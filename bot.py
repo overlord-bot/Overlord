@@ -38,5 +38,3 @@ async def main():
     await bot.start(os.getenv("DISCORD_TOKEN"))  # fetches token from env file stored locally and starts bot
 
 asyncio.run(main())
-
-

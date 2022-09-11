@@ -10,9 +10,9 @@ class BasicMath(commands.Cog, name="BasicMath"):
         self.bot = bot
 
     @commands.command()
-    async def add(self, ctx, left: int, right: int):
+    async def add(self, context, left: int, right: int):
         """Adds two numbers together."""  # this is the description that will show up in !help
-        await ctx.send(left + right)
+        await context.send(left + right)
 
 
 async def setup(bot):
