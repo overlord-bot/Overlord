@@ -3,7 +3,7 @@
 from discord.ext import commands
 
 
-class BasicMath(commands.Cog, name="BasicMath"):
+class BasicMath(commands.Cog, name="Basic Math"):
     """Calculates basic math"""
 
     def __init__(self, bot):
@@ -11,8 +11,13 @@ class BasicMath(commands.Cog, name="BasicMath"):
 
     @commands.command()
     async def add(self, context, left: int, right: int):
-        """Adds two numbers together."""  # this is the description that will show up in !help
+        """Adds two numbers"""  # this is the description that will show up in !help
         await context.send(left + right)
+
+    @commands.command()
+    async def subtract(self, context, left: int, right: int):
+        """Subtracts first number from the second"""  # this is the description that will show up in !help
+        await context.send(left - right)
 
 
 async def setup(bot):
