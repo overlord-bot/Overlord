@@ -8,16 +8,18 @@ from discord.ext import commands
 
 from dotenv import load_dotenv  # pip install python-dotenv
 
-
+# Necessary intents (permissions) for the bot to function
 intents = discord.Intents.default()
 intents.members = True  # permission to see server members
 intents.message_content = True  # permission to read message content
 
+# Setup the bot object and its descriptions
 bot_status = "With Fate | Try !help "
 bot_description = "This is the full help description"
 bot = commands.Bot(command_prefix="!", description=bot_description, intents=intents, activity=discord.Game(name=bot_status))
 
 
+# Load all cogs inside the cogs folder
 async def load_cogs():
     print("\n------------------ Loading Cogs -----------------")
     for folder in os.listdir("cogs"):
