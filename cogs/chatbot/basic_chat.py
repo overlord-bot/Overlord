@@ -3,7 +3,7 @@
 from discord.ext import commands
 
 
-class BasicChat(commands.Cog, name="BasicChat"):
+class BasicChat(commands.Cog, name="Basic Chat"):
     """Basic Chatbot Functions"""
 
     def __init__(self, bot):

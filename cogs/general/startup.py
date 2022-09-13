@@ -7,7 +7,7 @@ import discord
 from discord.ext import commands
 
 
-class Startup(commands.Cog, name="Startup"):
+class Startup(commands.Cog, name="Start Up"):
     """Startup Operations"""
 
     def __init__(self, bot):

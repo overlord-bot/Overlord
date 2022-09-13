@@ -5,7 +5,7 @@ import yfinance as yf
 from discord.ext import commands
 
 
-class YahooFinance(commands.Cog, name="YahooFinance"):
+class YahooFinance(commands.Cog, name="Yahoo Finance"):
     """Fetches stock information using yahoo finance"""
 
     def __init__(self, bot):
