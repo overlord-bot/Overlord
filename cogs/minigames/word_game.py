@@ -10,7 +10,7 @@ class WordGame(commands.Cog, name="Word Game"):
         self.word = "Jeans"
 
     @commands.command()
-    async def getword(ctx, arg):
+    async def getword(self, ctx):
         """Returns the test word. FOR DEBUG ONLY!"""
         await ctx.send("Jeans")
 
