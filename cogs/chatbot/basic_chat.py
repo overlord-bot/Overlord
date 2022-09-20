@@ -29,7 +29,18 @@ class BasicChat(commands.Cog, name="Basic Chat"):
         #additional features below
         elif "apex" in message.content.lower():
             await message.channel.send("Who's ready to fly on a zipline? I AM!")
-
+            
+class ExtraFunc(commands.Cog, name="Additional Function "):
+    def __init__(self, bot):
+        self.bot = bot
+    @commands.Cog.listener()  
+    async def on_message(self, message):
+        if message.author == self.bot.user or message.author.bot:
+            return
+        elif 'rick roll' in message.content.lower():
+            await message.channel.send("Never Gonna Give You Up!")
+            await message.channel.send("Never Gonna Let You Down!")
 
 async def setup(bot):
     await bot.add_cog(BasicChat(bot))
+    await bot.add_cog(ExtraFunc(bot))
