@@ -16,11 +16,19 @@ class AnimeScraper(commands.Cog, name="Anime Scraper"):
         """Searches for an anime"""  # this is the description that will show up in !help
         url = "https://myanimelist.net/search/all?q=" + search + "&cat=all"
 
-        data = requests.get(url)
-        html = BeautifulSoup(data.text, 'html.parser')
+        search_data = requests.get(url)
+        search_soup = BeautifulSoup(search_data.text, 'html.parser')
 
-        a_href = html.find("a", {"class": "hoverinfo_trigger"}).get("href")
-        await context.send(a_href)
+        anime_url = search_soup.find("a", {"class": "hoverinfo_trigger"}).get("href")
+
+        print(anime_url)
+
+        anime_data = requests.get(anime_url)
+        anime_soup = BeautifulSoup(anime_data.text, 'html.parser')
+        score = anime_soup.find("div", {"class": "score-label"}).get_text()
+        description = anime_soup.find("p", {"itemprop": "description"}).get_text()
+
+        await context.send(f"URL: {anime_url} | Score: {score} | Description: {description}")
 
 
 async def setup(bot):
