@@ -11,21 +11,15 @@ from dotenv import load_dotenv  # pip install python-dotenv
 
 class Bot(commands.Bot):
     def __init__(self) -> None:
-        # If you are not planning on developing application or slash commands ignore this.
-        # FOR MAIN RELEASE CHANGE testing_server TO NONE OR FALSE
         self.testing_server = None
-        # self.testing_server = discord.Object(id=333409598365106176)
-        #                                 ^^^^^^^^^^^^^^^^^^
-        #                               Insert your server id here
-        #                         (make sure discord dev mode is enabled)
-        # Click "Copy Id": https://i.gyazo.com/3499ab2ba0219b07e7e892355931c17a.png
+        # self.testing_server = discord.Object(os.getenv("TESTING_SERVER_ID"))
 
         # Necessary intents (permissions) for the bot to function
         intents = discord.Intents.default()
         intents.members = True  # permission to see server members
         intents.message_content = True  # permission to read message content
 
-        # Setup the bot object and its descriptions
+        # Set up the bot object and its descriptions
         bot_status = "With Fate | Try !help "
         bot_description = "This is the full help description"
         super().__init__(command_prefix="!", description=bot_description, intents=intents, activity=discord.Game(name=bot_status))
