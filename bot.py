@@ -13,7 +13,8 @@ class Bot(commands.Bot):
     def __init__(self) -> None:
         # If you are not planning on developing application or slash commands ignore this.
         # FOR MAIN RELEASE CHANGE testing_server TO NONE OR FALSE
-        self.testing_server = discord.Object(id=333409598365106176)
+        self.testing_server = None
+        # self.testing_server = discord.Object(id=333409598365106176)
         #                                 ^^^^^^^^^^^^^^^^^^
         #                               Insert your server id here
         #                         (make sure discord dev mode is enabled)
