@@ -1,5 +1,6 @@
 from array import *
-from discord.ext import commands
+from .course import Course
+from .degree import Degree
 
 class Catalog():
 

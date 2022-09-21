@@ -1,7 +1,11 @@
 from array import *
-from discord.ext import commands
 
 class Course():
+
+    def __init__(self, name, major, id):
+        self.name = name
+        self.major = major
+        self.id = id
 
     #consistent properties unlikely to change
     name = ""
@@ -41,3 +45,11 @@ class Course():
 
     def level():
         return (course_id//1000)
+
+    def __eq__(self, other):
+        if self.name == other.name and self.id == other.id:
+            return True
+        return False
+
+    def __hash__(self):
+        return self.id
