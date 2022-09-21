@@ -9,6 +9,7 @@ from discord.ext import commands
 
 class Startup(commands.Cog, name="Start Up"):
     """Startup Operations"""
+    global testing_server
 
     def __init__(self, bot):
         self.bot = bot
@@ -21,6 +22,12 @@ class Startup(commands.Cog, name="Start Up"):
         print(f"Python version: {platform.python_version()}")
         print(f"Running on: {platform.system()} {platform.release()} ({os.name})")
         print("----------------------------------------------------------------------")
+        await self.bot.wait_until_ready()
+        if (testing_server):
+            self.bot.tree.copy_global_to(guild=testing_server)
+            await self.bot.tree.sync(guild=testing_server)
+        else:
+            await self.bot.tree.sync()
 
 
 async def setup(bot):
