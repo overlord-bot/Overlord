@@ -18,14 +18,6 @@ bot_status = "With Fate | Try !help "
 bot_description = "This is the full help description"
 bot = commands.Bot(command_prefix="!", description=bot_description, intents=intents, activity=discord.Game(name=bot_status))
 
-# If you are not planning on developing application or slash commands ignore this.
-# FOR MAIN RELEASE CHANGE testing_server TO NONE OR FALSE
-testing_server = discord.Object(id=333409598365106176)
-#                                 ^^^^^^^^^^^^^^^^^^
-#                               Insert your server id here
-#                         (make sure discord dev mode is enabled)
-# Click "Copy Id": https://i.gyazo.com/3499ab2ba0219b07e7e892355931c17a.png
-
 
 # Load all cogs inside the cogs folder
 async def load_cogs():
