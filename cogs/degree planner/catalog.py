@@ -1,6 +1,7 @@
 from array import *
+from discord.ext import commands
 
-class Catalog:
+class Catalog():
 
     #catalog will  be a list of courses and degrees
     #also store graphs for further analysis and course prediction of free electives

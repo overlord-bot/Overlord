@@ -1,6 +1,7 @@
 from array import *
+from discord.ext import commands
 
-class Course:
+class Course():
 
     #consistent properties unlikely to change
     name = ""
