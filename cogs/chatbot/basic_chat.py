@@ -26,12 +26,12 @@ class BasicChat(commands.Cog, name="Basic Chat"):
         # not needed due to asyncio, left commented out in code in case needed later
         # await self.bot.process_commands(message)  # https://discordpy.readthedocs.io/en/stable/faq.html#why-does-on-message-make-my-commands-stop-working
         #additional features below
-        elif (message.content == "what the time is it?") or (message.content == "what the time is it") or (message.content == "what time") or (message.content == "/time"):
+        elif (message.content == "what the time is it?") or (message.content == "what the time is it") or (message.content == "what time") or (message.content == "time"):
             now = datetime.now()
             current_time = now.strftime("%H:%M:%S")
             await message.channel.send("It's " + current_time + " now!")
         
-        elif (message.content.lower() == "what day is today?") or (message.content.lower() == "what day is today") or (message.content.lower() == "what is today?") or (message.content.lower() == "/date"):
+        elif (message.content.lower() == "what day is today?") or (message.content.lower() == "what day is today") or (message.content.lower() == "what is today?") or (message.content.lower() == "date"):
             today = date.today()
             d = today.strftime("%B %d, %Y")
             await message.channel.send("Today is " + d)
