@@ -11,9 +11,14 @@ class Moderation(commands.Cog, name="Moderation"):
     def __init__(self, bot: commands.bot):
         self.bot = bot
 
-    @commands.command(name = "quit", alias=["logout", "shutdown", "kill"])
-    async def quit(self, ctx: commands.Context) -> None:
+    @commands.command(name="quit", alias=["logout", "shutdown", "kill"])
+    async def quit_prefix(self, ctx: commands.Context) -> None:
         await ctx.message.delete()
+        await self.bot.close()
+
+    @discord.app_commands.command(name="quit")
+    async def quit_slash(self, interaction: discord.Interaction) -> None:
+        await interaction.response.send_message("Shutting down!", ephemeral=True)
         await self.bot.close()
     
 
