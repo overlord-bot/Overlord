@@ -1,7 +1,9 @@
 # Basic Chat Response
 
 from discord.ext import commands
-import webbrowser
+from datetime import datetime
+from datetime import date
+
 
 class BasicChat(commands.Cog, name="Basic Chat"):
     """Basic Chatbot Functions"""
@@ -13,7 +15,7 @@ class BasicChat(commands.Cog, name="Basic Chat"):
     async def on_message(self, message):
         if message.author == self.bot.user or message.author.bot:
             return
-        elif message.content.startswith("hi"):
+        elif message.content.lower().startswith("hi"):
             await message.channel.send("hello")  # reacts with message in the location it was sent from
         elif message.content == "msg":
             await message.author.send('👋')  # sends a direct message to the user
@@ -21,14 +23,23 @@ class BasicChat(commands.Cog, name="Basic Chat"):
             await message.add_reaction("👍")  # adds an emoji reaction to a message, press windows key + '.' to bring up emoji list
             await message.add_reaction("❤")
             await message.add_reaction("🆗")
-        elif message.content.lower().startswith("goodbye"):
-            await message.channel.send("GoodBye")
-            await self.bot.close()
         # not needed due to asyncio, left commented out in code in case needed later
         # await self.bot.process_commands(message)  # https://discordpy.readthedocs.io/en/stable/faq.html#why-does-on-message-make-my-commands-stop-working
         #additional features below
-        elif "apex" in message.content.lower():
-            await message.channel.send("Who's ready to fly on a zipline? I AM!")
+        elif (message.content == "what the time is it?") or (message.content == "what the time is it") or (message.content == "what time") or (message.content == "/time"):
+            now = datetime.now()
+            current_time = now.strftime("%H:%M:%S")
+            await message.channel.send("It's " + current_time + " now!")
+        
+        elif (message.content.lower() == "what day is today?") or (message.content.lower() == "what day is today") or (message.content.lower() == "what is today?") or (message.content.lower() == "/date"):
+            today = date.today()
+            d = today.strftime("%B %d, %Y")
+            await message.channel.send("Today is " + d)
+
+        elif (message.content.lower() == "goodbye") or (message.content.lower() == "good bye"):     #close the bot
+            await message.channel.send("GoodBye, have a great day!")
+            await self.bot.close()
+            
             
 class ExtraFunc(commands.Cog, name="Additional Function "):
     def __init__(self, bot):
