@@ -14,7 +14,7 @@ class List_and_rules():
     min_same_concentration = 0
     min_same_pathway = 0
 
-    def eval():
+    def fulfilled():
         courses = 0
         courses_2k = 0
         courses_4k = 0
