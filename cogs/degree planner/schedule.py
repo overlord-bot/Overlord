@@ -9,27 +9,25 @@ from .bundle import Bundle
 from .list_and_rules import List_and_rules
 
 
-class Schedule(commands.Cog, name="Degree Planner"):
+class Schedule():
 
-    def __init__(self, bot):
-        self.bot = bot
-
+    #global variables
     msg_content = ""
     master_list = []
-    print("[Degree Planner Initialization] initializing master_list")
-    for x in range(0, 12):
-        master_list.append([])
 
-
+    #flags
     selection_flag = False
+    test_running = False
 
-    @commands.Cog.listener()
+    async def master_list_init(self):
+        print("[Degree Planner Initialization] initializing master_list")
+        self.master_list.clear()
+        for x in range(0, 12):
+            self.master_list.append([])
+
     async def on_message(self, message):
-        if message.author == self.bot.user or message.author.bot:
-            return
-
         # the chat input works as a fSM where a flag causes it to jump to a node and a negative response goes back to initial state
-        elif message.content.startswith("dp"):
+        if message.content.startswith("dp"):
             # ask a question as to what to do
             await self.msg(message, "nyaa")
             
@@ -41,7 +39,11 @@ class Schedule(commands.Cog, name="Degree Planner"):
         elif self.selection_flag:
             self.selection_flag = False
             if message.content.casefold() == "1":
-                await self.test(message)
+                if self.test_running:
+                    await self.msg(message, "Test is already running, please wait for its completion")
+                else:
+                    self.test_running = True
+                    await self.test(message)
 
             elif message.content.casefold() == "0":
                 await self.msg(message, "ok :(")
@@ -72,6 +74,8 @@ class Schedule(commands.Cog, name="Degree Planner"):
 
         await self.msg_release(message)
 
+        await self.master_list_init()
+
         #adding courses to the master list
         self.master_list[0].append(course1)
         self.master_list[0].append(course2)
@@ -97,8 +101,10 @@ class Schedule(commands.Cog, name="Degree Planner"):
 
         await self.msg(message, "Bundle assertions successful")
 
+        await self.master_list_init()
 
         await self.msg(message, "Test completed")
+        self.test_running = False
 
     async def msg_hold(self, message, content):
         print("content added" + content)
@@ -121,7 +127,3 @@ class Schedule(commands.Cog, name="Degree Planner"):
             for course in courselist:
                 await self.msg_hold(message, "    Course info: " + course.name + " " + course.major + " " + str(course.id))
         await self.msg_release(message)
-
-
-async def setup(bot):
-    await bot.add_cog(Schedule(bot))
