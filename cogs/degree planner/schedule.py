@@ -58,6 +58,7 @@ class Schedule():
     async def test(self, message):
         await self.msg(message, "Generating synthetic test data set")
 
+        # generating courses by configuring it here
         course1 = Course("Data Structures", "CSCI", 1200)
         course2 = Course("Algorithms", "CSCI", 2300)
         course3 = Course("Circuits", "ECSE", 2010)
@@ -76,12 +77,12 @@ class Schedule():
 
         await self.master_list_init()
 
-        #adding courses to the master list
+        # adding courses to the master list
         self.master_list[0].append(course1)
         self.master_list[0].append(course2)
         self.master_list[2].append(course3)
 
-        #print masterlist
+        # print masterlist
         await self.msg(message, "Added courses to schedule, printing schedule")
         await self.print_master_list(message)
 
