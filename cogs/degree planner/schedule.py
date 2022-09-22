@@ -14,42 +14,43 @@ class Schedule(commands.Cog, name="Degree Planner"):
     def __init__(self, bot):
         self.bot = bot
 
+    msg_content = ""
     master_list = []
-    print("hi")
-    for x in range(0, 10):
+    print("[Degree Planner Initialization] initializing master_list")
+    for x in range(0, 12):
         master_list.append([])
 
-    test_flag = False
+
+    selection_flag = False
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        global test_flag
         if message.author == self.bot.user or message.author.bot:
             return
 
+        # the chat input works as a fSM where a flag causes it to jump to a node and a negative response goes back to initial state
         elif message.content.startswith("dp"):
-            await self.msg(message, "nya")
+            # ask a question as to what to do
+            await self.msg(message, "nyaa")
+            
+            await self.msg(message, "What would you like to do?")
+            await self.msg(message, "  input the number in chat:  1: begin test sequence  0: cancel")
 
-            if self.test_flag:
-                await self.msg(message, "ERROR 1 IMPOSSIBLE STATE")
+            self.selection_flag = True
+        
+        elif self.selection_flag:
+            self.selection_flag = False
+            if message.content.casefold() == "1":
+                await self.test(message)
+
+            elif message.content.casefold() == "0":
+                await self.msg(message, "ok :(")
+
+            elif message.content.casefold() == "69":
+                await self.msg(message, "nice")
+
             else:
-                await self.msg(message, "Begin test sequence?")
-                self.test_flag = True
-
-        elif message.content.startswith("yes") and self.test_flag:
-            self.test_flag = False
-            await self.test(message)
-
-        elif message.content.startswith("no") and self.test_flag:
-            self.test_flag = False
-            await self.msg(message, "ok :(")
-
-        elif self.test_flag:
-            self.test_flag = False
-            await self.msg(message, "Unknown response, cancelling")
-
-        else:
-            self.test_flag = False
+                await self.msg(message, "Unknown response, cancelling")
 
     
     async def test(self, message):
@@ -63,11 +64,13 @@ class Schedule(commands.Cog, name="Degree Planner"):
         assert course2.name == "Algorithms" and course2.major == "CSCI" and course2.id == 2300
         assert course3.name == "Circuits" and course3.major == "ECSE" and course3.id == 2010
 
-        await self.msg(message, "Courses generated, printing courses")
+        await self.msg_hold(message, "Courses generated, printing courses")
 
-        await self.msg(message, "Course1: " + course1.name + " " + course1.major + " " + str(course1.id))
-        await self.msg(message, "Course2: " + course2.name + " " + course2.major + " " + str(course2.id))
-        await self.msg(message, "Course3: " + course3.name + " " + course3.major + " " + str(course3.id))
+        await self.msg_hold(message, "Course1: " + course1.name + " " + course1.major + " " + str(course1.id))
+        await self.msg_hold(message, "Course2: " + course2.name + " " + course2.major + " " + str(course2.id))
+        await self.msg_hold(message, "Course3: " + course3.name + " " + course3.major + " " + str(course3.id))
+
+        await self.msg_release(message)
 
         #adding courses to the master list
         self.master_list[0].append(course1)
@@ -95,17 +98,29 @@ class Schedule(commands.Cog, name="Degree Planner"):
         await self.msg(message, "Bundle assertions successful")
 
 
+        await self.msg(message, "Test completed")
+
+    async def msg_hold(self, message, content):
+        print("content added" + content)
+        self.msg_content = self.msg_content + content + "\n"
+
+    async def msg_release(self, message):
+        await message.channel.send("[Degree Planner] " + self.msg_content)
+        self.msg_content = ""
+
     async def msg(self, message, content):
         await message.channel.send("[Degree Planner] " + str(content))
+        # print("[Degree Planner] " + str(content))
 
     async def print_master_list(self, message):
         count = 0
+        await self.msg_hold(message, "")
         for courselist in self.master_list:
             count+=1
-            await self.msg(message, "  Semester " + str(count) + ":")
+            await self.msg_hold(message, "  Semester " + str(count) + ":")
             for course in courselist:
-                await self.msg(message, "    Course info: " + course.name + " " + course.major + " " + str(course.id))
-
+                await self.msg_hold(message, "    Course info: " + course.name + " " + course.major + " " + str(course.id))
+        await self.msg_release(message)
 
 
 async def setup(bot):
