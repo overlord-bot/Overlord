@@ -1,0 +1,14 @@
+{
+  "courses": [
+    {
+      "name": "Programming Languages",
+      "major": "CSCI",
+      "id": "4430"
+    },
+    {
+      "name": "Operating Systems",
+      "major": "CSCI",
+      "id": "4210"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ from array import *
 from discord.ext import commands
 import discord
 import asyncio
+import json
 
 from .course import Course
 from .catalog import Catalog
@@ -44,7 +45,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if message.content.startswith("dp"):
             await schedule.msg(message, "hiyaa")
             await schedule.msg(message, "What would you like to do, " + str(message.author)[0:str(message.author).find('#'):1] + "?")
-            await schedule.msg(message, "input the number in chat:  1: begin test sequence  0: cancel")
+            await schedule.msg(message, "input the number in chat:  1: begin test sequence 2: import from json file 0: cancel")
 
             #sets the flag to true so the next input (except for "dp") is treated as a response to the selection menu
             schedule.selection_flag = True
@@ -58,6 +59,14 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     schedule.test_running = True
                     await self.test(message)
 
+            elif message.content.casefold() == "2":
+                await schedule.msg(message, "reading from data.json...")
+                f = open("data.json")
+                print("Successfully opened json file")
+                json_data = json.load(f)
+                print("Successfully loaded json file")
+                await self.parse_courses(message, schedule, json_data)
+
             elif message.content.casefold() == "0":
                 await schedule.msg(message, "ok :(")
 
@@ -70,7 +79,11 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     async def test(self, message):
         test_suite = Test1()
         await test_suite.test(message)
-        
+
+    async def parse_courses(self, message, schedule, json_data):
+        for element in json_data['courses']:
+            course = Course(element['name'], element['major'], int(element['id']))
+            print(str(element) + " added successfully")
 
 async def setup(bot):
     await bot.add_cog(Degree_Planner(bot))

@@ -37,10 +37,12 @@ class Schedule():
     # it can all be replaced with different UI system later
     #-----------------------------------------------------------------------
 
+    # stores the string inside a cache
     async def msg_hold(self, message, content):
         print("content added" + content)
         self.msg_content = self.msg_content + content + "\n"
 
+    # prints all text within cache into discord's chat
     async def msg_release(self, message, which):
         if which:
             # little embed test
@@ -53,10 +55,11 @@ class Schedule():
             await message.channel.send("```yaml\n" + self.msg_content + "```")
             self.msg_content = ""
 
+    # immediately prints a string to discord's chat
     async def msg(self, message, content):
         await message.channel.send("[Degree Planner] " + str(content))
-        # print("[Degree Planner] " + str(content))
 
+    # prints student's schedule, uses msg_hold and msg_release functions
     async def print_master_list(self, message):
         count = 0
         await self.msg_hold(message, "")
