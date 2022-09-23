@@ -7,9 +7,37 @@ class WordGame(commands.Cog, name="Word Game"):
 
     def __init__(self, bot):
         self.bot = bot
-        self.word = "Jeans"
+        self.word = "jeans"
         self.round = -1
         self.current_progress = []
+
+
+    def checkword(word, checked_word):
+        """Compare current word to checked word"""
+        currentlist = []
+        letterdict = dict()
+        for i in range(0, len(checked_word)):
+            currentlet = checked_word[i].lower()
+            if currentlet in letterdict.keys():
+                letterdict[currentlet] += 1
+            else:
+                letterdict[currentlet] = 1
+
+        for i in range(0, len(word)):
+            currentlet = word[i].lower()
+            comparedlet = word[i].lower()
+
+            if currentlet == comparedlet:
+                currentlist.append("G")
+                letterdict[word[i]] -= 1
+            else:
+                if currentlet in checked_word.lower() and letterdict[currentlet] > 0:
+                    currentlist.append("Y")
+                    letterdict[comparedlet] -= 1
+                else:
+                    currentlist.append("B")
+        
+        return currentlist
 
     @commands.command()
     async def getword(self, ctx):
