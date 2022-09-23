@@ -6,13 +6,19 @@ import ast
 import math
 import operator
 
-# basic unary and binary operators
-BASIC_OPS = {
-    ast.Add: operator.add,
-    ast.Sub: operator.sub,
-    ast.Mult: operator.mul,
-    ast.Div: operator.truediv,
-    ast.BitXor: operator.pow, # redefine ^ to mean exponentiation
+OPERATIONS = {
+    # operations represented by symbols
+    ast.Add: operator.add, # addition
+    ast.BitXor: operator.pow, # exponentiation
+    ast.Div: operator.truediv, # division
+    ast.Mult: operator.mul, # multiplication
+    ast.Mod: operator.mod, # modulo
+    ast.Sub: operator.sub, # subtraction
+
+    # operations represented by names
+    "cos": lambda args: math.cos(args[0]),
+    "sin": lambda args: math.sin(args[0]),
+    "tan": lambda args: math.tan(args[0])
 }
 
 def evaluate_node(node):
@@ -22,7 +28,7 @@ def evaluate_node(node):
 
     # unary operators
     elif isinstance(node, ast.UnaryOp):
-        op = BASIC_OPS[type(node.op)]
+        op = OPERATIONS[type(node.op)]
 
         # evaluate the argument first
         arg = evaluate_node(node.operand)
@@ -31,13 +37,22 @@ def evaluate_node(node):
 
     # binary operators
     elif isinstance(node, ast.BinOp):
-        op = BASIC_OPS[type(node.op)]
+        op = OPERATIONS[type(node.op)]
 
         # evaluate both arguments first
         left = evaluate_node(node.left)
         right = evaluate_node(node.right)
 
         return op(left, right)
+
+    # named functions
+    elif isinstance(node, ast.Call):
+        op = OPERATIONS[node.func.id]
+
+        # evaluate the arguments first
+        args = [evaluate_node(arg) for arg in node.args]
+
+        return op(args)
 
     # unknown or unsupported
     else:
