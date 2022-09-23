@@ -19,7 +19,7 @@ class PostfixOperator:
         del stack[-self.arg_count:] # pop arg_count values off
         stack.append(result)
 
-OPERATORS = {
+POSTFIX_OPS = {
     "neg": PostfixOperator(lambda stack: -stack[-1], 1),
     "+": PostfixOperator(lambda stack: stack[-2] + stack[-1], 2),
     "-": PostfixOperator(lambda stack: stack[-2] - stack[-1], 2),
@@ -29,13 +29,13 @@ OPERATORS = {
     "sqrt": PostfixOperator(lambda stack: math.sqrt(stack[-1]), 1)
 }
 
-def reverse_polish(expression):
+def eval_postfix(expression):
     tokens = expression.split()
     stack = []
 
     for token in tokens:
-        if token in OPERATORS:
-            OPERATORS[token](stack)
+        if token in POSTFIX_OPS:
+            POSTFIX_OPS[token](stack)
         else: # assume anything other than an operator is a value
             stack.append(float(token))
 
@@ -52,14 +52,17 @@ class BasicMath(commands.Cog, name="Basic Math"):
 
     @commands.group()
     async def calc(self, context):
-        """ Evaluate the given mathematical expression. Reverse Polish (calc rpn) notation supported."""
+        """Evaluate the given mathematical expression."""
+
         if context.invoked_subcommand is None:
             await context.send("Invalid subcommand")
 
-    @calc.command(name="rpn")
-    async def calc_rpn(self, context, *, expression):
+    @calc.command(name="postfix")
+    async def calc_postfix(self, context, *, expression):
+        """Evaluate a postfix expression (e.g. 1 2 + => 3)"""
+
         try:
-            await context.reply(reverse_polish(expression))
+            await context.reply(eval_postfix(expression))
         except Exception as e:
             await context.reply(f"Error: {e}")
 
