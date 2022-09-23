@@ -16,7 +16,7 @@ class BasicChat(commands.Cog, name="Basic Chat"):
         if message.author == self.bot.user or message.author.bot:
             return
         elif message.content.lower().startswith("hi"):
-            await message.channel.send("hello")  # reacts with message in the location it was sent from
+            await message.channel.send("Hello, " + message.author.name + " !")  # reacts with message in the location it was sent from
         elif message.content == "msg":
             await message.author.send('👋')  # sends a direct message to the user
         elif message.content == "react":
@@ -37,7 +37,7 @@ class BasicChat(commands.Cog, name="Basic Chat"):
             await message.channel.send("Today is " + d)
 
         elif (message.content.lower() == "goodbye") or (message.content.lower() == "good bye"):     #close the bot
-            await message.channel.send("GoodBye, have a great day!")
+            await message.channel.send("GoodBye, " + message.author.name + ", have a great day!")
             await self.bot.close()
             
             
