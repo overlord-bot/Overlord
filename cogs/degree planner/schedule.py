@@ -1,5 +1,7 @@
 from array import *
+from pickle import FALSE
 from discord.ext import commands
+import discord
 import asyncio
 
 from .course import Course
@@ -73,18 +75,21 @@ class Schedule():
         course1 = Course("Data Structures", "CSCI", 1200)
         course2 = Course("Algorithms", "CSCI", 2300)
         course3 = Course("Circuits", "ECSE", 2010)
+        course4 = Course("Animation", "ARTS", 4070)
 
         assert course1.name == "Data Structures" and course1.major == "CSCI" and course1.id == 1200
         assert course2.name == "Algorithms" and course2.major == "CSCI" and course2.id == 2300
         assert course3.name == "Circuits" and course3.major == "ECSE" and course3.id == 2010
+        assert course4.name == "Animation" and course4.major == "ARTS" and course4.id == 4070
 
-        await self.msg_hold(message, "Courses generated, printing courses")
+        await self.msg_hold(message, "Printing courses:")
 
-        await self.msg_hold(message, "Course1: " + course1.name + " " + course1.major + " " + str(course1.id))
-        await self.msg_hold(message, "Course2: " + course2.name + " " + course2.major + " " + str(course2.id))
-        await self.msg_hold(message, "Course3: " + course3.name + " " + course3.major + " " + str(course3.id))
+        await self.msg_hold(message, "Course1: " + course1.name + " " + course1.major + " " + str(course1.id) + " of level " + str(course1.level()))
+        await self.msg_hold(message, "Course2: " + course2.name + " " + course2.major + " " + str(course2.id) + " of level " + str(course2.level()))
+        await self.msg_hold(message, "Course3: " + course3.name + " " + course3.major + " " + str(course3.id) + " of level " + str(course3.level()))
+        await self.msg_hold(message, "Course4: " + course4.name + " " + course4.major + " " + str(course4.id) + " of level " + str(course4.level()))
 
-        await self.msg_release(message)
+        await self.msg_release(message, False)
 
         await self.master_list_init()
 
@@ -92,6 +97,7 @@ class Schedule():
         self.master_list[0].append(course1)
         self.master_list[0].append(course2)
         self.master_list[2].append(course3)
+        self.master_list[3].append(course4)
 
         # print masterlist
         await self.msg(message, "Added courses to schedule, printing schedule")
@@ -112,9 +118,28 @@ class Schedule():
         assert bundle2 != bundle3
 
         await self.msg(message, "Bundle assertions successful")
+        
+        
+        # List_and_rules tests
+        await self.msg(message, "Beginning testing of class List_and_rules")
 
+        lar1 = List_and_rules()
+        lar1.course_list = [course1, course2]
+        lar1.min_courses = 2
+        lar1.min_2000_courses = 1
+        lar1.required_courses = [course1]
+        assert lar1.fulfilled()
+
+        lar1.course_list = [course1]
+        assert not lar1.fulfilled()
+
+        lar1.course_list = [course1, course4]
+        assert not lar1.fulfilled()
+
+        await self.msg(message, "List_and_rules assertions successful")
+
+        # resetting master_list and conclude test module
         await self.master_list_init()
-
         await self.msg(message, "Test completed")
         self.test_running = False
 
@@ -129,9 +154,17 @@ class Schedule():
         print("content added" + content)
         self.msg_content = self.msg_content + content + "\n"
 
-    async def msg_release(self, message):
-        await message.channel.send("[Degree Planner] " + self.msg_content)
-        self.msg_content = ""
+    async def msg_release(self, message, which):
+        if which:
+            # little embed test
+            embed = discord.Embed(title="Slime",color=discord.Color.blue())
+            embed.add_field(name="*info*", value=self.msg_content, inline = False)
+            await message.channel.send(embed=embed)
+            self.msg_content = ""
+        else:
+            # code block test
+            await message.channel.send("```yaml\n" + self.msg_content + "```")
+            self.msg_content = ""
 
     async def msg(self, message, content):
         await message.channel.send("[Degree Planner] " + str(content))
@@ -142,7 +175,7 @@ class Schedule():
         await self.msg_hold(message, "")
         for courselist in self.master_list:
             count+=1
-            await self.msg_hold(message, "  Semester " + str(count) + ":")
+            await self.msg_hold(message, "Semester " + str(count) + ":")
             for course in courselist:
-                await self.msg_hold(message, "    Course info: " + course.name + " " + course.major + " " + str(course.id))
-        await self.msg_release(message)
+                await self.msg_hold(message, "\tCourse info: " + course.name + " " + course.major + " " + str(course.id))
+        await self.msg_release(message, False)

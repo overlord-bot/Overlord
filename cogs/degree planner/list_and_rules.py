@@ -20,21 +20,21 @@ class List_and_rules():
         courses_4k = 0
         courses_CI = 0
         required_copy = self.required_courses
-        same_concentration = dict()
-        same_pathway = dict()
+        #same_concentration = dict()
+        #same_pathway = dict()
 
         for course in self.course_list:
             courses+=1
-            if (course.level == 2):
+            if course.level() == 2:
                 courses_2k+=1
-            if (course.level == 4):
+            if course.level() == 4:
                 courses_4k+=1
-            if (course.CI):
+            if course.CI:
                 courses_CI+=1
             #TODO add pathway and concentration counter here
-            if (course in required_copy):
+            if course in required_copy:
                 required_copy.remove(course)
 
-        if (courses < self.min_courses or courses_2k < self.min_2000_courses or courses_4k < self.min_4000_courses or courses_CI < self.min_CI or required_copy):
+        if courses < self.min_courses or courses_2k < self.min_2000_courses or courses_4k < self.min_4000_courses or courses_CI < self.min_CI or required_copy:
             return False
         return True

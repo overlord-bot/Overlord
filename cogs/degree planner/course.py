@@ -44,7 +44,7 @@ class Course():
         self.not_summer = False
 
     def level(self):
-        return (self.course_id//1000)
+        return (self.id//1000)
 
     def __eq__(self, other):
         if self.name == other.name and self.id == other.id:
