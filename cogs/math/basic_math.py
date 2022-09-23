@@ -2,7 +2,9 @@
 
 from discord.ext import commands
 
+import ast
 import math
+import operator
 
 class PostfixOperator:
     """Helper class for stack-based postfix operators"""
@@ -44,6 +46,45 @@ def eval_postfix(expression):
     else:
         raise Exception("extraneous values remaining on the stack")
 
+INFIX_OPS = { # basic operators
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.BitXor: operator.pow, # redefine ^ to mean exponentiation
+}
+
+def eval_infix_node(node):
+    # numbers
+    if isinstance(node, ast.Num):
+        return node.n
+
+    # unary operators
+    elif isinstance(node, ast.UnaryOp):
+        op = INFIX_OPS[type(node.op)]
+
+        # evaluate the argument first
+        arg = eval_infix_node(node.operand)
+
+        return op(arg)
+
+    # binary operators
+    elif isinstance(node, ast.BinOp):
+        op = INFIX_OPS[type(node.op)]
+
+        # evaluate both arguments first
+        left = eval_infix_node(node.left)
+        right = eval_infix_node(node.right)
+
+        return op(left, right)
+
+    # unknown or unsupported
+    else:
+        raise TypeError("unknown or unsupported operator/function")
+
+def eval_infix(expression):
+    return eval_infix_node(ast.parse(expression, mode="eval").body)
+
 class BasicMath(commands.Cog, name="Basic Math"):
     """Calculates basic math"""
 
@@ -56,6 +97,14 @@ class BasicMath(commands.Cog, name="Basic Math"):
 
         if context.invoked_subcommand is None:
             await context.send("Invalid subcommand")
+
+    @calc.command(name="infix")
+    async def calc_infix(self, context, *, expression):
+        """Evaluate an infix expression (e.g. 1 + 2 => 3)"""
+        try:
+            await context.reply(eval_infix(expression))
+        except Exception as e:
+            await context.reply(f"Error: {e}")
 
     @calc.command(name="postfix")
     async def calc_postfix(self, context, *, expression):
