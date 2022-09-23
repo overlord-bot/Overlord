@@ -16,9 +16,11 @@ OPERATIONS = {
     ast.Sub: operator.sub, # subtraction
 
     # operations represented by names
-    "cos": lambda args: math.cos(args[0]),
-    "sin": lambda args: math.sin(args[0]),
-    "tan": lambda args: math.tan(args[0])
+    "abs": lambda args: abs(args[0]), # absolute value
+    "cos": lambda args: math.cos(args[0]), # cosine
+    "sin": lambda args: math.sin(args[0]), # sine
+    "sqrt": lambda args: math.sqrt(args[0]), # square root
+    "tan": lambda args: math.tan(args[0]) # tangent
 }
 
 def evaluate_node(node):
