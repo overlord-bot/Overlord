@@ -55,14 +55,7 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         elif 'rick roll' in message.content.lower():
             await message.channel.send("Never Gonna Give You Up!")
             await message.channel.send("Never Gonna Let You Down!")
-        GREETING_INPUTS = ("hello", "hi", "greetings", "sup", "what's up","hey",)
-        for word in message.content.split():
-            if word.lower() in GREETING_INPUTS:
-                await message.channel.send(random.choice(GREETING_INPUTS))
-    async def hi(self,message):
-        GREETING_INPUTS = ("hello", "hi", "greetings", "sup", "what's up","hey",)
-        if message.author == self.bot.user or message.author.bot:
-            return
+        GREETING_INPUTS = ("hello", "greetings", "sup", "what's up","hey",)
         for word in message.content.split():
             if word.lower() in GREETING_INPUTS:
                 await message.channel.send(random.choice(GREETING_INPUTS))
