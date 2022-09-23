@@ -8,6 +8,7 @@ import discord
 from discord.ext import commands
 import datetime
 import os
+import calendar
 
 class Calendar(commands.Cog, name="Calendar"):
         def __init__(self, bot):
@@ -35,6 +36,7 @@ class Calendar(commands.Cog, name="Calendar"):
             return embed
 
         def print_add_embed(self, event):
+            event = event + "\n"
             self.calendar.append(event)
             self.save_calendar()
             embed = discord.Embed(title="Calendar", description="Event added!", color=0xff0000)
@@ -42,17 +44,37 @@ class Calendar(commands.Cog, name="Calendar"):
             return embed
 
         def print_calendar_embed(self):
-            embed = discord.Embed(title="Calendar", description="Here's the calendar for the server!", color=0xff0000)
-            for event in self.calendar:
-                embed.add_field(name=event, value="\u200b", inline=False)
+            now = datetime.datetime.now()
+            year = now.year
+            month = now.month
+            day = now.day
+
+            embed = discord.Embed(title="Calendar", description="Calendar for " + calendar.month_name[month] + " " + str(year), color=0xff0000)
+            cal = calendar.monthcalendar(year, month)
+
+            for week in cal:
+                week_string += "\n"
+                for day in week:
+                    if day == 0:
+                        week_string += "-\t\t"
+                    elif len(str(day)) == 1:
+                        week_string += "0" + str(day) + "\t\t"
+                    else:
+                        week_string += str(day) + "\t\t"
+                embed.add_field(name=week_string, value="\u200b", inline=False)
             return embed
+
 
         def print_clear_embed(self):
             embed = discord.Embed(title="Calendar", description="Calendar cleared!", color=0xff0000)
             return embed
 
-        @commands.command()
-        async def calendar(self, context, action: str, *, event: str = None):
+
+        @commands.command(
+            name="calendar",
+            help="Add or view events on the calendar! Usage: !calendar <add/remove> <event> or !calendar <view/clear>"
+        )
+        async def calendar(self, context, action: str, *, event: str = None, date: str = None):
             """Adds or views events in the calendar."""
             if action.lower() == "add":
                 if event:
@@ -84,6 +106,7 @@ class Calendar(commands.Cog, name="Calendar"):
                     await context.send("Please specify an event.")
             else:
                 await context.send("Please specify an action.")
+
 
 async def setup(bot):
     await bot.add_cog(Calendar(bot))
