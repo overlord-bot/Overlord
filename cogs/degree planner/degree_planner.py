@@ -12,6 +12,8 @@ from .schedule import Schedule
 
 class Degree_Planner(commands.Cog, name="Degree Planner"):
 
+    # each user is assigned a schedule object and stored in the dictionary below, with the format
+    # Schedules = <author, Schedule>
     schedules = dict()
 
     def __init__(self, bot):
@@ -22,7 +24,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if message.author == self.bot.user or message.author.bot:
             return
         else:
-            print("received input ")
+            print("received input from user " + str(message.author))
             if message.author in self.schedules:
                 await self.schedules.get(message.author).on_message(message)
                 print("returning user")

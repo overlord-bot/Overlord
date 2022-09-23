@@ -28,23 +28,23 @@ class Course():
     not_spring = False #if this class is usually unavailable in spring
     not_summer = False #if this class is usually unavailable in the summer
 
-    def fall_only():
-        not_fall = False
-        not_spring = True
-        not_summer = True
+    def fall_only(self):
+        self.not_fall = False
+        self.not_spring = True
+        self.not_summer = True
 
-    def spring_only():
-        not_fall = True
-        not_spring = False
-        not_summer = True
+    def spring_only(self):
+        self.not_fall = True
+        self.not_spring = False
+        self.not_summer = True
 
-    def summer_only():
-        not_fall = True
-        not_spring = True
-        not_summer = False
+    def summer_only(self):
+        self.not_fall = True
+        self.not_spring = True
+        self.not_summer = False
 
-    def level():
-        return (course_id//1000)
+    def level(self):
+        return (self.course_id//1000)
 
     def __eq__(self, other):
         if self.name == other.name and self.id == other.id:

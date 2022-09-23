@@ -6,7 +6,7 @@ class Bundle(Course):
 
     course_bundle = []
 
-    def add_to_bundle(course):
+    def add_to_bundle(self, course):
         self.course_bundle.append(course)
 
     def __eq__(self, other):

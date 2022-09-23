@@ -11,33 +11,45 @@ from .list_and_rules import List_and_rules
 
 class Schedule():
 
-    #global variables
-    msg_content = ""
+    # SCHEDULE GLOBAL VARIABLES
+
+    # needs to be initialized before every use by calling master_list_init()
+    # uses 2D array [semester][course]
     master_list = []
 
-    #flags
-    selection_flag = False
-    test_running = False
+    # temporary variables
+    msg_content = "" # holds a string so it can be outputted to discord at the same time to avoid long waits due to network delays when printing individually
 
+    # flags
+    selection_flag = False # whether to take user input as a choice for the selection menu
+    test_running = False # if a test is already running, prevents two tests from running at the same time
+
+
+    # Initializes the data structure storing all courses in the schedule, grouped by semester
     async def master_list_init(self):
         print("[Degree Planner Initialization] initializing master_list")
         self.master_list.clear()
+
+        #generates 12 empty lists within master_list. Each list represents a semester, with element 0 representing semester 1 and so on.
         for x in range(0, 12):
             self.master_list.append([])
 
-    async def on_message(self, message):
-        # the chat input works as a fSM where a flag causes it to jump to a node and a negative response goes back to initial state
-        if message.content.startswith("dp"):
-            # ask a question as to what to do
-            await self.msg(message, "nyaa")
-            
-            await self.msg(message, "What would you like to do?")
-            await self.msg(message, "  input the number in chat:  1: begin test sequence  0: cancel")
 
+    #-----------------------------------------------------------------------
+    # This function is a temporary text based system to control the bot
+    # it can all be replaced with different UI system later
+    #-----------------------------------------------------------------------
+    async def on_message(self, message):
+        if message.content.startswith("dp"):
+            await self.msg(message, "hiyaa")
+            await self.msg(message, "What would you like to do, " + str(message.author)[0:str(message.author).find('#'):1] + "?")
+            await self.msg(message, "input the number in chat:  1: begin test sequence  0: cancel")
+
+            #sets the flag to true so the next input (except for "dp") is treated as a response to the selection menu
             self.selection_flag = True
         
         elif self.selection_flag:
-            self.selection_flag = False
+            self.selection_flag = False # resets selection flag
             if message.content.casefold() == "1":
                 if self.test_running:
                     await self.msg(message, "Test is already running, please wait for its completion")
@@ -50,7 +62,6 @@ class Schedule():
 
             elif message.content.casefold() == "69":
                 await self.msg(message, "nice")
-
             else:
                 await self.msg(message, "Unknown response, cancelling")
 
@@ -106,6 +117,13 @@ class Schedule():
 
         await self.msg(message, "Test completed")
         self.test_running = False
+
+
+
+    #-----------------------------------------------------------------------
+    # Functions to help format and sent messages to the user
+    # it can all be replaced with different UI system later
+    #-----------------------------------------------------------------------
 
     async def msg_hold(self, message, content):
         print("content added" + content)
