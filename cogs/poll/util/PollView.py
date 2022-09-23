@@ -6,6 +6,6 @@ class PollView(discord.ui.View):
 		self.value = None
 
 	@discord.ui.button(label="Title", style=discord.ButtonStyle.blurple)
-	async def create(self, button: discord.ui.Button, interaction: discord.Interaction):
-		# AttributeError: 'Button' object has no attribute 'response'
+	async def create(self, interaction: discord.Interaction, button: discord.ui.Button):
+		print(interaction)
 		await interaction.response.send_message("h")
