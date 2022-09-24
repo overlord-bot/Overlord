@@ -35,6 +35,10 @@ class Schedule():
     #-----------------------------------------------------------------------
     # Functions to help format and sent messages to the user
     # it can all be replaced with different UI system later
+    #
+    # The reason currently these message methods are inside the schedule
+    # is because they hold data over time and therefore must be instigated
+    # for every user
     #-----------------------------------------------------------------------
 
     # stores the string inside a cache
@@ -43,8 +47,8 @@ class Schedule():
         self.msg_content = self.msg_content + content + "\n"
 
     # prints all text within cache into discord's chat
-    async def msg_release(self, message, which):
-        if which:
+    async def msg_release(self, message, embedded):
+        if embedded:
             # little embed test
             embed = discord.Embed(title="Slime",color=discord.Color.blue())
             embed.add_field(name="*info*", value=self.msg_content, inline = False)
@@ -67,5 +71,5 @@ class Schedule():
             count+=1
             await self.msg_hold(message, "Semester " + str(count) + ":")
             for course in courselist:
-                await self.msg_hold(message, "\tCourse info: " + course.name + " " + course.major + " " + str(course.id))
+                await self.msg_hold(message, "\tCourse info: " + course.name + " " + course.major + " " + str(course.course_id))
         await self.msg_release(message, False)

@@ -1,0 +1,39 @@
+{
+  "courses": [
+    {
+      "name": "Programming Languages",
+      "major": "CSCI",
+      "id": "4430"
+    },
+    {
+      "name": "Operating Systems",
+      "major": "CSCI",
+      "id": "4210"
+    },
+    {
+      "name": "Data Science",
+      "major": "CSCI",
+      "id": "4350"
+    },
+    {
+      "name": "Intro to Electronics",
+      "major": "ECSE",
+      "id": "2050"
+    },
+    {
+      "name": "Mechatronics",
+      "major": "ECSE",
+      "id": "4090"
+    },
+    {
+      "name": "Embedded Control",
+      "major": "ENGR",
+      "id": "2350"
+    },
+    {
+      "name": "Graphic Storytelling",
+      "major": "ARTS",
+      "id": "2070"
+    }
+  ]
+}

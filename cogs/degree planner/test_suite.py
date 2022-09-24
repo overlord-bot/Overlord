@@ -14,8 +14,7 @@ class Test1():
     # temporary variables
     msg_content = "" # holds a string so it can be outputted to discord at the same time to avoid long waits
     
-    async def test(self, message):
-        schedule = Schedule()
+    async def test(self, message, schedule):
         await schedule.msg(message, "Generating synthetic test data set")
         # generating courses by configuring it here
         course1 = Course("Data Structures", "CSCI", 1200)
@@ -23,17 +22,17 @@ class Test1():
         course3 = Course("Circuits", "ECSE", 2010)
         course4 = Course("Animation", "ARTS", 4070)
 
-        assert course1.name == "Data Structures" and course1.major == "CSCI" and course1.id == 1200
-        assert course2.name == "Algorithms" and course2.major == "CSCI" and course2.id == 2300
-        assert course3.name == "Circuits" and course3.major == "ECSE" and course3.id == 2010
-        assert course4.name == "Animation" and course4.major == "ARTS" and course4.id == 4070
+        assert course1.name == "Data Structures" and course1.major == "CSCI" and course1.course_id == 1200
+        assert course2.name == "Algorithms" and course2.major == "CSCI" and course2.course_id == 2300
+        assert course3.name == "Circuits" and course3.major == "ECSE" and course3.course_id == 2010
+        assert course4.name == "Animation" and course4.major == "ARTS" and course4.course_id == 4070
 
         await schedule.msg_hold(message, "Printing courses:")
 
-        await schedule.msg_hold(message, "Course1: " + course1.name + " " + course1.major + " " + str(course1.id) + " of level " + str(course1.level()))
-        await schedule.msg_hold(message, "Course2: " + course2.name + " " + course2.major + " " + str(course2.id) + " of level " + str(course2.level()))
-        await schedule.msg_hold(message, "Course3: " + course3.name + " " + course3.major + " " + str(course3.id) + " of level " + str(course3.level()))
-        await schedule.msg_hold(message, "Course4: " + course4.name + " " + course4.major + " " + str(course4.id) + " of level " + str(course4.level()))
+        await schedule.msg_hold(message, "Course1: " + course1.name + " " + course1.major + " " + str(course1.course_id) + " of level " + str(course1.level()))
+        await schedule.msg_hold(message, "Course2: " + course2.name + " " + course2.major + " " + str(course2.course_id) + " of level " + str(course2.level()))
+        await schedule.msg_hold(message, "Course3: " + course3.name + " " + course3.major + " " + str(course3.course_id) + " of level " + str(course3.level()))
+        await schedule.msg_hold(message, "Course4: " + course4.name + " " + course4.major + " " + str(course4.course_id) + " of level " + str(course4.level()))
 
         await schedule.msg_release(message, False)
 
@@ -86,5 +85,4 @@ class Test1():
 
         # resetting master_list and conclude test module
         await schedule.master_list_init()
-        await schedule.msg(message, "Test completed")
         schedule.test_running = False
