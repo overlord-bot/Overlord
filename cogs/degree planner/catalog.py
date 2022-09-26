@@ -14,11 +14,14 @@ class Catalog():
     course_list = dict() # course name as key
     degree_list = dict() # degree name as key
 
+
     def add_course(self, course):
         self.course_list.update({course.name:course})
 
+
     def add_degree(self, degree):
         self.degree_list.update({degree.name:degree})
+
 
     def to_string(self):
         count1 = 1

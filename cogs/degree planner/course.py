@@ -7,7 +7,7 @@ class Course():
         self.major = major
         self.course_id = cid
 
-    # consistent properties unlikely to change
+    # main properties
     name = ""
     major = "" # mjaor tag i.e. CSCI, ECSE
     course_id = 1 # number of course, i.e. 1200, 2500

@@ -1,9 +1,11 @@
 from array import *
 from .course import Course
 
+
+# A list of classes and the rules that determines requirement fulfillment statuses.
+
+
 class List_and_rules():
-# a list of classes and rules to determine the failure rate
-# the failure rate is the number of classes that still needs to be added at a minimum to fulfill all the rules
 
     course_list = []
     min_courses = 0

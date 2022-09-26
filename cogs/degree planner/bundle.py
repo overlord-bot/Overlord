@@ -1,8 +1,11 @@
 from array import *
 from .course import Course
 
-class Bundle(Course):
+
 # A bundle represents a list of classes, inherits from course so this can be plugged in freely in place of a course
+
+
+class Bundle(Course):
 
     course_bundle = []
 
