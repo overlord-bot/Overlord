@@ -5,6 +5,7 @@ from discord.ext import commands
 import ast
 import math
 import operator
+import re
 
 OPERATIONS = {
     # operations represented by symbols
@@ -63,6 +64,18 @@ def evaluate_node(node):
 def evaluate(expression):
     return evaluate_node(ast.parse(expression, mode="eval").body)
 
+def handle_implicit_mul(expression):
+    # product of two expressions enclosed by parentheses
+    expression = expression.replace(")(", ")*(")
+
+    # digit followed by letter or opening parentheses
+    expression = re.sub(r"([0-9])([A-Za-z\(])", r"\1*\2", expression)
+
+    # closing parentheses followed by digit/letter
+    expression = re.sub(r"\)([0-9A-Za-z])", r")*\1", expression)
+
+    return expression
+
 class BasicMath(commands.Cog, name="Basic Math"):
     """Calculates basic math"""
 
@@ -74,7 +87,7 @@ class BasicMath(commands.Cog, name="Basic Math"):
         """Evaluate the given mathematical expression."""
 
         try:
-            await context.reply(evaluate(expression))
+            await context.reply(evaluate(handle_implicit_mul(expression)))
         except Exception as e:
             await context.reply(f"Error: {e}")
 
