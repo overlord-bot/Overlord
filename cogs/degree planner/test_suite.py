@@ -30,44 +30,65 @@ class Test1():
         course2 = Course("Algorithms", "CSCI", 2300)
         course3 = Course("Circuits", "ECSE", 2010)
         course4 = Course("Animation", "ARTS", 4070)
+        course4.HASS_pathway = "Digital Arts"
+        course5 = Course("Networking in the Linux Kernel", "CSCI", 4310)
+        course5.CI = True
+        course5.concentration = "Systems and Software"
+        course6 = Course("Cryptography 1", "CSCI", 4230)
+        course6.CI = True
+        course6.concentration = "Theory, Algorithms and Mathematics"
 
         assert course1.name == "Data Structures" and course1.major == "CSCI" and course1.course_id == 1200
         assert course2.name == "Algorithms" and course2.major == "CSCI" and course2.course_id == 2300
         assert course3.name == "Circuits" and course3.major == "ECSE" and course3.course_id == 2010
-        assert course4.name == "Animation" and course4.major == "ARTS" and course4.course_id == 4070
+        assert course4.name == "Animation" and course4.major == "ARTS" and course4.course_id == 4070 and course4.HASS_pathway == "Digital Arts"
+        assert course5.name == "Networking in the Linux Kernel" and course5.major == "CSCI" and course5.course_id == 4310 and course5.CI == True and course5.concentration == "Systems and Software"
+        assert course6.name == "Cryptography 1" and course6.major == "CSCI" and course6.course_id == 4230 and course6.CI == True and course6.concentration == "Theory, Algorithms and Mathematics"
+
+        # adding courses to catalog
+
+        await user.msg(message, "Adding courses to catalog")
+
+        catalog = Catalog()
+
+        catalog.add_course(course1)
+        catalog.add_course(course2)
+        catalog.add_course(course3)
+        catalog.add_course(course4)
+        catalog.add_course(course5)
+        catalog.add_course(course6)
 
         await user.msg_hold(message, "Printing courses:")
 
-        await user.msg_hold(message, "Course1: " + course1.name + " " + course1.major + " " + str(course1.course_id) + " of level " + str(course1.level()))
-        await user.msg_hold(message, "Course2: " + course2.name + " " + course2.major + " " + str(course2.course_id) + " of level " + str(course2.level()))
-        await user.msg_hold(message, "Course3: " + course3.name + " " + course3.major + " " + str(course3.course_id) + " of level " + str(course3.level()))
-        await user.msg_hold(message, "Course4: " + course4.name + " " + course4.major + " " + str(course4.course_id) + " of level " + str(course4.level()))
-
+        for course in catalog.get_all_courses():
+            await user.msg_hold(message, course.to_string())
         await user.msg_release(message, False)
 
         user.get_schedule("test").master_list_init()
         # adding courses to the master list
         
-        user.get_schedule("test").add_course(course1, 1)
-        user.get_schedule("test").add_course(course2, 2)
-        user.get_schedule("test").add_course(course3, 4)
-        user.get_schedule("test").add_course(course4, 4)
-        user.get_schedule("test").add_course(course1, 1)
-        user.get_schedule("test").add_course(course1, 1)
-        user.get_schedule("test").add_course(course1, 5)
-        user.get_schedule("test").remove_course(course1, 5)
-        user.get_schedule("test").add_course(course1, 8)
+        user.get_schedule("test").add_course(catalog.get_course("Data Structures"), 1)
+        user.get_schedule("test").add_course(catalog.get_course("Algorithms"), 2)
+        user.get_schedule("test").add_course(catalog.get_course("Circuits"), 4)
+        user.get_schedule("test").add_course(catalog.get_course("Animation"), 4)
+        user.get_schedule("test").add_course(catalog.get_course("Data Structures"), 1)
+        user.get_schedule("test").add_course(catalog.get_course("Data Structures"), 1)
+        user.get_schedule("test").add_course(catalog.get_course("Data Structures"), 5)
+        user.get_schedule("test").remove_course(catalog.get_course("Data Structures"), 5)
+        user.get_schedule("test").add_course(catalog.get_course("Data Structures"), 8)
+        user.get_schedule("test").add_course(catalog.get_course("Networking in the Linux Kernel"), 8)
+        user.get_schedule("test").add_course(catalog.get_course("Cryptography 1"), 8)
 
         #reference test
         schedule2 = user.get_schedule("test")
-        schedule2.add_course(course4, 0)
+        schedule2.add_course(catalog.get_course("Animation"), 0)
         
         #checks to make sure add and remove worked properly, without duplicates within one semester but allowing for duplicates across semesters
         assert len(user.get_schedule("test").master_list[0]) == 1
         assert len(user.get_schedule("test").master_list[1]) == 1
         assert len(user.get_schedule("test").master_list[4]) == 2
         assert len(user.get_schedule("test").master_list[5]) == 0
-        assert len(user.get_schedule("test").master_list[8]) == 1
+        assert len(user.get_schedule("test").master_list[8]) == 3
 
         # print masterlist
         await user.msg(message, "Added courses to schedule, printing schedule")
@@ -80,7 +101,7 @@ class Test1():
         bundle1 = Bundle("core CS1", "CSCI", 0)
         bundle1.course_bundle = {course1, course2}
         bundle2 = Bundle("core CS2", "CSCI", 10)
-        bundle2.course_bundle = {course1, course2}
+        bundle2.course_bundle = {course2, course1}
         bundle3 = Bundle("A schedule", "ECSE", 0)
         bundle3.course_bundle = {course1, course2, course3}
             
@@ -89,6 +110,45 @@ class Test1():
         assert bundle2 != bundle3
 
         await user.msg(message, "Bundle assertions successful")
+
+        # testing course attribute search
+        await user.msg(message, "Beginning testing of course attribute search")
+        course_target1 = Course("Default", "Default", 0) # all CI courses
+        course_target1.CI = True
+        course_target2 = Course("Default", "Default", 4000) # all 4000 level courses
+        course_target3 = Course("Data Structures", "Default", 0) # data structures
+        course_target4 = Course("Data Structures", "Default", 2000) # none
+        course_target5 = Course("Default", "Default", 0) # all theory concentration courses
+        course_target5.concentration = "Theory, Algorithms and Mathematics"
+
+        bundle1 = catalog.get_course_match(course_target1)
+        await user.msg(message, "Bundle1: " + bundle1.to_string())
+        bundle1_ans = Bundle("CI", "NONE", 1)
+        bundle1_ans.add(catalog.get_course("Networking in the Linux Kernel"))
+        bundle1_ans.add(catalog.get_course("Cryptography 1"))
+        await user.msg(message, "Bundle1_ans: " + bundle1_ans.to_string())
+        assert bundle1 == bundle1_ans
+
+        bundle2 = catalog.get_course_match(course_target2)
+        await user.msg(message, "Bundle2: " + bundle2.to_string())
+        bundle2_ans = Bundle("4000", "NONE", 2)
+        bundle2_ans.course_bundle = [course4, course5, course6]
+        await user.msg(message, "Bundle2_ans: " + bundle2_ans.to_string())
+        assert bundle2 == bundle2_ans
+
+        bundle3 = catalog.get_course_match(course_target3)
+        bundle3_ans = Bundle("DS", "NONE", 3)
+        bundle3_ans.course_bundle = [course1]
+        assert bundle3 == bundle3_ans
+
+        bundle4 = catalog.get_course_match(course_target4)
+        bundle4_ans = Bundle("NONE", "NONE", 4)
+        assert bundle4 == bundle4_ans
+
+        bundle5 = catalog.get_course_match(course_target5)
+        bundle5_ans = Bundle("Theory", "NONE", 5)
+        bundle5_ans.course_bundle = [course6]
+        assert bundle5 == bundle5_ans
         
         
         # List_and_rules tests

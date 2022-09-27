@@ -8,15 +8,16 @@ class Course():
         self.course_id = cid
 
     # main properties
-    name = ""
-    major = "" # mjaor tag i.e. CSCI, ECSE
-    course_id = 1 # number of course, i.e. 1200, 2500
+    name = "Default"
+    major = "Default" # mjaor tag i.e. CSCI, ECSE
+    course_id = 0 # number of course, i.e. 1200, 2500
+    credits = 0 # credit hours of this course
     cross_listed = [] # list of other courses that are cross listed and should be treated as identical to this one
 
     CI = False # if it's communication intensive
     HASS_inquiry = False # if it's hass inquiry
-    HASS_pathway = "" # hass pathway this class belongs to, if none, will be "none"
-    concentration = "" # concentration area this class belongs to, if none, will be "none"
+    HASS_pathway = "" # hass pathway this class belongs to, if none, will be ""
+    concentration = "" # concentration area this class belongs to, if none, will be ""
     prerequisites = [] # a list of other classes that must be taken prior to this one
     suggested_prerequisites = [] # optional, will be displayed as a notification rather than a hard requirement
     restricted = False # if this is a major restricted class

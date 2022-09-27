@@ -9,8 +9,20 @@ class Bundle(Course):
 
     course_bundle = []
 
-    def add_to_bundle(self, course):
+    def __init__(self, a, b, c):
+        self.course_bundle = []
+
+    def add(self, course):
         self.course_bundle.append(course)
+
+    def remove(self, course):
+        self.course_bundle.remove(course)
+
+    def to_string(self):
+        string = ""
+        for course in self.course_bundle:
+            string+="[" + course.name + "] "
+        return string
 
     def __eq__(self, other):
         mylist = self.course_bundle
