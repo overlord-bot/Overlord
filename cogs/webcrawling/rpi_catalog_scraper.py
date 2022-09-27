@@ -1,6 +1,7 @@
 # RPI Catalog Scraper
 import requests
 from bs4 import BeautifulSoup
+import time  # for calculating runtime
 
 from discord.ext import commands
 
@@ -65,6 +66,8 @@ def find_course(course_list):
 
 # main function to generate all pages to be searched
 if __name__ == "__main__":
+    start_time = time.time()
+
     subject_code = "-1"  # -1 searches for all courses, can be replaced with "CSCI" for example to specify subject
     for page_number in range(1, 21):  # there are 20 pages in the course catalog for 2022-2023
         page_url = f"http://catalog.rpi.edu/content.php?" \
@@ -76,4 +79,4 @@ if __name__ == "__main__":
 
         find_course(soup_search(page_url))
 
-
+    print("--- %s seconds ---" % (time.time() - start_time))
