@@ -3,6 +3,7 @@ __pycache__/
 .vs
 .git
 .env
+env5
 OverLordEnv
 
 calendar.txt
