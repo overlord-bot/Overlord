@@ -82,6 +82,11 @@ class WordGame(commands.Cog, name="Word Game"):
         else:
             await ctx.send("The game has not started!")
 
+    @add_word.error
+    async def add_word_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("Not enough arguments!")
+
     @commands.command()
     async def end_game(self, ctx):
         """Ends the word game if not started"""
@@ -95,6 +100,7 @@ class WordGame(commands.Cog, name="Word Game"):
     ######################################################################
     #   !checkStatus
     ######################################################################
+
 
 async def setup(bot):
     await bot.add_cog(WordGame(bot))
