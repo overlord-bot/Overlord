@@ -43,13 +43,21 @@ class List_and_rules():
             if course in required_copy:
                 required_copy.remove(course)
             if course.HASS_pathway in same_pathway:
-                same_pathway.get(course.HASS_pathway).append(course)
+                print("A")
+                list_returned = same_pathway.get(course.HASS_pathway)
+                list_returned.append(course)
+                same_pathway.update({course.HASS_pathway:list_returned})
+                print("appended")
             elif course.HASS_pathway != "":
-                same_pathway.update(course.HASS_pathway, [course])
+                print("B")
+                same_pathway.update({course.HASS_pathway:[course]})
             if course.concentration in same_concentration:
-                same_concentration.get(course.concentration).append(course)
+                list_returned = same_concentration.get(course.concentration)
+                list_returned.append(course)
+                same_concentration.update({course.concentration:list_returned})
             elif course.concentration != "":
-                same_concentration.update(course.concentration, [course])
+                print("C")
+                same_concentration.update({course.concentration:[course]})
 
         if (courses < self.min_courses or courses_2k < self.min_2000_courses or courses_4k < self.min_4000_courses 
             or courses_CI < self.min_CI or required_copy or self.longest(same_concentration) < self.min_same_concentration
