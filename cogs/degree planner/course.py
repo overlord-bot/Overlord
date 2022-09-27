@@ -8,8 +8,8 @@ class Course():
         self.course_id = cid
 
     # main properties
-    name = "Default"
-    major = "Default" # mjaor tag i.e. CSCI, ECSE
+    name = ""
+    major = "" # major tag i.e. CSCI, ECSE
     course_id = 0 # number of course, i.e. 1200, 2500
     credits = 0 # credit hours of this course
     cross_listed = [] # list of other courses that are cross listed and should be treated as identical to this one

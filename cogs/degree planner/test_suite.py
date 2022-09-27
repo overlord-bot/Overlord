@@ -37,6 +37,8 @@ class Test1():
         course6 = Course("Cryptography 1", "CSCI", 4230)
         course6.CI = True
         course6.concentration = "Theory, Algorithms and Mathematics"
+        course7 = Course("Algorithm Analysis", "CSCI", 4020)
+        course6.concentration = "Theory, Algorithms and Mathematics"
 
         assert course1.name == "Data Structures" and course1.major == "CSCI" and course1.course_id == 1200
         assert course2.name == "Algorithms" and course2.major == "CSCI" and course2.course_id == 2300
@@ -166,6 +168,13 @@ class Test1():
 
         lar1.course_list = [course1, course4]
         assert not lar1.fulfilled()
+
+        lar1.course_list = [course1, course2, course6]
+        lar1.min_same_concentration = 2
+        assert not lar1.fulfilled()
+
+        lar1.course_list = [course1, course2, course6, course7]
+        assert lar1.fulfilled()
 
         await user.msg(message, "List_and_rules assertions successful")
 
