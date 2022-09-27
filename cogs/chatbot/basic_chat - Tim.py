@@ -31,7 +31,7 @@ class TimChat(commands.Cog, name="Basic Chat"):
             current_time = now.strftime("%H:%M:%S")
             await message.channel.send("It's " + current_time + " now!")
         
-        elif (message.content.lower() == "what day is today?") or (message.content.lower() == "what day is today") or (message.content.lower() == "what is today?") or (message.content.lower() == "date"):
+        elif (message.content.lower() == "what day is today?") or (message.content.lower() == "what day is today") or (message.content.lower() == "what is today?") or (message.content.lower() == "date") or (message.content.lower() == "what is the date"):
             today = date.today()
             d = today.strftime("%B %d, %Y")
             await message.channel.send("Today is " + d)
