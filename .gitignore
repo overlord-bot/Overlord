@@ -5,9 +5,8 @@ __pycache__/
 env5
 .git
 OverLordEnv
-
+OverlordTestEnv
 # important environmental variables
 .env
-
 # other files to ignore
 calendar.txt
