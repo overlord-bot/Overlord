@@ -17,7 +17,7 @@ class WordGame(commands.Cog, name="Word Game"):
         """Helper function"""
         return arg.lower()
 
-    def checkword(word, checked_word):
+    def checkword(self, word, checked_word):
         """Compare current word to checked word"""
         """Requires that word and checked_word are same case and of same length"""
 
@@ -69,11 +69,18 @@ class WordGame(commands.Cog, name="Word Game"):
     @commands.command()
     async def add_word(self, ctx, word: to_lower):
         """Add word to list of words"""
-        if(len(word) == len(self.word)):
-            self.round += 1
-            wordlist = self.checkword(word, self.word)
+        if(self.round >= 0):
+            if(len(word) == len(self.word)):
+                self.round += 1
+                wordlist = self.checkword(word, self.word)
+                self.current_progress.append(wordlist)
+                await ctx.send(''.join(wordlist))
+                if (wordlist.count('G') == len(self.word)):
+                    await ctx.send("You win!")
+            else:
+                await ctx.send("Argument not correct length!")
         else:
-            await ctx.send("Argument not correct length!")
+            await ctx.send("The game has not started!")
 
     @commands.command()
     async def end_game(self, ctx):
