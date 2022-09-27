@@ -13,6 +13,7 @@ class TimChat(commands.Cog, name="Basic Chat"):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        BAD_WORDS = ("fuck", "motherfucker")
         if message.author == self.bot.user or message.author.bot:
             return
         elif message.content.lower().startswith("hi"):
