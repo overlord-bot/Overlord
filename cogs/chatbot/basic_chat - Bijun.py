@@ -1,5 +1,8 @@
 # Basic Chat Response
 import random 
+import io
+import aiohttp
+import discord
 from discord.ext import commands
 from datetime import datetime
 from datetime import date
@@ -38,6 +41,7 @@ class BijunChat(commands.Cog, name="Basic Chat"):
 
         elif "fuck" in message.content.lower():
             await message.delete()
+            await message.channel.send("https://c.tenor.com/fzrYWO2l7KkAAAAC/captain-america-language.gif")
             await message.channel.send("Watch your language!")
 
         elif (message.content.lower() == "goodbye") or (message.content.lower() == "good bye"):     #close the bot
@@ -53,6 +57,7 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         if message.author == self.bot.user or message.author.bot:
             return
         elif 'rick roll' in message.content.lower():
+            await message.channel.send("https://c.tenor.com/_4YgA77ExHEAAAAd/rick-roll.gif")
             await message.channel.send("Never Gonna Give You Up!")
             await message.channel.send("Never Gonna Let You Down!")
         GREETING_INPUTS = ("hello", "greetings", "sup", "what's up","hey",)
