@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from discord.ext import commands
 
 
+# Fetches all of the course's
 def soup_search(url):
     search_result = requests.get(url).text
     search_soup = BeautifulSoup(search_result, 'html.parser')
@@ -16,6 +17,10 @@ def soup_search(url):
 def find_course(course_list):
     for course in course_list:
         course_title = course.parent.h3.text.strip()
+        course_id = course_title.split(" - ")[0].strip()
+        course_subject = course_id.split(" ")[0].strip()
+        course_number = course_id.split(" ")[1].strip()
+        course_name = course_title.split(" - ")[1].strip()
         course_description = course.parent.text.replace(course_title,
                                                         "").strip()  # Order from top to bottom: Description, Prerequsites/Corequisites, When Offered, Cross Listed, Credit Hours
         course_credit_hours = "Unknown"
@@ -39,7 +44,10 @@ def find_course(course_list):
             course_requisites = course_description.split("Prerequisites/Corequisites: ")[1].strip()
         course_description = course_description.split("Prerequisites/Corequisites: ")[0].strip()
 
-        print(f"\n{course_title}")
+        print("----------------------------------")
+        print(f"Course Subject: {course_subject}")
+        print(f"Course Number: {course_number}")
+        print(f"Course Name: {course_name}")
         print(f"Description: {course_description}")
         print(f"Course Prerequisites/Corequisites: {course_requisites}")
         print(f"Course Offered: {course_offered}")
