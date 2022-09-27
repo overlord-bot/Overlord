@@ -5,7 +5,7 @@ from datetime import datetime
 from datetime import date
 
 
-class BasicChat(commands.Cog, name="Basic Chat"):
+class BijunChat(commands.Cog, name="Basic Chat"):
     """Basic Chatbot Functions"""
 
     def __init__(self, bot):
@@ -61,5 +61,5 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
                 await message.channel.send(random.choice(GREETING_INPUTS))
     
 async def setup(bot):
-    await bot.add_cog(BasicChat(bot))
+    await bot.add_cog(BijunChat(bot))
     await bot.add_cog(ExtraFunc(bot))
