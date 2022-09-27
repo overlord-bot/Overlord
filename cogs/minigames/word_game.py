@@ -2,6 +2,8 @@
 
 from discord.ext import commands
 
+
+
 class WordGame(commands.Cog, name="Word Game"):
     """Plays the word game that is similar to Wordle"""
 
@@ -14,26 +16,28 @@ class WordGame(commands.Cog, name="Word Game"):
 
     def checkword(word, checked_word):
         """Compare current word to checked word"""
+        word_lower = word.lower()
+        checkword_lower = checked_word.lower()
         currentlist = []
         letterdict = dict()
         for i in range(0, len(checked_word)):
-            currentlet = checked_word[i].lower()
+            currentlet = checkword_lower[i]
             if currentlet in letterdict.keys():
                 letterdict[currentlet] += 1
             else:
                 letterdict[currentlet] = 1
 
         for i in range(0, len(word)):
-            currentlet = word[i].lower()
-            comparedlet = word[i].lower()
+            currentlet = word_lower[i]
+            comparedlet = checkword_lower[i]
 
             if currentlet == comparedlet:
                 currentlist.append("G")
-                letterdict[word[i]] -= 1
+                letterdict[currentlet] -= 1
             else:
-                if currentlet in checked_word.lower() and letterdict[currentlet] > 0:
+                if currentlet in checkword_lower and letterdict[currentlet] > 0:
                     currentlist.append("Y")
-                    letterdict[comparedlet] -= 1
+                    letterdict[currentlet] -= 1
                 else:
                     currentlist.append("B")
         
@@ -44,9 +48,6 @@ class WordGame(commands.Cog, name="Word Game"):
         """Returns the test word. FOR DEBUG ONLY!"""
         await ctx.send(self.word)
 
-    ######################################################################
-    #   !startGame
-    ######################################################################
 
     @commands.command()
     async def start_game(self, ctx):
@@ -62,11 +63,6 @@ class WordGame(commands.Cog, name="Word Game"):
     #   !addWord
     ######################################################################
 
-    
-
-    ######################################################################
-    #   !endGame
-    ######################################################################
 
     @commands.command()
     async def end_game(self, ctx):
