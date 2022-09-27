@@ -27,7 +27,13 @@ class GoMinigame(commands.Cog, name = "Go"):
         # 0 represents place without a move, 1 represents move from player 1, 2 for player 2
         self.board = [[0]*9 for i in range(9)]
 
+    """
+    Blank state is presented by brown square
+    User 1 is represented by white circle
+    User 2 is represented by black circle
+    """
     async def printBoardState(self, context):
+        # build the string to send it all in one message
         output_string = ""
         for i in range(9):
             for j in range(9):
