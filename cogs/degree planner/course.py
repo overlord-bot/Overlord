@@ -16,8 +16,8 @@ class Course():
 
     CI = False # if it's communication intensive
     HASS_inquiry = False # if it's hass inquiry
-    HASS_pathway = "" # hass pathway this class belongs to, if none, will be ""
-    concentration = "" # concentration area this class belongs to, if none, will be ""
+    HASS_pathway = [] # list of hass pathway this class belongs to, if none, will be ""
+    concentration = [] # concentration area this class belongs to, if none, will be "", could be list of pair (major, concentration) since one course can be in different concentration for different courses
     prerequisites = [] # a list of other classes that must be taken prior to this one
     suggested_prerequisites = [] # optional, will be displayed as a notification rather than a hard requirement
     restricted = False # if this is a major restricted class
