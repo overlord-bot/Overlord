@@ -1,4 +1,4 @@
 Additional Functionality will be added below
-Timmy: goodbye & apex, date and time
+Timmy: goodbye, date and time, adding name of who say hi, add bad word recognize
 Andy:
 Bijun:
