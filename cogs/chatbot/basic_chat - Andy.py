@@ -36,7 +36,7 @@ class BasicChat(commands.Cog, name="Basic Chat"):
             d = today.strftime("%B %d, %Y")
             await message.channel.send("Today is " + d)
 
-        elif "fuck" or "shit" or "motherfucker" in message.content.lower():
+        elif "fuck" in message.content.lower():
             await message.delete()
             await message.channel.send("Watch your language!")
 
