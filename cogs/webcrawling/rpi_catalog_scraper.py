@@ -5,15 +5,16 @@ from bs4 import BeautifulSoup
 from discord.ext import commands
 
 
-# Fetches all of the course's
+# Finds all courses in a url based on its first child's "a" tag attributes
 def soup_search(url):
-    search_result = requests.get(url).text
-    search_soup = BeautifulSoup(search_result, 'html.parser')
+    search_data = requests.get(url).text
+    search_soup = BeautifulSoup(search_data, 'html.parser')
 
     return search_soup.find_all("a", {"style": "float:right",
                                          "href": "javascript:acalogPopup('/mime/download.?catoid=24&ftype=3&foid=', 'view_flashpoint', 770, 530, 'yes')"})
 
 
+# parses courses attributes for easier handling in the degree planner
 def find_course(course_list):
     for course in course_list:
         course_title = course.parent.h3.text.strip()
@@ -21,8 +22,10 @@ def find_course(course_list):
         course_subject = course_id.split(" ")[0].strip()
         course_number = course_id.split(" ")[1].strip()
         course_name = course_title.split(" - ")[1].strip()
-        course_description = course.parent.text.replace(course_title,
-                                                        "").strip()  # Order from top to bottom: Description, Prerequsites/Corequisites, When Offered, Cross Listed, Credit Hours
+
+        # Order from top to bottom on catalog: Description, Prerequsites/Corequisites, When Offered, Cross Listed, Credit Hours
+        course_description = course.parent.text.replace(course_title, "").strip()
+        course_is_ci = False
         course_credit_hours = "Unknown"
         course_crosslisted = "Not Crosslisted"
         course_offered = "Unknown"
@@ -44,20 +47,26 @@ def find_course(course_list):
             course_requisites = course_description.split("Prerequisites/Corequisites: ")[1].strip()
         course_description = course_description.split("Prerequisites/Corequisites: ")[0].strip()
 
-        print("----------------------------------")
+        if course_description.find("This is a communication-intensive course.") != -1:
+            course_is_ci = True
+        course_description = course_description.replace("This is a communication-intensive course.", "").strip()
+
+        print("-------------------------------------------------------")
         print(f"Course Subject: {course_subject}")
         print(f"Course Number: {course_number}")
         print(f"Course Name: {course_name}")
         print(f"Description: {course_description}")
+        print(f"Course is communication-intensive: {course_is_ci}")
         print(f"Course Prerequisites/Corequisites: {course_requisites}")
         print(f"Course Offered: {course_offered}")
         print(f"Course Crosslisted: {course_crosslisted}")
         print(f"Credit Hours: {course_credit_hours}")
 
 
+# main function to generate all pages to be searched
 if __name__ == "__main__":
-    subject_code = "-1"  # -1 searches for all courses
-    for page_number in range(1, 21):
+    subject_code = "-1"  # -1 searches for all courses, can be replaced with "CSCI" for example to specify subject
+    for page_number in range(1, 21):  # there are 20 pages in the course catalog for 2022-2023
         page_url = f"http://catalog.rpi.edu/content.php?" \
                    f"filter%5B27%5D={subject_code}" \
                    f"&filter%5B29%5D=&filter%5Bcourse_type%5D=" \
