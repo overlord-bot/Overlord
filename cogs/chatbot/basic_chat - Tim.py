@@ -43,7 +43,6 @@ class TimChat(commands.Cog, name="Basic Chat"):
         elif (message.content.lower() == "goodbye") or (message.content.lower() == "good bye"):     #close the bot
             await message.channel.send("GoodBye, " + message.author.name + ", have a great day!")
             await self.bot.close()
-<<<<<<< Updated upstream
             
             
 class ExtraFunc(commands.Cog, name="Additional Function "):
@@ -60,9 +59,7 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         for word in message.content.split():
             if word.lower() in GREETING_INPUTS:
                 await message.channel.send(random.choice(GREETING_INPUTS))
-=======
 
->>>>>>> Stashed changes
     
 async def setup(bot):
     await bot.add_cog(TimChat(bot))
