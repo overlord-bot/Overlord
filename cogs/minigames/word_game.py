@@ -13,29 +13,32 @@ class WordGame(commands.Cog, name="Word Game"):
         self.round = -1
         self.current_progress = []
 
+    def to_lower(arg):
+        """Helper function"""
+        return arg.lower()
 
     def checkword(word, checked_word):
         """Compare current word to checked word"""
-        word_lower = word.lower()
-        checkword_lower = checked_word.lower()
+        """Requires that word and checked_word are same case and of same length"""
+
         currentlist = []
         letterdict = dict()
         for i in range(0, len(checked_word)):
-            currentlet = checkword_lower[i]
+            currentlet = checked_word[i]
             if currentlet in letterdict.keys():
                 letterdict[currentlet] += 1
             else:
                 letterdict[currentlet] = 1
 
         for i in range(0, len(word)):
-            currentlet = word_lower[i]
-            comparedlet = checkword_lower[i]
+            currentlet = word[i]
+            comparedlet = checked_word[i]
 
             if currentlet == comparedlet:
                 currentlist.append("G")
                 letterdict[currentlet] -= 1
             else:
-                if currentlet in checkword_lower and letterdict[currentlet] > 0:
+                if currentlet in checked_word and letterdict[currentlet] > 0:
                     currentlist.append("Y")
                     letterdict[currentlet] -= 1
                 else:
@@ -63,6 +66,14 @@ class WordGame(commands.Cog, name="Word Game"):
     #   !addWord
     ######################################################################
 
+    @commands.command()
+    async def add_word(self, ctx, word: to_lower):
+        """Add word to list of words"""
+        if(len(word) == len(self.word)):
+            self.round += 1
+            wordlist = self.checkword(word, self.word)
+        else:
+            await ctx.send("Argument not correct length!")
 
     @commands.command()
     async def end_game(self, ctx):
