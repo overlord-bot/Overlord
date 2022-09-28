@@ -13,7 +13,7 @@ class TimChat(commands.Cog, name="Basic Chat"):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        BAD_WORDS = ("fuck", "motherfucker")
+        BAD_WORDS = ("fuck", "motherfucker", "shit")
         if message.author == self.bot.user or message.author.bot:
             return
         elif message.content.lower().startswith("hi"):
@@ -37,13 +37,15 @@ class TimChat(commands.Cog, name="Basic Chat"):
             d = today.strftime("%B %d, %Y")
             await message.channel.send("Today is " + d)
 
-        elif "fuck" in message.content.lower():
-            await message.delete()
-            await message.channel.send("Watch your language!")
-
         elif (message.content.lower() == "goodbye") or (message.content.lower() == "good bye"):     #close the bot
             await message.channel.send("GoodBye, " + message.author.name + ", have a great day!")
             await self.bot.close()
+        
+        for word in message.content.lower().split():
+            if word.lower() in BAD_WORDS:
+                await message.delete()
+                await message.channel.send("https://c.tenor.com/fzrYWO2l7KkAAAAC/captain-america-language.gif")
+                await message.channel.send("Watch your language!")
     
 async def setup(bot):
     await bot.add_cog(TimChat(bot))
