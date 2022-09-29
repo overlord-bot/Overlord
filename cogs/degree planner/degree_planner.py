@@ -96,15 +96,15 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 # 2) degree planner's directory
                 # 3) root directory of the project folder
 
-                if os.path.isfile(os.getcwd() + "\\cogs\\degree planner\\data\\course_data.json"):
-                    await user.msg(message, "file found: " + os.getcwd() + "\\cogs\\degree planner\\data\\course_data.json")
-                    f = open(os.getcwd() + "\\cogs\\degree planner\\data\\course_data.json")
-                elif os.path.isfile(os.getcwd() + "\\cogs\\degree planner\\course_data.json"):
-                    await user.msg(message, "file found: " + os.getcwd() + "\\cogs\\degree planner\\course_data.json")
-                    f = open(os.getcwd() + "\\cogs\\degree planner\\course_data.json")
-                elif os.path.isfile(os.getcwd() + "\\course_data.json"):
-                    await user.msg(message, "file found: " + os.getcwd() + "\\course_data.json")
-                    f = open(os.getcwd() + "\\course_data.json")
+                if os.path.isfile(os.getcwd() + "/cogs/degree planner/data/course_data.json"):
+                    await user.msg(message, "file found: " + os.getcwd() + "/cogs/degree planner/data/course_data.json")
+                    f = open(os.getcwd() + "/cogs/degree planner/data/course_data.json")
+                elif os.path.isfile(os.getcwd() + "/cogs/degree planner/course_data.json"):
+                    await user.msg(message, "file found: " + os.getcwd() + "/cogs/degree planner/course_data.json")
+                    f = open(os.getcwd() + "/cogs/degree planner/course_data.json")
+                elif os.path.isfile(os.getcwd() + "/course_data.json"):
+                    await user.msg(message, "file found: " + os.getcwd() + "/course_data.json")
+                    f = open(os.getcwd() + "/course_data.json")
 
                 else:
                     await user.msg(message, "file not found, terminating")

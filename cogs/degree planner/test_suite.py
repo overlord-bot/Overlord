@@ -38,7 +38,7 @@ class Test1():
         course6.CI = True
         course6.concentration = "Theory, Algorithms and Mathematics"
         course7 = Course("Algorithm Analysis", "CSCI", 4020)
-        course6.concentration = "Theory, Algorithms and Mathematics"
+        course7.concentration = "Theory, Algorithms and Mathematics"
 
         assert course1.name == "Data Structures" and course1.major == "CSCI" and course1.course_id == 1200
         assert course2.name == "Algorithms" and course2.major == "CSCI" and course2.course_id == 2300
@@ -157,23 +157,23 @@ class Test1():
         await user.msg(message, "Beginning testing of class List_and_rules")
 
         lar1 = List_and_rules()
-        print("0")
+ 
         lar1.course_list = [course1, course2]
         lar1.min_courses = 2
         lar1.min_2000_courses = 1
         lar1.required_courses = [course1]
         assert lar1.fulfilled()
-        print("1")
+
         lar1.course_list = [course1]
         assert not lar1.fulfilled()
-        print("2")
+
         lar1.course_list = [course1, course4]
         assert not lar1.fulfilled()
-        print("3")
+
         lar1.course_list = [course1, course2, course6]
         lar1.min_same_concentration = 2
         assert not lar1.fulfilled()
-        print("4")
+
         lar1.course_list = [course1, course2, course6, course7]
         assert lar1.fulfilled()
 

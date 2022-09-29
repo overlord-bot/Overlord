@@ -24,9 +24,10 @@ from .list_and_rules import List_and_rules
 class Schedule():
     # SCHEDULE GLOBAL VARIABLES
 
-    # needs to be initialized before every use by calling master_list_init()
-    # uses 2D array [semester][course]
-    master_list = []
+    def __init__(self):
+        # needs to be initialized before every use by calling master_list_init()
+        # uses 2D array [semester][course]
+        self.master_list = []
 
     #-----------------------------------------------------------------------
     # Initializes the data structure storing all courses in the schedule,

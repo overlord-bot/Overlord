@@ -2,8 +2,9 @@ from array import *
 
 class Degree():
 
-    name = "" # name of the degree program
-    list_and_rules = [] # list of List_and_rules objects that dictate requirements for this degree
+    def __init__(self):
+        self.name = "" # name of the degree program
+        self.list_and_rules = [] # list of List_and_rules objects that dictate requirements for this degree
 
     def to_string(self):
         return self.name

@@ -9,20 +9,17 @@ from .schedule import Schedule
 
 
 class User():
-
-    username = ""
-    schedules = dict() # List of all schedules this person has created <schedule name, Schedule obj>
     
-    # temporary variables
-    msg_content = "" # holds a string so it can be outputted to discord at the same time to avoid long waits due to network delays when printing individually
-
-    # flags
-    selection_flag = False # whether to take user input as a choice for the selection menu
-    test_running = False # if a test is already running, prevents two tests from running at the same time
-
     def __init__(self, name):
         self.username = name
-    
+        self.schedules = dict() # List of all schedules this person has created <schedule name, Schedule obj>
+
+         # temporary variables
+        self.msg_content = "" # holds a string so it can be outputted to discord at the same time to avoid long waits due to network delays when printing individually
+
+        # flags
+        self.selection_flag = False # whether to take user input as a choice for the selection menu
+        self.test_running = False # if a test is already running, prevents two tests from running at the same time
 
     def get_all_schedules(self):
         return self.schedules.values()
@@ -63,27 +60,28 @@ class User():
 
     # stores the string inside a cache
     async def msg_hold(self, message, content):
-        print("content added" + content)
         self.msg_content = self.msg_content + content + "\n"
 
 
     # prints all text within cache into discord's chat
-    async def msg_release(self, message, embedded):
-        if embedded:
+    async def msg_release(self, message, debug):
+        debug = True # !!!!!!!!!!!!!!!!!!!!!!!! TEMPORARY
+        if debug:
+            print(self.msg_content)
             # little embed test
-            embed = discord.Embed(title="Slime",color=discord.Color.blue())
-            embed.add_field(name="*info*", value=self.msg_content, inline = False)
-            await message.channel.send(embed=embed)
+            #embed = discord.Embed(title="Slime",color=discord.Color.blue())
+            #embed.add_field(name="*info*", value=self.msg_content, inline = False)
+            #await message.channel.send(embed=embed)
             self.msg_content = ""
         else:
-            # code block test
             await message.channel.send("```yaml\n" + self.msg_content + "```")
             self.msg_content = ""
 
 
     # immediately prints a string to discord's chat
     async def msg(self, message, content):
-        await message.channel.send("[Degree Planner] " + str(content))
+        print(str(content))
+        #await message.channel.send("[Degree Planner] " + str(content))
 
 
     def to_string(self):
