@@ -10,9 +10,7 @@ from .bundle import Bundle
 from .list_and_rules import List_and_rules
 from .schedule import Schedule
 
-class Test1():
-    # temporary variables
-    msg_content = "" # holds a string so it can be outputted to discord at the same time to avoid long waits
+class Test1():    
     
     async def test(self, message, user):
         await user.msg(message, "Generating synthetic test data set")

@@ -85,7 +85,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 else:
                     user.test_running = True
                     await self.test(message, user)
-                    await user.msg(message, "Test completed")
+                    await user.msg(message, "Test completed successfully, all assertions are met")
 
             # CASE 2: run data fetch from json
             elif message.content.casefold() == "2":
@@ -114,7 +114,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await user.msg(message, "Sucessfully parsed json data, printing catalog")
                 await user.msg_hold(message, self.catalog.to_string())
                 await user.msg_release(message, False)
-                await user.msg(message, "Sucessfully printed catalog")
 
             # CASE 0: cancel selection operation
             elif message.content.casefold() == "0":
@@ -135,7 +134,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     #-----------------------------------------------------------------------
     async def test(self, message, user):
         test_suite = Test1()
+        user.debug = True
         await test_suite.test(message, user)
+        user.debug = False
 
 
     #-----------------------------------------------------------------------

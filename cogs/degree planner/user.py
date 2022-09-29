@@ -20,6 +20,7 @@ class User():
         # flags
         self.selection_flag = False # whether to take user input as a choice for the selection menu
         self.test_running = False # if a test is already running, prevents two tests from running at the same time
+        self.debug = False # if set to true, all msg will print to console instead
 
     def get_all_schedules(self):
         return self.schedules.values()
@@ -64,24 +65,27 @@ class User():
 
 
     # prints all text within cache into discord's chat
-    async def msg_release(self, message, debug):
-        debug = True # !!!!!!!!!!!!!!!!!!!!!!!! TEMPORARY
-        if debug:
+    async def msg_release(self, message, fancy):
+        if self.debug:
             print(self.msg_content)
-            # little embed test
-            #embed = discord.Embed(title="Slime",color=discord.Color.blue())
-            #embed.add_field(name="*info*", value=self.msg_content, inline = False)
-            #await message.channel.send(embed=embed)
+            self.msg_content = ""
+        elif not fancy:
+            await message.channel.send("```yaml\n" + self.msg_content + "```")
             self.msg_content = ""
         else:
-            await message.channel.send("```yaml\n" + self.msg_content + "```")
+            # little embed test
+            embed = discord.Embed(title="Slime",color=discord.Color.blue())
+            embed.add_field(name="*info*", value=self.msg_content, inline = False)
+            await message.channel.send(embed=embed)
             self.msg_content = ""
 
 
     # immediately prints a string to discord's chat
     async def msg(self, message, content):
-        print(str(content))
-        #await message.channel.send("[Degree Planner] " + str(content))
+        if self.debug:
+            print(str(content))
+        else:
+            await message.channel.send("[Degree Planner] " + str(content))
 
 
     def to_string(self):
