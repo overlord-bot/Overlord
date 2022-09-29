@@ -17,6 +17,7 @@ class Startup(commands.Cog, name="Start Up"):
     async def on_ready(self):
         print("\n---------------------- Connecting to Discord ------------------------")
         print(f"{self.bot.user} (ID: {self.bot.user.id}) has connected to Discord!")
+        print(f"Using fast booting version of Overlord, slash commands unavailable!")
         print(f"discord.py API version: {discord.__version__}")
         print(f"Python version: {platform.python_version()}")
         print(f"Running on: {platform.system()} {platform.release()} ({os.name})")

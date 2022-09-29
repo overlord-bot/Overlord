@@ -2,6 +2,7 @@
 
 import asyncio
 import os
+import sys
 
 import discord
 from discord.ext import commands
@@ -14,18 +15,37 @@ intents.members = True  # permission to see server members
 intents.message_content = True  # permission to read message content
 
 # Set up the bot object and its descriptions
-bot_status = "With Fate | Try !help "
-bot_description = "This is the full help description"
+bot_status = "alone"
+bot_description = "fastbot version"
 bot = commands.Bot(command_prefix="!", description=bot_description, intents=intents, activity=discord.Game(name=bot_status))
 
 # Load all cogs inside the cogs folder
 async def load_cogs():
     print("\n------------------ Loading Cogs -----------------")
-    text = input("please list all folders to load separated by commas (general folder is always loaded)\n")
-    folder_names = text.split(',')
+
+    # checking command line arguments
+    arguments = sys.argv
+    arguments.pop(0)
+    print("command line arguments:" + str(arguments))
+
+    # if no arguments provided, prompt for list to ignore
+    
+    if len(arguments) == 0:
+        print("please list all folders to load separated by commas (general folder is always loaded).\n")
+        print("to avoid receiving this prompt in the future, please enter all folders to load in your command line argument. Input 'all' to load all modules\n")
+        text = input("Please provide folders to load: ")
+        folder_names = text.split(',')
+    else:
+        folder_names = arguments
+    
+    loadall = False
+    if len(folder_names) > 0 and folder_names[0] == "all":
+        print("loadall activated")
+        loadall = True
+ 
     print("loading folders: " + str(folder_names))
     for folder in os.listdir("cogs"):
-        if str(folder) not in folder_names and str(folder) != "general":
+        if str(folder) not in folder_names and str(folder) != "general" and not loadall:
             # since this is fast startup, we don't want to touch the general stuff except for faststartup.py
             print("skipping " + str(folder))
             continue
