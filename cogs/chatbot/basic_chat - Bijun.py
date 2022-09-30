@@ -6,9 +6,10 @@ import discord
 from discord.ext import commands
 from datetime import datetime
 from datetime import date
+import time 
 
 
-class BijunChat(commands.Cog, name="Basic Chat"):
+class BijunChat(commands.Cog, name="BijunChat"):
     """Basic Chatbot Functions"""
 
     def __init__(self, bot):
@@ -64,7 +65,23 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         for word in message.content.split():
             if word.lower() in GREETING_INPUTS:
                 await message.channel.send(random.choice(GREETING_INPUTS))
-    
+        
+        if "count " and "seconds"  in message.content.lower():
+            times = ""
+            for i in range(0,len(message.content.lower())):
+                if message.content.lower()[i].isdigit() :
+                    times+=message.content.lower()[i]
+            times = int(times)
+            await message.channel.send("Start counting {} seconds!".format(times))
+            count = times
+            while count:
+                if(count == times/2):
+                    await message.channel.send("{} seconds left!".format(count))
+                time.sleep(1)
+                count -= 1
+            await message.channel.send("TIME'S UP!")
+            await message .channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
+
 async def setup(bot):
     await bot.add_cog(BijunChat(bot))
     await bot.add_cog(ExtraFunc(bot))
