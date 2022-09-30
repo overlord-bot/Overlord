@@ -51,16 +51,20 @@ async def load_cogs(bot):
             folder_names = arguments[i+1].split(",")
             print("loading folders specified from command line input: " + str(folder_names))
 
-    if flag_noargs: # if no arguments provided, prompt for list to ignore in command line 
-        print("no arguments detected for module selection, please list all folders to load separated by commas (general folder is always loaded).\n")
-        print("You may also input 'all' to load all modules\n")
-        text = input(">>> ")
-        folder_names = text.split(',')
+    if flag_noargs: # if no arguments provided, load everything
+        print("no arguments received, loading all modules \\(^.^)/")
+        folder_names = ["all"]
+        #print("no arguments detected for module selection, please list all folders to load separated by commas (general folder is always loaded).\n")
+        #print("You may also input 'all' to load all modules\n")
+        #text = input(">>> ")
+        #folder_names = text.split(',')
  
     if len(folder_names) > 0 and folder_names[0] == "all": # detects if load all is selected
         print("loadall activated")
         loadall = True
  
+    #loadall = False #hard disables loadall
+
     print("loading folders: " + str(folder_names))
     for folder in os.listdir("cogs"):
         if str(folder) not in folder_names and str(folder) != "general" and not loadall: # general folder always loads
