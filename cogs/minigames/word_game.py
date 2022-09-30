@@ -79,6 +79,8 @@ class WordGame(commands.Cog, name="Word Game"):
                 self.current_progress.append(wordlist)
                 await ctx.send(''.join(wordlist))
                 if (wordlist.count('G') == len(self.word)):
+                    self.round = -1
+                    self.current_progress = []
                     await ctx.send("You win!")
             else:
                 await ctx.send("Argument not correct length!")
@@ -99,10 +101,6 @@ class WordGame(commands.Cog, name="Word Game"):
             await ctx.send("Game ended! The word was " + self.word)
         else:
             await ctx.send("The game hasn't started!")
-
-    ######################################################################
-    #   !checkStatus
-    ######################################################################
 
     @commands.command()
     async def check_status(self, ctx):
