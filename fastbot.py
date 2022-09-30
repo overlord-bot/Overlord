@@ -63,10 +63,18 @@ async def load_cogs():
                     print(f"Failed Loading: cogs.{folder}.{filename} | Error: {exception}")
 
 
-async def main():
+# Performs all steps needed to initialize the bot on a separate thread
+async def initialize():
     await load_cogs()
-
     load_dotenv()
     await bot.start(os.getenv("DISCORD_TOKEN"))
 
-asyncio.run(main())
+
+# The starting function, call this directly to run the bot
+def main():
+    asyncio.run(initialize())
+
+
+# Prevent bot from running upon importing this class, and only runs if this class is the startup file
+if __name__ == "__main__":
+    main()

@@ -58,10 +58,10 @@ class Test1():
         catalog.add_course(course5)
         catalog.add_course(course6)
 
-        await user.msg_hold(message, "Printing courses:")
+        await user.msg_hold("Printing courses:")
 
         for course in catalog.get_all_courses():
-            await user.msg_hold(message, course.to_string())
+            await user.msg_hold(course.to_string())
         await user.msg_release(message, False)
 
         user.get_schedule("test").master_list_init()
@@ -84,15 +84,15 @@ class Test1():
         schedule2.add_course(catalog.get_course("Animation"), 0)
         
         #checks to make sure add and remove worked properly, without duplicates within one semester but allowing for duplicates across semesters
-        assert len(user.get_schedule("test").master_list[0]) == 1
-        assert len(user.get_schedule("test").master_list[1]) == 1
-        assert len(user.get_schedule("test").master_list[4]) == 2
-        assert len(user.get_schedule("test").master_list[5]) == 0
-        assert len(user.get_schedule("test").master_list[8]) == 3
+        assert len(user.get_schedule("test").get_semester(0)) == 1
+        assert len(user.get_schedule("test").get_semester(1)) == 1
+        assert len(user.get_schedule("test").get_semester(4)) == 2
+        assert len(user.get_schedule("test").get_semester(5)) == 0
+        assert len(user.get_schedule("test").get_semester(8)) == 3
 
         # print masterlist
         await user.msg(message, "Added courses to schedule, printing schedule")
-        await user.msg_hold(message, user.get_schedule("test").to_string())
+        await user.msg_hold(user.get_schedule("test").to_string())
         await user.msg_release(message, False)
 
         # Bundle tests
