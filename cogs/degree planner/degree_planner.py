@@ -4,6 +4,7 @@ import discord
 import asyncio
 import json
 import os
+import sys
 
 from .course import Course
 from .catalog import Catalog
@@ -37,7 +38,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     def __init__(self, bot):
         self.bot = bot
 
-
     #-----------------------------------------------------------------------
     # Main message listener
     #
@@ -47,29 +47,30 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     #-----------------------------------------------------------------------
     @commands.Cog.listener()
     async def on_message(self, message):
+
+        # ignore messages not from users
         if message.author == self.bot.user or message.author.bot:
             return
         else:
-            print("received input from user " + str(message.author))
+            # self.users is a dictionary of existing users that link their name to a User object
             if message.author in self.users:
-                await self.on_msg(message, self.users.get(message.author))
-                print("returning user")
+                await self.message_handler(message)
+                print(f"returning user: {message.author}")
             else:
                 user = User(message.author)
-                self.users[message.author] = user
-                await self.on_msg(message, self.users.get(message.author))
-                print("new user")
-
+                self.users.update({message.author:user})
+                await self.message_handler(message)
+                print(f"new user: {message.author}")
 
     #-----------------------------------------------------------------------
     # This function is a temporary text based system to control the bot
     # it can all be replaced with different UI system later
     #-----------------------------------------------------------------------
-    async def on_msg(self, message, user):
-        if message.content.startswith("dp"):
-            await user.msg(message, "hiyaa")
-            await user.msg(message, "What would you like to do, " + str(message.author)[0:str(message.author).find('#'):1] + "?") # What would you like to do, <username without tag>?
-            await user.msg(message, "input the number in chat:  1: begin test sequence 2: import from json file 0: cancel")
+    async def message_handler(self, message):
+        user = self.users.get(message.author)
+        if message.content.casefold() == "!dp":
+            await user.msg(message, f"Hiyaa, what would you like to do, {str(message.author)[0:str(message.author).find('#'):1]}?") # What would you like to do, <username without tag>?
+            await user.msg(message, "input the number in chat:  1: begin test sequence 2: import courses from json file 9: unique test 0: cancel")
 
             # Sets the flag to true so the next input (except for "dp") is treated as a response to the selection
             user.selection_flag = True
@@ -84,8 +85,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await user.msg(message, "Operation is already running, please wait for its completion")
                 else:
                     user.test_running = True
-                    await self.test(message, user)
-                    await user.msg(message, "Test completed")
+                    await self.test(message)
+                    await user.msg(message, "Test completed successfully, all assertions are met")
 
             # CASE 2: run data fetch from json
             elif message.content.casefold() == "2":
@@ -96,25 +97,29 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 # 2) degree planner's directory
                 # 3) root directory of the project folder
 
-                if os.path.isfile(os.getcwd() + "\\cogs\\degree planner\\data\\course_data.json"):
-                    await user.msg(message, "file found: " + os.getcwd() + "\\cogs\\degree planner\\data\\course_data.json")
-                    f = open(os.getcwd() + "\\cogs\\degree planner\\data\\course_data.json")
-                elif os.path.isfile(os.getcwd() + "\\cogs\\degree planner\\course_data.json"):
-                    await user.msg(message, "file found: " + os.getcwd() + "\\cogs\\degree planner\\course_data.json")
-                    f = open(os.getcwd() + "\\cogs\\degree planner\\course_data.json")
-                elif os.path.isfile(os.getcwd() + "\\course_data.json"):
-                    await user.msg(message, "file found: " + os.getcwd() + "\\course_data.json")
-                    f = open(os.getcwd() + "\\course_data.json")
+                if os.path.isfile(os.getcwd() + "/cogs/degree planner/data/course_data.json"):
+                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree planner/data/course_data.json")
+                    f = open(os.getcwd() + "/cogs/degree planner/data/course_data.json")
+                elif os.path.isfile(os.getcwd() + "/cogs/degree planner/course_data.json"):
+                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree planner/course_data.json")
+                    f = open(os.getcwd() + "/cogs/degree planner/course_data.json")
+                elif os.path.isfile(os.getcwd() + "/course_data.json"):
+                    await user.msg(message, f"file found: {os.getcwd()}/course_data.json")
+                    f = open(os.getcwd() + "/course_data.json")
 
                 else:
                     await user.msg(message, "file not found, terminating")
                     return
                 json_data = json.load(f)
-                await self.parse_courses(message, user, json_data)
+                await self.parse_courses(message, json_data)
                 await user.msg(message, "Sucessfully parsed json data, printing catalog")
-                await user.msg_hold(message, self.catalog.to_string())
+                await user.msg_hold(self.catalog.to_string())
                 await user.msg_release(message, False)
-                await user.msg(message, "Sucessfully printed catalog")
+                await user.msg(message, "parsing completed")
+
+            # CASE 9: INSERT ANY SPECIAL TESTS TO RUN HERE
+            elif message.content.casefold() == "9":
+                print(str(sys.argv))
 
             # CASE 0: cancel selection operation
             elif message.content.casefold() == "0":
@@ -128,31 +133,32 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             else:
                 await user.msg(message, "Unknown response, cancelling")
 
-
     #-----------------------------------------------------------------------
     # Helper function that starts running the test_suite, can be replaced
     # by pytest later
     #-----------------------------------------------------------------------
-    async def test(self, message, user):
+    async def test(self, message):
+        user = self.users.get(message.author)
         test_suite = Test1()
+        user.debug = True
         await test_suite.test(message, user)
-
+        user.debug = False
 
     #-----------------------------------------------------------------------
     # Loads json file data representing course data into course objects
     # and stores it into the catalog
     #-----------------------------------------------------------------------
-    async def parse_courses(self, message, user, json_data):
+    async def parse_courses(self, message, json_data):
+        user = self.users.get(message.author)
         if user.test_running:
-            await user.msg(message, "Schedule unavailable due to another operation running")
+            await user.msg(message, "Operation unavailable due to another user operation running")
             return
         await user.msg(message, "Beginning parsing json data into catalog")
         for element in json_data['courses']:
             course = Course(element['name'], element['major'], int(element['id']))
             self.catalog.add_course(course)
-            await user.msg_hold(message, str(element))
+            await user.msg_hold(str(element))
         await user.msg_release(message, False)
-
 
 async def setup(bot):
     await bot.add_cog(Degree_Planner(bot))
