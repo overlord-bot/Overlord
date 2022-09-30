@@ -14,7 +14,7 @@ class WordGame(commands.Cog, name="Word Game"):
         self.current_progress = []
         self.emojidict = {"G": ":green_square:",
                           "Y": ":yellow_square:",
-                          "B": ":black_square:",
+                          "B": ":black_large_square:",
                           }
     def to_lower(arg):
         """Helper function"""
@@ -85,7 +85,8 @@ class WordGame(commands.Cog, name="Word Game"):
                 self.round += 1
                 wordlist = self.checkword(word, self.word)
                 self.current_progress.append(wordlist)
-                await ctx.send(''.join(wordlist))
+                emojimessage = self.to_emoji(''.join(wordlist))
+                await ctx.send(emoji.emojize(emojimessage))
                 if (wordlist.count('G') == len(self.word)):
                     self.round = -1
                     self.current_progress = []
