@@ -54,10 +54,6 @@ async def load_cogs(bot):
     if flag_noargs: # if no arguments provided, load everything
         print("no arguments received, loading all modules \\(^.^)/")
         folder_names = ["all"]
-        #print("no arguments detected for module selection, please list all folders to load separated by commas (general folder is always loaded).\n")
-        #print("You may also input 'all' to load all modules\n")
-        #text = input(">>> ")
-        #folder_names = text.split(',')
  
     if len(folder_names) > 0 and folder_names[0] == "all": # detects if load all is selected
         print("loadall activated")
