@@ -9,7 +9,6 @@ from dotenv import load_dotenv  # pip install python-dotenv
 
 class Bot(commands.Bot):
     def __init__(self) -> None:
-        print("initializing bot class in standard bot creation")
         self.testing_server = None
         # self.testing_server = discord.Object(os.getenv("TESTING_SERVER_ID"))
 
@@ -35,9 +34,7 @@ def main_standard():
 # Load all cogs inside the cogs folder
 async def load_cogs(bot):
     print("\n------------------ Loading Cogs -----------------")
-
-    # checking command line arguments
-    arguments = sys.argv
+    arguments = sys.argv # checking command line arguments
     print("your command line arguments:" + str(arguments))
 
     loadall = False
@@ -54,14 +51,13 @@ async def load_cogs(bot):
             folder_names = arguments[i+1].split(",")
             print("loading folders specified from command line input: " + str(folder_names))
 
-    # if no arguments provided, prompt for list to ignore in command line 
-    if flag_noargs:
-        print("no arguments detected for module selection, please list all folders to load modules from separated by commas (general folder is always loaded).\n")
+    if flag_noargs: # if no arguments provided, prompt for list to ignore in command line 
+        print("no arguments detected for module selection, please list all folders to load separated by commas (general folder is always loaded).\n")
         print("You may also input 'all' to load all modules\n")
         text = input(">>> ")
         folder_names = text.split(',')
  
-    if len(folder_names) > 0 and folder_names[0] == "all":
+    if len(folder_names) > 0 and folder_names[0] == "all": # detects if load all is selected
         print("loadall activated")
         loadall = True
  
@@ -72,13 +68,9 @@ async def load_cogs(bot):
             continue
         print("parsing " + str(folder))
         for filename in os.listdir(os.path.join(f"cogs/{folder}")):
-            if "-fast" in arguments and str(folder) == "general" and str(filename) != "faststartup.py":
-                print("skipping file " + str(filename) + " because it's in general folder for fast startup and not faststartup.py")
+            if "-fast" in arguments and str(folder) == "general" and filename != "startup.py": # fast mode skips all but startup.py in general folder
+                print(f"skipping file {filename}")
                 continue
-            elif "-fast" not in arguments and str(folder) == "general" and str(filename) == "faststartup.py":
-                print("skipping file " + str(filename) + " faststartup.py since it's regular startup")
-                continue
-
             if filename.endswith(".py"):
                 try:
                     await bot.load_extension(f"cogs.{folder}.{filename[:-3]}")
@@ -98,7 +90,6 @@ def main_fast():
     bot_status = "alone"
     bot_description = "fastbot version"
     bot = commands.Bot(command_prefix="!", description=bot_description, intents=intents, activity=discord.Game(name=bot_status))
-
     asyncio.run(fast_initialize(bot))
 
 # IGNORE IF YOU'RE NOT USING COMMANDLESS FAST LOAD
