@@ -14,8 +14,8 @@ class Course():
         # critical attributes
         self.CI = False # if it's communication intensive
         self.HASS_inquiry = False # if it's hass inquiry
-        self.HASS_pathway = "" # hass pathway this class belongs to, if none, will be ""
-        self.concentration = "" # concentration area this class belongs to, if none, will be ""
+        self.HASS_pathway = "" # hass pathway this class belongs to, if none, will be "" <- this should be a list right
+        self.concentration = "" # concentration area this class belongs to, if none, will be "" <- so does this
         self.prerequisites = [] # a list of other classes that must be taken prior to this one
         self.suggested_prerequisites = [] # optional, will be displayed as a notification rather than a hard requirement
         self.restricted = False # if this is a major restricted class

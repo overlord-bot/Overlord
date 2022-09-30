@@ -42,7 +42,7 @@ class List_and_rules():
                 courses_CI+=1
             if course in required_copy:
                 required_copy.remove(course)
-            if course.HASS_pathway in same_pathway:
+            if course.HASS_pathway in same_pathway:# shouldn't here be a loop, since a course can be in multiple different pathway
                 list_returned = same_pathway.get(course.HASS_pathway)
                 list_returned.append(course)
                 same_pathway.update({course.HASS_pathway:list_returned})

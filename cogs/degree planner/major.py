@@ -1,9 +1,10 @@
 from array import *
 from math import *
-from .bundle import Bundle
 
+# what I did here is not check fulfillment, it more like to recommend courses for user base on major, minor, pathway
+# 
 
-class Major(Bundle):
+class Major:
     name = ""
 
     # !!!!
