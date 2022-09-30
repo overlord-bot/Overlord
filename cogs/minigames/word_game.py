@@ -116,7 +116,8 @@ class WordGame(commands.Cog, name="Word Game"):
         """Check the current game status"""
         if (self.round > 0):
             return_text = self.print_status()
-            await ctx.send(return_text)
+            emoji_text = self.to_emoji(return_text)
+            await ctx.send(emoji.emojize(emoji_text))
         elif (self.round == 0):
              await ctx.send("No one has added any words!")
         else:
