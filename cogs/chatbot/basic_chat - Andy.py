@@ -40,8 +40,18 @@ class AndyChat(commands.Cog, name="Andy Chat"):
         elif "biden" in message.content.lower():
             await message.reply("https://media.giphy.com/media/QWw4hc5gTnJhY0BUI3/giphy.gif")
 
+        elif "obama" in message.content.lower():
+            await message.reply("https://media.giphy.com/media/cEYFeDKVPTmRgIG9fmo/giphy.gif")
+
+        elif "lebron" in message.content.lower():
+            await message.reply("https://media.giphy.com/media/GS2HlaP8SzW0g/giphy.gif")
+
         elif "turner" in message.content.lower():
             await message.reply("https://media.giphy.com/media/tzV14WYQwgDQ61GCvt/giphy.gif")
+
+        elif "kuzman" in message.content.lower():
+            await message.reply("https://media.giphy.com/media/7PbdlEW2fyXDubicsU/giphy.gif")
+
             
 
 
