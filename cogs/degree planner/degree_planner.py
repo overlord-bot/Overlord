@@ -4,6 +4,7 @@ import discord
 import asyncio
 import json
 import os
+import sys
 
 from .course import Course
 from .catalog import Catalog
@@ -37,7 +38,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     def __init__(self, bot):
         self.bot = bot
 
-
     #-----------------------------------------------------------------------
     # Main message listener
     #
@@ -62,7 +62,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await self.message_handler(message)
                 print("new user: " + str(message.author))
 
-
     #-----------------------------------------------------------------------
     # This function is a temporary text based system to control the bot
     # it can all be replaced with different UI system later
@@ -71,7 +70,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         user = self.users.get(message.author)
         if message.content.casefold() == "!dp":
             await user.msg(message, "Hiyaa, what would you like to do, " + str(message.author)[0:str(message.author).find('#'):1] + "?") # What would you like to do, <username without tag>?
-            await user.msg(message, "input the number in chat:  1: begin test sequence 2: import courses from json file 0: cancel")
+            await user.msg(message, "input the number in chat:  1: begin test sequence 2: import courses from json file 9: unique test 0: cancel")
 
             # Sets the flag to true so the next input (except for "dp") is treated as a response to the selection
             user.selection_flag = True
@@ -118,6 +117,10 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await user.msg_release(message, False)
                 await user.msg(message, "parsing completed")
 
+            # CASE 9: INSERT ANY SPECIAL TESTS TO RUN HERE
+            elif message.content.casefold() == "9":
+                print(str(sys.argv))
+
             # CASE 0: cancel selection operation
             elif message.content.casefold() == "0":
                 await user.msg(message, "ok :(")
@@ -130,7 +133,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             else:
                 await user.msg(message, "Unknown response, cancelling")
 
-
     #-----------------------------------------------------------------------
     # Helper function that starts running the test_suite, can be replaced
     # by pytest later
@@ -141,7 +143,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         user.debug = True
         await test_suite.test(message, user)
         user.debug = False
-
 
     #-----------------------------------------------------------------------
     # Loads json file data representing course data into course objects
@@ -158,7 +159,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             self.catalog.add_course(course)
             await user.msg_hold(str(element))
         await user.msg_release(message, False)
-
 
 async def setup(bot):
     await bot.add_cog(Degree_Planner(bot))

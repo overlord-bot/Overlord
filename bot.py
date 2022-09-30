@@ -2,15 +2,14 @@
 
 import asyncio
 import os
-
+import sys
 import discord
 from discord.ext import commands
-
 from dotenv import load_dotenv  # pip install python-dotenv
-
 
 class Bot(commands.Bot):
     def __init__(self) -> None:
+        print("initializing bot class in standard bot creation")
         self.testing_server = None
         # self.testing_server = discord.Object(os.getenv("TESTING_SERVER_ID"))
 
@@ -25,22 +24,98 @@ class Bot(commands.Bot):
         super().__init__(command_prefix="!", description=bot_description, intents=intents, activity=discord.Game(name=bot_status))
 
     async def setup_hook(self) -> None:
-        await self.load_cogs()
+        await load_cogs(self)
 
-    # Load all cogs inside the cogs folder
-    async def load_cogs(self) -> None:
-        print("\n------------------ Loading Cogs -----------------")
-        for folder in os.listdir("cogs"):
-            for filename in os.listdir(os.path.join(f"cogs/{folder}")):
-                if filename.endswith(".py"):
-                    try:
-                        await self.load_extension(f"cogs.{folder}.{filename[:-3]}")
-                        print(f"Success Loading: cogs.{folder}.{filename}")
-                    except Exception as e:
-                        exception = f"{type(e).__name__}: {e}"
-                        print(f"Failed Loading: cogs.{folder}.{filename} | Error: {exception}")
+# MAIN STARTUP FUNCTION FOR A REGULAR STARTUP, treat this as you would treat main()
+def main_standard():
+    bot = Bot()
+    load_dotenv()
+    asyncio.run(bot.run(os.getenv("DISCORD_TOKEN")))  # fetches token from env file stored locally and starts bot
 
+# Load all cogs inside the cogs folder
+async def load_cogs(bot):
+    print("\n------------------ Loading Cogs -----------------")
 
-bot = Bot()
-load_dotenv()
-asyncio.run(bot.run(os.getenv("DISCORD_TOKEN")))  # fetches token from env file stored locally and starts bot
+    # checking command line arguments
+    arguments = sys.argv
+    print("your command line arguments:" + str(arguments))
+
+    loadall = False
+    flag_noargs = True
+    for i in range(0, len(arguments)):
+        if arguments[i] == "-all":
+            flag_noargs = False
+            print("found -all in command line input, loading all modules")
+            loadall = True
+            folder_names = ["all"]
+            break
+        if arguments[i] == "-load" and len(arguments) > i+1:
+            flag_noargs = False
+            folder_names = arguments[i+1].split(",")
+            print("loading folders specified from command line input: " + str(folder_names))
+
+    # if no arguments provided, prompt for list to ignore in command line 
+    if flag_noargs:
+        print("no arguments detected for module selection, please list all folders to load modules from separated by commas (general folder is always loaded).\n")
+        print("You may also input 'all' to load all modules\n")
+        text = input(">>> ")
+        folder_names = text.split(',')
+ 
+    if len(folder_names) > 0 and folder_names[0] == "all":
+        print("loadall activated")
+        loadall = True
+ 
+    print("loading folders: " + str(folder_names))
+    for folder in os.listdir("cogs"):
+        if str(folder) not in folder_names and str(folder) != "general" and not loadall: # general folder always loads
+            print("skipping " + str(folder))
+            continue
+        print("parsing " + str(folder))
+        for filename in os.listdir(os.path.join(f"cogs/{folder}")):
+            if "-fast" in arguments and str(folder) == "general" and str(filename) != "faststartup.py":
+                print("skipping file " + str(filename) + " because it's in general folder for fast startup and not faststartup.py")
+                continue
+            elif "-fast" not in arguments and str(folder) == "general" and str(filename) == "faststartup.py":
+                print("skipping file " + str(filename) + " faststartup.py since it's regular startup")
+                continue
+
+            if filename.endswith(".py"):
+                try:
+                    await bot.load_extension(f"cogs.{folder}.{filename[:-3]}")
+                    print(f"Success Loading: cogs.{folder}.{filename}")
+                except Exception as e:
+                    exception = f"{type(e).__name__}: {e}"
+                    print(f"Failed Loading: cogs.{folder}.{filename} | Error: {exception}")
+
+# IGNORE IF YOU'RE NOT USING COMMANDLESS FAST LOAD
+def main_fast():
+    # Necessary intents (permissions) for the bot to function
+    intents = discord.Intents.default()
+    intents.members = True  # permission to see server members
+    intents.message_content = True  # permission to read message content
+
+    # Set up the bot object and its descriptions
+    bot_status = "alone"
+    bot_description = "fastbot version"
+    bot = commands.Bot(command_prefix="!", description=bot_description, intents=intents, activity=discord.Game(name=bot_status))
+
+    asyncio.run(fast_initialize(bot))
+
+# IGNORE IF YOU'RE NOT USING COMMANDLESS FAST LOAD
+async def fast_initialize(bot):
+    await load_cogs(bot)
+    load_dotenv()
+    await bot.start(os.getenv("DISCORD_TOKEN"))
+
+def main():
+    arguments = sys.argv
+    if "-fast" in arguments:
+        print("loading fastbot!")
+        main_fast()
+    else:
+        print("loading standard bot!")
+        main_standard()
+
+# only runs if this class is the startup file
+if __name__ == "__main__":
+    main()
