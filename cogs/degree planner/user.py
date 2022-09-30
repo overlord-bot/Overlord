@@ -28,7 +28,7 @@ class User():
 
     def get_schedule(self, schedule_name):
         if self.__schedules.get(schedule_name, 0) == 0:
-            print("Schedule " + schedule_name + " not found")
+            print(f"Schedule {schedule_name} not found")
         return self.__schedules.get(schedule_name, 0)
 
 
@@ -43,9 +43,9 @@ class User():
 
     def rename_schedule(self, old_name, new_name):
         if self.__schedules.get(old_name, 0) == 0:
-            print("Schedule " + old_name + " not found")
+            print(f"Schedule {old_name} not found")
         elif self.__schedules.get(new_name, 0) != 0:
-            print("Schedule " + new_name + " already exists, can't change name")
+            print(f"Schedule {new_name} already exists, can't change name")
         else:
             self.__schedules.update({new_name : self.__schedules.get(old_name)})
             self.__schedules.pop(old_name)
@@ -70,7 +70,7 @@ class User():
             print(self.__msg_cache)
             self.__msg_cache = ""
         elif not fancy:
-            await message.channel.send("```yaml\n" + self.__msg_cache + "```")
+            await message.channel.send(f"```yaml\n{self.__msg_cache}```")
             self.__msg_cache = ""
         else:
             # little embed test
@@ -85,14 +85,14 @@ class User():
         if self.debug:
             print(str(content))
         else:
-            await message.channel.send("[Degree Planner] " + str(content))
+            await message.channel.send(f"[Degree Planner] {str(content)}")
 
 
     def to_string(self):
         schedule_names = ""
         for s in self.__schedules.keys():
             schedule_names += "[" + s + "] "
-        return str(self.username) + "'s schedules: " + schedule_names
+        return f"{str(self.username)}'s schedules: {schedule_names}"
 
 
     def __eq__(self, other):

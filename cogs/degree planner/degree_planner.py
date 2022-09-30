@@ -55,12 +55,12 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             # self.users is a dictionary of existing users that link their name to a User object
             if message.author in self.users:
                 await self.message_handler(message)
-                print("returning user: " + str(message.author))
+                print(f"returning user: {message.author}")
             else:
                 user = User(message.author)
                 self.users.update({message.author:user})
                 await self.message_handler(message)
-                print("new user: " + str(message.author))
+                print(f"new user: {message.author}")
 
     #-----------------------------------------------------------------------
     # This function is a temporary text based system to control the bot
@@ -69,7 +69,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     async def message_handler(self, message):
         user = self.users.get(message.author)
         if message.content.casefold() == "!dp":
-            await user.msg(message, "Hiyaa, what would you like to do, " + str(message.author)[0:str(message.author).find('#'):1] + "?") # What would you like to do, <username without tag>?
+            await user.msg(message, f"Hiyaa, what would you like to do, {str(message.author)[0:str(message.author).find('#'):1]}?") # What would you like to do, <username without tag>?
             await user.msg(message, "input the number in chat:  1: begin test sequence 2: import courses from json file 9: unique test 0: cancel")
 
             # Sets the flag to true so the next input (except for "dp") is treated as a response to the selection
@@ -98,13 +98,13 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 # 3) root directory of the project folder
 
                 if os.path.isfile(os.getcwd() + "/cogs/degree planner/data/course_data.json"):
-                    await user.msg(message, "file found: " + os.getcwd() + "/cogs/degree planner/data/course_data.json")
+                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree planner/data/course_data.json")
                     f = open(os.getcwd() + "/cogs/degree planner/data/course_data.json")
                 elif os.path.isfile(os.getcwd() + "/cogs/degree planner/course_data.json"):
-                    await user.msg(message, "file found: " + os.getcwd() + "/cogs/degree planner/course_data.json")
+                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree planner/course_data.json")
                     f = open(os.getcwd() + "/cogs/degree planner/course_data.json")
                 elif os.path.isfile(os.getcwd() + "/course_data.json"):
-                    await user.msg(message, "file found: " + os.getcwd() + "/course_data.json")
+                    await user.msg(message, f"file found: {os.getcwd()}/course_data.json")
                     f = open(os.getcwd() + "/course_data.json")
 
                 else:

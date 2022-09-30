@@ -47,7 +47,7 @@ class Course():
         return (self.course_id//1000)
 
     def to_string(self):
-        return self.name + " " + self.major + " " + str(self.course_id)
+        return f"{self.name} {self.major} {str(self.course_id)}"
 
     def __eq__(self, other):
         if self.name == other.name and self.course_id == other.course_id:

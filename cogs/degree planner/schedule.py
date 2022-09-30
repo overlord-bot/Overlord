@@ -57,7 +57,7 @@ class Schedule():
 
     def remove_course(self, course, semester):
         if semester not in self.find_course(course):
-            print("course not present in semester" + str(semester))
+            print(f"course not present in semester {str(semester)}")
         else:
             self.__master_list[semester].remove(course)
 

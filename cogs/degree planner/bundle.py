@@ -21,7 +21,7 @@ class Bundle(Course):
     def to_string(self):
         string = ""
         for course in self.course_bundle:
-            string+="[" + course.name + "] "
+            string+=f"[{course.name}] "
         return string
 
     def __eq__(self, other):
