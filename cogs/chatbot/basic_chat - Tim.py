@@ -5,7 +5,7 @@ from datetime import datetime
 from datetime import date
 
 
-class TimChat(commands.Cog, name="Basic Chat"):
+class TimChat(commands.Cog, name="TimChat"):
     """Basic Chatbot Functions"""
 
     def __init__(self, bot):
@@ -37,7 +37,10 @@ class TimChat(commands.Cog, name="Basic Chat"):
             d = today.strftime("%B %d, %Y")
             await message.channel.send("Today is " + d)
 
-        elif (message.content.lower() == "goodbye") or (message.content.lower() == "good bye"):     #close the bot
+        elif (message.content.lower() == "who's the leader?") or (message.content.lower() == "leader of the program") or (message.content.lower() == "leader"):
+            await message.channel.send("Master Jack & Master Alan")
+
+        elif (message.content.lower() == "goodbye") or (message.content.lower() == "bye"):     #close the bot
             await message.channel.send("GoodBye, " + message.author.name + ", have a great day!")
             await self.bot.close()
         
