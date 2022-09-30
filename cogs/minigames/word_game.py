@@ -1,7 +1,7 @@
 # Clone of the game wordle
 
 from discord.ext import commands
-
+import emoji
 
 
 class WordGame(commands.Cog, name="Word Game"):
@@ -12,7 +12,10 @@ class WordGame(commands.Cog, name="Word Game"):
         self.word = "jeans"
         self.round = -1
         self.current_progress = []
-
+        self.emojidict = {"G": ":green_square:",
+                          "Y": ":yellow_square:",
+                          "B": ":black_square:",
+                          }
     def to_lower(arg):
         """Helper function"""
         return arg.lower()
@@ -52,6 +55,11 @@ class WordGame(commands.Cog, name="Word Game"):
         for i in range(0, len(self.current_progress)):
                        return_status = return_status + ''.join(self.current_progress[i]) + '\n'
         return return_status
+
+    def to_emoji(self, message):
+        """Replaces letters with emoji names"""
+        new_message = message.replace('G', self.emojidict['G']).replace('Y', self.emojidict['Y']).replace('B', self.emojidict['B'])
+        return new_message
 
     @commands.command()
     async def getword(self, ctx):
