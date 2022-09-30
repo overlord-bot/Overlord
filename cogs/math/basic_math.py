@@ -24,10 +24,24 @@ OPERATIONS = {
     "tan": lambda args: math.tan(args[0]) # tangent
 }
 
+CONSTANTS = {
+    "e": math.e,
+    "pi": math.pi
+}
+
 def evaluate_node(node):
     # numbers
     if isinstance(node, ast.Num):
         return node.n
+
+    # constants
+    elif isinstance(node, ast.Name):
+        const_name = node.id
+
+        if const_name in CONSTANTS:
+            return CONSTANTS[const_name]
+        else:
+            raise Exception(f"no such constant '{const_name}' supported")
 
     # unary operators
     elif isinstance(node, ast.UnaryOp):
