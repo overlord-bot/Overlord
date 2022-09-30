@@ -9,11 +9,12 @@ from .bundle import Bundle
 
 class Catalog():
 
-    # catalog will  be a list of courses and degrees
-    # TODO also store graphs for further analysis and course prediction of free electives
-
-    __course_list = dict() # course name as key
-    __degree_list = dict() # degree name as key
+    def __init__(self):
+        # catalog will  be a list of courses and degrees
+        # TODO also store graphs for further analysis and course prediction of free electives
+        self.__course_list = dict() # course name as key
+        self.__degree_list = dict() # degree name as key
+        self.lock = False;
 
 
     def add_course(self, course):
@@ -47,7 +48,6 @@ class Catalog():
         bundle = Bundle("Return", "CSCI", 0)
         default_course = Course("Default", "Default", 0)
         for course in self.__course_list.values():
-            print(course.to_string())
             if target_course.name != default_course.name and target_course.name != course.name:
                 continue
             if target_course.major != default_course.major and target_course.major != course.major:

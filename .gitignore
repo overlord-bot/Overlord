@@ -6,6 +6,7 @@ env5
 .git
 OverLordEnv
 OverlordTestEnv
+VSProject
 # important environmental variables
 .env
 # other files to ignore
