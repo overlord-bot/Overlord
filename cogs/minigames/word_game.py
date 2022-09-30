@@ -50,7 +50,7 @@ class WordGame(commands.Cog, name="Word Game"):
         """Returns the current status of the game"""
         return_status = str()
         for i in range(0, len(self.current_progress)):
-                       return_status = return_status + self.current_progress[i] + '\n'
+                       return_status = return_status + ''.join(self.current_progress[i]) + '\n'
         return return_status
 
     @commands.command()
