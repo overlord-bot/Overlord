@@ -46,6 +46,13 @@ class WordGame(commands.Cog, name="Word Game"):
         
         return currentlist
 
+    def print_status(self):
+        """Returns the current status of the game"""
+        return_status = str()
+        for i in range(0, len(self.current_progress)):
+                       return_status = return_status + self.current_progress[i] + '\n'
+        return return_status
+
     @commands.command()
     async def getword(self, ctx):
         """Returns the test word. FOR DEBUG ONLY!"""
@@ -61,10 +68,6 @@ class WordGame(commands.Cog, name="Word Game"):
             self.round = 0
             # TODO: Add multiple words
             await ctx.send("Game Started!")
-
-    ######################################################################
-    #   !addWord
-    ######################################################################
 
     @commands.command()
     async def add_word(self, ctx, word: to_lower):
@@ -100,6 +103,17 @@ class WordGame(commands.Cog, name="Word Game"):
     ######################################################################
     #   !checkStatus
     ######################################################################
+
+    @commands.command()
+    async def check_status(self, ctx):
+        """Check the current game status"""
+        if (self.round > 0):
+            return_text = self.print_status()
+            await ctx.send(return_text)
+        elif (self.round == 0):
+             await ctx.send("No one has added any words!")
+        else:
+            await ctx.send("The game has not started!")
 
 
 async def setup(bot):
