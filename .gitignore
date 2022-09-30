@@ -1,8 +1,13 @@
+# Development Environment files
 __pycache__/
 .idea/
 .vs
+env5
 .git
-.env
 OverLordEnv
-
+OverlordTestEnv
+VSProject
+# important environmental variables
+.env
+# other files to ignore
 calendar.txt
