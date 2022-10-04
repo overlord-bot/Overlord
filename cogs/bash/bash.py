@@ -2,13 +2,18 @@ import discord
 import asyncio
 from discord.ext import commands
 from discord import app_commands
-#from cogs.bash.util.BashView import BashView
 
-import docker
 '''
 pip install pywin32==225
 pip install docker
 '''
+from textwrap import wrap
+import docker
+from importlib.metadata import version
+import platform
+
+if platform.system() == 'Windows' and int(version('pywin32')) > 225:
+	raise Exception('The Docker Python package requires pywin32 <= ver 225 to run, please downgrade or run on Linux')
 
 class Bash(commands.GroupCog, name="bash"):
 	"""
@@ -16,20 +21,34 @@ class Bash(commands.GroupCog, name="bash"):
 	"""
 	global testing_server
 
-	#Connect to Docker api @tcp://localhost:2375
-	client = docker.from_env()
+	try:
+		#Connect to Docker api @tcp://localhost:2375
+		client = docker.from_env()
+		print("Bulding Docker Image...")
+		#Build the image from the Dockerfile, might take a while if first time running
+		built = client.images.build(path="./cogs/bash", tag="disc:v1")
+		print("Docker Image built as disc:v1")
+	except Exception as err:
+		raise Exception(err)
 
 	def __init__(self, bot: commands.bot):
 		self.bot = bot
 
 	async def run(self, command) -> str:
-		#Build the image from the Dockerfile, might take a while if first time running
-		built = self.client.images.build(path="./cogs/bash", tag="disc:v1")
-		#Create a container from the newly created image and run the command
-		ret = self.client.containers.run("disc:v1", command=["/bin/sh", "-c", command], remove=True)
+		try:
+			print(command)
+			#Create a container from the newly created image and run the command
+			ret = self.client.containers.run("disc:v1", command=["/bin/sh", "-c", command], remove=True)
+			#Decode result (bytes -> str)
+			ret = str(ret.decode("utf-8"))
+		except Exception as err:
+			#Catch and print errors
+			print(err)
+			print(err.command)
+			s = err.stderr
+			ret = s.decode("utf-8")
 		print(self.client.containers.list())
-		#Decode and return result
-		return str(ret.decode("utf-8"))
+		return ret
 
 	@app_commands.command(name="start", description="Run commands in Ubuntu 22.04")
 	async def bash(self, interaction: discord.Interaction, command: str) -> None:
