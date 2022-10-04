@@ -99,7 +99,7 @@ class WordGame(commands.Cog, name="Word Game"):
     async def add_word(self, ctx, word: to_lower):
         """Add word to list of words"""
         if(self.round >= 0):
-            if(len(word) == len(self.current_word)):
+            if(word in self.word_list):
                 self.round += 1
                 wordlist = self.checkword(word, self.current_word)
                 self.current_progress.append(wordlist)
@@ -109,7 +109,7 @@ class WordGame(commands.Cog, name="Word Game"):
                     self.clear_game()
                     await ctx.send("You win!")
             else:
-                await ctx.send("Argument not correct length!")
+                await ctx.send("Invalid word!")
         else:
             await ctx.send("The game has not started!")
 
@@ -122,8 +122,8 @@ class WordGame(commands.Cog, name="Word Game"):
     async def end_game(self, ctx):
         """Ends the word game if not started"""
         if (self.round >= 0):
-            self.clear_game()
             await ctx.send("Game ended! The word was " + self.current_word)
+            self.clear_game()
         else:
             await ctx.send("The game hasn't started!")
 
