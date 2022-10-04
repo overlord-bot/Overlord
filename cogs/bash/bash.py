@@ -67,4 +67,5 @@ class Bash(commands.GroupCog, name="bash"):
 
 
 async def setup(bot: commands.bot) -> None:
-	await bot.add_cog(Bash(bot), guilds=[discord.Object(id=250758983327940618)]) #change id
+	test_server = 0 #place test server id here
+	await bot.add_cog(Bash(bot), guilds=[discord.Object(id=test_server)])
