@@ -10,7 +10,7 @@ class Bundle(Course):
     course_bundle = []
     title = ""
 
-    def __init__(self, a, b, title):
+    def __init__(self, title, b, c):
         self.course_bundle = []
         self.title = title
 

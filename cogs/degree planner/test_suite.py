@@ -27,22 +27,22 @@ class Test1():
         course2 = Course("Algorithms", "CSCI", 2300)
         course3 = Course("Circuits", "ECSE", 2010)
         course4 = Course("Animation", "ARTS", 4070)
-        course4.HASS_pathway = "Digital Arts"
+        course4.HASS_pathway.add("Digital Arts")
         course5 = Course("Networking in the Linux Kernel", "CSCI", 4310)
         course5.CI = True
-        course5.concentration = "Systems and Software"
+        course5.concentration.add("Systems and Software")
         course6 = Course("Cryptography 1", "CSCI", 4230)
         course6.CI = True
-        course6.concentration = "Theory, Algorithms and Mathematics"
+        course6.concentration.add("Theory, Algorithms and Mathematics")
         course7 = Course("Algorithm Analysis", "CSCI", 4020)
-        course7.concentration = "Theory, Algorithms and Mathematics"
+        course7.concentration.add("Theory, Algorithms and Mathematics")
 
         assert course1.name == "Data Structures" and course1.major == "CSCI" and course1.course_id == 1200
         assert course2.name == "Algorithms" and course2.major == "CSCI" and course2.course_id == 2300
         assert course3.name == "Circuits" and course3.major == "ECSE" and course3.course_id == 2010
-        assert course4.name == "Animation" and course4.major == "ARTS" and course4.course_id == 4070 and course4.HASS_pathway == "Digital Arts"
-        assert course5.name == "Networking in the Linux Kernel" and course5.major == "CSCI" and course5.course_id == 4310 and course5.CI == True and course5.concentration == "Systems and Software"
-        assert course6.name == "Cryptography 1" and course6.major == "CSCI" and course6.course_id == 4230 and course6.CI == True and course6.concentration == "Theory, Algorithms and Mathematics"
+        assert course4.name == "Animation" and course4.major == "ARTS" and course4.course_id == 4070 and "Digital Arts" in course4.HASS_pathway
+        assert course5.name == "Networking in the Linux Kernel" and course5.major == "CSCI" and course5.course_id == 4310 and course5.CI == True and "Systems and Software" in course5.concentration
+        assert course6.name == "Cryptography 1" and course6.major == "CSCI" and course6.course_id == 4230 and course6.CI == True and "Theory, Algorithms and Mathematics" in course6.concentration
 
         # adding courses to catalog
 
@@ -118,7 +118,7 @@ class Test1():
         course_target3 = Course("Data Structures", "Default", 0) # data structures
         course_target4 = Course("Data Structures", "Default", 2000) # none
         course_target5 = Course("Default", "Default", 0) # all theory concentration courses
-        course_target5.concentration = "Theory, Algorithms and Mathematics"
+        course_target5.concentration.add("Theory, Algorithms and Mathematics")
 
         bundle1 = catalog.get_course_match(course_target1)
         await user.msg(message, f"Bundle1: {bundle1.to_string()}")
@@ -145,8 +145,10 @@ class Test1():
         assert bundle4 == bundle4_ans
 
         bundle5 = catalog.get_course_match(course_target5)
+        await user.msg(message, f"Bundle5: {bundle5.to_string()}")
         bundle5_ans = Bundle("Theory", "NONE", 5)
         bundle5_ans.course_bundle = [course6]
+        await user.msg(message, f"Bundle5_ans: {bundle5_ans.to_string()}")
         assert bundle5 == bundle5_ans
         
         
