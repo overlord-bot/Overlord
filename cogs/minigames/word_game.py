@@ -6,16 +6,30 @@ import emoji
 
 class WordGame(commands.Cog, name="Word Game"):
     """Plays the word game that is similar to Wordle"""
+    """words.txt from https://github.com/charlesreid1/five-letter-words/blob/master/sgb-words.txt"""
 
     def __init__(self, bot):
         self.bot = bot
-        self.word = "jeans"
+        self.word_list = self.get_words()
         self.round = -1
         self.current_progress = []
         self.emojidict = {"G": ":green_square:",
                           "Y": ":yellow_square:",
-                          "B": ":black_large_square:",
-                          }
+                          "B": ":black_large_square:",}
+
+    def get_words():
+        """From https://github.com/charlesreid1/five-letter-words/blob/master/get_words.py"""
+
+        # Load the file.
+        with open('words.txt','r') as f:
+            ## This includes \n at the end of each line:
+            #words = f.readlines()
+    
+            # This drops the \n at the end of each line:
+            words = f.read().splitlines()
+
+        return words
+
     def to_lower(arg):
         """Helper function"""
         return arg.lower()
