@@ -14,7 +14,7 @@ class Catalog():
         # TODO also store graphs for further analysis and course prediction of free electives
         self.__course_list = {} # course name as key
         self.__degree_list = {} # degree name as key
-        self.lock = False;
+        self.lock = False
 
 
     def add_course(self, course):
