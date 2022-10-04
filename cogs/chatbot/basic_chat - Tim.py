@@ -1,7 +1,6 @@
 # Basic Chat Response
-import random 
 from discord.ext import commands
-from datetime import datetime
+import datetime
 from datetime import date
 
 
@@ -39,6 +38,7 @@ class TimChat(commands.Cog, name="TimChat"):
 
         elif (message.content.lower() == "who's the leader?") or (message.content.lower() == "leader of the program") or (message.content.lower() == "leader"):
             await message.channel.send("Master Jack & Master Alan")
+            await message.channel.send("Any words that disrespect this channel will be deleted and warning message will be send!")
 
         elif (message.content.lower() == "goodbye") or (message.content.lower() == "bye"):     #close the bot
             await message.channel.send("GoodBye, " + message.author.name + ", have a great day!")
