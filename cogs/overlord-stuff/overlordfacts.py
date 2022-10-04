@@ -11,7 +11,10 @@ class OverlordFacts(commands.Cog, name="Overlord Facts"):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(
+        name="overlordfacts",
+        help="Get facts about a character from the Overlord series! Usage: !overlordfacts <character>"
+    )
     async def overlordfacts(self, context, character: str):
         """Sends the wiki link of the specified Overlord Character."""
         character = character.title().replace(" ", "_")
