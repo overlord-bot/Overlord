@@ -17,6 +17,13 @@ class HelpCommand(commands.HelpCommand):
 
         await self.get_destination().send(embed=embed)
 
+    async def send_cog_help(self, cog):
+        embed = discord.Embed(title=f"Help for {cog.qualified_name}")
+
+        embed.description = "\n".join(f"**{command.qualified_name} {command.signature}** - {command.help}" for command in cog.get_commands())
+
+        await self.get_destination().send(embed=embed)
+
     async def send_command_help(self, command):
         embed = discord.Embed(title=f"Help for `{command.qualified_name}`")
 
