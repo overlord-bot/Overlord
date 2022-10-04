@@ -2,8 +2,8 @@
 
 from discord.ext import commands
 import emoji
-
-
+import random
+import os
 class WordGame(commands.Cog, name="Word Game"):
     """Plays the word game that is similar to Wordle"""
     """words.txt from https://github.com/charlesreid1/five-letter-words/blob/master/sgb-words.txt"""
@@ -11,20 +11,18 @@ class WordGame(commands.Cog, name="Word Game"):
     def __init__(self, bot):
         self.bot = bot
         self.word_list = self.get_words()
+        self.current_word = ''
         self.round = -1
         self.current_progress = []
         self.emojidict = {"G": ":green_square:",
                           "Y": ":yellow_square:",
                           "B": ":black_large_square:",}
 
-    def get_words():
+    def get_words(self):
         """From https://github.com/charlesreid1/five-letter-words/blob/master/get_words.py"""
 
         # Load the file.
-        with open('words.txt','r') as f:
-            ## This includes \n at the end of each line:
-            #words = f.readlines()
-    
+        with open(os.path.join(os.getcwd(), "cogs", "minigames", "words.txt"),'r') as f:
             # This drops the \n at the end of each line:
             words = f.read().splitlines()
 
@@ -75,10 +73,16 @@ class WordGame(commands.Cog, name="Word Game"):
         new_message = message.replace('G', self.emojidict['G']).replace('Y', self.emojidict['Y']).replace('B', self.emojidict['B'])
         return new_message
 
+    def clear_game(self):
+        """Clears game state"""
+        self.round = -1
+        self.current_word = ''
+        self.current_progress = []
+
     @commands.command()
     async def getword(self, ctx):
         """Returns the test word. FOR DEBUG ONLY!"""
-        await ctx.send(self.word)
+        await ctx.send(self.current_word)
 
 
     @commands.command()
@@ -88,22 +92,21 @@ class WordGame(commands.Cog, name="Word Game"):
             await ctx.send("Game already started!")
         else:
             self.round = 0
-            # TODO: Add multiple words
+            self.current_word = random.choice(self.word_list)
             await ctx.send("Game Started!")
 
     @commands.command()
     async def add_word(self, ctx, word: to_lower):
         """Add word to list of words"""
         if(self.round >= 0):
-            if(len(word) == len(self.word)):
+            if(len(word) == len(self.current_word)):
                 self.round += 1
-                wordlist = self.checkword(word, self.word)
+                wordlist = self.checkword(word, self.current_word)
                 self.current_progress.append(wordlist)
                 emojimessage = self.to_emoji(''.join(wordlist))
                 await ctx.send(emoji.emojize(emojimessage))
-                if (wordlist.count('G') == len(self.word)):
-                    self.round = -1
-                    self.current_progress = []
+                if (wordlist.count('G') == len(self.current_word)):
+                    self.clear_game()
                     await ctx.send("You win!")
             else:
                 await ctx.send("Argument not correct length!")
@@ -119,9 +122,8 @@ class WordGame(commands.Cog, name="Word Game"):
     async def end_game(self, ctx):
         """Ends the word game if not started"""
         if (self.round >= 0):
-            self.round = -1
-            self.current_progress = []
-            await ctx.send("Game ended! The word was " + self.word)
+            self.clear_game()
+            await ctx.send("Game ended! The word was " + self.current_word)
         else:
             await ctx.send("The game hasn't started!")
 
