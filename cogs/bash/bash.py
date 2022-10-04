@@ -17,7 +17,7 @@ if platform.system() == 'Windows' and int(version('pywin32')) > 225:
 
 class Bash(commands.GroupCog, name="bash"):
 	"""
-	Bash
+	Bash - Allows for running linux programs inside discord by creating and executing commands inside Docker containers
 	"""
 	global testing_server
 
@@ -44,7 +44,6 @@ class Bash(commands.GroupCog, name="bash"):
 		except Exception as err:
 			#Catch and print errors
 			print(err)
-			print(err.command)
 			s = err.stderr
 			ret = s.decode("utf-8")
 		print(self.client.containers.list())
