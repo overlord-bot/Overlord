@@ -65,7 +65,7 @@ class WordGame(commands.Cog, name="Word Game"):
         """Returns the current status of the game"""
         return_status = str()
         for i in range(0, len(self.current_progress)):
-                       return_status = return_status + ''.join(self.current_progress[i]) + '\n'
+                       return_status = return_status + self.current_progress[i][0] + ": " + ''.join(self.current_progress[i][1]) + '\n'
         return return_status
 
     def to_emoji(self, message):
@@ -102,7 +102,7 @@ class WordGame(commands.Cog, name="Word Game"):
             if(word in self.word_list):
                 self.round += 1
                 wordlist = self.checkword(word, self.current_word)
-                self.current_progress.append(wordlist)
+                self.current_progress.append((word, wordlist))
                 emojimessage = self.to_emoji(''.join(wordlist))
                 await ctx.send(emoji.emojize(emojimessage))
                 if (wordlist.count('G') == len(self.current_word)):
