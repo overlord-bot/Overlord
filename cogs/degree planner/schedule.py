@@ -7,7 +7,7 @@ from .course import Course
 from .catalog import Catalog
 from .degree import Degree
 from .bundle import Bundle
-from .list_and_rules import List_and_rules
+from .rules import Rules
 
 
 #########################################################################

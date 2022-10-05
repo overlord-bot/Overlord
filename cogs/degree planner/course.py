@@ -7,7 +7,7 @@ class Course():
         self.major = major # major tag i.e. CSCI, ECSE
         self.course_id = cid # number of course, i.e. 1200, 2500
         self.credits = 0 # credit hours of this course
-        self.cross_listed = set() # set of other courses that are cross listed and should be treated as identical to this one
+        self.cross_listed = set() # set of cross listed courses that should be treated as same course
 
         self.syllabus = dict() # this should be a dictionary of <professor, link>
 
@@ -17,7 +17,7 @@ class Course():
         self.HASS_pathway = set() # set of pathways
         self.concentration = set() # set of concentrations
         self.prerequisites = set() # set of prerequisites
-        self.suggested_prerequisites = set() # optional, set will be displayed as a notification rather than a hard requirement
+        self.suggested_prerequisites = set() # optional, set will be displayed as a notification
         self.restricted = False # if this is a major restricted class
 
         # optional attributes
@@ -25,6 +25,12 @@ class Course():
         self.not_fall = False # if this class is usually unavailable in fall semesters
         self.not_spring = False # if this class is usually unavailable in spring
         self.not_summer = False # if this class is usually unavailable in the summer
+
+    def add_prerequisite(self, prereq):
+        self.prerequisites.add(prereq)
+
+    def add_cross_listed(self, cross):
+        self.cross_listed.add(cross)
 
     def in_pathway(self, pathway):
         return pathway in self.HASS_pathway
@@ -58,7 +64,10 @@ class Course():
         return (self.course_id//1000)
 
     def to_string(self):
-        return f"{self.name} {self.major} {str(self.course_id)}"
+        st = (f"{self.name}: {self.major} {str(self.course_id)}, {self.credits} credits"
+            f"{f', concentrations: {str(self.concentration)}' if len(self.concentration) != 0 else ''}"
+            f"{f', pathways: {str(self.HASS_pathway)}' if len(self.HASS_pathway) != 0 else ''}")
+        return st.replace("set()", "none")
 
     def __eq__(self, other):
         if self.name == other.name and self.course_id == other.course_id:

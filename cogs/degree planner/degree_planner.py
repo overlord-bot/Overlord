@@ -10,7 +10,7 @@ from .course import Course
 from .catalog import Catalog
 from .degree import Degree
 from .bundle import Bundle
-from .list_and_rules import List_and_rules
+from .rules import Rules
 from .schedule import Schedule
 from .test_suite import Test1
 from .user import User
@@ -149,24 +149,66 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     # and stores it into the catalog
     #-----------------------------------------------------------------------
     async def parse_courses(self, message, json_data):
+        
         user = self.users.get(message.author)
+
         if user.test_running:
             await user.msg(message, "Operation unavailable due to another user operation running")
             return
+
         await user.msg(message, "Beginning parsing json data into catalog")
+        
         for element in json_data['courses']:
+
+            # gets course name, major and course_id
             course = Course(element['name'], element['major'], int(element['id']))
+
+            if 'credits' in element:
+                course.credits = element['credits']
+            
             if 'CI' in element:
                 course.CI = element['CI']
 
             if 'HASS_pathway' in element:
-                HASS_pathway = element['HASS_pathway'].split(",")
-                for pathway in HASS_pathway:
-                    course.add_pathway(pathway.strip())
-                    print(f"added pathway {pathway.strip()}")
+                HASS_pathway = element['HASS_pathway'] # list of pathways
+                if isinstance(HASS_pathway, list):
+                    for pathway in HASS_pathway: # add each individual pathway (stripped of whitespace)
+                        course.add_pathway(pathway.strip())
+                elif HASS_pathway != "":
+                    course.add_pathway(HASS_pathway.strip())
+
+            if 'concentration' in element:
+                concentration = element['concentration']
+                if isinstance(concentration, list):
+                    for con in concentration:
+                        course.add_concentration(con.strip())
+                elif concentration != "":
+                    course.add_concentration(concentration.strip())
+
+            if 'prerequisites' in element:
+                prereqs = element['prerequisites']
+                if isinstance(prereqs, list):
+                    for prereq in prereqs:
+                        course.add_prerequisite(prereq.strip())
+                elif prereqs != "":
+                    course.add_prerequisite(prereqs.strip())
+
+            if 'cross_listed' in element:
+                cross_listed = element['cross_listed']
+                if isinstance(cross_listed, list):
+                    for cross in cross_listed:
+                        course.add_cross_listed(cross.strip())
+                elif cross_listed != "":
+                    course.add_cross_listed(cross_listed.strip())
+
+            if 'restricted' in element:
+                course.restricted = element['restricted']
+
+            if 'description' in element:
+                course.description = element['description']
 
             self.catalog.add_course(course)
-            await user.msg_hold(str(element))
+            await user.msg_hold(course.to_string())
         await user.msg_release(message, False)
 
 async def setup(bot):

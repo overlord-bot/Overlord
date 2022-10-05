@@ -7,7 +7,7 @@ from .course import Course
 from .catalog import Catalog
 from .degree import Degree
 from .bundle import Bundle
-from .list_and_rules import List_and_rules
+from .rules import Rules
 from .schedule import Schedule
 
 class Test1():    
@@ -155,7 +155,7 @@ class Test1():
         # List_and_rules tests
         await user.msg(message, "Beginning testing of class List_and_rules")
 
-        lar1 = List_and_rules()
+        lar1 = Rules()
  
         lar1.course_list = [course1, course2]
         lar1.min_courses = 2
