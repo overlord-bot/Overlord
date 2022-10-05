@@ -1,11 +1,9 @@
 from array import *
 from .course import Course
 
-
 # A list of classes and the rules that determines requirement fulfillment statuses.
 
-
-class List_and_rules():
+class Rules():
 
     course_list = []
     min_courses = 0
