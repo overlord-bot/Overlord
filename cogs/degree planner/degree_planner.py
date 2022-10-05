@@ -156,6 +156,15 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         await user.msg(message, "Beginning parsing json data into catalog")
         for element in json_data['courses']:
             course = Course(element['name'], element['major'], int(element['id']))
+            if 'CI' in element:
+                course.CI = element['CI']
+
+            if 'HASS_pathway' in element:
+                HASS_pathway = element['HASS_pathway'].split(",")
+                for pathway in HASS_pathway:
+                    course.add_pathway(pathway.strip())
+                    print(f"added pathway {pathway.strip()}")
+
             self.catalog.add_course(course)
             await user.msg_hold(str(element))
         await user.msg_release(message, False)

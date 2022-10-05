@@ -3,7 +3,8 @@
     {
       "name": "Programming Languages",
       "major": "CSCI",
-      "id": "4430"
+      "id": "4430",
+      "CI": false
     },
     {
       "name": "Operating Systems",
@@ -33,7 +34,9 @@
     {
       "name": "Graphic Storytelling",
       "major": "ARTS",
-      "id": "2070"
+      "id": "2070",
+      "CI": false,
+      "HASS_pathway": "Electronic Arts, Animation"
     }
   ]
 }
