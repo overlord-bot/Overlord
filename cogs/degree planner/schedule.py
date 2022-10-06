@@ -24,10 +24,12 @@ from .rules import Rules
 class Schedule():
     # SCHEDULE GLOBAL VARIABLES
 
-    def __init__(self):
+    def __init__(self, name:str):
         # needs to be initialized before every use by calling master_list_init()
         # uses 2D array [semester][course]
         self.__master_list = []
+        self.name = name
+        self.master_list_init()
 
     #-----------------------------------------------------------------------
     # Initializes the data structure storing all courses in the schedule,
@@ -53,6 +55,7 @@ class Schedule():
             print("cannot add course as it's duplicated")
         else:
             self.__master_list[semester].append(course)
+            print(f"added course: {course.to_string()}, semester: {semester}")
 
 
     def remove_course(self, course, semester):
@@ -83,10 +86,10 @@ class Schedule():
     # prints student's schedule to a string
     def to_string(self):
         count = 0
-        s = ""
+        s = "Schedule: " + self.name + "\n"
         for courselist in self.__master_list:
             count+=1
-            s+="Semester " + str(count) + ":\n"
+            s+="  Semester " + str(count) + ":\n"
             for course in courselist:
-                s+="\tCourse info: " + course.name + " " + course.major + " " + str(course.course_id) + "\n"
+                s+="    Course info: " + course.name + " " + course.major + " " + str(course.course_id) + "\n"
         return s

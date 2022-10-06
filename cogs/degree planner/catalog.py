@@ -12,8 +12,8 @@ class Catalog():
     def __init__(self):
         # catalog will  be a list of courses and degrees
         # TODO also store graphs for further analysis and course prediction of free electives
-        self.__course_list = {} # course name as key
-        self.__degree_list = {} # degree name as key
+        self.__course_list = dict() # course name as key
+        self.__degree_list = dict() # degree name as key
         self.lock = False
 
 

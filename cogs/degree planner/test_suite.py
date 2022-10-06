@@ -14,7 +14,7 @@ class Test1():
     async def test(self, message, user):
         await user.msg(message, "Generating synthetic test data set")
 
-        if user.get_schedule("test") == 0:
+        if isinstance(user.get_schedule("test"), str):
             await user.msg(message, "No previous schedule named 'test' exists, creating new test schedule")
             user.new_schedule("test")
         else:
@@ -63,7 +63,6 @@ class Test1():
             await user.msg_hold(course.to_string())
         await user.msg_release(message, False)
 
-        user.get_schedule("test").master_list_init()
         # adding courses to the master list
         
         user.get_schedule("test").add_course(catalog.get_course("Data Structures"), 1)
@@ -182,4 +181,3 @@ class Test1():
 
         # resetting master_list and conclude test module
         user.get_schedule("test").master_list_init()
-        user.test_running = False

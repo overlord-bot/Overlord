@@ -4,47 +4,57 @@ import discord
 import asyncio
 import os
 import json
+from enum import Enum
 
 from .schedule import Schedule
 
 
+class Flag(Enum):
+    MENU_SELECT = 0
+    SCHEDULING = 1
+    DEBUG = 2
+    TEST_RUNNING = 3
+    SCHEDULE_SELECTION = 4
+
+
 class User():
     
-    def __init__(self, name):
+    def __init__(self, name:str):
         self.username = name
         self.__schedules = dict() # List of all schedules this person has created <schedule name, Schedule obj>
+        self.curr_schedule = "" # empty string signifies no current schedule
 
          # temporary variables
         self.__msg_cache = "" # holds a string so it can be outputted to discord at the same time to avoid long waits due to network delays when printing individually
+        self.msg_header = "" # this is added before every msg, after the [degree planner]
 
         # flags
-        self.selection_flag = False # whether to take user input as a choice for the selection menu
-        self.test_running = False # if a test is already running, prevents two tests from running at the same time
-        self.debug = False # if set to true, all msg will print to console instead
+        self.flag = set()
 
     def get_all_schedules(self):
         return self.__schedules.values()
 
 
-    def get_schedule(self, schedule_name):
-        if self.__schedules.get(schedule_name, 0) == 0:
+    def get_schedule(self, schedule_name:str):
+        if isinstance(self.__schedules.get(schedule_name, ""), str):
             print(f"Schedule {schedule_name} not found")
-        return self.__schedules.get(schedule_name, 0)
+            return ""
+        return self.__schedules.get(schedule_name)
 
 
-    def new_schedule(self, schedule_name):
-        schedule = Schedule()
+    def new_schedule(self, schedule_name:str):
+        schedule = Schedule(schedule_name)
         self.__schedules.update({schedule_name : schedule})
 
 
-    def add_schedule(self, schedule_name, schedule):
+    def add_schedule(self, schedule_name:str, schedule:Schedule):
         self.__schedules.update({schedule_name : schedule})
 
 
-    def rename_schedule(self, old_name, new_name):
-        if self.__schedules.get(old_name, 0) == 0:
+    def rename_schedule(self, old_name:str, new_name:str):
+        if isinstance(self.__schedules.get(old_name, ""), str):
             print(f"Schedule {old_name} not found")
-        elif self.__schedules.get(new_name, 0) != 0:
+        elif not isinstance(self.__schedules.get(new_name, ""), str):
             print(f"Schedule {new_name} already exists, can't change name")
         else:
             self.__schedules.update({new_name : self.__schedules.get(old_name)})
@@ -60,13 +70,13 @@ class User():
     #-----------------------------------------------------------------------
 
     # stores the string inside a cache
-    async def msg_hold(self, content):
+    async def msg_hold(self, content:str):
         self.__msg_cache = self.__msg_cache + content + "\n"
 
 
     # prints all text within cache into discord's chat
-    async def msg_release(self, message, fancy):
-        if self.debug:
+    async def msg_release(self, message:str, fancy:bool):
+        if Flag.DEBUG in self.flag:
             print(self.__msg_cache)
             self.__msg_cache = ""
         elif not fancy:
@@ -81,9 +91,9 @@ class User():
 
 
     # immediately prints a string to discord's chat
-    async def msg(self, message, content):
-        if self.debug:
-            print(str(content))
+    async def msg(self, message, content:str):
+        if Flag.DEBUG in self.flag:
+            print(self.msg_header + str(content))
         else:
             await message.channel.send(f"[Degree Planner] {str(content)}")
 
