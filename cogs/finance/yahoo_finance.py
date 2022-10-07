@@ -1,6 +1,6 @@
 # Uses yfinance api to fetch data from yahoo finance
 
-import yfinance as yf  # $ pip install yfinance --upgrade --no-cache-dir
+import yfinance as yf  # pip install yfinance --upgrade --no-cache-dir
 from discord.ext import commands
 
 
