@@ -4,6 +4,7 @@
 #by using the command !calendar <add/view> <event>
 #and !calendar <view>
 
+import asyncio
 import discord
 from discord.ext import commands
 import datetime
@@ -19,6 +20,7 @@ class Calendar(commands.Cog, name="Calendar"):
             self.calendar_file = "calendar.txt"
             self.load_calendar()
     
+        #used to load the calendar from the calendar.txt file
         def load_calendar(self):
             if os.path.exists(self.calendar_file):
                 with open(self.calendar_file, "r") as f:
@@ -28,15 +30,23 @@ class Calendar(commands.Cog, name="Calendar"):
                 with open(self.calendar_file, "w") as f:
                     pass
     
+        #used to add an event to the calendar
         def save_calendar(self):
             with open(self.calendar_file, "w") as f:
                 for event in self.calendar:
                     f.write(event + "")
 
+        #used to print remove embed
         def print_remove_embed(self):
             embed = discord.Embed(title="Calendar", description="Event removed!", color=0xff0000)
             return embed
 
+        #used to print the clear embed    
+        def print_clear_embed(self):
+            embed = discord.Embed(title="Calendar", description="Calendar cleared!", color=0xff0000)
+            return embed
+
+        #used to print add embed
         def print_add_embed(self, event):
             date = event.split(" ")[-1]
             event = event.partition(date)[0]
@@ -50,6 +60,20 @@ class Calendar(commands.Cog, name="Calendar"):
             self.save_calendar()
             return embed
 
+        #used to check to see if the day has an event
+        def check_event(self, week_string, date):
+            curr = ""
+            if date < 10:  
+                curr = "0" + str(date)
+            else:
+                curr = str(date)
+            for key in self.dictionary.keys():
+                if key[3:5] == curr:
+                    for event in self.dictionary[key]:
+                        week_string += "*"
+            return week_string
+
+        #used to print the calendar
         def print_calendar_embed(self):
             now = datetime.datetime.now()
             year = now.year
@@ -63,24 +87,40 @@ class Calendar(commands.Cog, name="Calendar"):
                 week_string += "\n"
                 for day in week:
                     if day == currday:
-                        week_string += str(day) + " <--" + "\t"
+                        if day < 10:
+                            week_string += "0"
+                        week_string += str(day) + "<--"
+                        week_string = self.check_event(week_string, day)
+                        week_string += "\t"
                     elif day == 0:
-                        week_string += "x \t\t"
+                        week_string += " x\t\t"
                     elif len(str(day)) == 1:
-                        week_string += "0" + str(day) + "\t\t"
+                        week_string += "0" + str(day)
+                        week_string = self.check_event(week_string, day)
+                        week_string += "\t\t"
                     else:
-                        week_string += str(day) + "\t\t"
+                        week_string += str(day)
+                        week_string = self.check_event(week_string, day)
+                        week_string += "\t\t"
                 embed.add_field(name=week_string, value="\u200b", inline=False)
                 week_string = ""
-            for date in self.dictionary:
+            for date in sorted(self.dictionary):
                 if int(date[:2]) == month:
                     embed.add_field(name=date, value="\n".join(self.dictionary[date]), inline=False)
             return embed
 
-        def print_clear_embed(self):
-            embed = discord.Embed(title="Calendar", description="Calendar cleared!", color=0xff0000)
-            return embed
-
+        #used to get the timer
+        def set_timer(self, date):
+            now = datetime.datetime.now()
+            year = now.year
+            month = now.month
+            day = now.day
+            event_month = int(date[:2])
+            event_day = int(date[3:5])
+            event_year = int(date[6:])
+            time_until_event0 = datetime.datetime(event_year, event_month, event_day) - datetime.datetime(year, month, day)
+            time_until_event1 = time_until_event0.total_seconds()
+            return time_until_event1
 
         @commands.command(
             name="calendar",
@@ -120,6 +160,17 @@ class Calendar(commands.Cog, name="Calendar"):
             else:
                 await context.send("Please specify an action.")
 
+        @commands.command(
+            name="calendar_timer",
+            help="Set a timer for date on the calendar! Usage: !calendar_timer <date as in MM/DD/YYYY>"
+        )
+        async def calendar_timer(self, context, date: str):
+            timer = self.set_timer(date)
+            timer1 = str(datetime.timedelta(seconds=timer))
+            await context.send("Timer set for " + str(timer1))
+            await asyncio.sleep(timer)
+            if date in self.dictionary:
+                await context.send("It's " + date + "! " + " ".join(self.dictionary[date]))
 
 async def setup(bot):
     await bot.add_cog(Calendar(bot))
