@@ -1,0 +1,63 @@
+{
+  "courses": [
+    {
+      "name": "Programming Languages",
+      "major": "CSCI",
+      "id": "4430",
+      "credits": 4,
+      "prerequisites": "Operating Systems",
+      "CI": false
+    },
+    {
+      "name": "Operating Systems",
+      "major": "CSCI",
+      "id": "4210",
+      "credits": 4,
+      "prerequisites": ["Foundations of Computer Science", "Computer Organization"]
+    },
+    {
+      "name": "Data Science",
+      "major": "CSCI",
+      "id": "4350",
+      "credits": 3,
+      "concentration": "Theory, Algorithms and Mathematics"
+    },
+    {
+      "name": "Intro to Electronics",
+      "major": "ECSE",
+      "id": "2050",
+      "prerequisites": ["Circuits"],
+      "credits": 4
+    },
+    {
+      "name": "Mechatronics",
+      "major": "ECSE",
+      "id": "4090",
+      "credits": 3,
+      "CI": false,
+      "cross_listed": "MANE 4520"
+    },
+    {
+      "name": "Embedded Control",
+      "major": "ENGR",
+      "id": "2350",
+      "credits": 4
+    },
+    {
+      "name": "Graphic Storytelling",
+      "major": "ARTS",
+      "id": "2070",
+      "credits": 4,
+      "CI": false,
+      "HASS_pathway": "Electronic Arts"
+    },
+    {
+      "name": "3D modelling",
+      "major": "ARTS",
+      "id": "3150",
+      "credits": 4,
+      "CI": false,
+      "HASS_pathway": [ "Electronic Arts", "Animation" ]
+    }
+  ]
+}
