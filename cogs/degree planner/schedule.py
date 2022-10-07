@@ -28,6 +28,7 @@ class Schedule():
         # needs to be initialized before every use by calling master_list_init()
         # uses 2D array [semester][course]
         self.__master_list = []
+        self.SEMESTERS_MAX = 12
         self.name = name
         self.master_list_init()
 
@@ -68,6 +69,7 @@ class Schedule():
     def get_semester(self, semester):
         if semester >= len(self.__master_list):
             print("invalid semester")
+            return ""
         return self.__master_list[semester]
 
 
@@ -88,8 +90,8 @@ class Schedule():
         count = 0
         s = "Schedule: " + self.name + "\n"
         for courselist in self.__master_list:
-            count+=1
             s+="  Semester " + str(count) + ":\n"
+            count+=1
             for course in courselist:
                 s+="    Course info: " + course.name + " " + course.major + " " + str(course.course_id) + "\n"
         return s

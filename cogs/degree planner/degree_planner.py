@@ -179,6 +179,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await user.msg(message, "not enough arguments")
                     return
                 semester = int(command.pop(0))
+                if semester not in range(0, sche.SEMESTERS_MAX):
+                    await user.msg(message, "invalid semester, please enter number between 0 and 11")
+                    return
 
                 for course_name in command:
                     await user.msg(message, f"attempting to add course {course_name} to semester {semester}")
@@ -196,6 +199,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await user.msg(message, "not enough arguments")
                     return
                 semester = int(command.pop(0))
+                if semester not in range(0, sche.SEMESTERS_MAX):
+                    await user.msg(message, "invalid semester, please enter number between 0 and 11")
+                    return
 
                 for course_name in command:
                     course = self.catalog.get_course(course_name)
