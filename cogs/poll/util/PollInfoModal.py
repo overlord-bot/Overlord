@@ -11,7 +11,12 @@ class PollInfoModal(discord.ui.Modal, title="Poll Information"):
 	)
 	poll_information = discord.ui.TextInput(
 		label = "Poll Information",
-		style=discord.TextStyle.long	
+		style=discord.TextStyle.long
+	)
+	poll_timeout = discord.ui.TextInput(
+		label= "Timeout",
+		style=discord.TextStyle.short,
+		placeholder="How many minutes should this poll last?"
 	)
 
 	# appliedcsskills.withgoogle.com
@@ -27,13 +32,15 @@ class PollInfoModal(discord.ui.Modal, title="Poll Information"):
 		return super().add_item(item)
 
 	async def on_submit(self, interaction: discord.Interaction) -> None:
-		title = self.poll_title.default
+		title = self.poll_title.value
 		content = self.poll_information.value.split("\n")
 		print(content)
-		embed = discord.Embed(title=title)
+		embed = discord.Embed(title=title, type="rich")
 		embed.set_author(name=interaction.user.nick, icon_url=interaction.user.display_avatar.url)
+		if (len(content) >= 25):
+			await interaction.response.send_message(ephemeral=True, content="You can't have more than 25 options")
+			return
 		for i in range(len(content)):
 			embed.add_field(name=str(i), value=content[i])
-		view = PollView(title=title, content=content)
+		view = PollView(title=title, content=content, embed=embed)
 		await interaction.response.send_message(embed=embed, view=view)
-		# await interaction.response.send_message(content="Thanks")
