@@ -90,7 +90,7 @@ class WordGame(commands.Cog, name="Word Game"):
 
     @commands.command()
     async def start_game(self, ctx, rounds: int = -1):
-        """Starts the word game."""
+        """Starts the word game. Rounds are infinite unless an optional positive integer is supplied."""
         if (self.round >= 0):
             await ctx.send("Game already started!")
         else:
@@ -101,7 +101,12 @@ class WordGame(commands.Cog, name="Word Game"):
                 await ctx.send("Game Started with " + str(self.max_round) + " rounds!")
             else:
                 await ctx.send("Game Started!")
-
+    
+    @start_game.error
+    async def start_game_error(self, ctx, error):
+        if isinstance(error, commands.BadArgument):
+            await ctx.send("I couldn't read how many rounds that was! Try typing an integer number.")
+    
     @commands.command()
     async def add_word(self, ctx, word: to_lower):
         """Add word to list of words"""
@@ -128,7 +133,7 @@ class WordGame(commands.Cog, name="Word Game"):
     @add_word.error
     async def add_word_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("Not enough arguments!")
+            await ctx.send("Your add_word is missing a word!")
 
     @commands.command()
     async def end_game(self, ctx):
