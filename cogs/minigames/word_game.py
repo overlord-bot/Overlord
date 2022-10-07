@@ -17,6 +17,7 @@ class WordGame(commands.Cog, name="Word Game"):
         self.emojidict = {"G": ":green_square:",
                           "Y": ":yellow_square:",
                           "B": ":black_large_square:",}
+        self.max_round = -1
 
     def get_words(self):
         """From https://github.com/charlesreid1/five-letter-words/blob/master/get_words.py"""
@@ -76,24 +77,30 @@ class WordGame(commands.Cog, name="Word Game"):
     def clear_game(self):
         """Clears game state"""
         self.round = -1
+        self.max_round = -1
         self.current_word = ''
         self.current_progress = []
 
+    """
     @commands.command()
     async def getword(self, ctx):
-        """Returns the test word. FOR DEBUG ONLY!"""
+        #Returns the test word. FOR DEBUG ONLY!
         await ctx.send(self.current_word)
-
+    """
 
     @commands.command()
-    async def start_game(self, ctx):
+    async def start_game(self, ctx, rounds: int = -1):
         """Starts the word game."""
         if (self.round >= 0):
             await ctx.send("Game already started!")
         else:
             self.round = 0
             self.current_word = random.choice(self.word_list)
-            await ctx.send("Game Started!")
+            if (rounds >= 1):
+                self.max_round = rounds
+                await ctx.send("Game Started with " + str(self.max_round) + " rounds!")
+            else:
+                await ctx.send("Game Started!")
 
     @commands.command()
     async def add_word(self, ctx, word: to_lower):
@@ -108,6 +115,11 @@ class WordGame(commands.Cog, name="Word Game"):
                 if (wordlist.count('G') == len(self.current_word)):
                     self.clear_game()
                     await ctx.send("You win!")
+                    return
+                
+                if(self.round >= self.max_round and self.max_round != -1):
+                    await ctx.send("Game ended! The word was " + self.current_word)
+                    self.clear_game()
             else:
                 await ctx.send("Invalid word!")
         else:
