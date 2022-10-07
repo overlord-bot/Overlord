@@ -59,33 +59,51 @@ def getRefs():
         refs.append([major, a_major["href"]])
     return refs
 
+def getPastCreditHours(list, name):
+    for item in list:
+        if(item['name'] == name):
+            #print(item)
+            info = int(item['credits']), int(item['number_classes'])
+            #print(info)
+            return info
+    return 0, 0
+
+def isElective(text): #Checks to see if course is elective based on key words
+    text = text.lower()
+    elective_key_words = ["elective", "option", "cas course", "sts course", "hass approved inquiry and communication intensive course", "concentration", "capstone", "approved project", "area of study", "4000-level comm course", "biology requirement", "track course"]
+    return any(substring in text for substring in elective_key_words)
+
 def write_to_dict(classes):
-    dict = {}
+    dict_list = []
     name = "undefined"
 
     for course in classes:
         course_dict = {}
+
         #Check if elective
-        if course.lower().count("elective") != 0:
-            credit_hours = 0
-            num_classes = 1
+        #if course.lower().count("elective") != 0 or course.lower().count("option") != 0:
+        if isElective(course):
             elective_split = course.split("Credit Hours: ")
             name = elective_split[0].strip()
+            
+            # TO DO
+            #
+            #                double check in case footnote after name
+            if name.lower().count('footnote') != 0 or name.lower().count('or') != 0: #Special case for footnote 
+                continue 
+
+            credit_hours, num_classes = getPastCreditHours(dict_list, name)
+            num_classes += 1
+
             if len(elective_split) >= 2:
-                if len(elective_split[1]) >= 2:
-                    credit_hours = elective_split[1][0]
-            
-            pastClass = dict.get(name) #Check if same elective already in system
-            if pastClass != None:
-                #if str(pastClass["credit_hours"]).strip() != "":
-                    #print(str(pastClass["credit_hours"]).strip())
-                try:
-                    credit_hours = int(credit_hours) + int(pastClass["credits"])
-                    num_classes = int(num_classes) + int(pastClass["number_classes"])
-                except:
-                    print("Error formatting credit hours for {}. Starting value *{}* and trying to add *{}*".format(name, credit_hours, pastClass["credits"]))
-            
+                if len(elective_split[1]) >= 1:
+                    try:
+                        credit_hours += int(elective_split[1].strip()[0]) #Get second part of split, remove spaces, take first number
+                    except:
+                        print("Error formatting credit hours for {}. Starting value *{}* and trying to add *{}*".format(name, credit_hours, elective_split[1][0]))
+    
             course_dict = {
+                "name": name,
                 "type": "elective",
                 "credits": credit_hours,
                 "number_classes": num_classes
@@ -106,30 +124,39 @@ def write_to_dict(classes):
             if len(name_split) >= 2: #If length is 2+ then tag and number exist
                 name = name_split[1]
 
+                if name.lower().count('footnote') != 0 or name.lower().count('or') != 0: #Special case for footnote
+                    continue
+
                 tag_split = name_split[0].split(" ")
                 if len(tag_split) >= 2:
                     tag = tag_split[0]
                     number = tag_split[1]
             else:
                 name = name_split[0].strip()
+                if name.lower().count('footnote') != 0 or name.lower().count('or') != 0: #Special case for footnote
+                    continue
         
             course_dict = {
+                "name": name,
                 "type": "course",
                 "credits": credit_hours,
                 "major": tag,
                 "course_id": number
             }
-        dict[name] = course_dict
+        #dict[name] = course_dict
+        dict_list.append(course_dict)
+        #dict[""]
         #print(course_dict)
 
-    return dict
+    #return dict
+    return dict_list
 
 dict = {}
 for ref_tup in getRefs():
     major = ref_tup[0]
     ref = ref_tup[1]
     page = requests.get("http://catalog.rpi.edu/" + ref)
-    #page = requests.get("http://catalog.rpi.edu/preview_program.php?catoid=24&poid=6389&returnto=604") 
+    #page = requests.get("http://catalog.rpi.edu/preview_program.php?catoid=18&poid=4016&returnto=439") 
 
     if page.status_code != 200: 
         print("Error downloading ref:", ref)
