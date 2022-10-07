@@ -5,9 +5,6 @@ class HelpCommand(commands.HelpCommand):
     async def send_bot_help(self, mapping):
         embed = discord.Embed(title="All commands", description="Type `!help [command]` for help with a specific command.")
 
-        bot = self.context.bot.user
-        embed.set_author(name=bot.name, icon_url=bot.avatar)
-
         for cog, commands in mapping.items():
             if cog is not None:
                 command_names = [command.name for command in commands if command is not None]
