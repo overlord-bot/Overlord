@@ -24,6 +24,9 @@ from discord.ext import commands
 class GoMinigame(commands.Cog, name = "Go"):
     def __init__(self, bot) -> None:
         self.bot = bot
+        self.player1 = None
+        self.player2 = None
+        self.turn = 1
         # 0 represents place without a move, 1 represents move from player 1, 2 for player 2
         self.board = [[0]*9 for i in range(9)]
 
@@ -51,6 +54,14 @@ class GoMinigame(commands.Cog, name = "Go"):
 
     @commands.command()
     async def go(self, context):
+        if len(context.message.content.split()) != 2:
+            await context.send("invalid command")
+            return
+
+        self.player1 = context.message.author.id
+        self.player2 = context.message.content.split()[1][2:-1:]
+        print(self.player1)
+        print(self.player2)
         await self.printBoardState(context)
         await context.send("go command working!")
 
