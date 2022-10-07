@@ -9,6 +9,7 @@ from datetime import date
 import time 
 
 
+client = commands.Bot(command_prefix="$")
 class BijunChat(commands.Cog, name="BijunChat"):
     """Basic Chatbot Functions"""
 
@@ -100,6 +101,7 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
                     count -= 1
                 await message.channel.send("TIME'S UP!")
                 await message .channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
+                
 
 async def setup(bot):
     await bot.add_cog(BijunChat(bot))
