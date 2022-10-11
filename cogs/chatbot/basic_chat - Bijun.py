@@ -45,10 +45,7 @@ class BijunChat(commands.Cog, name="BijunChat"):
             await message.channel.send("https://c.tenor.com/fzrYWO2l7KkAAAAC/captain-america-language.gif")
             await message.channel.send("Watch your language!")
 
-        elif (message.content.lower() == "goodbye") or (message.content.lower() == "good bye"):     #close the bot
-            await message.channel.send("GoodBye, " + message.author.name + ", have a great day!")
-            await self.bot.close()
-            
+        
             
 class ExtraFunc(commands.Cog, name="Additional Function "):
     def __init__(self, bot):
