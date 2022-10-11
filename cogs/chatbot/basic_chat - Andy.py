@@ -1,11 +1,11 @@
-﻿# Basic Chat Response
-import random 
-import random 
-import io
-import aiohttp
-import discord
+﻿# Chat Functions made by Andy
 
 from discord.ext import commands
+
+name_to_url = {"!youtube": "https://www.youtube.com/", '!yt': "https://www.youtube.com/",
+               "!facebook": "https://www.facebook.com/", "!fb": "https://www.facebook.com/",
+               "!reddit": "https://www.reddit.com/", "!lms": "https://lms.rpi.edu/",
+               "!quacs": "https://quacs.org/", "!sis": "https://sis.rpi.edu/"}
 
 
 class AndyChat(commands.Cog, name="Andy Chat"):
@@ -14,12 +14,18 @@ class AndyChat(commands.Cog, name="Andy Chat"):
     def __init__(self, bot):
         self.bot = bot
 
-        
     @commands.Cog.listener()
-
     async def on_message(self, message):
 
-        ID = message.author.id
+        msg = message.content.lower()
+
+        # reacts with a specified emoji
+        if msg.startswith("!react"):
+            await message.add_reaction(message.content[-1])
+
+        # finds website name in dictionary and sends a link
+        if msg in name_to_url.keys():
+            await message.reply(name_to_url[msg])
 
         # gifs
         if message.content.lower().startswith("what") and len(message.content) < 10:
@@ -30,7 +36,7 @@ class AndyChat(commands.Cog, name="Andy Chat"):
 
         elif "shirley" in message.content.lower():
             await message.reply("https://media.giphy.com/media/dHvG5FzLhmwJS3CUZj/giphy.gif")
-        
+
         elif "marty" in message.content.lower():
             await message.reply("https://media.giphy.com/media/yGoHdRNjnV7ze7LQfN/giphy.gif")
 
@@ -52,8 +58,8 @@ class AndyChat(commands.Cog, name="Andy Chat"):
         elif "kuzman" in message.content.lower():
             await message.reply("https://media.giphy.com/media/7PbdlEW2fyXDubicsU/giphy.gif")
 
-            
-
+        elif "therock" in message.content.lower().replace(' ', ''):
+            await message.reply("https://media.giphy.com/media/26ghbWoXv3G6ypo8o/giphy.gif")
 
 
 async def setup(bot):
