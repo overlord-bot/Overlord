@@ -9,7 +9,6 @@ from datetime import date
 import time 
 
 
-client = commands.Bot(command_prefix="$")
 class BijunChat(commands.Cog, name="BijunChat"):
     """Basic Chatbot Functions"""
 
