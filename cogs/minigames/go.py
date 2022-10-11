@@ -87,10 +87,18 @@ class GoMinigame(commands.Cog, name = "Go"):
         if (self.turn == 1 and user != self.player1) or (self.turn == 2 and user != self.player2):
             print("Not a player")
             return
+        if len(move) != 5:
+            await context.send("Please write your move command like '(x,y)'")
+            return
+
+        x = int(move[1])
+        y = int(move[3])
 
         if self.turn == 1:
-            self.turn = 0
+            self.board[x][y] = 1
+            self.turn = 2
         else:
+            self.board[x][y] = 2
             self.turn = 1
         self.printBoardState(context)
 
