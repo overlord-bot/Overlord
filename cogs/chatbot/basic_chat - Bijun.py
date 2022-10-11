@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 from datetime import datetime
 from datetime import date
-import time 
+import asyncio
 
 
 class BijunChat(commands.Cog, name="BijunChat"):
@@ -44,7 +44,6 @@ class BijunChat(commands.Cog, name="BijunChat"):
             await message.delete()
             await message.channel.send("https://c.tenor.com/fzrYWO2l7KkAAAAC/captain-america-language.gif")
             await message.channel.send("Watch your language!")
-
         
             
 class ExtraFunc(commands.Cog, name="Additional Function "):
@@ -65,7 +64,7 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         
         if "!count" in message.content.lower():
             if  "sec" in message.content.lower():
-            
+                
                 times = ""
                 for i in range(0,len(message.content.lower())):
                     if message.content.lower()[i].isdigit() :
@@ -74,15 +73,16 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
                 await message.channel.send("Start counting {} seconds!".format(times))
                 count = times
                 while count:
-                    if(count == times/2):
+                    if(count == (times/2)-1):
                         await message.channel.send("{} seconds left!".format(count))
-                    time.sleep(1)
+                    await asyncio.sleep(1)
                     count -= 1
                 await message.channel.send("TIME'S UP!")
                 await message .channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
         
         if "!count" in message.content.lower():
             if  "min" in message.content.lower():
+                await asyncio.sleep(100)
                 times = ""
                 for i in range(0,len(message.content.lower())):
                     if message.content.lower()[i].isdigit() :
@@ -91,12 +91,13 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
                 await message.channel.send("Start counting {} minutes!".format(times))
                 count = times
                 while count:
-                    if(count == times/2):
+                    if(count == (times/2)-1):
                         await message.channel.send("{} minutes left!".format(count))
-                    time.sleep(60)
+                    await asyncio.sleep(60)
                     count -= 1
                 await message.channel.send("TIME'S UP!")
                 await message .channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
+        
     '''
     @commands.command()
     async def count(self,message, arg1,arg2):
