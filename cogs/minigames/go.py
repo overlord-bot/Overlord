@@ -66,7 +66,8 @@ class GoMinigame(commands.Cog, name = "Go"):
 
         #making a move
         if context.message.mentions == []:
-            self.makeMove(context, context.message.content.split()[1])
+            print("EPIC")
+            await self.makeMove(context, context.message.content.split()[1])
             return
 
         #starting the game, resetting the board
@@ -100,7 +101,7 @@ class GoMinigame(commands.Cog, name = "Go"):
         else:
             self.board[x][y] = 2
             self.turn = 1
-        self.printBoardState(context)
+        await self.printBoardState(context)
 
 async def setup(bot):
     await bot.add_cog(GoMinigame(bot))
