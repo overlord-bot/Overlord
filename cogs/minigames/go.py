@@ -38,9 +38,29 @@ class GoMinigame(commands.Cog, name = "Go"):
     User 2 is represented by black circle
     """
     async def printBoardState(self, context):
+        number = [
+            ":stop_button:",
+            ":one:",
+            ":two:",
+            ":three:",
+            ":four:",
+            ":five:",
+            ":six:",
+            ":seven:",
+            ":eight:",
+            ":nine:",
+            ":stop_button:"
+        ]
+
         # build the string to send it all in one message
-        output_string = ""
+        output_string = ":fast_forward:" * 4 + ":regional_indicator_g::regional_indicator_o::arrows_counterclockwise:" + ":rewind:" * 4 + "\n"
+
+        for i in range(11):
+            output_string += number[i]
+
+        output_string += "\n"
         for i in range(9):
+            output_string += number[9-i]
             for j in range(9):
                 match self.board[i][j]:
                     case 0:
@@ -51,7 +71,11 @@ class GoMinigame(commands.Cog, name = "Go"):
                         output_string += ':black_circle:'
                     case _:
                         output_string += 'There is a major problem!!'
-            output_string += "\n"
+            output_string += number[9-i] + "\n"
+
+        for i in range(11):
+            output_string += number[i]
+
         await context.send(output_string)
 
     @commands.command()
@@ -86,7 +110,7 @@ class GoMinigame(commands.Cog, name = "Go"):
     async def makeMove(self, context, move):
         user = context.message.author
         if (self.turn == 1 and user != self.player1) or (self.turn == 2 and user != self.player2):
-            print("Not a player")
+            print("Not the right player!")
             return
         if len(move) != 5:
             await context.send("Please write your move command like '(x,y)'")
