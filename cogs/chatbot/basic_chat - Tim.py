@@ -57,7 +57,7 @@ class TimChat(commands.Cog, name="TimChat"):
         await message.channel.send(random.choice(JOKES))
     @commands.command()
     async def goodbye(self, message):
-        FAREWELL = ("See ya, ", "Bye bye, ", "See you around, ", "Alright, ", "Good to see you ")
+        FAREWELL = ("See ya, ", "Bye bye, ", "See you around, ", "Alright, ", "Good to see you ", "Anytime ", "See you next time ")
         await message.channel.send(random.choice(FAREWELL) + message.author.name + ", have a great day!")
         await self.bot.close()
 
