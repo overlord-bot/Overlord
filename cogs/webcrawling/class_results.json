@@ -35,12 +35,6 @@
       "course_id": "1020"
     },
     {
-      "name": "CAS Course",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Investigating Society ",
       "type": "course",
       "credits": "4",
@@ -48,22 +42,10 @@
       "course_id": "2100"
     },
     {
-      "name": "CAS Course",
+      "name": "Science Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Advanced STS Course",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "CAS Course",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Advanced STS Course",
@@ -79,10 +61,16 @@
       "course_id": "4980"
     },
     {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 20,
+      "number_classes": 5
+    },
+    {
       "name": "CAS Course",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Federal Civil Procedure",
@@ -92,23 +80,9 @@
       "course_id": -1
     },
     {
-      "name": "Contracts",
-      "type": "course",
-      "credits": "3",
-      "major": "none",
-      "course_id": -1
-    },
-    {
       "name": "Property I",
       "type": "course",
       "credits": "2",
-      "major": "none",
-      "course_id": -1
-    },
-    {
-      "name": "Introduction to Lawyering",
-      "type": "course",
-      "credits": "3",
       "major": "none",
       "course_id": -1
     },
@@ -205,6 +179,12 @@
       "course_id": "1200"
     },
     {
+      "name": "SoE 2\u2026. Engineering Design Elective",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
+    },
+    {
       "name": "Engineering Processes ",
       "type": "course",
       "credits": "1",
@@ -219,18 +199,18 @@
       "course_id": "2530"
     },
     {
-      "name": "Thermodynamics ",
-      "type": "course",
-      "credits": "3",
-      "major": "MANE",
-      "course_id": "2710"
-    },
-    {
       "name": "Introduction to Differential Equations ",
       "type": "course",
       "credits": "4",
       "major": "MATH",
       "course_id": "2400"
+    },
+    {
+      "name": "Thermodynamics ",
+      "type": "course",
+      "credits": "3",
+      "major": "MANE",
+      "course_id": "2710"
     },
     {
       "name": "Modeling and Analysis of Uncertainty ",
@@ -275,12 +255,6 @@
       "course_id": "4070"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "STSO 4100   Professional Development II",
       "type": "course",
       "credits": "2",
@@ -314,12 +288,6 @@
       "number_classes": 1
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Propulsion Systems ",
       "type": "course",
       "credits": "3",
@@ -329,8 +297,14 @@
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
+    },
+    {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 20,
+      "number_classes": 5
     },
     {
       "name": "MANE 4\u2026. Capstone Design Elective",
@@ -354,12 +328,6 @@
   ],
   "Applied Physics": [
     {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Computer Science I ",
       "type": "course",
       "credits": "4",
@@ -372,12 +340,6 @@
       "credits": "4",
       "major": "MATH",
       "course_id": "1010"
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 0,
-      "number_classes": 1
     },
     {
       "name": "Introduction to Biology ",
@@ -414,12 +376,6 @@
       "course_id": "2400"
     },
     {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
       "credits": "4",
@@ -432,12 +388,6 @@
       "credits": "4",
       "major": "PHYS",
       "course_id": "2210"
-    },
-    {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Mathematics Elective",
@@ -457,12 +407,6 @@
       "credits": "4",
       "major": "PHYS",
       "course_id": "2350"
-    },
-    {
-      "name": "Technical Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
     },
     {
       "name": "Advanced Calculus ",
@@ -488,26 +432,8 @@
     {
       "name": "Technical Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Technical Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Technical Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Free Elective",
@@ -518,8 +444,8 @@
     {
       "name": "HASS Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 20,
+      "number_classes": 5
     },
     {
       "name": "Optics ",
@@ -529,25 +455,11 @@
       "course_id": "2620"
     },
     {
-      "name": "Lasers and Optical Systems ",
-      "type": "course",
-      "credits": "4",
-      "major": "PHYS",
-      "course_id": "4630"
-    },
-    {
       "name": "Optical Communications and Integrated Optics ",
       "type": "course",
       "credits": "4",
       "major": "PHYS",
       "course_id": "4640"
-    },
-    {
-      "name": "Solid-State Physics ",
-      "type": "course",
-      "credits": "4",
-      "major": "PHYS",
-      "course_id": "4720"
     },
     {
       "name": "Introduction to Electronics ",
@@ -583,27 +495,6 @@
       "credits": "3",
       "major": "MTLE",
       "course_id": "4160"
-    },
-    {
-      "name": "Solid-State Physics ",
-      "type": "course",
-      "credits": "4",
-      "major": "PHYS",
-      "course_id": "4720"
-    },
-    {
-      "name": "Astrophysics ",
-      "type": "course",
-      "credits": "4",
-      "major": "ASTR",
-      "course_id": "4220"
-    },
-    {
-      "name": "Gravitation and Cosmology ",
-      "type": "course",
-      "credits": "4",
-      "major": "ASTR",
-      "course_id": "4240"
     },
     {
       "name": "Lasers and Optical Systems ",
@@ -789,12 +680,6 @@
       "course_id": "1050"
     },
     {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "MATH Elective",
       "type": "elective",
       "credits": 4,
@@ -820,12 +705,6 @@
       "credits": "5",
       "major": "ARCH",
       "course_id": "4820"
-    },
-    {
-      "name": "Science Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
     },
     {
       "name": "Professional Practice 1 ",
@@ -856,18 +735,6 @@
       "course_id": "4830"
     },
     {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Science Elective",
       "type": "elective",
       "credits": 8,
@@ -879,30 +746,6 @@
       "credits": "5",
       "major": "ARCH",
       "course_id": "4770"
-    },
-    {
-      "name": "Professional Elective",
-      "type": "elective",
-      "credits": 2,
-      "number_classes": 1
-    },
-    {
-      "name": "Professional Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Professional Practice 2 ",
@@ -919,22 +762,10 @@
       "course_id": "4780"
     },
     {
-      "name": "Professional Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "HASS Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 20,
+      "number_classes": 5
     },
     {
       "name": "Architectural Design Studio 7 ",
@@ -951,22 +782,16 @@
       "course_id": "4910"
     },
     {
-      "name": "Professional Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 2
-    },
-    {
       "name": "Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
     },
     {
       "name": "Professional Elective",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 2
+      "credits": 10,
+      "number_classes": 5
     },
     {
       "name": "Final Project Design Studio ",
@@ -1034,6 +859,12 @@
       "course_id": "1100"
     },
     {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 16,
+      "number_classes": 4
+    },
+    {
       "name": "Molecular Biology ",
       "type": "course",
       "credits": "4",
@@ -1048,13 +879,7 @@
       "course_id": "1200"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "Free Elective",
+      "name": "HASS Core Neuroscience Elective",
       "type": "elective",
       "credits": 8,
       "number_classes": 2
@@ -1076,14 +901,8 @@
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Cellular Neuroscience ",
@@ -1172,36 +991,10 @@
       "course_id": "1200"
     },
     {
-      "name": "Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 2,
-      "number_classes": 1
-    },
-    {
-      "name": "Molecular Biochemistry I ",
-      "type": "course",
-      "credits": "4",
-      "major": "BIOL",
-      "course_id": "4760"
-    },
-    {
-      "name": "Biology Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 6,
-      "number_classes": 2
-    },
-    {
-      "name": "Biostatistics ",
-      "type": "course",
-      "credits": "4",
-      "major": "BIOL",
-      "course_id": "4200"
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Biology Elective",
@@ -1210,23 +1003,11 @@
       "number_classes": 2
     },
     {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 6,
-      "number_classes": 2
-    },
-    {
       "name": "Biostatistics ",
       "type": "course",
       "credits": "4",
       "major": "BIOL",
       "course_id": "4200"
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 2
     },
     {
       "name": "Molecular Biochemistry I ",
@@ -1238,53 +1019,23 @@
     {
       "name": "BIOL - Biology Elective",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 1
+      "credits": 12,
+      "number_classes": 3
     },
     {
       "name": "Elective",
       "type": "elective",
-      "credits": 6,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 6,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 6,
-      "number_classes": 2
-    },
-    {
-      "name": "BIOL - Biology Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "BIOL - Biology Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 6,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 6,
-      "number_classes": 2
+      "credits": 32,
+      "number_classes": 9
     }
   ],
   "Biomedical Engineering": [
+    {
+      "name": "HASS Elective Credit Hours:4",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
+    },
     {
       "name": "Chemistry I ",
       "type": "course",
@@ -1395,18 +1146,6 @@
       "credits": "3",
       "major": "ENGR",
       "course_id": "2600"
-    },
-    {
-      "name": "HASS Elective -",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "Free Elective  -",
-      "type": "elective",
-      "credits": 3,
-      "number_classes": 1
     },
     {
       "name": "Modeling of Biomedical Systems ",
@@ -1563,12 +1302,6 @@
       "course_id": "1020"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Health Economics and Policy ",
       "type": "course",
       "credits": "4",
@@ -1582,29 +1315,11 @@
       "number_classes": 1
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Physics I ",
       "type": "course",
       "credits": "4",
       "major": "PHYS",
       "course_id": "1100"
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Econometrics ",
@@ -1627,18 +1342,6 @@
       "number_classes": 1
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Economics of Biotech and Medical Innovations ",
       "type": "course",
       "credits": "4",
@@ -1652,21 +1355,9 @@
       "number_classes": 1
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Readings in Economics ",
       "type": "course",
-      "credits": "3",
+      "credits": "4",
       "major": "ECON",
       "course_id": "4940"
     },
@@ -1679,14 +1370,8 @@
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 6,
-      "number_classes": 2
+      "credits": 38,
+      "number_classes": 10
     },
     {
       "name": "Data Analytics",
@@ -1927,12 +1612,6 @@
       "number_classes": 1
     },
     {
-      "name": "Science Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Environmental and Ecological Systems ",
       "type": "course",
       "credits": "4",
@@ -1972,30 +1651,16 @@
       "number_classes": 1
     },
     {
-      "name": "Structures 2 ",
-      "type": "course",
-      "credits": "3",
-      "major": "ARCH",
-      "course_id": "4330"
-    },
-    {
-      "name": "Construction Industry Seminar 1 ",
-      "type": "course",
-      "credits": "2",
-      "major": "ARCH",
-      "course_id": "4510"
-    },
-    {
       "name": "Concentration 4",
       "type": "elective",
       "credits": 4,
       "number_classes": 1
     },
     {
-      "name": "Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 1
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Structures 2 ",
@@ -2122,11 +1787,23 @@
       "course_id": "2430"
     },
     {
+      "name": "Science Core Elective",
+      "type": "elective",
+      "credits": 4,
+      "number_classes": 1
+    },
+    {
       "name": "Managerial Finance ",
       "type": "course",
       "credits": "4",
       "major": "MGMT",
       "course_id": "2320"
+    },
+    {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 8,
+      "number_classes": 2
     },
     {
       "name": "Operations Management ",
@@ -2137,12 +1814,6 @@
     },
     {
       "name": "HASS Ethics Option",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "Elective",
       "type": "elective",
       "credits": 4,
       "number_classes": 1
@@ -2175,10 +1846,10 @@
       "number_classes": 1
     },
     {
-      "name": "Elective",
+      "name": "HASS or Science Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 10,
+      "number_classes": 3
     },
     {
       "name": "Econometrics ",
@@ -2190,8 +1861,8 @@
     {
       "name": "Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
     }
   ],
   "Business and Management": [
@@ -2273,12 +1944,6 @@
       "course_id": "2300"
     },
     {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Management Professional Development 2 ",
       "type": "course",
       "credits": "2",
@@ -2307,34 +1972,22 @@
       "course_id": "2320"
     },
     {
-      "name": "Elective",
+      "name": "Science Core Elective",
       "type": "elective",
       "credits": 8,
       "number_classes": 2
     },
     {
-      "name": "Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 20,
+      "number_classes": 5
     },
     {
       "name": "Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Strategy and Policy ",
@@ -2363,20 +2016,6 @@
       "credits": "4",
       "major": "MGMT",
       "course_id": "4530"
-    },
-    {
-      "name": "Entrepreneurial Finance ",
-      "type": "course",
-      "credits": "4",
-      "major": "MGMT",
-      "course_id": "4540"
-    },
-    {
-      "name": "Topics in Management ",
-      "type": "course",
-      "credits": "4",
-      "major": "MGMT",
-      "course_id": "4960"
     },
     {
       "name": "Investments I ",
@@ -2472,12 +2111,6 @@
   ],
   "Chemical Engineering": [
     {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Introduction to Chemical Engineering ",
       "type": "course",
       "credits": "1",
@@ -2504,12 +2137,6 @@
       "credits": "4",
       "major": "PHYS",
       "course_id": "1100"
-    },
-    {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Fundamentals of Chemical Engineering ",
@@ -2575,12 +2202,6 @@
       "course_id": "1200"
     },
     {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Energy, Entropy, and Equilibrium ",
       "type": "course",
       "credits": "3",
@@ -2593,12 +2214,6 @@
       "credits": "3",
       "major": "ENGR",
       "course_id": "2600"
-    },
-    {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Free Elective I",
@@ -2629,8 +2244,8 @@
     {
       "name": "HASS Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 20,
+      "number_classes": 5
     },
     {
       "name": "Chemical Engineering Separations ",
@@ -2744,6 +2359,12 @@
       "course_id": "1200"
     },
     {
+      "name": "HASS  Core Elective",
+      "type": "elective",
+      "credits": 4,
+      "number_classes": 1
+    },
+    {
       "name": "Equilibrium Chemistry and Quantitative Analysis ",
       "type": "course",
       "credits": "3",
@@ -2763,12 +2384,6 @@
       "credits": "4",
       "major": "MATH",
       "course_id": "2400"
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
     },
     {
       "name": "Introduction to Biology ",
@@ -2812,10 +2427,10 @@
       "course_id": "4420"
     },
     {
-      "name": "Electives",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 7,
-      "number_classes": 1
+      "credits": 20,
+      "number_classes": 5
     },
     {
       "name": "Instrumental Methods of Analysis ",
@@ -2917,12 +2532,6 @@
       "course_id": "2400"
     },
     {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Introduction to Cell and Molecular Biology ",
       "type": "course",
       "credits": "3",
@@ -2935,12 +2544,6 @@
       "credits": "3",
       "major": "CHEM",
       "course_id": "2290"
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Macroscopic Physical Chemistry ",
@@ -2959,8 +2562,8 @@
     {
       "name": "Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
     },
     {
       "name": "Genetics and Evolution ",
@@ -2982,6 +2585,12 @@
       "credits": "2",
       "major": "CHEM",
       "course_id": "4030"
+    },
+    {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Electives Credit hours: 4",
@@ -3096,6 +2705,12 @@
       "course_id": "2400"
     },
     {
+      "name": "This course may be deferred until Spring and replaced by a HASS core elective.",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
+    },
+    {
       "name": "Experimental Chemistry II: Synthesis and Characterization ",
       "type": "course",
       "credits": "3",
@@ -3130,6 +2745,12 @@
       "course_id": "4410"
     },
     {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 12,
+      "number_classes": 3
+    },
+    {
       "name": "Elective",
       "type": "elective",
       "credits": 4,
@@ -3154,6 +2775,12 @@
       "credits": "3",
       "major": "CHEM",
       "course_id": "4420"
+    },
+    {
+      "name": "Electives (either free elective or CHME elective)",
+      "type": "elective",
+      "credits": 2,
+      "number_classes": 1
     },
     {
       "name": "Instrumental Methods of Analysis ",
@@ -3199,12 +2826,6 @@
   ],
   "Civil Engineering": [
     {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Chemistry I ",
       "type": "course",
       "credits": "4",
@@ -3224,12 +2845,6 @@
       "credits": "4",
       "major": "MATH",
       "course_id": "1010"
-    },
-    {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Introduction to Civil and Environmental Engineering ",
@@ -3309,12 +2924,6 @@
       "course_id": "2670"
     },
     {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Introduction to Engineering Design ",
       "type": "course",
       "credits": "4",
@@ -3334,18 +2943,6 @@
       "credits": "4",
       "major": "ENVE",
       "course_id": "4370"
-    },
-    {
-      "name": "CE Design Elective",
-      "type": "elective",
-      "credits": 3,
-      "number_classes": 1
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
     },
     {
       "name": "Beginning Programming in Civil and Environmental Engineering ",
@@ -3389,8 +2986,8 @@
     {
       "name": "HASS Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Free Elective",
@@ -3440,25 +3037,11 @@
       "course_id": "4340"
     },
     {
-      "name": "Biological Processes in Environmental Engineering ",
-      "type": "course",
-      "credits": "4",
-      "major": "ENVE",
-      "course_id": "4350"
-    },
-    {
       "name": "CIVL 4010  Foundation Engineering",
       "type": "course",
       "credits": "3",
       "major": "none",
       "course_id": -1
-    },
-    {
-      "name": "Geoenvironmental Engineering ",
-      "type": "course",
-      "credits": "3",
-      "major": "CIVL",
-      "course_id": "4140"
     },
     {
       "name": "Geotechnical Design ",
@@ -3480,13 +3063,6 @@
       "credits": "3",
       "major": "CIVL",
       "course_id": "4660"
-    },
-    {
-      "name": "Highway Engineering ",
-      "type": "course",
-      "credits": "3",
-      "major": "CIVL",
-      "course_id": "4670"
     },
     {
       "name": "Geoenvironmental Engineering ",
@@ -3574,12 +3150,6 @@
       "course_id": "1010"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Introduction to Cognitive Science ",
       "type": "course",
       "credits": "4",
@@ -3599,12 +3169,6 @@
       "credits": "4",
       "major": "MATH",
       "course_id": "1020"
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Foundations of Computer Science ",
@@ -3628,18 +3192,6 @@
       "course_id": "2140"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Sensation and Perception ",
       "type": "course",
       "credits": "4",
@@ -3653,23 +3205,11 @@
       "number_classes": 1
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Research Methods and Statistics I ",
       "type": "course",
       "credits": "4",
       "major": "PSYC",
       "course_id": "2310"
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Cognitive Modeling ",
@@ -3729,38 +3269,8 @@
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 48,
+      "number_classes": 12
     },
     {
       "name": "Approved project/seminar course",
@@ -3777,12 +3287,6 @@
     }
   ],
   "Communication, Media, and Design": [
-    {
-      "name": "Math Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
     {
       "name": "Math Elective",
       "type": "elective",
@@ -3811,12 +3315,6 @@
       "course_id": "1492"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Introduction to Graphic Design ",
       "type": "course",
       "credits": "4",
@@ -3824,40 +3322,10 @@
       "course_id": "2660"
     },
     {
-      "name": "Free Elective",
+      "name": "Science Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Pro-Seminar in Communication, Media, and Design ",
@@ -3867,16 +3335,22 @@
       "course_id": "4930"
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 36,
+      "number_classes": 9
+    },
+    {
+      "name": "Major Elective",
+      "type": "elective",
+      "credits": 20,
+      "number_classes": 5
     }
   ],
   "Computer and Systems Engineering": [
@@ -4006,6 +3480,12 @@
       "course_id": "4100"
     },
     {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 16,
+      "number_classes": 4
+    },
+    {
       "name": "Introduction to Electronics ",
       "type": "course",
       "credits": "4",
@@ -4122,7 +3602,7 @@
       "course_id": "2600"
     },
     {
-      "name": "Free Elective",
+      "name": "Computer Science Option/Capstone or Free Elective",
       "type": "elective",
       "credits": 4,
       "number_classes": 1
@@ -4141,35 +3621,16 @@
       "number_classes": 1
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Programming Languages ",
-      "type": "course",
-      "credits": "4",
-      "major": "CSCI",
-      "course_id": "4430"
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Computer Science Option/Capstone",
       "type": "elective",
       "credits": 4,
       "number_classes": 1
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Programming Languages ",
@@ -4185,16 +3646,16 @@
       "number_classes": 1
     },
     {
-      "name": "Free Elective",
+      "name": "Free Elective or Computer Science Option/Capstone",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 4,
+      "number_classes": 1
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 24,
+      "number_classes": 6
     }
   ],
   "Design, Innovation, and Society": [
@@ -4213,6 +3674,12 @@
       "course_id": "1110"
     },
     {
+      "name": "\u200bScience Core Elective",
+      "type": "elective",
+      "credits": 4,
+      "number_classes": 1
+    },
+    {
       "name": "Design and Innovation Studio II ",
       "type": "course",
       "credits": "4",
@@ -4225,12 +3692,6 @@
       "credits": "4",
       "major": "STSO",
       "course_id": "2210"
-    },
-    {
-      "name": "Complementary Area of Study",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
     },
     {
       "name": "Design and Innovation Studio III ",
@@ -4248,24 +3709,6 @@
     {
       "name": "STS Advanced Option",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "Complementary Area of Study",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "STS Advanced Option",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Complementary Area of Study",
-      "type": "elective",
       "credits": 8,
       "number_classes": 2
     },
@@ -4279,8 +3722,8 @@
     {
       "name": "Complementary Area of Study",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Design and Innovation Studio B ",
@@ -4297,10 +3740,16 @@
       "course_id": "4610"
     },
     {
-      "name": "Free Elective",
+      "name": "Science Core Elective",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 1
+      "credits": 20,
+      "number_classes": 5
+    },
+    {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Capstone Design Elective",
@@ -4311,14 +3760,8 @@
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
     }
   ],
   "Design, Innovation, and Society/Mechanical Engineering": [
@@ -4455,12 +3898,6 @@
       "course_id": "1200"
     },
     {
-      "name": "PDI Studio Advanced Option",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Engineering Dynamics ",
       "type": "course",
       "credits": "4",
@@ -4507,12 +3944,6 @@
       "credits": "3",
       "major": "MANE",
       "course_id": "4730"
-    },
-    {
-      "name": "STS Advanced Option",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
     },
     {
       "name": "MANE Technical Elective",
@@ -4576,23 +4007,11 @@
       "course_id": "1200"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Calculus II ",
       "type": "course",
       "credits": "4",
       "major": "MATH",
       "course_id": "1020"
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
@@ -4602,46 +4021,16 @@
       "course_id": "2010"
     },
     {
-      "name": "Economics Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Statistics Option",
       "type": "elective",
       "credits": 4,
       "number_classes": 1
     },
     {
-      "name": "Free Elective",
+      "name": "Science Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Economics Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
     },
     {
       "name": "Econometrics ",
@@ -4651,10 +4040,10 @@
       "course_id": "4570"
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Culminating Experience",
@@ -4666,26 +4055,14 @@
     {
       "name": "Economics Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 40,
+      "number_classes": 10
     }
   ],
   "Electrical Engineering": [
@@ -4855,7 +4232,7 @@
       "course_id": "2900"
     },
     {
-      "name": "Restricted Elective",
+      "name": "Laboratory Elective",
       "type": "elective",
       "credits": 3,
       "number_classes": 1
@@ -4891,15 +4268,21 @@
       "type": "elective",
       "credits": 6,
       "number_classes": 2
+    },
+    {
+      "name": "Free Electives (2 or 3 if needed)",
+      "type": "elective",
+      "credits": 6,
+      "number_classes": 1
+    },
+    {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 20,
+      "number_classes": 5
     }
   ],
   "Electronic Arts": [
-    {
-      "name": "Studio Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
     {
       "name": "Science Elective",
       "type": "elective",
@@ -4914,7 +4297,7 @@
       "course_id": "1010"
     },
     {
-      "name": "Focus Area Elective",
+      "name": "History/Theory Elective",
       "type": "elective",
       "credits": 4,
       "number_classes": 1
@@ -4941,43 +4324,13 @@
       "course_id": "1100"
     },
     {
-      "name": "Focus Area Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Focus Area Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Studio Elective",
       "type": "elective",
       "credits": 8,
       "number_classes": 2
     },
     {
-      "name": "Focus Area Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
+      "name": "Science Core Elective",
       "type": "elective",
       "credits": 8,
       "number_classes": 2
@@ -4985,114 +4338,20 @@
     {
       "name": "Focus Area Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 32,
+      "number_classes": 8
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Focus Area Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Creative Seminar I ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4840"
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Creative Seminar II ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4850"
-    },
-    {
-      "name": "Digital Imaging ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1020"
-    },
-    {
-      "name": "Digital Filmmaking ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1030"
-    },
-    {
-      "name": "Basic Drawing ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1200"
-    },
-    {
-      "name": "Creative Seminar I ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4840"
-    },
-    {
-      "name": "Creative Seminar II ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4850"
-    },
-    {
-      "name": "2D Experimental Animation ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "2060"
-    },
-    {
-      "name": "3D Digital Modeling ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "2230"
-    },
-    {
-      "name": "Interactive Arts Programming ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4010"
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Advanced Digital 3D Projects ",
@@ -5123,74 +4382,11 @@
       "course_id": "4090"
     },
     {
-      "name": "Advanced Drawing ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4200"
-    },
-    {
       "name": "Animation Production ",
       "type": "course",
       "credits": "4",
       "major": "ARTS",
       "course_id": "4460"
-    },
-    {
-      "name": "Experimental Game Design ",
-      "type": "course",
-      "credits": "4",
-      "major": "GSAS",
-      "course_id": "4510"
-    },
-    {
-      "name": "Digital Imaging ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1020"
-    },
-    {
-      "name": "Digital Filmmaking ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1030"
-    },
-    {
-      "name": "Basic Drawing ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1200"
-    },
-    {
-      "name": "Creative Seminar I ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4840"
-    },
-    {
-      "name": "Creative Seminar II ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4850"
-    },
-    {
-      "name": "Intermediate Digital Imaging ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "2040"
-    },
-    {
-      "name": "2D Experimental Animation ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "2060"
     },
     {
       "name": "Sculpture I ",
@@ -5212,13 +4408,6 @@
       "credits": "4",
       "major": "ARTS",
       "course_id": "2230"
-    },
-    {
-      "name": "Topics in the Arts ",
-      "type": "course",
-      "credits": "2",
-      "major": "ARTS",
-      "course_id": "2960"
     },
     {
       "name": "Advanced Drawing ",
@@ -5249,13 +4438,6 @@
       "course_id": "4860"
     },
     {
-      "name": "Topics in the Arts ",
-      "type": "course",
-      "credits": "2",
-      "major": "ARTS",
-      "course_id": "4960"
-    },
-    {
       "name": "Experimental Game Design ",
       "type": "course",
       "credits": "4",
@@ -5270,46 +4452,11 @@
       "course_id": "1380"
     },
     {
-      "name": "Music and Sound I ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "2380"
-    },
-    {
       "name": "and",
       "type": "course",
       "credits": -1,
       "major": "none",
       "course_id": -1
-    },
-    {
-      "name": "Digital Imaging ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1020"
-    },
-    {
-      "name": "Digital Filmmaking ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1030"
-    },
-    {
-      "name": "Creative Seminar I ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4840"
-    },
-    {
-      "name": "Creative Seminar II ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4850"
     },
     {
       "name": "Music and Technology I ",
@@ -5357,13 +4504,6 @@
       "name": "Game Sound and Musical Play ",
       "type": "course",
       "credits": "4",
-      "major": "ARTS",
-      "course_id": "2560"
-    },
-    {
-      "name": "Game Sound and Musical Play ",
-      "type": "course",
-      "credits": "4",
       "major": "GSAS",
       "course_id": "2560"
     },
@@ -5399,50 +4539,14 @@
       "name": "Music, Sound & Screen Media ",
       "type": "course",
       "credits": "4",
-      "major": "ARTS",
-      "course_id": "4440"
-    },
-    {
-      "name": "Music, Sound & Screen Media ",
-      "type": "course",
-      "credits": "4",
       "major": "GSAS",
       "course_id": "4440"
     },
     {
-      "name": "Digital Filmmaking ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1030"
-    },
-    {
-      "name": "Music and Sound I ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "2380"
-    },
-    {
-      "name": "Digital Imaging ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1020"
-    },
-    {
-      "name": "Creative Seminar I ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4840"
-    },
-    {
-      "name": "Creative Seminar II ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4850"
+      "name": "(ARTS 1030 is required for this concentration.)",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
     },
     {
       "name": "Intermediate Video ",
@@ -5506,34 +4610,6 @@
       "credits": "2",
       "major": "ARTS",
       "course_id": "4960"
-    },
-    {
-      "name": "Digital Imaging ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1020"
-    },
-    {
-      "name": "Digital Filmmaking ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1030"
-    },
-    {
-      "name": "Basic Drawing ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "1200"
-    },
-    {
-      "name": "Music and Sound I ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "2380"
     },
     {
       "name": "Creative Seminar I ",
@@ -5656,18 +4732,6 @@
       "course_id": "1100"
     },
     {
-      "name": "Engineering Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "Engineering Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Introduction to Differential Equations ",
       "type": "course",
       "credits": "4",
@@ -5684,14 +4748,14 @@
     {
       "name": "Engineering Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
-      "name": "Engineering Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Introduction to Engineering Design ",
@@ -5738,18 +4802,18 @@
       "course_id": "1100"
     },
     {
-      "name": "Chemistry II ",
-      "type": "course",
-      "credits": "4",
-      "major": "CHEM",
-      "course_id": "1200"
-    },
-    {
       "name": "Introduction to Civil and Environmental Engineering ",
       "type": "course",
       "credits": "1",
       "major": "CIVL",
       "course_id": "1100"
+    },
+    {
+      "name": "Chemistry II ",
+      "type": "course",
+      "credits": "4",
+      "major": "CHEM",
+      "course_id": "1200"
     },
     {
       "name": "Biological Science Elective",
@@ -5786,18 +4850,18 @@
       "course_id": "2110"
     },
     {
-      "name": "Beginning Programming in Civil and Environmental Engineering ",
-      "type": "course",
-      "credits": "1",
-      "major": "CIVL",
-      "course_id": "1300"
-    },
-    {
       "name": "Introduction to Water Resources Engineering ",
       "type": "course",
       "credits": "4",
       "major": "CIVL",
       "course_id": "2060"
+    },
+    {
+      "name": "Beginning Programming in Civil and Environmental Engineering ",
+      "type": "course",
+      "credits": "1",
+      "major": "CIVL",
+      "course_id": "1300"
     },
     {
       "name": "Free Elective I",
@@ -5853,6 +4917,12 @@
       "course_id": "4340"
     },
     {
+      "name": "Technical Elective Credits Hours: 3",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
+    },
+    {
       "name": "Free Elective II",
       "type": "elective",
       "credits": 4,
@@ -5873,9 +4943,21 @@
       "course_id": "4350"
     },
     {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 20,
+      "number_classes": 5
+    },
+    {
       "name": "Free Elective III",
       "type": "elective",
       "credits": 4,
+      "number_classes": 1
+    },
+    {
+      "name": "Earth Science Elective",
+      "type": "elective",
+      "credits": 0,
       "number_classes": 1
     },
     {
@@ -5972,25 +5054,10 @@
       "course_id": "4190"
     },
     {
-      "name": "Global Environmental Change ",
-      "type": "course",
-      "credits": "4",
-      "major": "BIOL",
-      "course_id": "4880"
-    },
-    {
-      "name": "Earth\u2019s Climate: Past, Present, and Future ",
-      "type": "course",
-      "credits": "4",
-      "major": "ERTH",
-      "course_id": "4500"
-    },
-    {
-      "name": "One Mile of the Hudson River ",
-      "type": "course",
-      "credits": "4",
-      "major": "IENV",
-      "course_id": "4700"
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Earth\u2019s Climate: Past, Present, and Future ",
@@ -6005,6 +5072,12 @@
       "credits": "4",
       "major": "BIOL",
       "course_id": "4880"
+    },
+    {
+      "name": "HASS Core Electives",
+      "type": "elective",
+      "credits": 20,
+      "number_classes": 3
     },
     {
       "name": "Culminating Experience",
@@ -6012,6 +5085,12 @@
       "credits": "4",
       "major": "none",
       "course_id": -1
+    },
+    {
+      "name": "Track Course or Free Elective",
+      "type": "elective",
+      "credits": 28,
+      "number_classes": 6
     },
     {
       "name": "Track Course and Free Elective",
@@ -6074,13 +5153,6 @@
       "credits": "4",
       "major": "ERTH",
       "course_id": "4370"
-    },
-    {
-      "name": "Aqueous Geochemistry ",
-      "type": "course",
-      "credits": "4",
-      "major": "ERTH",
-      "course_id": "4690"
     },
     {
       "name": "Groundwater Hydrology ",
@@ -6204,35 +5276,11 @@
       "course_id": "1520"
     },
     {
-      "name": "GSAS Concentration Course",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "GSAS Concentration Course",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Game Development I ",
       "type": "course",
       "credits": "4",
       "major": "GSAS",
       "course_id": "4520"
-    },
-    {
-      "name": "GSAS Concentration Course\u200b",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "GSAS Concentration Course\u200b",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Game Development II ",
@@ -6242,22 +5290,10 @@
       "course_id": "4540"
     },
     {
-      "name": "Free Elective",
+      "name": "Science Core Elective",
       "type": "elective",
       "credits": 4,
       "number_classes": 1
-    },
-    {
-      "name": "GSAS Concentration Course\u200b",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "GSAS Concentration Course\u200b",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Experimental Game Design ",
@@ -6283,14 +5319,8 @@
     {
       "name": "GSAS Concentration Course\u200b",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 20,
+      "number_classes": 5
     },
     {
       "name": "GSAS 4990 - GSAS Capstone",
@@ -6301,20 +5331,20 @@
     {
       "name": "GSAS Concentration Course",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "GSAS Concentration Course",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
+    },
+    {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 20,
+      "number_classes": 5
     },
     {
       "name": "Introduction to Cognitive Science ",
@@ -6322,13 +5352,6 @@
       "credits": "4",
       "major": "COGS",
       "course_id": "2120"
-    },
-    {
-      "name": "Game AI ",
-      "type": "course",
-      "credits": "4",
-      "major": "COGS",
-      "course_id": "4420"
     },
     {
       "name": "Minds and Machines ",
@@ -6496,6 +5519,12 @@
       "credits": "4",
       "major": "ARTS",
       "course_id": "1380"
+    },
+    {
+      "name": "OR\n\n4 additional credits of Music coursework from the concentration if student is approved to skip ARTS 1380",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
     },
     {
       "name": "Music and Technology I ",
@@ -6683,13 +5712,6 @@
       "name": "Music, Sound & Screen Media ",
       "type": "course",
       "credits": "4",
-      "major": "GSAS",
-      "course_id": "4440"
-    },
-    {
-      "name": "Music, Sound & Screen Media ",
-      "type": "course",
-      "credits": "4",
       "major": "ARTS",
       "course_id": "4440"
     },
@@ -6699,13 +5721,6 @@
       "credits": "4",
       "major": "ARTS",
       "course_id": "2550"
-    },
-    {
-      "name": "Game Sound and Musical Play ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "2560"
     },
     {
       "name": "Game Sound and Musical Play ",
@@ -6780,6 +5795,12 @@
       "course_id": "1100"
     },
     {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 16,
+      "number_classes": 4
+    },
+    {
       "name": "Introduction to Geophysics ",
       "type": "course",
       "credits": "4",
@@ -6835,12 +5856,6 @@
       "name": "ERTH 4XXX selected from the ERTH Electives: (4 credits)",
       "type": "elective",
       "credits": 0,
-      "number_classes": 1
-    },
-    {
-      "name": "Electives",
-      "type": "elective",
-      "credits": 8,
       "number_classes": 1
     },
     {
@@ -6969,10 +5984,10 @@
       "course_id": "1200"
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 1
+      "credits": 24,
+      "number_classes": 5
     },
     {
       "name": "Environmental Measurements ",
@@ -7050,6 +6065,12 @@
   ],
   "Industrial and Management Engineering": [
     {
+      "name": "HASS Core Elective I",
+      "type": "elective",
+      "credits": 4,
+      "number_classes": 1
+    },
+    {
       "name": "Chemistry I ",
       "type": "course",
       "credits": "4",
@@ -7078,6 +6099,12 @@
       "course_id": "1010"
     },
     {
+      "name": "HASS Core Elective II",
+      "type": "elective",
+      "credits": 4,
+      "number_classes": 1
+    },
+    {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
       "credits": "1",
@@ -7104,6 +6131,12 @@
       "credits": "4",
       "major": "CSCI",
       "course_id": "1100"
+    },
+    {
+      "name": "HASS Core Elective III",
+      "type": "elective",
+      "credits": 4,
+      "number_classes": 1
     },
     {
       "name": "Introduction to Differential Equations ",
@@ -7155,6 +6188,12 @@
       "course_id": "4100"
     },
     {
+      "name": "HASS Core Elective IV Credits Hours: 4",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
+    },
+    {
       "name": "Engineering Economics ",
       "type": "course",
       "credits": "3",
@@ -7162,18 +6201,18 @@
       "course_id": "4760"
     },
     {
-      "name": "Operations Research Methods ",
-      "type": "course",
-      "credits": "4",
-      "major": "ISYE",
-      "course_id": "4600"
-    },
-    {
       "name": "Introduction to Engineering Design ",
       "type": "course",
       "credits": "4",
       "major": "ENGR",
       "course_id": "2050"
+    },
+    {
+      "name": "Operations Research Methods ",
+      "type": "course",
+      "credits": "4",
+      "major": "ISYE",
+      "course_id": "4600"
     },
     {
       "name": "Technical Elective I",
@@ -7185,6 +6224,12 @@
       "name": "Technical Elective II",
       "type": "elective",
       "credits": 3,
+      "number_classes": 1
+    },
+    {
+      "name": "HASS Core Elective V",
+      "type": "elective",
+      "credits": 4,
       "number_classes": 1
     },
     {
@@ -7226,6 +6271,12 @@
       "course_id": "4210"
     },
     {
+      "name": "Technical Elective IV Credit Hours:3",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
+    },
+    {
       "name": "Free Elective II",
       "type": "elective",
       "credits": 4,
@@ -7252,12 +6303,6 @@
     }
   ],
   "Information Technology and Web Science": [
-    {
-      "name": "Focus Track Course",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
     {
       "name": "Computer Science I ",
       "type": "course",
@@ -7305,18 +6350,6 @@
       "number_classes": 1
     },
     {
-      "name": "Focus Track Course",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Web Systems Development ",
       "type": "course",
       "credits": "4",
@@ -7328,12 +6361,6 @@
       "type": "elective",
       "credits": 0,
       "number_classes": 1
-    },
-    {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Introduction to Human Computer Interaction ",
@@ -7350,25 +6377,7 @@
       "course_id": "4500"
     },
     {
-      "name": "Focus Track Course",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Focus Track Course",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Life Science Elective:",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "Free Elective",
       "type": "elective",
       "credits": 4,
       "number_classes": 1
@@ -7378,12 +6387,6 @@
       "type": "elective",
       "credits": 0,
       "number_classes": 1
-    },
-    {
-      "name": "HASS Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Managing IT Resources ",
@@ -7414,22 +6417,10 @@
       "course_id": "4170"
     },
     {
-      "name": "Focus Track Course",
+      "name": "ITWS 4100  - Information Technology and Web Science Capstone",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Focus Track Course",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 4,
+      "number_classes": 1
     },
     {
       "name": "Focus Track Capstone Course/Experience",
@@ -7440,20 +6431,20 @@
     {
       "name": "Focus Track Course",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 28,
+      "number_classes": 7
     },
     {
       "name": "HASS Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
     }
   ],
   "Materials Engineering": [
@@ -7580,6 +6571,12 @@
       "credits": "4",
       "major": "MTLE",
       "course_id": "4250"
+    },
+    {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 20,
+      "number_classes": 5
     },
     {
       "name": "Free Elective I",
@@ -7795,29 +6792,11 @@
       "course_id": "1100"
     },
     {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Calculus II ",
       "type": "course",
       "credits": "4",
       "major": "MATH",
       "course_id": "1020"
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Introduction to Biology ",
@@ -7834,12 +6813,6 @@
       "course_id": "2010"
     },
     {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Introduction to Differential Equations ",
       "type": "course",
       "credits": "4",
@@ -7853,46 +6826,22 @@
       "number_classes": 1
     },
     {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Capstone I",
       "type": "elective",
       "credits": 0,
       "number_classes": 1
     },
     {
-      "name": "Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Capstone II",
       "type": "elective",
       "credits": 0,
       "number_classes": 1
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Math Option",
@@ -7909,14 +6858,8 @@
     {
       "name": "Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 44,
+      "number_classes": 11
     }
   ],
   "Mechanical Engineering Curriculum": [
@@ -8053,12 +6996,6 @@
       "course_id": "4030"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
       "credits": "3",
@@ -8080,6 +7017,24 @@
       "course_id": "4730"
     },
     {
+      "name": "HASS Core Elective Credit hours:  4",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
+    },
+    {
+      "name": "MANE 4\u2026. Technical Elective Credit hours:  3",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
+    },
+    {
+      "name": "MANE 4\u2026. Computation Elective Credit hours:  3 ",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
+    },
+    {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
       "credits": "1",
@@ -8093,16 +7048,22 @@
       "number_classes": 1
     },
     {
-      "name": "Free Elective",
+      "name": "SoE/SoS-4\u2026. Technical Elective II Credit hours:  3",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 0,
+      "number_classes": 1
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
+    },
+    {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 16,
+      "number_classes": 4
     }
   ],
   "Music": [
@@ -8156,7 +7117,49 @@
       "course_id": "1520"
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective OR History and Culture Course",
+      "type": "elective",
+      "credits": 4,
+      "number_classes": 1
+    },
+    {
+      "name": "\u200b\u200bARTS 4700 - Sound Recording and Production II is a recommended course for this elective (not required)",
+      "type": "elective",
+      "credits": 0,
+      "number_classes": 1
+    },
+    {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 20,
+      "number_classes": 5
+    },
+    {
+      "name": "Free Elective or History and Culture course",
+      "type": "elective",
+      "credits": 4,
+      "number_classes": 1
+    },
+    {
+      "name": "Science Core Elective",
+      "type": "elective",
+      "credits": 16,
+      "number_classes": 4
+    },
+    {
+      "name": "Free Elective or ARTS 4500  - Topics in History and Analysis of Music",
+      "type": "elective",
+      "credits": 4,
+      "number_classes": 1
+    },
+    {
+      "name": "Free Elective or Culminating Experience",
+      "type": "elective",
+      "credits": 8,
+      "number_classes": 2
+    },
+    {
+      "name": "Free Elective or ARTS 4880 - Interdisciplinary Research Seminar",
       "type": "elective",
       "credits": 4,
       "number_classes": 1
@@ -8164,46 +7167,8 @@
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Composition Seminar ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4390"
-    },
-    {
-      "name": "Interdisciplinary Research Seminar ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "4880"
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Rensselaer Concert Choir ",
@@ -8246,13 +7211,6 @@
       "credits": "4",
       "major": "ARTS",
       "course_id": "2550"
-    },
-    {
-      "name": "Game Sound and Musical Play ",
-      "type": "course",
-      "credits": "4",
-      "major": "ARTS",
-      "course_id": "2560"
     },
     {
       "name": "Game Sound and Musical Play ",
@@ -8437,22 +7395,22 @@
       "course_id": "4470"
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 4,
+      "credits": 20,
+      "number_classes": 5
+    },
+    {
+      "name": "MANE 4\u2026. NE Technical Elective Credit hours: 3",
+      "type": "elective",
+      "credits": 0,
       "number_classes": 1
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
     },
     {
       "name": "MANE 4\u2026. NE Technical Elective II",
@@ -8468,12 +7426,6 @@
       "credits": "4",
       "major": "MATH",
       "course_id": "1010"
-    },
-    {
-      "name": "Philosophy Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
     },
     {
       "name": "Calculus II ",
@@ -8539,29 +7491,11 @@
       "course_id": "1130"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Introduction to Logic ",
       "type": "course",
       "credits": "4",
       "major": "PHIL",
       "course_id": "2140"
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Philosophy of Biology ",
@@ -8585,22 +7519,16 @@
       "course_id": "4310"
     },
     {
-      "name": "Philosophy Elective",
+      "name": "Science Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Ethics ",
@@ -8620,13 +7548,6 @@
       "name": "Bioethics ",
       "type": "course",
       "credits": "4",
-      "major": "PHIL",
-      "course_id": "4500"
-    },
-    {
-      "name": "Bioethics ",
-      "type": "course",
-      "credits": "4",
       "major": "STSO",
       "course_id": "4250"
     },
@@ -8638,24 +7559,6 @@
       "course_id": "2960"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "PHIL 4990 - Capstone Experience in Philosophy",
       "type": "elective",
       "credits": 3,
@@ -8664,26 +7567,14 @@
     {
       "name": "Philosophy Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 44,
+      "number_classes": 11
     }
   ],
   "Physician-Scientist": [
@@ -8786,6 +7677,12 @@
       "course_id": "4760"
     },
     {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 24,
+      "number_classes": 6
+    },
+    {
       "name": "Investigative Medicine II ",
       "type": "course",
       "credits": "1",
@@ -8830,12 +7727,6 @@
       "course_id": "1010"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Introduction to Biology ",
       "type": "course",
       "credits": "3",
@@ -8878,12 +7769,6 @@
       "course_id": "2210"
     },
     {
-      "name": "Mathematics Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Elective",
       "type": "elective",
       "credits": 4,
@@ -8897,23 +7782,11 @@
       "course_id": "2350"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "Thermodynamics and Statistical Mechanics ",
       "type": "course",
       "credits": "4",
       "major": "PHYS",
       "course_id": "4420"
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
     },
     {
       "name": "Mathematics Elective",
@@ -8931,14 +7804,14 @@
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 20,
+      "number_classes": 5
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Observational Astronomy ",
@@ -9014,10 +7887,10 @@
       "course_id": "4310"
     },
     {
-      "name": "Psychology Elective",
+      "name": "Science Core Elective",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 1
+      "credits": 12,
+      "number_classes": 3
     },
     {
       "name": "Mathematical Methods in Psychological Science ",
@@ -9027,28 +7900,16 @@
       "course_id": "4350"
     },
     {
-      "name": "Free Elective",
+      "name": "PSYC 2/4000 Core Content Elective",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 1
+      "credits": 16,
+      "number_classes": 4
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Psychology Elective",
@@ -9059,38 +7920,8 @@
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 40,
+      "number_classes": 10
     }
   ],
   "Science, Technology, and Society": [
@@ -9129,12 +7960,6 @@
       "course_id": "1020"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Investigating Society ",
       "type": "course",
       "credits": "4",
@@ -9142,10 +7967,10 @@
       "course_id": "2100"
     },
     {
-      "name": "CAS Course",
+      "name": "Science Core Elective",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 1
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Sustainability and STS Careers ",
@@ -9157,50 +7982,14 @@
     {
       "name": "Advanced STS Course",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "Advanced STS Course",
-      "type": "elective",
       "credits": 8,
       "number_classes": 2
     },
     {
-      "name": "Free Elective",
+      "name": "HASS Core Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "CAS Course",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "CAS Course",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Research Design ",
@@ -9212,20 +8001,14 @@
     {
       "name": "CAS Course",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 28,
+      "number_classes": 7
     }
   ],
   "Sustainability Studies": [
@@ -9258,12 +8041,6 @@
       "course_id": "1520"
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
       "name": "Investigating Society ",
       "type": "course",
       "credits": "4",
@@ -9271,10 +8048,10 @@
       "course_id": "2100"
     },
     {
-      "name": "SUST Advanced Option",
+      "name": "Science Core Elective",
       "type": "elective",
-      "credits": 4,
-      "number_classes": 1
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "CAS Course Option",
@@ -9283,52 +8060,10 @@
       "number_classes": 1
     },
     {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
       "name": "SUST Advanced Option",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "SUST Advanced Option",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "SUST Advanced Option",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "CAS Course",
-      "type": "elective",
-      "credits": 4,
-      "number_classes": 1
-    },
-    {
-      "name": "CAS Course",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
-    },
-    {
-      "name": "Free Elective",
-      "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 16,
+      "number_classes": 4
     },
     {
       "name": "Sustainability and STS Careers ",
@@ -9347,14 +8082,20 @@
     {
       "name": "CAS Course",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 12,
+      "number_classes": 3
+    },
+    {
+      "name": "HASS Core Elective",
+      "type": "elective",
+      "credits": 24,
+      "number_classes": 6
     },
     {
       "name": "Free Elective",
       "type": "elective",
-      "credits": 8,
-      "number_classes": 2
+      "credits": 20,
+      "number_classes": 5
     }
   ]
 }

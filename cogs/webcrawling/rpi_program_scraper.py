@@ -68,6 +68,14 @@ def getPastCreditHours(list, name):
             return info
     return 0, 0
 
+def itemIndex(list, name):
+    for i in range(len(list)):
+        item = list[i]
+        if(item["name"] == name):
+            return i
+    return -1
+        
+
 def isElective(text): #Checks to see if course is elective based on key words
     text = text.lower()
     elective_key_words = ["elective", "option", "cas course", "sts course", "hass approved inquiry and communication intensive course", "concentration", "capstone", "approved project", "area of study", "4000-level comm course", "biology requirement", "track course"]
@@ -84,13 +92,8 @@ def write_to_dict(classes):
         #if course.lower().count("elective") != 0 or course.lower().count("option") != 0:
         if isElective(course):
             elective_split = course.split("Credit Hours: ")
-            name = elective_split[0].strip()
-            
-            # TO DO
-            #
-            #                double check in case footnote after name
-            if name.lower().count('footnote') != 0 or name.lower().count('or') != 0: #Special case for footnote 
-                continue 
+            name = elective_split[0].strip() \
+                   .split("\n\t")[0] #removes extra line
 
             credit_hours, num_classes = getPastCreditHours(dict_list, name)
             num_classes += 1
@@ -144,6 +147,9 @@ def write_to_dict(classes):
                 "course_id": number
             }
         #dict[name] = course_dict
+        index = itemIndex(dict_list, name)
+        if index != -1:
+            dict_list.pop(index)
         dict_list.append(course_dict)
         #dict[""]
         #print(course_dict)
