@@ -89,7 +89,7 @@ class WordGame(commands.Cog, name="Word Game"):
     """
 
     @commands.command()
-    async def start_game(self, ctx, rounds: int = -1):
+    async def wordgame(self, ctx, rounds: int = -1):
         """Starts the word game. Rounds are infinite unless an optional positive integer is supplied."""
         if (self.round >= 0):
             await ctx.send("Game already started!")
@@ -102,13 +102,13 @@ class WordGame(commands.Cog, name="Word Game"):
             else:
                 await ctx.send("Game Started!")
     
-    @start_game.error
-    async def start_game_error(self, ctx, error):
+    @wordgame.error
+    async def wordgame_error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
             await ctx.send("I couldn't read how many rounds that was! Try typing an integer number.")
     
     @commands.command()
-    async def add_word(self, ctx, word: to_lower):
+    async def addword(self, ctx, word: to_lower):
         """Add word to list of words"""
         if(self.round >= 0):
             if(word in self.word_list):
@@ -130,13 +130,13 @@ class WordGame(commands.Cog, name="Word Game"):
         else:
             await ctx.send("The game has not started!")
 
-    @add_word.error
-    async def add_word_error(self, ctx, error):
+    @addword.error
+    async def addword_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Your add_word is missing a word!")
 
     @commands.command()
-    async def end_game(self, ctx):
+    async def endwordgame(self, ctx):
         """Ends the word game if not started"""
         if (self.round >= 0):
             await ctx.send("Game ended! The word was " + self.current_word)
@@ -145,7 +145,7 @@ class WordGame(commands.Cog, name="Word Game"):
             await ctx.send("The game hasn't started!")
 
     @commands.command()
-    async def check_status(self, ctx):
+    async def checkstatus(self, ctx):
         """Check the current game status"""
         if (self.round > 0):
             return_text = self.print_status()
