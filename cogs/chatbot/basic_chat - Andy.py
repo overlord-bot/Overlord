@@ -19,7 +19,37 @@ class AndyChat(commands.Cog, name="Andy Chat"):
 
     async def on_message(self, message):
 
-        ID = message.author.id
+       
+        # reacts with the a specified emoji
+        if message.content.lower().startswith("!react"):
+                await message.add_reaction(message.content[-1])
+
+        # replys with a link to website
+
+        if message.content.lower().startswith("!reddit"):
+            await message.reply("https://www.reddit.com/")
+
+        elif message.content.lower().startswith("!youtube"):
+            await message.reply("https://www.youtube.com/")
+        
+        elif message.content.lower().startswith("!yt"):
+            await message.reply("https://www.youtube.com/")
+
+        elif message.content.lower().startswith("!facebook"):
+            await message.reply("https://www.facebook.com/")
+
+        elif message.content.lower().startswith("!fb"):
+            await message.reply("https://www.facebook.com/")
+
+        elif message.content.lower().startswith("!lms"):
+            await message.reply("https://lms.rpi.edu/")
+
+        elif message.content.lower().startswith("!quacs"):
+            await message.reply("https://quacs.org/")
+
+        elif message.content.lower().startswith("!sis"):
+            await message.reply("https://sis.rpi.edu/")
+
 
         # gifs
         if message.content.lower().startswith("what") and len(message.content) < 10:
@@ -51,6 +81,9 @@ class AndyChat(commands.Cog, name="Andy Chat"):
 
         elif "kuzman" in message.content.lower():
             await message.reply("https://media.giphy.com/media/7PbdlEW2fyXDubicsU/giphy.gif")
+
+        elif "therock" in message.content.lower().replace(' ', ''):
+            await message.reply("https://media.giphy.com/media/26ghbWoXv3G6ypo8o/giphy.gif")
 
             
 
