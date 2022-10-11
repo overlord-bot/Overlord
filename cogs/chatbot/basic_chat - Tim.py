@@ -1,5 +1,6 @@
 # Basic Chat Response
 import random 
+from discord.ext import tasks
 from discord.ext import commands
 import datetime
 from datetime import date
@@ -10,6 +11,8 @@ class TimChat(commands.Cog, name="TimChat"):
 
     def __init__(self, bot):
         self.bot = bot
+        self.taskLoop.start()
+        self.index = 0
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -47,14 +50,27 @@ class TimChat(commands.Cog, name="TimChat"):
                 await message.delete()
                 await message.channel.send("https://c.tenor.com/fzrYWO2l7KkAAAAC/captain-america-language.gif")
                 await message.channel.send("Watch your language!")
-    
+
+    def cog_unload(self):
+        self.taskLoop.cancel()
+
+    @tasks.loop(seconds=5)
+    async def taskLoop(self, message, arg):
+            #await message.channel.send(arg)
+            print(self.index)
+            self.index += 1
+
+
     @commands.command()
-    async def pun(self, message):
+    async def pun(self, message, arg):
         JOKES = ("My friend drove his expensive car into a tree and found out how his Mercedes bends.", "Never trust an atom, they make up everything!", "Why did Adele cross the road? To say hello from the other side.",
          "I don't trust stairs because they're always up to something.", "My friend's bakery burned down last night. Now his business is toast.", " I wasn't originally going to get a brain transplant, but then I changed my mind.", 
          "There was a kidnapping at school yesterday. Don't worry, though - he woke up!", "What washes up on tiny beaches? Microwaves.", "Do you know how to make holy water? You boil the hell out of it.", 
          "What does my head and hell have in common? They both have demons in them", "The teacher asked, 'why are you in school on a saturday?' I told her my mum told me to go to hell.", "What do you call a monkey that loves Doritos? A chipmunk!")
         await message.channel.send(random.choice(JOKES))
+        self.taskLoop.start(message, arg)
+        
+
     @commands.command()
     async def goodbye(self, message):
         FAREWELL = ("See ya, ", "Bye bye, ", "See you around, ", "Alright, ", "Good to see you ", "Anytime ", "See you next time ")
