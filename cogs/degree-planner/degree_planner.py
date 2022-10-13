@@ -259,13 +259,13 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         for element in json_data['courses']:
 
             # gets course name, major and course_id
-            course = Course(element['name'], element['major'], int(element['id']))
+            course = Course(element['course_name'], element['course_subject'], int(element['course_number']))
 
-            if 'credits' in element:
-                course.credits = element['credits']
+            if 'course_credit_hours' in element:
+                course.credits = element['course_credit_hours']
             
-            if 'CI' in element:
-                course.CI = element['CI']
+            if 'course_is_ci' in element:
+                course.CI = element['course_is_ci']
 
             if 'HASS_pathway' in element:
                 HASS_pathway = element['HASS_pathway'] # list of pathways
@@ -283,16 +283,16 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 elif concentration != "":
                     course.add_concentration(concentration.strip())
 
-            if 'prerequisites' in element:
-                prereqs = element['prerequisites']
+            if 'course_requisites' in element:
+                prereqs = element['course_requisites']
                 if isinstance(prereqs, list):
                     for prereq in prereqs:
                         course.add_prerequisite(prereq.strip())
                 elif prereqs != "":
                     course.add_prerequisite(prereqs.strip())
 
-            if 'cross_listed' in element:
-                cross_listed = element['cross_listed']
+            if 'course_crosslisted' in element:
+                cross_listed = element['course_crosslisted']
                 if isinstance(cross_listed, list):
                     for cross in cross_listed:
                         course.add_cross_listed(cross.strip())
@@ -302,8 +302,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             if 'restricted' in element:
                 course.restricted = element['restricted']
 
-            if 'description' in element:
-                course.description = element['description']
+            if 'course_description' in element:
+                course.description = element['course_description']
 
             self.catalog.add_course(course)
             await user.msg_hold(course.to_string())
