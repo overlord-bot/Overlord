@@ -73,8 +73,19 @@ class Calendar(commands.Cog, name="Calendar"):
                         week_string += "*"
             return week_string
 
+        #check if there is an event within the next num days
+        def check_next(self, num):
+            now = datetime.datetime.now()
+            #convert now to int
+            currday = int(now.strftime("%d"))
+            embed = discord.Embed(title="Calendar", description="Events in the next " + str(num) + " days", color=0xff0000)
+            for key in sorted(self.dictionary.keys()):
+                if int(key[3:5]) <= currday + int(num):
+                    embed.add_field(name=key, value="\n".join(self.dictionary[key]), inline=False)
+            return embed
+
         #used to print the calendar
-        def print_calendar_embed(self):
+        def print_calendar_embed(self, event):
             now = datetime.datetime.now()
             year = now.year
             month = now.month
@@ -82,28 +93,53 @@ class Calendar(commands.Cog, name="Calendar"):
 
             embed = discord.Embed(title="Calendar", description="Calendar for " + calendar.month_name[month] + " " + str(year), color=0xff0000)
             cal = calendar.monthcalendar(year, month)
-            week_string = ""
-            for week in cal:
+            week_string = "Mon\t Tue\t Wed\t Thu\t Fri\t Sat\t Sun"
+            #prints out the week calendar
+            if event == "week":
                 week_string += "\n"
-                for day in week:
-                    if day == currday:
-                        if day < 10:
-                            week_string += "0"
-                        week_string += str(day) + "<--"
-                        week_string = self.check_event(week_string, day)
-                        week_string += "\t"
-                    elif day == 0:
-                        week_string += " x\t\t"
-                    elif len(str(day)) == 1:
-                        week_string += "0" + str(day)
-                        week_string = self.check_event(week_string, day)
-                        week_string += "\t\t"
-                    else:
-                        week_string += str(day)
-                        week_string = self.check_event(week_string, day)
-                        week_string += "\t\t"
-                embed.add_field(name=week_string, value="\u200b", inline=False)
-                week_string = ""
+                for week in cal:
+                    if currday in week:
+                        for day in week:
+                            if day == currday:
+                                if day < 10:
+                                    week_string += "0"
+                                week_string += str(day)
+                                week_string = self.check_event(week_string, day)
+                                week_string += "<-\t"
+                            elif day == 0:
+                                week_string += "  x\t\t"
+                            elif len(str(day)) == 1:
+                                week_string += "0" + str(day)
+                                week_string = self.check_event(week_string, day)
+                                week_string += "\t\t"
+                            else:
+                                week_string += str(day)
+                                week_string = self.check_event(week_string, day)
+                                week_string += "\t\t"
+                        embed.add_field(name=week_string, value = "\u200b", inline=False)
+            else:
+                #prints out the month calendar
+                for week in cal:
+                    week_string += "\n"
+                    for day in week:
+                        if day == currday:
+                            if day < 10:
+                                week_string += "0"
+                            week_string += str(day)
+                            week_string = self.check_event(week_string, day)
+                            week_string += "<-\t"
+                        elif day == 0:
+                            week_string += "  x\t\t"
+                        elif len(str(day)) == 1:
+                            week_string += "0" + str(day)
+                            week_string = self.check_event(week_string, day)
+                            week_string += "\t\t"
+                        else:
+                            week_string += str(day)
+                            week_string = self.check_event(week_string, day)
+                            week_string += "\t\t"
+                    embed.add_field(name=week_string, value="\u200b", inline=False)
+                    week_string = ""
             for date in sorted(self.dictionary):
                 if int(date[:2]) == month:
                     embed.add_field(name=date, value="\n".join(self.dictionary[date]), inline=False)
@@ -124,10 +160,10 @@ class Calendar(commands.Cog, name="Calendar"):
 
         @commands.command(
             name="calendar",
-            help="Add or view events on the calendar! Usage: !calendar <add/remove> <event> <date as in MM/DD/YYYY> or !calendar <view/clear>"
+            help="Add or view events on the calendar! Usage: !calendar <add/remove> <event> <date as in MM/DD/YYYY> or !calendar <clear> or !calendar <view> <week/month>"
         )
         async def calendar(self, context, action: str, *, event: str = None, date: str = None):
-            """Adds or views events in the calendar."""
+            """Adds or views events in the calendar. Usage: !calendar <add/remove> <event> <date as in MM/DD/YYYY> or !calendar <view/clear> <week/month>"""
             if action.lower() == "add":
                 if event:
                     await context.send(embed=self.print_add_embed(event))
@@ -135,7 +171,13 @@ class Calendar(commands.Cog, name="Calendar"):
                     await context.send("Please specify an event.")
 
             elif action.lower() == "view":
-                await context.send(embed=self.print_calendar_embed())
+                if event:
+                    await context.send(embed=self.print_calendar_embed(event.lower()))
+                else:
+                    await context.send("Please specify a valid view.")
+
+            elif action.lower() == "events":
+                await context.send(embed=self.check_next(event))
 
             elif action.lower() == "clear":
                 self.dictionary = {}
@@ -165,6 +207,7 @@ class Calendar(commands.Cog, name="Calendar"):
             help="Set a timer for date on the calendar! Usage: !calendar_timer <date as in MM/DD/YYYY>"
         )
         async def calendar_timer(self, context, date: str):
+            """Sets a timer for the date on the calendar. Usage: !calendar_timer <date as in MM/DD/YYYY>"""
             timer = self.set_timer(date)
             timer1 = str(datetime.timedelta(seconds=timer))
             await context.send("Timer set for " + str(timer1))
