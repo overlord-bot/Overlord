@@ -9,7 +9,7 @@ class CommonEvents(commands.Cog, name="Common Events"):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.Cog.listener()
+    #@commands.Cog.listener()
     async def on_member_join(self, member):
         guild = member.guild
         if guild.system_channel is not None:
