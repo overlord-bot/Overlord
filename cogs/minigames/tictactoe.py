@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 
 class TicTacToeState:
@@ -86,6 +87,48 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
 
     def __init__(self, bot):
         self.bot = bot
+        self.active_games = {}
+
+    @commands.command()
+    async def tttnew(self, context, opponent: discord.User):
+        """
+        Start a new game by pinging someone, with yourself as X and your
+        opponent as O.
+        """
+
+        # check against the user starting a game with themself
+        if context.author == opponent:
+            await context.reply("You can't play a game against yourself!")
+            return
+
+        # make sure the opponent is not a bot
+        if opponent.bot:
+            await context.reply("You can't play with bots!")
+            return
+
+        key = tuple(sorted([context.author.id, opponent.id]))
+
+        # check that there is no active game between the two
+        if key in self.active_games:
+            await context.reply("You already have a game with them!")
+            return
+
+        self.active_games[key] = TicTacToeState(context.author, opponent)
+
+    @commands.command()
+    async def tttstop(self, context, opponent: discord.User):
+        """
+        Ends your game with the specified opponent if such a game is in
+        progress.
+        """
+
+        key = tuple(sorted([context.author.id, opponent.id]))
+
+        if key in self.active_games:
+            del self.active_games[key]
+            await context.reply(f"Ended game with <@!{opponent.id}>")
+        else:
+            await context.reply("You don't have a game with them!")
 
 async def setup(bot):
     await bot.add_cog(TicTacToe(bot))
