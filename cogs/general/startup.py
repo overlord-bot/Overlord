@@ -2,10 +2,9 @@
 
 import os
 import platform
-
+import sys
 import discord
 from discord.ext import commands
-
 
 class Startup(commands.Cog, name="Start Up"):
     """Startup Operations"""
@@ -21,6 +20,11 @@ class Startup(commands.Cog, name="Start Up"):
         print(f"Python version: {platform.python_version()}")
         print(f"Running on: {platform.system()} {platform.release()} ({os.name})")
 
+        arguments = sys.argv
+        if "-fast" in arguments:
+            print("----------------------- Connected to Discord ------------------------")
+            return
+
         await self.bot.wait_until_ready()
 
         # Syncs bot commands with the specific bot testing server in bot.py
@@ -33,7 +37,6 @@ class Startup(commands.Cog, name="Start Up"):
             print("Syncing commands globally")
             await self.bot.tree.sync()
         print("----------------------------------------------------------------------")
-
 
 async def setup(bot):
     await bot.add_cog(Startup(bot))
