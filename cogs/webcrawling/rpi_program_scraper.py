@@ -37,7 +37,7 @@ def getInfoFromChildren(children):
         #print(class_name)
     return classes
 
-def getRefs():
+def getRefs(): #Get links to every major
     program_req = requests.get("http://catalog.rpi.edu/content.php?catoid=24&navoid=604")
 
     if program_req.status_code == 200: 
@@ -59,7 +59,7 @@ def getRefs():
         refs.append([major, a_major["href"]])
     return refs
 
-def getPastCreditHours(list, name):
+def getPastCreditHours(list, name): #Get how many credit hours already needed
     for item in list:
         if(item['name'] == name):
             #print(item)
@@ -67,6 +67,14 @@ def getPastCreditHours(list, name):
             #print(info)
             return info
     return 0, 0
+
+def itemIndex(list, name): #Find index of item in list
+    for i in range(len(list)):
+        item = list[i]
+        if(item["name"] == name):
+            return i
+    return -1
+        
 
 def isElective(text): #Checks to see if course is elective based on key words
     text = text.lower()
@@ -81,16 +89,10 @@ def write_to_dict(classes):
         course_dict = {}
 
         #Check if elective
-        #if course.lower().count("elective") != 0 or course.lower().count("option") != 0:
         if isElective(course):
             elective_split = course.split("Credit Hours: ")
-            name = elective_split[0].strip()
-            
-            # TO DO
-            #
-            #                double check in case footnote after name
-            if name.lower().count('footnote') != 0 or name.lower().count('or') != 0: #Special case for footnote 
-                continue 
+            name = elective_split[0].strip() \
+                   .split("\n\t")[0] #removes extra line
 
             credit_hours, num_classes = getPastCreditHours(dict_list, name)
             num_classes += 1
@@ -143,12 +145,11 @@ def write_to_dict(classes):
                 "major": tag,
                 "course_id": number
             }
-        #dict[name] = course_dict
+        index = itemIndex(dict_list, name)
+        if index != -1:
+            dict_list.pop(index)
         dict_list.append(course_dict)
-        #dict[""]
-        #print(course_dict)
 
-    #return dict
     return dict_list
 
 dict = {}
@@ -169,11 +170,9 @@ for ref_tup in getRefs():
     for year in years[1:]: #Skipping first entry as is description of major
         for semester in year.children:
             classes += getInfoFromDiv(semester)
-    #print(classes)
     dict[major.strip()] = write_to_dict(classes)
     #break
 
-#print(dict)
 json_object = json.dumps(dict, indent=2)
 with open("cogs/webcrawling/class_results.json", "w") as outfile:  # write to file
     outfile.write(json_object)
