@@ -99,28 +99,40 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             # CASE 2: run data fetch from json
             elif message.content.casefold() == "2":
                 print("INPUT 2 REGISTERED")
+
+
+                #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TEMPORARY FLAG ADDED HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                user.flag.add(Flag.DEBUG)
+                #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TEMPORARY FLAG ADDED HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
                 # There are currently three acceptable places to store the course_data.json file, and this function
                 # will check through them in the listed order:
                 # 1) within a folder named "data" inside degree planner's directory
                 # 2) degree planner's directory
                 # 3) root directory of the project folder
 
-                if os.path.isfile(os.getcwd() + "/cogs/degree planner/data/course_data.json"):
-                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree planner/data/course_data.json")
-                    f = open(os.getcwd() + "/cogs/degree planner/data/course_data.json")
-                elif os.path.isfile(os.getcwd() + "/cogs/degree planner/course_data.json"):
-                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree planner/course_data.json")
-                    f = open(os.getcwd() + "/cogs/degree planner/course_data.json")
-                elif os.path.isfile(os.getcwd() + "/course_data.json"):
-                    await user.msg(message, f"file found: {os.getcwd()}/course_data.json")
-                    f = open(os.getcwd() + "/course_data.json")
+                filename = "catalog_results.json"
+
+                if os.path.isfile(os.getcwd() + "/cogs/webcrawling/" + filename):
+                    await user.msg(message, f"file found: {os.getcwd()}/cogs/webcrawling/" + filename)
+                    f = open(os.getcwd() + "/cogs/webcrawling/" + filename)
+                elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/data/" + filename):
+                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/data/" + filename)
+                    f = open(os.getcwd() + "/cogs/degree-planner/data/" + filename)
+                elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/" + filename):
+                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/" + filename)
+                    f = open(os.getcwd() + "/cogs/degree-planner/" + filename)
+                elif os.path.isfile(os.getcwd() + "/" + filename):
+                    await user.msg(message, f"file found: {os.getcwd()}/" + filename)
+                    f = open(os.getcwd() + "/" + filename)
 
                 else:
                     await user.msg(message, "file not found, terminating")
                     return
                 json_data = json.load(f)
                 f.close()
-                await self.parse_courses(message, json_data)
+                await self.parse_courses_set(message, json_data)
                 await user.msg(message, "Sucessfully parsed json data, printing catalog")
                 await user.msg_hold(self.catalog.to_string())
                 await user.msg_release(message, False)
@@ -308,6 +320,83 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             self.catalog.add_course(course)
             await user.msg_hold(course.to_string())
         await user.msg_release(message, False)
+
+        
+    async def parse_courses_set(self, message, json_data):
+        
+        user = self.users.get(message.author)
+
+        if Flag.TEST_RUNNING in user.flag:
+            await user.msg(message, "Operation unavailable due to another user operation running")
+            return
+
+        await user.msg(message, "Beginning parsing json data into catalog")
+
+        # json data format: list[dict(attribute : value)]
+
+        for element in json_data:
+            #print(str(element))
+
+            # gets course name, major and course_id
+            if 'course_name' in element and 'course_subject' in element and 'course_number' in element:
+                if len(element['course_subject']) != 4:
+                    print("PARSING ERROR: course subject not 4 characters for course " + str(element))
+                    continue
+                if not element['course_number'].isdigit():
+                    print("PARSING ERROR: course number is not a number for course " + str(element))
+                    continue
+                course = Course(element['course_name'], element['course_subject'], int(float(element['course_number'])))
+            else:
+                print("PARSING ERROR: course name, subject or number not found " + str(element))
+                continue
+
+            if 'course_credit_hours' in element:
+                course.credits = element['course_credit_hours']
+            
+            if 'course_is_ci' in element:
+                course.CI = element['course_is_ci']
+
+            if 'HASS_pathway' in element:
+                HASS_pathway = element['HASS_pathway'] # list of pathways
+                if isinstance(HASS_pathway, list):
+                    for pathway in HASS_pathway: # add each individual pathway (stripped of whitespace)
+                        course.add_pathway(pathway.strip())
+                elif HASS_pathway != "":
+                    course.add_pathway(HASS_pathway.strip())
+
+            if 'concentration' in element:
+                concentration = element['concentration']
+                if isinstance(concentration, list):
+                    for con in concentration:
+                        course.add_concentration(con.strip())
+                elif concentration != "":
+                    course.add_concentration(concentration.strip())
+
+            if 'course_requisites' in element:
+                prereqs = element['course_requisites']
+                if isinstance(prereqs, list):
+                    for prereq in prereqs:
+                        course.add_prerequisite(prereq.strip())
+                elif prereqs != "":
+                    course.add_prerequisite(prereqs.strip())
+
+            if 'course_crosslisted' in element:
+                cross_listed = element['course_crosslisted']
+                if isinstance(cross_listed, list):
+                    for cross in cross_listed:
+                        course.add_cross_listed(cross.strip())
+                elif cross_listed != "":
+                    course.add_cross_listed(cross_listed.strip())
+
+            if 'restricted' in element:
+                course.restricted = element['restricted']
+
+            if 'course_description' in element:
+                course.description = element['course_description']
+
+            self.catalog.add_course(course)
+            #await user.msg_hold(course.to_string())
+        #await user.msg_release(message, False)
 
 async def setup(bot):
     await bot.add_cog(Degree_Planner(bot))
