@@ -4802,18 +4802,18 @@
       "course_id": "1100"
     },
     {
-      "name": "Introduction to Civil and Environmental Engineering ",
-      "type": "course",
-      "credits": "1",
-      "major": "CIVL",
-      "course_id": "1100"
-    },
-    {
       "name": "Chemistry II ",
       "type": "course",
       "credits": "4",
       "major": "CHEM",
       "course_id": "1200"
+    },
+    {
+      "name": "Introduction to Civil and Environmental Engineering ",
+      "type": "course",
+      "credits": "1",
+      "major": "CIVL",
+      "course_id": "1100"
     },
     {
       "name": "Biological Science Elective",
@@ -4850,18 +4850,18 @@
       "course_id": "2110"
     },
     {
-      "name": "Introduction to Water Resources Engineering ",
-      "type": "course",
-      "credits": "4",
-      "major": "CIVL",
-      "course_id": "2060"
-    },
-    {
       "name": "Beginning Programming in Civil and Environmental Engineering ",
       "type": "course",
       "credits": "1",
       "major": "CIVL",
       "course_id": "1300"
+    },
+    {
+      "name": "Introduction to Water Resources Engineering ",
+      "type": "course",
+      "credits": "4",
+      "major": "CIVL",
+      "course_id": "2060"
     },
     {
       "name": "Free Elective I",
