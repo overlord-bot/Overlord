@@ -1,4 +1,5 @@
-import sys
+import os
+import asyncio
 import time
 from cogs.poll.util.PollView import PollView
 import random
@@ -63,3 +64,10 @@ class PollInfoModal(discord.ui.Modal, title="Poll Information"):
 		)
 		if send_followup:
 			await interaction.followup.send(ephemeral=True, content="You can't have more than 25 options, limiting to 25.")
+		
+		# Wait for the poll to end which creates a barplot with the "{poll_id}.png" as the name
+		filename = f"{poll_id}.png"
+		while not(filename in os.listdir(os.getcwd())):
+			await asyncio.sleep(1)
+		await interaction.followup.send(file=discord.File(filename))
+		os.remove(os.path.join(os.getcwd(), filename))

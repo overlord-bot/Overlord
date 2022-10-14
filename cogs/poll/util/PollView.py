@@ -1,5 +1,6 @@
 from typing import List
 import discord
+import matplotlib.pyplot as plt
 
 class PollView(discord.ui.View):
 	def __init__(self, title: str, content: List[str], embed: discord.Embed, timeout:int, poll_id:str) -> None:
@@ -22,10 +23,19 @@ class PollView(discord.ui.View):
 			button.callback = self.button_callback
 			self.add_item(button)
 		
-	def on_timeout(self) -> None:
-		# TODO Clearing buttons does not work 
-		# TODO add displaying a bar chart showing stats
-		print(f"{self.title}:{self.poll_id} timed out.")
+	async def on_timeout(self) -> None:
+		# TODO Manually stop the poll
+		print(f"Poll {self.poll_id}:{self.title} timed out.")
+
+		# Create a bar plot and save it with the poll id
+		count = [len(poll) for poll in self.voted]
+		plt.title(label=self.title)
+		plt.bar(x=self.content, height=count)
+		plt.yticks(ticks=[i for i in range(max(count)+1)])
+		plt.savefig(f'{self.poll_id}.png')
+		plt.close()
+		
+		# TODO Clearing buttons does not work??
 		self.clear_items()
 
 	async def button_callback(self, interaction: discord.Interaction) -> None:
