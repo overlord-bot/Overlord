@@ -3,15 +3,16 @@ import requests
 from bs4 import BeautifulSoup
 import time  # for calculating runtime
 import json
+from pprint import pprint
 
 
 # Finds all courses in an url based on its first child's "a" tag attributes
 def soup_search(url):
     search_data = requests.get(url).text
     search_soup = BeautifulSoup(search_data, 'html.parser')
-    
-    return search_soup.find_all("a", {"style": "float:right",
-                                      "href": "javascript:acalogPopup('/mime/download.?catoid=24&ftype=3&foid=', 'view_flashpoint', 770, 530, 'yes')"})
+    course_data = search_soup.find_all("a", {"style": "float:right", "href": "javascript:acalogPopup('/mime/download.?catoid=24&ftype=3&foid=', 'view_flashpoint', 770, 530, 'yes')"})
+
+    return course_data  # parent element of course data
 
 
 # parses course attributes for easier handling in the degree planner
@@ -32,28 +33,29 @@ def get_course_info(course_list):
         course_crosslisted = "Not Crosslisted"
         course_offered = "Unknown"
         course_requisites = "None"
+        course_prerequisites = []
+        course_corequisites = []
 
-        if len(course_description.split("Credit Hours: ")) > 1:
+        if course_description.find("Credit Hours: ") != -1:
             course_credit_hours = course_description.split("Credit Hours: ")[1].strip()
         course_description = course_description.split("Credit Hours: ")[0].strip()
 
-        if len(course_description.split("Cross Listed: ")) > 1:
+        if course_description.find("Cross Listed: ") != -1:
             course_crosslisted = course_description.split("Cross Listed: ")[1].strip()
         course_description = course_description.split("Cross Listed: ")[0].strip()
 
-        if len(course_description.split("When Offered: ")) > 1:
+        if course_description.find("When Offered: ") != -1:
             course_offered = course_description.split("When Offered: ")[1].strip()
         course_description = course_description.split("When Offered: ")[0].strip()
 
-        if len(course_description.split("Prerequisites/Corequisites: ")) > 1:
+        if course_description.find("Prerequisites/Corequisites: ") != -1:
             course_requisites = course_description.split("Prerequisites/Corequisites: ")[1].strip()
         course_description = course_description.split("Prerequisites/Corequisites: ")[0].strip()
 
         if course_description.find("This is a communication-intensive course.") != -1:
             course_is_ci = True
-        course_description = course_description.replace("This is a communication-intensive course.", "").strip()
+            course_description = course_description.replace("This is a communication-intensive course.", "").strip()
 
-        '''
         print("-------------------------------------------------------")
         print(f"Course Subject: {course_subject}")
         print(f"Course Number: {course_number}")
@@ -64,7 +66,6 @@ def get_course_info(course_list):
         print(f"Course Offered: {course_offered}")
         print(f"Course Crosslisted: {course_crosslisted}")
         print(f"Credit Hours: {course_credit_hours}")
-        '''
 
         parsed_course = {
             "course_subject": course_subject,
