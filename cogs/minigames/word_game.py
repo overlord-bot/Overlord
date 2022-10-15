@@ -90,17 +90,18 @@ class WordGame(commands.Cog, name="Word Game"):
 
     @commands.command()
     async def wordgame(self, ctx, rounds: int = -1):
-        """Starts the word game. Rounds are infinite unless an optional positive integer is supplied."""
+        """Starts the word game. 
+        rounds: an optional number of rounds to play the game with."""
         if (self.round >= 0):
-            await ctx.send("Game already started!")
+            await ctx.send("The Word Game has already started!")
         else:
             self.round = 0
             self.current_word = random.choice(self.word_list)
             if (rounds >= 1):
                 self.max_round = rounds
-                await ctx.send("Game Started with " + str(self.max_round) + " rounds!")
+                await ctx.send("Word Game started with " + str(self.max_round) + " rounds!")
             else:
-                await ctx.send("Game Started!")
+                await ctx.send("Word Game started!")
     
     @wordgame.error
     async def wordgame_error(self, ctx, error):
@@ -109,7 +110,7 @@ class WordGame(commands.Cog, name="Word Game"):
     
     @commands.command()
     async def addword(self, ctx, word: to_lower):
-        """Add word to list of words"""
+        """Add 5-lettered word to list of words"""
         if(self.round >= 0):
             if(word in self.word_list):
                 self.round += 1
@@ -123,26 +124,26 @@ class WordGame(commands.Cog, name="Word Game"):
                     return
                 
                 if(self.round >= self.max_round and self.max_round != -1):
-                    await ctx.send("Game ended! The word was " + self.current_word)
+                    await ctx.send("Word Game ended! The word was " + self.current_word)
                     self.clear_game()
             else:
-                await ctx.send("Invalid word!")
+                await ctx.send("It seems that word is not in my dictionary. Try typing another 5-lettered word.")
         else:
-            await ctx.send("The game has not started!")
+            await ctx.send("The Word Game has not started!")
 
     @addword.error
     async def addword_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("Your add_word is missing a word!")
+            await ctx.send("Your addword is missing a word!")
 
     @commands.command()
     async def endwordgame(self, ctx):
         """Ends the word game if not started"""
         if (self.round >= 0):
-            await ctx.send("Game ended! The word was " + self.current_word)
+            await ctx.send("Word Game ended! The word was " + self.current_word)
             self.clear_game()
         else:
-            await ctx.send("The game hasn't started!")
+            await ctx.send("The Word Game has not started!")
 
     @commands.command()
     async def checkstatus(self, ctx):
@@ -154,7 +155,7 @@ class WordGame(commands.Cog, name="Word Game"):
         elif (self.round == 0):
              await ctx.send("No one has added any words!")
         else:
-            await ctx.send("The game has not started!")
+            await ctx.send("The Word Game has not started!")
 
 
 async def setup(bot):
