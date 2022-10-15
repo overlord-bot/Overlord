@@ -7,7 +7,7 @@ from .course import Course
 from .catalog import Catalog
 from .degree import Degree
 from .bundle import Bundle
-from .list_and_rules import List_and_rules
+from .rules import Rules
 
 
 #########################################################################
@@ -24,9 +24,13 @@ from .list_and_rules import List_and_rules
 class Schedule():
     # SCHEDULE GLOBAL VARIABLES
 
-    # needs to be initialized before every use by calling master_list_init()
-    # uses 2D array [semester][course]
-    master_list = []
+    def __init__(self, name:str):
+        # needs to be initialized before every use by calling master_list_init()
+        # uses 2D array [semester][course]
+        self.__master_list = []
+        self.SEMESTERS_MAX = 12
+        self.name = name
+        self.master_list_init()
 
     #-----------------------------------------------------------------------
     # Initializes the data structure storing all courses in the schedule,
@@ -35,12 +39,12 @@ class Schedule():
 
     def master_list_init(self):
         print("initializing master_list")
-        self.master_list.clear()
+        self.__master_list.clear()
 
         # Generates 12 empty lists within master_list. Each list represents a semester
         # with element 0 representing semester 1 and so on.
         for x in range(0, 12):
-            self.master_list.append([])
+            self.__master_list.append([])
         print("initializing master_list complete")
 
     #-----------------------------------------------------------------------
@@ -51,14 +55,22 @@ class Schedule():
         if semester in self.find_course(course):
             print("cannot add course as it's duplicated")
         else:
-            self.master_list[semester].append(course)
+            self.__master_list[semester].append(course)
+            print(f"added course: {course.to_string()}, semester: {semester}")
 
 
     def remove_course(self, course, semester):
         if semester not in self.find_course(course):
-            print("course not present in semester" + str(semester))
+            print(f"course not present in semester {str(semester)}")
         else:
-            self.master_list[semester].remove(course)
+            self.__master_list[semester].remove(course)
+
+
+    def get_semester(self, semester):
+        if semester >= len(self.__master_list):
+            print("invalid semester")
+            return ""
+        return self.__master_list[semester]
 
 
     # Parameters: course to find
@@ -66,7 +78,7 @@ class Schedule():
     def find_course(self, course):
         i = 0;
         present_in = []
-        for courselist in self.master_list:
+        for courselist in self.__master_list:
             if course in courselist:
                 present_in.append(i)
             i+=1
@@ -76,10 +88,10 @@ class Schedule():
     # prints student's schedule to a string
     def to_string(self):
         count = 0
-        s = ""
-        for courselist in self.master_list:
+        s = "Schedule: " + self.name + "\n"
+        for courselist in self.__master_list:
+            s+="  Semester " + str(count) + ":\n"
             count+=1
-            s+="Semester " + str(count) + ":\n"
             for course in courselist:
-                s+="\tCourse info: " + course.name + " " + course.major + " " + str(course.course_id) + "\n"
+                s+="    Course info: " + course.name + " " + course.major + " " + str(course.course_id) + "\n"
         return s

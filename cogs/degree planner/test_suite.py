@@ -7,17 +7,14 @@ from .course import Course
 from .catalog import Catalog
 from .degree import Degree
 from .bundle import Bundle
-from .list_and_rules import List_and_rules
+from .rules import Rules
 from .schedule import Schedule
 
-class Test1():
-    # temporary variables
-    msg_content = "" # holds a string so it can be outputted to discord at the same time to avoid long waits
-    
+class Test1():    
     async def test(self, message, user):
         await user.msg(message, "Generating synthetic test data set")
 
-        if user.get_schedule("test") == 0:
+        if isinstance(user.get_schedule("test"), str):
             await user.msg(message, "No previous schedule named 'test' exists, creating new test schedule")
             user.new_schedule("test")
         else:
@@ -30,22 +27,22 @@ class Test1():
         course2 = Course("Algorithms", "CSCI", 2300)
         course3 = Course("Circuits", "ECSE", 2010)
         course4 = Course("Animation", "ARTS", 4070)
-        course4.HASS_pathway = "Digital Arts"
+        course4.HASS_pathway.add("Digital Arts")
         course5 = Course("Networking in the Linux Kernel", "CSCI", 4310)
         course5.CI = True
-        course5.concentration = "Systems and Software"
+        course5.concentration.add("Systems and Software")
         course6 = Course("Cryptography 1", "CSCI", 4230)
         course6.CI = True
-        course6.concentration = "Theory, Algorithms and Mathematics"
+        course6.concentration.add("Theory, Algorithms and Mathematics")
         course7 = Course("Algorithm Analysis", "CSCI", 4020)
-        course6.concentration = "Theory, Algorithms and Mathematics"
+        course7.concentration.add("Theory, Algorithms and Mathematics")
 
         assert course1.name == "Data Structures" and course1.major == "CSCI" and course1.course_id == 1200
         assert course2.name == "Algorithms" and course2.major == "CSCI" and course2.course_id == 2300
         assert course3.name == "Circuits" and course3.major == "ECSE" and course3.course_id == 2010
-        assert course4.name == "Animation" and course4.major == "ARTS" and course4.course_id == 4070 and course4.HASS_pathway == "Digital Arts"
-        assert course5.name == "Networking in the Linux Kernel" and course5.major == "CSCI" and course5.course_id == 4310 and course5.CI == True and course5.concentration == "Systems and Software"
-        assert course6.name == "Cryptography 1" and course6.major == "CSCI" and course6.course_id == 4230 and course6.CI == True and course6.concentration == "Theory, Algorithms and Mathematics"
+        assert course4.name == "Animation" and course4.major == "ARTS" and course4.course_id == 4070 and "Digital Arts" in course4.HASS_pathway
+        assert course5.name == "Networking in the Linux Kernel" and course5.major == "CSCI" and course5.course_id == 4310 and course5.CI == True and "Systems and Software" in course5.concentration
+        assert course6.name == "Cryptography 1" and course6.major == "CSCI" and course6.course_id == 4230 and course6.CI == True and "Theory, Algorithms and Mathematics" in course6.concentration
 
         # adding courses to catalog
 
@@ -60,13 +57,12 @@ class Test1():
         catalog.add_course(course5)
         catalog.add_course(course6)
 
-        await user.msg_hold(message, "Printing courses:")
+        await user.msg_hold("Printing courses:")
 
         for course in catalog.get_all_courses():
-            await user.msg_hold(message, course.to_string())
+            await user.msg_hold(course.to_string())
         await user.msg_release(message, False)
 
-        user.get_schedule("test").master_list_init()
         # adding courses to the master list
         
         user.get_schedule("test").add_course(catalog.get_course("Data Structures"), 1)
@@ -86,15 +82,15 @@ class Test1():
         schedule2.add_course(catalog.get_course("Animation"), 0)
         
         #checks to make sure add and remove worked properly, without duplicates within one semester but allowing for duplicates across semesters
-        assert len(user.get_schedule("test").master_list[0]) == 1
-        assert len(user.get_schedule("test").master_list[1]) == 1
-        assert len(user.get_schedule("test").master_list[4]) == 2
-        assert len(user.get_schedule("test").master_list[5]) == 0
-        assert len(user.get_schedule("test").master_list[8]) == 3
+        assert len(user.get_schedule("test").get_semester(0)) == 1
+        assert len(user.get_schedule("test").get_semester(1)) == 1
+        assert len(user.get_schedule("test").get_semester(4)) == 2
+        assert len(user.get_schedule("test").get_semester(5)) == 0
+        assert len(user.get_schedule("test").get_semester(8)) == 3
 
         # print masterlist
         await user.msg(message, "Added courses to schedule, printing schedule")
-        await user.msg_hold(message, user.get_schedule("test").to_string())
+        await user.msg_hold(user.get_schedule("test").to_string())
         await user.msg_release(message, False)
 
         # Bundle tests
@@ -121,21 +117,21 @@ class Test1():
         course_target3 = Course("Data Structures", "Default", 0) # data structures
         course_target4 = Course("Data Structures", "Default", 2000) # none
         course_target5 = Course("Default", "Default", 0) # all theory concentration courses
-        course_target5.concentration = "Theory, Algorithms and Mathematics"
+        course_target5.concentration.add("Theory, Algorithms and Mathematics")
 
         bundle1 = catalog.get_course_match(course_target1)
-        await user.msg(message, "Bundle1: " + bundle1.to_string())
+        await user.msg(message, f"Bundle1: {bundle1.to_string()}")
         bundle1_ans = Bundle("CI", "NONE", 1)
         bundle1_ans.add(catalog.get_course("Networking in the Linux Kernel"))
         bundle1_ans.add(catalog.get_course("Cryptography 1"))
-        await user.msg(message, "Bundle1_ans: " + bundle1_ans.to_string())
+        await user.msg(message, f"Bundle1_ans: {bundle1_ans.to_string()}")
         assert bundle1 == bundle1_ans
 
         bundle2 = catalog.get_course_match(course_target2)
-        await user.msg(message, "Bundle2: " + bundle2.to_string())
+        await user.msg(message, f"Bundle2: {bundle2.to_string()}")
         bundle2_ans = Bundle("4000", "NONE", 2)
         bundle2_ans.course_bundle = [course4, course5, course6]
-        await user.msg(message, "Bundle2_ans: " + bundle2_ans.to_string())
+        await user.msg(message, f"Bundle2_ans: {bundle2_ans.to_string()}")
         assert bundle2 == bundle2_ans
 
         bundle3 = catalog.get_course_match(course_target3)
@@ -148,39 +144,40 @@ class Test1():
         assert bundle4 == bundle4_ans
 
         bundle5 = catalog.get_course_match(course_target5)
+        await user.msg(message, f"Bundle5: {bundle5.to_string()}")
         bundle5_ans = Bundle("Theory", "NONE", 5)
         bundle5_ans.course_bundle = [course6]
+        await user.msg(message, f"Bundle5_ans: {bundle5_ans.to_string()}")
         assert bundle5 == bundle5_ans
         
         
         # List_and_rules tests
         await user.msg(message, "Beginning testing of class List_and_rules")
 
-        lar1 = List_and_rules()
-        print("0")
+        lar1 = Rules()
+ 
         lar1.course_list = [course1, course2]
         lar1.min_courses = 2
         lar1.min_2000_courses = 1
         lar1.required_courses = [course1]
         assert lar1.fulfilled()
-        print("1")
+
         lar1.course_list = [course1]
         assert not lar1.fulfilled()
-        print("2")
+
         lar1.course_list = [course1, course4]
         assert not lar1.fulfilled()
-        print("3")
+
         lar1.course_list = [course1, course2, course6]
         lar1.min_same_concentration = 2
         assert not lar1.fulfilled()
-        print("4")
+
         lar1.course_list = [course1, course2, course6, course7]
         assert lar1.fulfilled()
 
         await user.msg(message, "List_and_rules assertions successful")
 
-        await user.msg(message, "Printing user data: " + user.to_string())
+        await user.msg(message, f"Printing user data: {user.to_string()}")
 
         # resetting master_list and conclude test module
         user.get_schedule("test").master_list_init()
-        user.test_running = False

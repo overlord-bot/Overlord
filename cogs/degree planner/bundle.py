@@ -8,9 +8,11 @@ from .course import Course
 class Bundle(Course):
 
     course_bundle = []
+    title = ""
 
-    def __init__(self, a, b, c):
+    def __init__(self, title, b, c):
         self.course_bundle = []
+        self.title = title
 
     def add(self, course):
         self.course_bundle.append(course)
@@ -18,10 +20,13 @@ class Bundle(Course):
     def remove(self, course):
         self.course_bundle.remove(course)
 
+    def get_title(self):
+        return self.title
+
     def to_string(self):
         string = ""
         for course in self.course_bundle:
-            string+="[" + course.name + "] "
+            string+=f"[{course.name}] "
         return string
 
     def __eq__(self, other):
@@ -34,6 +39,15 @@ class Bundle(Course):
             otherlist.remove(course)
         if otherlist:
             return False
+        return True
+
+    def __ge__(self, other): # see if other is a sublist of self
+        mylist = self.course_bundle
+        otherlist = other.course_bundle
+
+        for course in otherlist:
+            if course not in mylist:
+                return False
         return True
 
     def __hash__(self):
