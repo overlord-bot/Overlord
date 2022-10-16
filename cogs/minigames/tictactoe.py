@@ -1,6 +1,10 @@
 import discord
 from discord.ext import commands
 
+_NUMBER_NAMES = [
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+]
+
 class TicTacToeState:
     def __init__(self, player_x, player_o):
         # initialise the board to be empty
@@ -17,9 +21,6 @@ class TicTacToeState:
 
     # get Discord-friendly string representation of the board
     def __str__(self):
-        NUMBER_NAMES = ["one", "two", "three", "four", "five", "six", "seven",
-            "eight", "nine"]
-
         stringified = ""
 
         # row-major counter for board's cells (0 to 9)
@@ -27,7 +28,7 @@ class TicTacToeState:
 
         for row in self.board:
             for cell in row:
-                stringified += f":{cell if cell else NUMBER_NAMES[counter]}:"
+                stringified += f":{cell if cell else _NUMBER_NAMES[counter]}:"
                 counter += 1
 
             stringified += "\n"
@@ -149,6 +150,10 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
             return
 
         self.active_games[key] = TicTacToeState(context.author, opponent)
+
+        game_msg = context.reply(str(self.active_games[key]))
+
+
 
     @commands.command()
     async def tttstop(self, context, opponent: discord.User):
