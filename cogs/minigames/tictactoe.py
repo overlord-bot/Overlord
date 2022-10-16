@@ -13,7 +13,7 @@ class TicTacToeState:
         }
 
         # X always has the first turn
-        self.curr_player = player_x
+        self.curr_player_sign = "x"
 
     # get Discord-friendly string representation of the board
     def __str__(self):
@@ -42,6 +42,22 @@ class TicTacToeState:
                 return False
 
         return True
+
+    # get a list of indices of free cells
+    def get_free_cells(self):
+        free_cells = []
+
+        # flat index
+        i = 0
+
+        for row in self.board:
+            for cell in row:
+                if cell is None:
+                    free_cells.append(i)
+
+                i += 1
+
+        return free_cells
 
     # gets the player by their associated letter, if possible
     def get_player(self, letter):
@@ -81,6 +97,25 @@ class TicTacToeState:
 
         # no winner yet
         return None
+
+    # places an X/O at the specified location for the current player
+    def make_move(self, flat_index):
+        # reject move if specified cell is filled
+        if flat_index not in self.get_free_cells():
+            return
+
+        # transform flat index into row-column pair
+        row_index = flat_index // 3
+        col_index = flat_index % 3
+
+        # place current player's sign
+        self.board[row_index][col_index] = self.curr_player_sign
+
+        # switch current player
+        if self.curr_player_sign == "x":
+            self.curr_player_sign = "o"
+        else:
+            self.curr_player_sign = "x"
 
 class TicTacToe(commands.Cog, name="Tic-tac-toe"):
     """A game of tic-tac-toe"""
