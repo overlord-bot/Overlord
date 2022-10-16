@@ -1,9 +1,8 @@
 import discord
 from discord.ext import commands
 
-_NUMBER_NAMES = [
-    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
-]
+# the keycap emojis for 1-9
+_NUM_EMOJIS = [str(n) + "\N{COMBINING ENCLOSING KEYCAP}" for n in range(1, 10)]
 
 class TicTacToeState:
     def __init__(self, player_x, player_o):
@@ -12,12 +11,12 @@ class TicTacToeState:
 
         # record who is playing
         self.players = {
-            "x": player_x,
-            "o": player_o
+            ":x:": player_x,
+            ":o:": player_o
         }
 
         # X always has the first turn
-        self.curr_player_sign = "x"
+        self.curr_player_sign = ":x:"
 
     # get Discord-friendly string representation of the board
     def __str__(self):
@@ -28,7 +27,7 @@ class TicTacToeState:
 
         for row in self.board:
             for cell in row:
-                stringified += f":{cell if cell else _NUMBER_NAMES[counter]}:"
+                stringified += f"{cell if cell else _NUM_EMOJIS[counter]}"
                 counter += 1
 
             stringified += "\n"
@@ -60,9 +59,9 @@ class TicTacToeState:
 
         return free_cells
 
-    # gets the player by their associated letter, if possible
+    # gets the player by their associated sign, if possible
     def get_player(self, letter):
-        if (letter == "x") or (letter == "o"):
+        if (letter == ":x:") or (letter == ":o:"):
             return self.players[letter]
         else:
             return None
@@ -113,10 +112,10 @@ class TicTacToeState:
         self.board[row_index][col_index] = self.curr_player_sign
 
         # switch current player
-        if self.curr_player_sign == "x":
-            self.curr_player_sign = "o"
+        if self.curr_player_sign == ":x:":
+            self.curr_player_sign = ":o:"
         else:
-            self.curr_player_sign = "x"
+            self.curr_player_sign = ":x:"
 
 class TicTacToe(commands.Cog, name="Tic-tac-toe"):
     """A game of tic-tac-toe"""
@@ -151,9 +150,7 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
 
         self.active_games[key] = TicTacToeState(context.author, opponent)
 
-        game_msg = context.reply(str(self.active_games[key]))
-
-
+        game_msg = await context.reply(str(self.active_games[key]))
 
     @commands.command()
     async def tttstop(self, context, opponent: discord.User):
