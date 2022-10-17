@@ -11,3 +11,4 @@ VSProject
 .env
 # other files to ignore
 calendar.txt
+list_of_commits.txt
