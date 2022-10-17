@@ -14,7 +14,7 @@ class GitHubScraper(commands.Cog, name="GitHub Scraper"):
 
     @commands.command()
     async def commitlist(self, context, username, repo_name, organization=""):
-        """Finds list of commits on the main branch of a GitHub repo. \nUsage: !commitlist <username> <repository_name> <organization_name(optional)>"""  # this is the description that will show up in !help
+        """Finds list of commits on the main branch of a GitHub repo."""  # this is the description that will show up in !help
 
         if not organization:
             organization = username
@@ -22,7 +22,7 @@ class GitHubScraper(commands.Cog, name="GitHub Scraper"):
         repo_url = f"https://github.com/{organization}/{repo_name}/commits?author={username}"
         commits_list = []  # list of commits in the main branch
 
-        # Finds link of commits on page and continues until there are no more older pages
+        # Finds link of commits on page and continues to older pages of commits until there are no older pages
         while True:
             print("Searching: " + repo_url)
             search_data = requests.get(repo_url)
@@ -50,15 +50,15 @@ class GitHubScraper(commands.Cog, name="GitHub Scraper"):
             if not more_pages:
                 break
 
-        # writes the commits list to a text file and sends back to user
+        # writes the commits list to a text file
         with open("list_of_commits.txt", "w") as file:
             file.write(f"{username}'s {len(commits_list)} Commits in Main Branch:\n")
             for commit in commits_list:
                 file.write(f"{commit}\n")
 
-        # send file with list of commits to user
+        # send text file with list of commits to user
         with open("list_of_commits.txt", "rb") as file:
-            await context.send("Your file is:", file=discord.File(file, "list_of_commits.txt"))
+            await context.reply("Your file is:", file=discord.File(file, "list_of_commits.txt"))
 
 
 async def setup(bot):
