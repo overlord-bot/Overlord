@@ -96,11 +96,12 @@ class WordGame(commands.Cog, name="Word Game"):
         if (self.round >= 0):
             await ctx.send("The Word Game has already started!")
         else:
-            self.round = 0
-            self.current_word = random.choice(self.word_list)
+            current_word = random.choice(self.word_list)
+            current_dict = {"word": current_word, "progress" : [], "rounds" : 0, "max_round" : -1}
+            self.player_dict[ctx.author.id] = current_dict
             if (rounds >= 1):
-                self.max_round = rounds
-                await ctx.send("Word Game started with " + str(self.max_round) + " rounds!")
+                current_dict["max_round"] = rounds
+                await ctx.send("Word Game started with " + str(current_dict["max_round"]) + " rounds!")
             else:
                 await ctx.send("Word Game started!")
     
