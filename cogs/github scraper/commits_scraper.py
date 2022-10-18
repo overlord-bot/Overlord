@@ -19,7 +19,10 @@ class GitHubScraper(commands.Cog, name="GitHub Scraper"):
         if not organization:
             organization = username
 
+        # other repo_url = https://github.com/{organization}/{repo_name}/commits/{branch_name}/?author={username}
+        # linke to all branches https://github.com/{organization}/{repo_name}/branches/all
         repo_url = f"https://github.com/{organization}/{repo_name}/commits?author={username}"
+
         commits_list = []  # list of commits in the main branch
 
         # Finds link of commits on page and continues to older pages of commits until there are no older pages
