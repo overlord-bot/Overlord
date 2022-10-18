@@ -51,14 +51,14 @@ class TimChat(commands.Cog, name="TimChat"):
                 await message.channel.send("https://c.tenor.com/fzrYWO2l7KkAAAAC/captain-america-language.gif")
                 await message.channel.send("Watch your language!")
 
-    def cog_unload(self):
-        self.taskLoop.cancel()
+#   def cog_unload(self):
+#         self.taskLoop.cancel()
 
-    @tasks.loop(seconds=5)
-    async def taskLoop(self, message, arg):
-            #await message.channel.send(arg)
-            print(self.index)
-            self.index += 1
+#     @tasks.loop(seconds=5)
+#     async def taskLoop(self, message, arg):
+#             message.channel.send(arg)
+#             #print(self.index)
+#             #self.index += 1
 
 
     @commands.command()
@@ -68,7 +68,7 @@ class TimChat(commands.Cog, name="TimChat"):
          "There was a kidnapping at school yesterday. Don't worry, though - he woke up!", "What washes up on tiny beaches? Microwaves.", "Do you know how to make holy water? You boil the hell out of it.", 
          "What does my head and hell have in common? They both have demons in them", "The teacher asked, 'why are you in school on a saturday?' I told her my mum told me to go to hell.", "What do you call a monkey that loves Doritos? A chipmunk!")
         await message.channel.send(random.choice(JOKES))
-        self.taskLoop.start(message, arg)
+        self.taskLoop.start(self,message, arg)
         
 
     @commands.command()
