@@ -342,10 +342,37 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 if len(element['course_subject']) != 4:
                     print("PARSING ERROR: course subject not 4 characters for course " + str(element))
                     continue
-                if not element['course_number'].isdigit():
+
+                #--------------------------------------------------------------------------
+                # Some course ID is a decimal number in the format ####.##
+                # The two digits after the decimal will be stored as course_id2
+                course_id2 = 0
+                if '.' in element['course_number']:
+                    split_num =  element['course_number'].split('.')
+                    if len(split_num) == 2:
+                        print("found split course number: " + split_num[0] + " . " + split_num[1])
+                        if split_num[0].isdigit() and split_num[1].isdigit():
+                            # We guarantee that if the code continues, these lines will be executed
+                            # and that course_id will be initiated if the first if statement runs
+                            course_id = int(float(split_num[0]))
+                            course_id2 = int(float(split_num[1]))
+                        else:
+                            print("PARSING ERROR: 2 part ID not <int>.<int> for course " + str(element))
+                            continue
+                    else:
+                        print("PARSING ERROR: 2 part ID not <int>.<int> for course " + str(element))
+                        continue
+                #--------------------------------------------------------------------------
+                        
+                elif not element['course_number'].isdigit():
                     print("PARSING ERROR: course number is not a number for course " + str(element))
                     continue
-                course = Course(element['course_name'], element['course_subject'], int(float(element['course_number'])))
+                else:
+                    course_id = int(float(element['course_number']))
+
+                course = Course(element['course_name'], element['course_subject'], course_id)
+                course.course_id2 = course_id2
+
             else:
                 print("PARSING ERROR: course name, subject or number not found " + str(element))
                 continue
