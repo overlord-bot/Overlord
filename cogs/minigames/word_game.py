@@ -11,13 +11,9 @@ class WordGame(commands.Cog, name="Word Game"):
     def __init__(self, bot):
         self.bot = bot
         self.word_list = self.get_words()
-        self.current_word = ''
-        self.round = -1
-        #self.current_progress = []
         self.emojidict = {"G": ":green_square:",
                           "Y": ":yellow_square:",
                           "B": ":black_large_square:",}
-        self.max_round = -1
         self.player_dict = dict()
 
     def get_words(self):
@@ -63,10 +59,10 @@ class WordGame(commands.Cog, name="Word Game"):
         
         return currentlist
 
-    def print_status(self, id):
+    def print_status(self, user_id):
         """Returns the current status of the for the user that called the command"""
         return_status = str()
-        current_progress = self.player_dict[id]["progress"]
+        current_progress = self.player_dict[user_id]["progress"]
         for i in range(0, len(current_progress)):
                        return_status = return_status + current_progress[i][0] + ": " + ''.join(current_progress[i][1]) + '\n'
         return return_status
@@ -80,12 +76,12 @@ class WordGame(commands.Cog, name="Word Game"):
         """Clears game state"""
         self.player_dict.pop(user_id)
 
-    """
+    
     @commands.command()
     async def getword(self, ctx):
         #Returns the test word. FOR DEBUG ONLY!
-        await ctx.send(self.current_word)
-    """
+        await ctx.send(self.player_dict[ctx.author.id]["word"])
+    
 
     @commands.command()
     async def wordgame(self, ctx, rounds: int = -1):
@@ -120,7 +116,7 @@ class WordGame(commands.Cog, name="Word Game"):
                 emojimessage = self.to_emoji(''.join(wordlist))
                 await ctx.send(emoji.emojize(emojimessage))
                 if (wordlist.count('G') == len(current_dict["word"])):
-                    self.clear_game()
+                    self.clear_game(ctx.author.id)
                     await ctx.send("You win!")
                     return
                 
