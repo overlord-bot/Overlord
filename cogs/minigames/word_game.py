@@ -124,7 +124,7 @@ class WordGame(commands.Cog, name="Word Game"):
                     await ctx.send("You win!")
                     return
                 
-                if(current_dict["round"] >= current_dict["max_round"] and current_dict["max_round"] != -1):
+                if(current_dict["rounds"] >= current_dict["max_round"] and current_dict["max_round"] != -1):
                     await ctx.send("Word Game ended! The word was " + current_dict["word"])
                     self.clear_game(ctx.author.id)
             else:
@@ -151,12 +151,12 @@ class WordGame(commands.Cog, name="Word Game"):
         """Check the current game status for the user"""
         if (ctx.author.id in self.player_dict.keys()):
             current_dict = self.player_dict[ctx.author.id]
-            if (current_dict["round"] > 0):
-                return_text = self.print_status()
+            if (current_dict["rounds"] > 0):
+                return_text = self.print_status(id)
                 emoji_text = self.to_emoji(return_text)
                 await ctx.send(emoji.emojize(emoji_text))
             
-            elif (self.round == 0):
+            elif (current_dict["rounds"] == 0):
                  await ctx.send("No one has added any words!")
         else:
             await ctx.send("The Word Game has not started!")
