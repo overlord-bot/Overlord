@@ -13,11 +13,12 @@ class WordGame(commands.Cog, name="Word Game"):
         self.word_list = self.get_words()
         self.current_word = ''
         self.round = -1
-        self.current_progress = []
+        #self.current_progress = []
         self.emojidict = {"G": ":green_square:",
                           "Y": ":yellow_square:",
                           "B": ":black_large_square:",}
         self.max_round = -1
+        self.player_dict = dict()
 
     def get_words(self):
         """From https://github.com/charlesreid1/five-letter-words/blob/master/get_words.py"""
@@ -63,7 +64,7 @@ class WordGame(commands.Cog, name="Word Game"):
         return currentlist
 
     def print_status(self):
-        """Returns the current status of the game"""
+        """Returns the current status of the for the user that called the command"""
         return_status = str()
         for i in range(0, len(self.current_progress)):
                        return_status = return_status + self.current_progress[i][0] + ": " + ''.join(self.current_progress[i][1]) + '\n'
@@ -79,7 +80,7 @@ class WordGame(commands.Cog, name="Word Game"):
         self.round = -1
         self.max_round = -1
         self.current_word = ''
-        self.current_progress = []
+        #self.current_progress = []
 
     """
     @commands.command()
@@ -90,7 +91,7 @@ class WordGame(commands.Cog, name="Word Game"):
 
     @commands.command()
     async def wordgame(self, ctx, rounds: int = -1):
-        """Starts the word game. 
+        """Starts the word game for the user. 
         rounds: an optional number of rounds to play the game with."""
         if (self.round >= 0):
             await ctx.send("The Word Game has already started!")
@@ -138,7 +139,7 @@ class WordGame(commands.Cog, name="Word Game"):
 
     @commands.command()
     async def endwordgame(self, ctx):
-        """Ends the word game if not started"""
+        """Ends the word game for the user if not started"""
         if (self.round >= 0):
             await ctx.send("Word Game ended! The word was " + self.current_word)
             self.clear_game()
@@ -147,7 +148,7 @@ class WordGame(commands.Cog, name="Word Game"):
 
     @commands.command()
     async def checkstatus(self, ctx):
-        """Check the current game status"""
+        """Check the current game status for the user"""
         if (self.round > 0):
             return_text = self.print_status()
             emoji_text = self.to_emoji(return_text)
@@ -156,7 +157,6 @@ class WordGame(commands.Cog, name="Word Game"):
              await ctx.send("No one has added any words!")
         else:
             await ctx.send("The Word Game has not started!")
-
 
 async def setup(bot):
     await bot.add_cog(WordGame(bot))
