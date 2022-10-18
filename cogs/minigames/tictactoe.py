@@ -71,7 +71,7 @@ class TicTacToeState:
         # check each row
         for row in self.board:
             # all the same value?
-            if len(set(row)) == 1:
+            if (len(set(row)) == 1) and (None not in row):
                 return self.get_player(row[0])
 
         # check each column
@@ -80,19 +80,19 @@ class TicTacToeState:
             values = {self.board[0][i], self.board[1][i], self.board[2][i]}
 
             # all the same value?
-            if len(values) == 1:
+            if (len(values) == 1) and (None not in values):
                 return self.get_player(self.board[0][i])
 
         # check diagonal from top left to bottom right
         diagonal_values = {self.board[0][0], self.board[1][1], self.board[2][2]}
 
-        if len(diagonal_values) == 1:
+        if (len(diagonal_values) == 1) and (None not in diagonal_values):
             return self.get_player(self.board[0][0])
 
         # check diagonal from top right to bottom left
         diagonal_values = {self.board[0][2], self.board[1][1], self.board[2][0]}
 
-        if len(diagonal_values) == 1:
+        if (len(diagonal_values) == 1) and (None not in diagonal_values):
             return self.get_player(self.board[0][2])
 
         # no winner yet
