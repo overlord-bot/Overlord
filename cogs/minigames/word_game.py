@@ -76,12 +76,12 @@ class WordGame(commands.Cog, name="Word Game"):
         """Clears game state"""
         self.player_dict.pop(user_id)
 
-    
+    """
     @commands.command()
     async def getword(self, ctx):
         #Returns the test word. FOR DEBUG ONLY!
         await ctx.send(self.player_dict[ctx.author.id]["word"])
-    
+    """
 
     @commands.command()
     async def wordgame(self, ctx, rounds: int = -1):
