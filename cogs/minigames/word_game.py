@@ -148,7 +148,7 @@ class WordGame(commands.Cog, name="Word Game"):
         if (ctx.author.id in self.player_dict.keys()):
             current_dict = self.player_dict[ctx.author.id]
             if (current_dict["rounds"] > 0):
-                return_text = self.print_status(id)
+                return_text = self.print_status(ctx.author.id)
                 emoji_text = self.to_emoji(return_text)
                 await ctx.send(emoji.emojize(emoji_text))
             
