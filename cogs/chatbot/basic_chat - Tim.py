@@ -62,7 +62,7 @@ class TimChat(commands.Cog, name="TimChat"):
 
 
     @commands.command()
-    async def pun(self, message, arg):
+    async def pun(self, message):
         JOKES = ("My friend drove his expensive car into a tree and found out how his Mercedes bends.", "Never trust an atom, they make up everything!", "Why did Adele cross the road? To say hello from the other side.",
          "I don't trust stairs because they're always up to something.", "My friend's bakery burned down last night. Now his business is toast.", " I wasn't originally going to get a brain transplant, but then I changed my mind.", 
          "There was a kidnapping at school yesterday. Don't worry, though - he woke up!", "What washes up on tiny beaches? Microwaves.", "Do you know how to make holy water? You boil the hell out of it.", 
