@@ -3,6 +3,7 @@
 This module is used to manage events and reminders for the server, and is currently in development.
 
 ##Commands
+
 To use the commands, type `!calendar` or `!calendar_timer` followed by the command. 
 
 `!calendar add <event> <MM/DD/YYYY>` will add an event for that date to the calendar.
