@@ -157,9 +157,22 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
             await context.reply("You already have a game with them!")
             return
 
-        self.active_games[key] = TicTacToeState(context.author, opponent)
+        game = self.active_games[key] = TicTacToeState(context.author, opponent)
+        game_msg = await context.reply(str(game))
 
-        game_msg = await context.reply(str(self.active_games[key]))
+        def check(reaction, user):
+            free_cells = game.get_free_cells()
+            curr_player = game.players[game.curr_player_sign]
+
+            return (user == curr_player) and (reaction.emoji in _NUM_EMOJIS) \
+                   and (_NUM_EMOJIS.index(reaction.emoji) in free_cells)
+
+        # add buttons for all free cells
+        for i in range(10):
+            await game_msg.add_reaction(_NUM_EMOJIS[i])
+
+        while True:
+            reaction, _ = await self.bot.wait_for("reaction_add", check=check)
 
     @commands.command()
     async def tttstop(self, context, opponent: discord.User):
