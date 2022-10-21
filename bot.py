@@ -86,6 +86,7 @@ async def load_cogs(bot):
 
 '''
 # IGNORE IF YOU'RE NOT USING COMMANDLESS FAST LOAD
+'''
 def main_fast():
     # Necessary intents (permissions) for the bot to function
     intents = discord.Intents.default()
@@ -105,8 +106,13 @@ async def fast_initialize(bot):
     await load_cogs(bot)
     load_dotenv()
     await bot.start(os.getenv("DISCORD_TOKEN"))
+<<<<<<< Updated upstream
 '''
 
+=======
+
+'''
+>>>>>>> Stashed changes
 def main():
     arguments = sys.argv
     if "-fast" in arguments:
