@@ -64,7 +64,7 @@ class WordGame(commands.Cog, name="Word Game"):
         return_status = str()
         current_progress = self.player_dict[user_id]["progress"]
         for i in range(0, len(current_progress)):
-                       return_status = return_status + current_progress[i][0] + ": " + ''.join(current_progress[i][1]) + '\n'
+                       return_status = return_status + ''.join(current_progress[i][1]) + ": " + current_progress[i][0] + '\n'
         return return_status
 
     def to_emoji(self, message):
