@@ -59,3 +59,4 @@ class Calendar(commands.Cog, name="Calendar"):
 
 async def setup(bot):
     await bot.add_cog(Calendar(bot))
+    

@@ -173,3 +173,4 @@ class CalHelper():
             time_until_event0 = datetime.datetime(event_year, event_month, event_day) - datetime.datetime(year, month, day)
             time_until_event1 = time_until_event0.total_seconds()
             return time_until_event1
+            
