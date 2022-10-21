@@ -70,30 +70,31 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
                     if message.content.lower()[i].isdigit() :
                         times+=message.content.lower()[i]
                 times = int(times)
-                await message.channel.send("Start counting {} seconds!".format(times))
+                times *= 10
+                await message.channel.send("Start counting {} seconds!".format(int(times/10)))
                 count = times
                 while count:
-                    if(count == (times/2)-1):
-                        await message.channel.send("{} seconds left!".format(count))
-                    await asyncio.sleep(1)
+                    if(count == (times/2)):
+                        await message.channel.send("{} seconds left!".format(count/10))
+                    await asyncio.sleep(0.1)
                     count -= 1
                 await message.channel.send("TIME'S UP!")
                 await message .channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
         
         if "!count" in message.content.lower():
             if  "min" in message.content.lower():
-                await asyncio.sleep(100)
                 times = ""
                 for i in range(0,len(message.content.lower())):
                     if message.content.lower()[i].isdigit() :
                         times+=message.content.lower()[i]
                 times = int(times)
-                await message.channel.send("Start counting {} minutes!".format(times))
+                times *= 10
+                await message.channel.send("Start counting {} minutes!".format(int(times/10)))
                 count = times
                 while count:
-                    if(count == (times/2)-1):
-                        await message.channel.send("{} minutes left!".format(count))
-                    await asyncio.sleep(60)
+                    if(count == (times/2)):
+                        await message.channel.send("{} minutes left!".format(count/10))
+                    await asyncio.sleep(6)
                     count -= 1
                 await message.channel.send("TIME'S UP!")
                 await message .channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
