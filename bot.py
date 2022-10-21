@@ -84,7 +84,7 @@ async def load_cogs(bot):
                     exception = f"{type(e).__name__}: {e}"
                     print(f"Failed Loading: cogs.{folder}.{filename} | Error: {exception}")
 
-'''
+
 # IGNORE IF YOU'RE NOT USING COMMANDLESS FAST LOAD
 '''
 def main_fast():
@@ -106,13 +106,11 @@ async def fast_initialize(bot):
     await load_cogs(bot)
     load_dotenv()
     await bot.start(os.getenv("DISCORD_TOKEN"))
-<<<<<<< Updated upstream
 '''
 
-=======
 
-'''
->>>>>>> Stashed changes
+
+
 def main():
     arguments = sys.argv
     if "-fast" in arguments:

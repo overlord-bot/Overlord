@@ -61,7 +61,7 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         for word in message.content.split():
             if word.lower() in GREETING_INPUTS:
                 await message.channel.send(random.choice(GREETING_INPUTS))
-        '''
+        
         if "!count" in message.content.lower():
             if  "sec" in message.content.lower():
                 
@@ -92,19 +92,15 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
                 await message.channel.send("Start counting {} minutes!".format(int(times/10)))
                 count = times
                 while count:
-<<<<<<< Updated upstream
-                    if(count == (times/2)-5):
+
+                    if(count == ((times/2))):
                         await message.channel.send("{} minutes left!".format(times/20))
-=======
-                    if(count == (times/2)):
-                        await message.channel.send("{} minutes left!".format(count/10))
->>>>>>> Stashed changes
                     await asyncio.sleep(6)
                     count -= 1
                 await message.channel.send("TIME'S UP!")
                 await message .channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
-        '''
-    
+        
+    '''
     @commands.command()
     async def count(self,message, arg1,arg2):
         if arg2 == "min":
@@ -115,7 +111,7 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
             while count!=0:
                 if(count == (times/2)+5):
                     await message.channel.send("{} minutes left!".format(times/20))
-                asyncio.sleep(0.6)
+                asyncio.sleep(6)
                 count -= 1
             await message.channel.send("TIME'S UP!")
             await message.channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
@@ -131,7 +127,7 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
                 count -= 1
             await message.channel.send("TIME'S UP!")
             await message.channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
-    
+    '''
 async def setup(bot):
     await bot.add_cog(BijunChat(bot))
     await bot.add_cog(ExtraFunc(bot))
