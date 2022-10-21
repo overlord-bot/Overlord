@@ -67,11 +67,11 @@ class GoMinigame(commands.Cog, name = "Go"):
                     case 0:
                         output_string += ":brown_square:"
                     case 1:
-                        output_string += ":white_circle:"
+                        output_string += ":black_circle:"
                     case 2:
-                        output_string += ':black_circle:'
+                        output_string += ":white_circle:"
                     case _:
-                        output_string += 'There is a major problem!!'
+                        output_string += "There is a major problem!!"
             output_string += number[9-i] + "\n"
 
         for i in range(11):
