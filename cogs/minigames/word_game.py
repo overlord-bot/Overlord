@@ -10,10 +10,12 @@ class WordGame(commands.Cog, name="Word Game"):
 
     def __init__(self, bot):
         self.bot = bot
+        #A list of words to reference
         self.word_list = self.get_words()
         self.emojidict = {"G": ":green_square:",
                           "Y": ":yellow_square:",
                           "B": ":black_large_square:",}
+        #A dictionary with discord channel ids as keys, and game data dictionaries as values
         self.channel_dict = dict()
 
     def get_words(self):
@@ -91,6 +93,7 @@ class WordGame(commands.Cog, name="Word Game"):
             await ctx.send("The Word Game has already started!")
         else:
             current_word = random.choice(self.word_list)
+            #Dictionary of current game data
             current_dict = {"word": current_word, "progress" : [], "rounds" : 0, "max_round" : -1}
             self.channel_dict[ctx.channel.id] = current_dict
             if (rounds >= 1):
