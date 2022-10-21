@@ -2,16 +2,16 @@
 
 from discord.ext import commands
 
-name_to_url = {"!youtube": "https://www.youtube.com/", '!yt': "https://www.youtube.com/",
-               "!facebook": "https://www.facebook.com/", "!fb": "https://www.facebook.com/",
-               "!reddit": "https://www.reddit.com/", "!lms": "https://lms.rpi.edu/",
-               "!quacs": "https://quacs.org/", "!sis": "https://sis.rpi.edu/",
-               "!gmail": "https://mail.google.com/mail/", "!pollbuddy": "https://pollbuddy.app/",
-               "!webmail": "https://webmail.rpi.edu/", "!submitty": "https://submitty.cs.rpi.edu/home",
-               "!sheets": "https://docs.google.com/spreadsheets/", "!docs": "https://docs.google.com/document/",
-               "!google": "https://www.google.com/", "!twitter": "https://twitter.com/",
-               "!instagram": "https://www.instagram.com/", "!ig": "https://www.instagram.com/",
-               "!amazon": "https://www.amazon.com/"}
+name_to_url = {"!s youtube": "https://www.youtube.com/", '!s yt': "https://www.youtube.com/",
+               "!s facebook": "https://www.facebook.com/", "!s fb": "https://www.facebook.com/",
+               "!s reddit": "https://www.reddit.com/", "!s lms": "https://lms.rpi.edu/",
+               "!s quacs": "https://quacs.org/", "!s sis": "https://sis.rpi.edu/",
+               "!s gmail": "https://mail.google.com/mail/", "!s pollbuddy": "https://pollbuddy.app/",
+               "!s webmail": "https://webmail.rpi.edu/", "!s submitty": "https://submitty.cs.rpi.edu/home",
+               "!s sheets": "https://docs.google.com/spreadsheets/", "!s docs": "https://docs.google.com/document/",
+               "!s google": "https://www.google.com/", "!s twitter": "https://twitter.com/",
+               "!s instagram": "https://www.instagram.com/", "!s ig": "https://www.instagram.com/",
+               "!s amazon": "https://www.amazon.com/"}
 
 gifs_react = {"johncena": "https://media.giphy.com/media/zgJj5O3peaTrg95T46/giphy.gif",
               "marty": "https://media.giphy.com/media/yGoHdRNjnV7ze7LQfN/giphy.gif",
