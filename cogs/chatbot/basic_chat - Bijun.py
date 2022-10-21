@@ -6,9 +6,10 @@ import discord
 from discord.ext import commands
 from datetime import datetime
 from datetime import date
+import asyncio
 
 
-class BijunChat(commands.Cog, name="Basic Chat"):
+class BijunChat(commands.Cog, name="BijunChat"):
     """Basic Chatbot Functions"""
 
     def __init__(self, bot):
@@ -43,11 +44,7 @@ class BijunChat(commands.Cog, name="Basic Chat"):
             await message.delete()
             await message.channel.send("https://c.tenor.com/fzrYWO2l7KkAAAAC/captain-america-language.gif")
             await message.channel.send("Watch your language!")
-
-        elif (message.content.lower() == "goodbye") or (message.content.lower() == "good bye"):     #close the bot
-            await message.channel.send("GoodBye, " + message.author.name + ", have a great day!")
-            await self.bot.close()
-            
+        
             
 class ExtraFunc(commands.Cog, name="Additional Function "):
     def __init__(self, bot):
@@ -56,7 +53,7 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
     async def on_message(self, message):
         if message.author == self.bot.user or message.author.bot:
             return
-        elif 'rick roll' in message.content.lower():
+        if 'rick roll' in message.content.lower():
             await message.channel.send("https://c.tenor.com/_4YgA77ExHEAAAAd/rick-roll.gif")
             await message.channel.send("Never Gonna Give You Up!")
             await message.channel.send("Never Gonna Let You Down!")
@@ -64,7 +61,69 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         for word in message.content.split():
             if word.lower() in GREETING_INPUTS:
                 await message.channel.send(random.choice(GREETING_INPUTS))
-    
+        
+        if "!count" in message.content.lower():
+            if  "sec" in message.content.lower():
+                
+                times = ""
+                for i in range(0,len(message.content.lower())):
+                    if message.content.lower()[i].isdigit() :
+                        times+=message.content.lower()[i]
+                times = int(times)
+                await message.channel.send("Start counting {} seconds!".format(times))
+                count = times
+                while count:
+                    if(count == (times/2)-1):
+                        await message.channel.send("{} seconds left!".format(count))
+                    await asyncio.sleep(1)
+                    count -= 1
+                await message.channel.send("TIME'S UP!")
+                await message .channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
+        
+        if "!count" in message.content.lower():
+            if  "min" in message.content.lower():
+                await asyncio.sleep(100)
+                times = ""
+                for i in range(0,len(message.content.lower())):
+                    if message.content.lower()[i].isdigit() :
+                        times+=message.content.lower()[i]
+                times = int(times)
+                await message.channel.send("Start counting {} minutes!".format(times))
+                count = times
+                while count:
+                    if(count == (times/2)-1):
+                        await message.channel.send("{} minutes left!".format(count))
+                    await asyncio.sleep(60)
+                    count -= 1
+                await message.channel.send("TIME'S UP!")
+                await message .channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
+        
+    '''
+    @commands.command()
+    async def count(self,message, arg1,arg2):
+        if arg2 == "min":
+            times = int(arg1)
+            await message.channel.send("Start counting {} minutes!".format(times))
+            count = times
+            while count!=0:
+                if(count == times/2):
+                    await message.channel.send("{} minutes left!".format(count))
+                time.sleep(60)
+                count -= 1
+            await message.channel.send("TIME'S UP!")
+            await message.channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
+        elif arg2 == "sec":
+            times = int(arg1)
+            await message.channel.send("Start counting {} seconds!".format(times))
+            count = times
+            while count!=0:
+                if(count == times/2):
+                    await message.channel.channel.send("{} seconds left!".format(count))
+                time.sleep(1)
+                count -= 1
+            await message.channel.send("TIME'S UP!")
+            await message.channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
+    '''
 async def setup(bot):
     await bot.add_cog(BijunChat(bot))
     await bot.add_cog(ExtraFunc(bot))

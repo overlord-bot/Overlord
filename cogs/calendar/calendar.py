@@ -37,12 +37,32 @@ class Calendar(commands.Cog, name="Calendar"):
                     f.write(event + "")
 
         #used to print remove embed
-        def print_remove_embed(self):
+        def print_remove_embed(self, event):
+            for key0 in self.dictionary.values():
+                print(key0)
+            if event == "last":
+                self.calendar.pop()
+            elif event in self.dictionary.keys():
+                del self.dictionary[event]
+            #broken for now, will fix later
+            elif event in self.dictionary.values():
+                for key in self.dictionary.keys():
+                    if event in self.dictionary[key]:
+                        self.dictionary[key].remove(event)
+                        if len(self.dictionary[key]) == 0:
+                            del self.dictionary[key]
+            else:
+                embed = discord.Embed(title="Calendar", description="Event not found!", color=0xff0000)
+                return embed
+            self.save_calendar()
             embed = discord.Embed(title="Calendar", description="Event removed!", color=0xff0000)
             return embed
 
         #used to print the clear embed    
         def print_clear_embed(self):
+            self.dictionary = {}
+            self.calendar = []
+            self.save_calendar()
             embed = discord.Embed(title="Calendar", description="Calendar cleared!", color=0xff0000)
             return embed
 
@@ -158,6 +178,7 @@ class Calendar(commands.Cog, name="Calendar"):
             time_until_event1 = time_until_event0.total_seconds()
             return time_until_event1
 
+        #used for the main calendar functions
         @commands.command(
             name="calendar",
             help="Add or view events on the calendar! Usage: !calendar <add/remove> <event> <date as in MM/DD/YYYY> or !calendar <clear> or !calendar <view> <week/month>"
@@ -180,28 +201,17 @@ class Calendar(commands.Cog, name="Calendar"):
                 await context.send(embed=self.check_next(event))
 
             elif action.lower() == "clear":
-                self.dictionary = {}
-                self.calendar = []
-                self.save_calendar()
                 await context.send(embed=self.print_clear_embed())
 
             elif action.lower() == "remove":
                 if event:
-                    if event == "last":
-                        self.calendar.pop()
-                        self.save_calendar()
-                        await context.send(embed=self.print_remove_embed())
-                    elif event in self.calendar:
-                        self.calendar.remove(event)
-                        self.save_calendar()
-                        await context.send(embed=self.print_remove_embed())
-                    else:
-                        await context.send("Event not found.")
+                    await context.send(embed=self.print_remove_embed(event))
                 else:
                     await context.send("Please specify an event.")
             else:
                 await context.send("Please specify an action.")
 
+        #used for the calendar timer function
         @commands.command(
             name="calendar_timer",
             help="Set a timer for date on the calendar! Usage: !calendar_timer <date as in MM/DD/YYYY>"
