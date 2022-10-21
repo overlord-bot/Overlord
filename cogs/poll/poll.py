@@ -10,7 +10,7 @@ class Polls(commands.GroupCog, name="polls"):
 		self.bot = bot
 
 	@discord.app_commands.command(name="create")
-	async def poll(self, interaction: discord.Interaction) -> None:
+	async def create(self, interaction: discord.Interaction) -> None:
 		'''
 		Creates a poll.
 		'''
