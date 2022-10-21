@@ -21,4 +21,4 @@ class Polls(commands.GroupCog, name="polls"):
 		await interaction.response.send_modal(modal)
 
 async def setup(bot: commands.bot) -> None:
-	await bot.add_cog(Polls(bot), guilds=[discord.Object(id=333409598365106176)])
+	await bot.add_cog(Polls(bot))
