@@ -12,7 +12,7 @@ class Bot(commands.Bot):
     def __init__(self) -> None:
         self.testing_server = None
         load_dotenv()
-        self.testing_server = discord.Object(os.getenv("TESTING_SERVER_ID"))
+        # self.testing_server = discord.Object(os.getenv("TESTING_SERVER_ID"))
 
         # Necessary intents (permissions) for the bot to function
         intents = discord.Intents.default()
@@ -85,7 +85,7 @@ async def load_cogs(bot):
                     exception = f"{type(e).__name__}: {e}"
                     print(f"Failed Loading: cogs.{folder}.{filename} | Error: {exception}")
 
-
+'''
 # IGNORE IF YOU'RE NOT USING COMMANDLESS FAST LOAD
 
 def main_fast():
@@ -108,15 +108,14 @@ async def fast_initialize(bot):
     load_dotenv()
     await bot.start(os.getenv("DISCORD_TOKEN"))
 
-
-
+'''
 
 
 def main():
     arguments = sys.argv
     if "-fast" in arguments:
         print("loading fastbot!")
-        main_fast()
+        # main_fast()
     else:
         print("loading standard bot!")
         main_standard()
