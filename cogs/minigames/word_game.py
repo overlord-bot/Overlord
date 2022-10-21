@@ -14,7 +14,7 @@ class WordGame(commands.Cog, name="Word Game"):
         self.emojidict = {"G": ":green_square:",
                           "Y": ":yellow_square:",
                           "B": ":black_large_square:",}
-        self.player_dict = dict()
+        self.channel_dict = dict()
 
     def get_words(self):
         """From https://github.com/charlesreid1/five-letter-words/blob/master/get_words.py"""
@@ -59,10 +59,10 @@ class WordGame(commands.Cog, name="Word Game"):
         
         return currentlist
 
-    def print_status(self, user_id):
+    def print_status(self, channel_id):
         """Returns the current status of the for the user that called the command"""
         return_status = str()
-        current_progress = self.player_dict[user_id]["progress"]
+        current_progress = self.channel_dict[channel_id]["progress"]
         for i in range(0, len(current_progress)):
                        return_status = return_status + ''.join(current_progress[i][1]) + ": " + current_progress[i][0] + '\n'
         return return_status
@@ -72,27 +72,27 @@ class WordGame(commands.Cog, name="Word Game"):
         new_message = message.replace('G', self.emojidict['G']).replace('Y', self.emojidict['Y']).replace('B', self.emojidict['B'])
         return new_message
 
-    def clear_game(self, user_id):
+    def clear_game(self, channel_id):
         """Clears game state"""
-        self.player_dict.pop(user_id)
+        self.channel_dict.pop(channel_id)
 
-    """
-    @commands.command()
+    
+    """@commands.command()
     async def getword(self, ctx):
         #Returns the test word. FOR DEBUG ONLY!
-        await ctx.send(self.player_dict[ctx.author.id]["word"])
+        await ctx.send(self.channel_dict[ctx.channel.id]["word"])
     """
 
     @commands.command()
     async def wordgame(self, ctx, rounds: int = -1):
         """Starts the word game for the user. 
         rounds: an optional number of rounds to play the game with."""
-        if (ctx.author.id in self.player_dict.keys()):
+        if (ctx.channel.id in self.channel_dict.keys()):
             await ctx.send("The Word Game has already started!")
         else:
             current_word = random.choice(self.word_list)
             current_dict = {"word": current_word, "progress" : [], "rounds" : 0, "max_round" : -1}
-            self.player_dict[ctx.author.id] = current_dict
+            self.channel_dict[ctx.channel.id] = current_dict
             if (rounds >= 1):
                 current_dict["max_round"] = rounds
                 await ctx.send("Word Game started with " + str(current_dict["max_round"]) + " rounds!")
@@ -107,8 +107,8 @@ class WordGame(commands.Cog, name="Word Game"):
     @commands.command()
     async def addword(self, ctx, word: to_lower):
         """Add 5-lettered word to list of words"""
-        if(ctx.author.id in self.player_dict.keys()):
-            current_dict = self.player_dict[ctx.author.id]
+        if(ctx.channel.id in self.channel_dict.keys()):
+            current_dict = self.channel_dict[ctx.channel.id]
             if(word in self.word_list):
                 current_dict["rounds"] += 1
                 wordlist = self.checkword(word, current_dict["word"])
@@ -116,13 +116,13 @@ class WordGame(commands.Cog, name="Word Game"):
                 emojimessage = self.to_emoji(''.join(wordlist))
                 await ctx.send(emoji.emojize(emojimessage))
                 if (wordlist.count('G') == len(current_dict["word"])):
-                    self.clear_game(ctx.author.id)
+                    self.clear_game(ctx.channel.id)
                     await ctx.send("You win!")
                     return
                 
                 if(current_dict["rounds"] >= current_dict["max_round"] and current_dict["max_round"] != -1):
                     await ctx.send("Word Game ended! The word was " + current_dict["word"])
-                    self.clear_game(ctx.author.id)
+                    self.clear_game(ctx.channel.id)
             else:
                 await ctx.send("It seems that word is not in my dictionary. Try typing another 5-lettered word.")
         else:
@@ -136,19 +136,19 @@ class WordGame(commands.Cog, name="Word Game"):
     @commands.command()
     async def endwordgame(self, ctx):
         """Ends the word game for the user if not started"""
-        if (ctx.author.id in self.player_dict.keys()):
-            await ctx.send("Word Game ended! The word was " + self.player_dict[ctx.author.id]["word"])
-            self.clear_game(ctx.author.id)
+        if (ctx.channel.id in self.channel_dict.keys()):
+            await ctx.send("Word Game ended! The word was " + self.channel_dict[ctx.channel.id]["word"])
+            self.clear_game(ctx.channel.id)
         else:
             await ctx.send("The Word Game has not started!")
 
     @commands.command()
     async def checkstatus(self, ctx):
         """Check the current game status for the user"""
-        if (ctx.author.id in self.player_dict.keys()):
-            current_dict = self.player_dict[ctx.author.id]
+        if (ctx.channel.id in self.channel_dict.keys()):
+            current_dict = self.channel_dict[ctx.channel.id]
             if (current_dict["rounds"] > 0):
-                return_text = self.print_status(ctx.author.id)
+                return_text = self.print_status(ctx.channel.id)
                 emoji_text = self.to_emoji(return_text)
                 await ctx.send(emoji.emojize(emoji_text))
             
