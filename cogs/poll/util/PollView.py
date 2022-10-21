@@ -1,16 +1,24 @@
-import random
-from typing import List
 import discord
 import matplotlib.pyplot as plt
+from typing import List
 
 class PollView(discord.ui.View):
+	'''
+	This poll view contains the buttons to vote on specific options
+	for a poll.
+	'''
+
+	'''
+	Static Variables
+	'''
+	# TODO optimize the code to only use a list of number_emojis of size 10
 	number_emojis = [ 
     '0️⃣1️⃣', '0️⃣2️⃣', '0️⃣3️⃣', '0️⃣4️⃣', '0️⃣5️⃣', '0️⃣6️⃣', '0️⃣7️⃣', '0️⃣8️⃣', '0️⃣9️⃣', '1️⃣0️⃣',
 		'1️⃣1️⃣', '1️⃣2️⃣', '1️⃣3️⃣', '1️⃣4️⃣', '1️⃣5️⃣', '1️⃣6️⃣', '1️⃣7️⃣', '1️⃣8️⃣', '1️⃣9️⃣', '2️⃣0️⃣',
 		'2️⃣1️⃣', '2️⃣2️⃣', '2️⃣3️⃣', '2️⃣4️⃣', '2️⃣5️⃣'
   ]
     
-	def __init__(self, title: str, content: List[str], embed: discord.Embed, timeout:int, poll_id:str) -> None:
+	def __init__(self, title:str, content:List[str], embed:discord.Embed, timeout:int, poll_id:str) -> None:
 		self.title = title
 		self.content = content
 		self.embed = embed
@@ -39,15 +47,24 @@ class PollView(discord.ui.View):
 		button.callback = self.end_button_callback
 		self.add_item(button)
 
-	async def check_poll_helper(self, id) -> int:
+	async def check_poll_helper(self, id:str) -> int:
 		'''
 		Checks to see if the id of a button that is clicked is
 			corresponds with this poll.
 
-		RETURNS:
-			button_id if button corresponds with this poll and is not the end poll button
-			-2 if button corresponds with this poll and is the end poll button
-			-1 if neither
+		Parameters
+		----------
+		id: :class:`str`
+			the id of a poll and button id delimited by a colon.
+			Example: "{poll_id}:{button_id}"
+
+		Returns
+		-------
+		`button_id` if button corresponds with this poll and is not the end poll button
+
+		`-2` if button corresponds with this poll and is the end poll button
+
+		`-1` if neither
 		'''
 		delimiter_idx = id.index(":")
 		poll_id = id[:delimiter_idx]
@@ -55,9 +72,14 @@ class PollView(discord.ui.View):
 			return -1
 		return int(id[delimiter_idx+1:])
 		
-	async def button_callback(self, interaction: discord.Interaction) -> None:
+	async def button_callback(self, interaction:discord.Interaction) -> None:
 		'''
 		When a numbered button is clicked, this callback function is called.
+		
+		Parameters
+		----------
+		interaction: :class:`discord.Interaction`
+			Interaction of a button click
 		'''
 
 		# Check to see if the button clicked corresponds with this poll
@@ -65,7 +87,7 @@ class PollView(discord.ui.View):
 		if button_id < 0:
 			return
 
-		# Bodged way to allow view to edit the message its attached to
+		# Allows this view to edit the message its attached to
 		if self.message == None:
 			self.message = interaction.message
 
@@ -85,35 +107,42 @@ class PollView(discord.ui.View):
 			)
 		await interaction.response.edit_message(embed=self.embed)
 
-	async def end_button_callback(self, interaction: discord.Interaction) -> None:
+	async def end_button_callback(self, interaction:discord.Interaction) -> None:
 		'''
-			
+		When the "End Poll" button is clicked, this callback function is called.
+
+		Parameters
+		----------
+		interaction: :class:`discord.Interaction`
+			Interaction of a button click
 		'''
 		# Check to see if the button clicked corresponds with this poll
 		button_id = await self.check_poll_helper(interaction.data["custom_id"]) 
 		if button_id != -2:
 			return
 
-		# Bodged way to allow view to edit the message its attached to
+		# Allows this view to edit the message its attached to
 		if self.message == None:
 			self.message = interaction.message
 
 		print(f"Poll {self.poll_id}:{self.title} has been ended by {interaction.user.display_name}.")
-		await interaction.response.defer()
+		# Defering is needed to stop "Interaction has not responded" error message
+		await interaction.response.defer() 
+		# Edit the message to show that the poll has ended and
+		# create a bar plot and save it with the name "poll_id.png" 
 		await self.edit_msg_ended_poll_helper()
 		await self.create_plot_helper()
+		# TODO Clearing buttons does not work??
 		self.clear_items()
 		self.stop()
 		
 	async def on_timeout(self) -> None:
 		'''
-		This function is called when the poll times out
+		This function is called when the poll times out.
 		'''
 		print(f"Poll {self.poll_id}:{self.title} timed out.")
 
-		# Edit
 		await self.edit_msg_ended_poll_helper()
-		# Create a bar plot and save it with the name "poll_id.png" 
 		await self.create_plot_helper()
 		
 		# TODO Clearing buttons does not work??
@@ -136,6 +165,10 @@ class PollView(discord.ui.View):
 		plt.close()
 
 	async def edit_msg_ended_poll_helper(self) -> None:
+		'''
+    If the poll has had a button clicked, (self.message was assigned),
+		edits the embed to show only "This poll has ended".
+		'''
 		if self.message:
 			self.embed.clear_fields()
 			self.embed.add_field(name="This poll has ended", value="-"*25)

@@ -3,17 +3,20 @@ from discord.ext import commands
 from cogs.poll.util.PollInfoModal import PollInfoModal
 
 class Polls(commands.GroupCog, name="polls"):
-	"""
+	'''
 	Interactive polls that update based on who answered.
-	"""
+	'''
 	def __init__(self, bot: commands.bot):
 		self.bot = bot
 
 	@discord.app_commands.command(name="create")
 	async def poll(self, interaction: discord.Interaction) -> None:
-		# TODO randomize embed color?
-		# discord.Color(255)
-		# colour="FF00B5",
+		'''
+		Creates a poll.
+		'''
+    
+		# Create a modal to send (basically a form) to collect information
+		# from the user
 		modal = PollInfoModal()
 		await interaction.response.send_modal(modal)
 
