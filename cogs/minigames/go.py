@@ -29,6 +29,7 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.turn = 1
         self.unplayedTiles = 81
         self.gameStarted = False
+        self.passMove = 0
         # 0 represents place without a move, 1 represents move from player 1, 2 for player 2
         self.board = [[0]*9 for i in range(9)]
 
@@ -87,24 +88,36 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.gameStarted = False
         self.board = [[0]*9 for i in range(9)]
 
+    def endGame(self):
+        return (0,0)
+
     @commands.command()
     async def go(self, context):
         #error checking for invalid commands
         if len(context.message.content.split()) != 2:
             await context.send("invalid command, must only have 2 commands")
             return
-        if context.message.mentions == [] and self.gameStarted == False:
-            await context.send("please tag another user")
-            return
 
-        if context.message.content.split()[1] == "end":
-            await context.send("Game ended! GG!")
-            self.reset()
-            return
+        if self.gameStarted == True and context.message.content.split()[1] == "pass" and (context.message.author == self.player1 or context.message.author == self.player2):
+            if self.turn == 1:
+                self.turn = 2
+            else:
+                self.turn = 1
+            self.passMove += 1
+
+            if self.passMove == 2:
+                result = self.endGame()
+                self.reset()
+                await context.send("Game ended! GG!")
+                return
 
         #making a move
         if context.message.mentions == []:
             await self.makeMove(context, context.message.content.split()[1])
+            return
+
+        if context.message.mentions == [] and self.gameStarted == False:
+            await context.send("please tag another user")
             return
 
         #starting the game, resetting the board
@@ -116,7 +129,7 @@ class GoMinigame(commands.Cog, name = "Go"):
         print(self.player1)
         print(self.player2)
         await self.printBoardState(context)
-        await context.send("go command working!")
+        await context.send("Game Started:")
 
     async def makeMove(self, context, move):
         user = context.message.author
@@ -127,9 +140,9 @@ class GoMinigame(commands.Cog, name = "Go"):
             await context.send("Please write your move command like '(x,y)'")
             return
 
-
-        x = int(move[3])-1
-        y = 9-int(move[1])
+        self.passMove = 0
+        x = 9-int(move[3])
+        y = int(move[1])-1
         
         if x < 0 or x > 8 or y < 0 or y > 8 or self.board[x][y] != 0:
             await context.send("Invalid move, please pick a valid tile")
@@ -141,7 +154,14 @@ class GoMinigame(commands.Cog, name = "Go"):
         else:
             self.board[x][y] = 2
             self.turn = 1
+
         await self.printBoardState(context)
+
+        self.unplayedTiles -= 1
+        if self.unplayedTiles == 0:
+            result = self.endGame()
+            self.reset()
+            await context.send("Game ended! GG!")
 
 async def setup(bot):
     await bot.add_cog(GoMinigame(bot))
