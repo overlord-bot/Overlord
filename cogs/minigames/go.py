@@ -32,11 +32,13 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.passMove = 0
         # 0 represents place without a move, 1 represents move from player 1, 2 for player 2
         self.board = [[0]*9 for i in range(9)]
+        # TESTING BOARD
+        # self.board = [[2,1,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
 
     """
     Blank state is presented by brown square
-    User 1 is represented by white circle
-    User 2 is represented by black circle
+    User 1 is represented by black circle
+    User 2 is represented by white circle
     """
     async def printBoardState(self, context):
         number = [
@@ -88,6 +90,32 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.gameStarted = False
         self.board = [[0]*9 for i in range(9)]
 
+    async def libertyCheck(self, context):
+        dir = [0,1,0,-1,0]
+        lostPieces = 0
+        playerLost = -1
+        for i in range(9):
+            for j in range(9):
+                liberty = 4
+                # checks for the 4 surrounding blocks
+                for k in range(4):
+                    x = i + dir[k]
+                    y = j + dir[k+1]
+                    if x < 0 or x > 8:
+                        liberty -= 1
+                    elif y < 0 or y > 8:
+                        liberty -= 1
+                    elif self.board[x][y] != 0:
+                        liberty -= 1
+                # the piece is surrounded
+                if liberty == 0:
+                    lostPieces += 1
+                    playerLost = self.board[i][j]
+                    # removes the piece
+                    self.board[i][j] = 0
+        if playerLost != -1:
+            await context.send(str(lostPieces) + " of player " + str(playerLost) + "'s pieces were captured")
+
     def endGame(self):
         return (0,0)
 
@@ -120,7 +148,8 @@ class GoMinigame(commands.Cog, name = "Go"):
             await context.send("please tag another user")
             return
 
-        #starting the game, resetting the board
+        # starting the game, resetting the board
+        # comment out if testing with board states
         self.reset()
         self.player1 = context.message.author
         self.player2 = context.message.mentions[0]
@@ -154,7 +183,8 @@ class GoMinigame(commands.Cog, name = "Go"):
         else:
             self.board[x][y] = 2
             self.turn = 1
-
+        
+        await self.libertyCheck(context)
         await self.printBoardState(context)
 
         self.unplayedTiles -= 1
