@@ -1,8 +1,8 @@
-#Calendar module for Overlord-Bot
+# Calendar module for Overlord-Bot
 
 This module is used to manage events and reminders for the server, and is currently in development.
 
-##Commands
+## Commands
 
 To use the commands, type `!calendar` or `!calendar_timer` followed by the command. 
 
