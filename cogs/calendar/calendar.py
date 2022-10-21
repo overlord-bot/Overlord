@@ -19,7 +19,7 @@ class Calendar(commands.Cog, name="Calendar"):
         """Adds or views events in the calendar. Usage: !calendar <add/remove> <event> <date as in MM/DD/YYYY> or !calendar <view/clear> <week/month>"""
         if action.lower() == "add":
             if event:
-                await context.send(embed=self.calhelper.print_add_embed(event, date))
+                await context.send(embed=self.calhelper.print_add_embed(event))
             else:
                 await context.send("Please specify an event.")
 

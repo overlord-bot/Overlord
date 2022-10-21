@@ -5,12 +5,14 @@ import datetime
 import os
 import calendar
 import datetime
+import json
 
 class CalHelper():
         def __init__(self, bot):
             self.bot = bot
             self.calendar = []
-            self.dictionary = {}
+            self.events = {}
+            #stores the calendar file in a json file
             self.calendar_file = "calendar.txt"
             self.load_calendar()
     
@@ -32,19 +34,19 @@ class CalHelper():
 
         #used to print remove embed
         def print_remove_embed(self, event):
-            for key0 in self.dictionary.values():
+            for key0 in self.events.values():
                 print(key0)
             if event == "last":
                 self.calendar.pop()
-            elif event in self.dictionary.keys():
-                del self.dictionary[event]
+            elif event in self.events.keys():
+                del self.events[event]
             #broken for now, will fix later
-            elif event in self.dictionary.values():
-                for key in self.dictionary.keys():
-                    if event in self.dictionary[key]:
-                        self.dictionary[key].remove(event)
-                        if len(self.dictionary[key]) == 0:
-                            del self.dictionary[key]
+            elif event in self.events.values():
+                for key in self.events.keys():
+                    if event in self.events[key]:
+                        self.events[key].remove(event)
+                        if len(self.events[key]) == 0:
+                            del self.events[key]
             else:
                 embed = discord.Embed(title="Calendar", description="Event not found!", color=0xff0000)
                 return embed
@@ -54,7 +56,7 @@ class CalHelper():
 
         #used to print the clear embed    
         def print_clear_embed(self):
-            self.dictionary = {}
+            self.events = {}
             self.calendar = []
             self.save_calendar()
             embed = discord.Embed(title="Calendar", description="Calendar cleared!", color=0xff0000)
@@ -64,10 +66,10 @@ class CalHelper():
         def print_add_embed(self, event):
             date = event.split(" ")[-1]
             event = event.partition(date)[0]
-            if date in self.dictionary:
-                self.dictionary[date].append(event)
+            if date in self.events:
+                self.events[date].append(event)
             else:
-                self.dictionary[date] = [event]
+                self.events[date] = [event]
             embed = discord.Embed(title="Calendar", description="Event added for " + date + "!", color=0xff0000)
             event = event + "\n"
             self.calendar.append(event)
@@ -81,9 +83,9 @@ class CalHelper():
                 curr = "0" + str(date)
             else:
                 curr = str(date)
-            for key in self.dictionary.keys():
+            for key in self.events.keys():
                 if key[3:5] == curr:
-                    for event in self.dictionary[key]:
+                    for event in self.events[key]:
                         week_string += "*"
             return week_string
 
@@ -93,9 +95,9 @@ class CalHelper():
             #convert now to int
             currday = int(now.strftime("%d"))
             embed = discord.Embed(title="Calendar", description="Events in the next " + str(num) + " days", color=0xff0000)
-            for key in sorted(self.dictionary.keys()):
+            for key in sorted(self.events.keys()):
                 if int(key[3:5]) <= currday + int(num):
-                    embed.add_field(name=key, value="\n".join(self.dictionary[key]), inline=False)
+                    embed.add_field(name=key, value="\n".join(self.events[key]), inline=False)
             return embed
 
         #used to print the calendar
@@ -154,9 +156,9 @@ class CalHelper():
                             week_string += "\t\t"
                     embed.add_field(name=week_string, value="\u200b", inline=False)
                     week_string = ""
-            for date in sorted(self.dictionary):
+            for date in sorted(self.events):
                 if int(date[:2]) == month:
-                    embed.add_field(name=date, value="\n".join(self.dictionary[date]), inline=False)
+                    embed.add_field(name=date, value="\n".join(self.events[date]), inline=False)
             return embed
 
         #used to get the timer
