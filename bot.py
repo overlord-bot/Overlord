@@ -11,7 +11,8 @@ from dotenv import load_dotenv  # pip install python-dotenv
 class Bot(commands.Bot):
     def __init__(self) -> None:
         self.testing_server = None
-        # self.testing_server = discord.Object(os.getenv("TESTING_SERVER_ID"))
+        load_dotenv()
+        self.testing_server = discord.Object(os.getenv("TESTING_SERVER_ID"))
 
         # Necessary intents (permissions) for the bot to function
         intents = discord.Intents.default()
