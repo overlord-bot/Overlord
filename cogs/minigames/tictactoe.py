@@ -98,7 +98,8 @@ class TicTacToeState:
         # no winner yet
         return None
 
-    # places an X/O at the specified location for the current player
+    # places an X/O at the specified location for the current player, returning
+    # the respective emoji if someone won, or None if there is no winner yet
     def make_move(self, flat_index):
         # reject move if specified cell is filled
         if flat_index not in self.get_free_cells():
@@ -111,11 +112,19 @@ class TicTacToeState:
         # place current player's sign
         self.board[row_index][col_index] = self.curr_player_sign
 
+        winner = self.get_winner()
+
+        if winner is not None:
+            return winner
+
         # switch current player
         if self.curr_player_sign == ":x:":
             self.curr_player_sign = ":o:"
         else:
             self.curr_player_sign = ":x:"
+
+        # no winner yet
+        return None
 
 class TicTacToe(commands.Cog, name="Tic-tac-toe"):
     """A game of tic-tac-toe"""
