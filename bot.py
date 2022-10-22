@@ -10,9 +10,13 @@ from dotenv import load_dotenv  # pip install python-dotenv
 
 class Bot(commands.Bot):
     def __init__(self) -> None:
-        self.testing_server = None
+        # If TESTING_SERVER_ID is an environment variable, this will set the app commands
+        #   to only sync on the server id stored in that env var (see cogs/general/startup.py).
+        #   Otherwise, app commands will sync globally (and take up to an hour to sync).
         load_dotenv()
-        # self.testing_server = discord.Object(os.getenv("TESTING_SERVER_ID"))
+
+        testing_server_id = os.getenv("TESTING_SERVER_ID")
+        self.testing_server = discord.Object(testing_server_id) if testing_server_id else None
 
         # Necessary intents (permissions) for the bot to function
         intents = discord.Intents.default()
@@ -84,6 +88,7 @@ async def load_cogs(bot):
                 except Exception as e:
                     exception = f"{type(e).__name__}: {e}"
                     print(f"Failed Loading: cogs.{folder}.{filename} | Error: {exception}")
+
 
 '''
 # IGNORE IF YOU'RE NOT USING COMMANDLESS FAST LOAD
