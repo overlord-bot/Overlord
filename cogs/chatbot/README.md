@@ -4,7 +4,7 @@ This module is used to manage chats in server channels.
 
 ## Commands
 
-`!s <search_term>` will reply a with a link to a website if it's stored in dictionary.\
+`!s <search_term>` will reply a with a link to a website if it's stored in dictionary.
 
 
 ## In-chat
