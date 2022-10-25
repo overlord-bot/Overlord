@@ -128,6 +128,19 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
             await message.channel.send("TIME'S UP!")
             await message.channel.send("https://media1.giphy.com/media/xUOxfb3UW3H12DJ7m8/giphy.gif")
     '''
+    @commands.command()
+    @commands.has_permissions(ban_members = True,administrator = True)
+    async def ban(self,ctx,Member: discord.Member, reasons=None):
+        await Member.ban(reason = reasons)
+        'await ctx.guild.ban(Member,reason=reasons)'
+        
+    @commands.command()
+    @commands.has_permissions(ban_members = True,administrator = True)
+    async def unban(self,ctx,Member: discord.Member, reasons=None):
+        await Member.unban(reason = reasons)
+    
+        
+        
 async def setup(bot):
     await bot.add_cog(BijunChat(bot))
     await bot.add_cog(ExtraFunc(bot))
