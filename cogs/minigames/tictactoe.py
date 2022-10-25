@@ -174,6 +174,21 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
         while True:
             reaction, _ = await self.bot.wait_for("reaction_add", check=check)
 
+            game.make_move(_NUM_EMOJIS.index(reaction.emoji))
+            await game_msg.edit(content=str(game))
+
+            maybe_winner = game.get_winner()
+
+            if maybe_winner is not None:
+                await game_msg.reply(f"{maybe_winner} has won!")
+                del self.active_games[key]
+                return
+
+            if game.is_filled():
+                await game_msg.reply("Draw!")
+                del self.active_games[key]
+                return
+
     @commands.command()
     async def tttstop(self, context, opponent: discord.User):
         """
