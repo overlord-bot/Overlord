@@ -168,7 +168,7 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
                    and (_NUM_EMOJIS.index(reaction.emoji) in free_cells)
 
         # add buttons for all free cells
-        for i in range(10):
+        for i in range(9):
             await game_msg.add_reaction(_NUM_EMOJIS[i])
 
         while True:
