@@ -2,8 +2,11 @@
 import random 
 #from discord.ext import tasks
 from discord.ext import commands
+import discord
 import datetime
 from datetime import date
+
+from bot import Bot
 
 
 class TimChat(commands.Cog, name="TimChat"):
@@ -50,6 +53,12 @@ class TimChat(commands.Cog, name="TimChat"):
                 await message.delete()
                 await message.channel.send("https://c.tenor.com/fzrYWO2l7KkAAAAC/captain-america-language.gif")
                 await message.channel.send("Watch your language!")
+
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        role = discord.utils.get(member.guild.roles, name='Friends')
+        await member.add_roles(role)
+        
 
 #   def cog_unload(self):
 #         self.taskLoop.cancel()
