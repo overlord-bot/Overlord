@@ -199,18 +199,18 @@
       "course_id": "2530"
     },
     {
-      "name": "Introduction to Differential Equations ",
-      "type": "course",
-      "credits": "4",
-      "major": "MATH",
-      "course_id": "2400"
-    },
-    {
       "name": "Thermodynamics ",
       "type": "course",
       "credits": "3",
       "major": "MANE",
       "course_id": "2710"
+    },
+    {
+      "name": "Introduction to Differential Equations ",
+      "type": "course",
+      "credits": "4",
+      "major": "MATH",
+      "course_id": "2400"
     },
     {
       "name": "Modeling and Analysis of Uncertainty ",
@@ -6201,18 +6201,18 @@
       "course_id": "4760"
     },
     {
-      "name": "Introduction to Engineering Design ",
-      "type": "course",
-      "credits": "4",
-      "major": "ENGR",
-      "course_id": "2050"
-    },
-    {
       "name": "Operations Research Methods ",
       "type": "course",
       "credits": "4",
       "major": "ISYE",
       "course_id": "4600"
+    },
+    {
+      "name": "Introduction to Engineering Design ",
+      "type": "course",
+      "credits": "4",
+      "major": "ENGR",
+      "course_id": "2050"
     },
     {
       "name": "Technical Elective I",
