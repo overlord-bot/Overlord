@@ -15,6 +15,7 @@ class Flag(Enum):
     DEBUG = 2
     TEST_RUNNING = 3
     SCHEDULE_SELECTION = 4
+    CASE_5 = 5
 
 
 class User():

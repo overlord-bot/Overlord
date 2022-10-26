@@ -15,6 +15,7 @@ from .schedule import Schedule
 from .test_suite import Test1
 from .user import User
 from .user import Flag
+from .search import Search
 
 
 #########################################################################
@@ -29,16 +30,14 @@ from .user import Flag
 
 class Degree_Planner(commands.Cog, name="Degree Planner"):
 
-    # each user is assigned a User object and stored in this dictionary
-    # Users = <username, User>
-    users = dict()
-
-    # a single copy of the catalog is kept in this class
-    catalog = Catalog()
-
     def __init__(self, bot):
         self.bot = bot
-
+        # each user is assigned a User object and stored in this dictionary
+        # Users = <username, User>
+        self.users = dict()
+        # a single copy of the catalog is kept in this class
+        self.catalog = Catalog()
+        self.search = Search(self.catalog)
     #-----------------------------------------------------------------------
     # Main message listener
     #
@@ -75,6 +74,11 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if Flag.TEST_RUNNING in user.flag:
             await user.msg(message, "Test running, please hold on")
             return
+
+        if Flag.CASE_5 in user.flag:
+            await user.msg(message, "case 5 active")
+            user.flag.remove(Flag.CASE_5)
+            self.search.search(message.content)
 
         if message.content.casefold() == "!dp":
             user.flag.clear()
@@ -136,6 +140,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await user.msg(message, "Sucessfully parsed json data, printing catalog")
                 await user.msg_hold(self.catalog.to_string())
                 await user.msg_release(message, False)
+
+                self.search.initialize()
+
                 await user.msg(message, "parsing completed")
 
             # CASE 9: Begin actual scheduler
@@ -144,6 +151,11 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 user.flag.add(Flag.SCHEDULE_SELECTION)
                 await user.msg(message, "You are now in scheduling mode!")
                 await user.msg(message, "Please enter the name of the schedule to modify. If the schedule entered does not exist, it will be created")
+
+            #CASE 5: Search course
+            elif message.content.casefold() == "5":
+                await user.msg(message, "Enter the course")
+                user.flag.add(Flag.CASE_5)
 
             # CASE 0: cancel selection operation
             elif message.content.casefold() == "0":
