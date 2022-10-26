@@ -99,6 +99,13 @@ class User():
             await message.channel.send(f"[Degree Planner] {str(content)}")
 
 
+    # identical to msg(message, content) except this one will print to discord regardless of debug mode
+    async def force_msg(self, message, content:str):
+        if Flag.DEBUG in self.flag:
+            print(self.msg_header + str(content))
+        await message.channel.send(f"[Degree Planner] {str(content)}")
+
+
     def to_string(self):
         schedule_names = ""
         for s in self.__schedules.keys():

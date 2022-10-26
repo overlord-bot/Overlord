@@ -70,17 +70,24 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     #-----------------------------------------------------------------------
     async def message_handler(self, message):
         user:User = self.users.get(message.author)
+        msg = message.content
 
         if Flag.TEST_RUNNING in user.flag:
             await user.msg(message, "Test running, please hold on")
             return
 
         if Flag.CASE_5 in user.flag:
-            await user.msg(message, "case 5 active")
             user.flag.remove(Flag.CASE_5)
-            self.search.search(message.content)
+            possible_courses = self.search.search(message.content.casefold())
+            await user.msg(message, "possible courses: " + str(possible_courses))
 
-        if message.content.casefold() == "!dp":
+        if msg.casefold().startswith("!dp") and len(msg.split(' ')) == 2 and msg.split(' ')[1].isdigit():
+            print("detected compound dp command")
+            user.flag.add(Flag.MENU_SELECT)
+            msg = msg.split(' ')[1]
+            print("altered msg to " + msg)
+
+        if msg.casefold() == "!dp":
             user.flag.clear()
             
             await user.msg(message, f"Hiyaa, what would you like to do, {str(message.author)[0:str(message.author).find('#'):1]}?") # What would you like to do, <username without tag>?
@@ -93,7 +100,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             user.flag.clear()
 
             # CASE 1: run test suite
-            if message.content.casefold() == "1":
+            if msg.casefold() == "1":
                 print("INPUT 1 REGISTERED")
                 user.flag.add(Flag.TEST_RUNNING)
                 await self.test(message)
@@ -101,7 +108,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 user.flag.remove(Flag.TEST_RUNNING)
 
             # CASE 2: run data fetch from json
-            elif message.content.casefold() == "2":
+            elif msg.casefold() == "2":
                 print("INPUT 2 REGISTERED")
 
 
@@ -143,26 +150,28 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
                 self.search.initialize()
 
-                await user.msg(message, "parsing completed")
+                await user.force_msg(message, "parsing completed")
 
             # CASE 9: Begin actual scheduler
-            elif message.content.casefold() == "9":
+            elif msg.casefold() == "9":
+                print("INPUT 9 REGISTERED")
                 user.flag.add(Flag.SCHEDULING)
                 user.flag.add(Flag.SCHEDULE_SELECTION)
                 await user.msg(message, "You are now in scheduling mode!")
                 await user.msg(message, "Please enter the name of the schedule to modify. If the schedule entered does not exist, it will be created")
 
             #CASE 5: Search course
-            elif message.content.casefold() == "5":
+            elif msg.casefold() == "5":
+                print("INPUT 5 REGISTERED")
                 await user.msg(message, "Enter the course")
                 user.flag.add(Flag.CASE_5)
 
             # CASE 0: cancel selection operation
-            elif message.content.casefold() == "0":
+            elif msg.casefold() == "0":
                 await user.msg(message, "ok :(")
 
             # CASE 69: nice
-            elif message.content.casefold() == "69":
+            elif msg.casefold() == "69":
                 await user.msg(message, "nice")
 
             # else: display unknown response message
@@ -171,7 +180,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
         elif Flag.SCHEDULING in user.flag:
 
-            command_raw = message.content.split(",") # user input split up, will parse as a command
+            command_raw = msg.split(",") # user input split up, will parse as a command
             command = [e.strip() for e in command_raw] # strips all strings
             command[:] = [e for e in command if e] # removes empty strings from list in place
             print("scheduling command: " + str(command))
