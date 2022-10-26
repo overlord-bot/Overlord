@@ -6,6 +6,7 @@ class Course():
         self.name = name
         self.major = major # major tag i.e. CSCI, ECSE
         self.course_id = cid # number of course, i.e. 1200, 2500
+        self.course_id2 = 0
         self.credits = 0 # credit hours of this course
         self.cross_listed = set() # set of cross listed courses that should be treated as same course
 
@@ -64,7 +65,7 @@ class Course():
         return (self.course_id//1000)
 
     def to_string(self):
-        st = (f"{self.name}: {self.major} {str(self.course_id)}, {self.credits} credits"
+        st = (f"{self.name}: {self.major} {str(self.course_id)}{f'.{self.course_id2}' if self.course_id2 != 0 else ''}, {self.credits} credits {'(CI)' if self.CI else ''}"
             f"{f', concentrations: {str(self.concentration)}' if len(self.concentration) != 0 else ''}"
             f"{f', pathways: {str(self.HASS_pathway)}' if len(self.HASS_pathway) != 0 else ''}")
         return st.replace("set()", "none")
