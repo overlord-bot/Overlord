@@ -131,7 +131,7 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
 
     def __init__(self, bot):
         self.bot = bot
-        self.active_games = {}
+        self.active_games = set()
 
     @staticmethod
     def _make_key(author, opponent):
@@ -162,7 +162,9 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
             await context.reply("You already have a game with them!")
             return
 
-        game = self.active_games[key] = TicTacToeState(context.author, opponent)
+        self.active_games.add(key)
+
+        game = TicTacToeState(context.author, opponent)
         game_msg = await context.reply(str(game))
 
         def check(reaction, user):
@@ -186,12 +188,12 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
 
             if maybe_winner is not None:
                 await game_msg.reply(f"{maybe_winner} has won!")
-                del self.active_games[key]
+                self.active_games.remove(key)
                 return
 
             if game.is_filled():
                 await game_msg.reply("Draw!")
-                del self.active_games[key]
+                self.active_games.remove(key)
                 return
 
     @commands.command()
@@ -204,7 +206,7 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
         key = self._make_key(context.author, opponent)
 
         if key in self.active_games:
-            del self.active_games[key]
+            self.active_games.remove(key)
             await context.reply(f"Ended game with <@!{opponent.id}>")
         else:
             await context.reply("You don't have a game with them!")
