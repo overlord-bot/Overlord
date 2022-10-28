@@ -31,17 +31,21 @@ class String:
         self.points.append([x,y])
 
     def libertyCheck(self, board) -> bool:
+        print("LIBERTY CHECK")
         dir = [0,1,0,-1,0]
         for point in self.points:
+            print(point)
             for i in range(4):
                 x = point[0] + dir[i]
                 y = point[1] = dir[i+1]
                 if x < 0 or x > 8:
-                    continue
+                    pass
                 elif y < 0 or y > 8:
-                    continue
-                elif board[x][y] != 0 and self.player != board[x][y]:
+                    pass
+                elif board[x][y] == 0:
+                    print(False)
                     return False
+        print(True)
         return True
     
     def combineStrings(self, string):
@@ -66,7 +70,6 @@ class GoMinigame(commands.Cog, name = "Go"):
         # 0 represents place without a move, 1 represents move from player 1, 2 for player 2
         self.board = [[0]*9 for i in range(9)]
         # TESTING BOARD
-        # self.board = [[2,1,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
 
     """
     Blank state is presented by brown square
