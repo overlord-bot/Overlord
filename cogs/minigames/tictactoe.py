@@ -133,6 +133,11 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
         self.bot = bot
         self.active_games = {}
 
+    @staticmethod
+    def _make_key(author, opponent):
+        # user IDs are sorted so that this function is commutative
+        return tuple(sorted(author.id, opponent.id))
+
     @commands.command()
     async def tttnew(self, context, opponent: discord.User):
         """
@@ -150,7 +155,7 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
             await context.reply("You can't play with bots!")
             return
 
-        key = tuple(sorted([context.author.id, opponent.id]))
+        key = self._make_key(context.author, opponent)
 
         # check that there is no active game between the two
         if key in self.active_games:
@@ -196,7 +201,7 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
         progress.
         """
 
-        key = tuple(sorted([context.author.id, opponent.id]))
+        key = self._make_key(context.author, opponent)
 
         if key in self.active_games:
             del self.active_games[key]
