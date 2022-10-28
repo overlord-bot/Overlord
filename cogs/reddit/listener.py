@@ -1,11 +1,14 @@
+from hashlib import new
 import urllib.request #python3 bot.py -fast -load reddit
+import requests
+#from urllib.request import Request, urlopen
 import json
 
 import discord
 from discord.ext import commands
 
-import threading #https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds
-
+from threading import Event, Thread
+#https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds
 
 
 class RedditListener(commands.Cog, name="Reddit Listener"):
@@ -17,18 +20,47 @@ class RedditListener(commands.Cog, name="Reddit Listener"):
     @commands.command()
     async def redditlisten(self, context, subreddit):
         reddit_data = getRedditData(subreddit)
-        newest_post = reddit_data["data"]["children"][3]["data"]["name"]
+        newest_post = reddit_data["data"]["children"][1]["data"]["name"]
+        print(newest_post)
+
+        
+        cancel_future_calls = call_repeatedly(5, context, subreddit, newest_post)
+        #cancel_future_calls() # stop future calls
+
         new_posts = getNewPosts(context, reddit_data, newest_post)
-        #print(new_posts)
+
         
         await sendPosts(context, new_posts)
 
     #await context.reply("Your file is:", file=discord.File(file, "list_of_commits.txt"))
 
+
+def runPostCheck(context, subreddit, newest_post):
+    reddit_data = getRedditData(subreddit)
+    #print(reddit_data)
+    new_post = reddit_data["data"]["children"][0]["data"]["name"]
+    print("Checking new: " + new_post + " against newest: " + str(newest_post))
+    if new_post == newest_post:
+        return new_post
+    
+    print("is a new post")
+    #new_posts = getNewPosts(context, reddit_data, newest_post)
+    #await sendPosts(context, new_posts)
+    return new_post
+
+def call_repeatedly(interval, context, subreddit, newest_post):
+    stopped = Event()
+    def loop():
+        while not stopped.wait(interval): # the first call is in `interval` secs
+            runPostCheck(context, subreddit, newest_post)
+    Thread(target=loop).start()    
+    return stopped.set
+
 def getRedditData(subreddit): #https://www.reddit.com/r/rpi/new.json?sort=new
     url = "https://www.reddit.com/r/" + subreddit + "/new.json?sort=new"
-    response = urllib.request.urlopen(url)
-    data = json.loads(response.read())
+    #response = urllib.request.urlopen(url).read()
+    response = requests.get(url, headers = {'User-agent': 'your bot 0.1'}).text
+    data = json.loads(response) #.decode('utf-8')
     #posts = data["data"]["children"] 
     return data
 
