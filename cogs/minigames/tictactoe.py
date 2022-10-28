@@ -136,7 +136,7 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
     @staticmethod
     def _make_key(author, opponent):
         # user IDs are sorted so that this function is commutative
-        return tuple(sorted(author.id, opponent.id))
+        return tuple(sorted([author.id, opponent.id]))
 
     @commands.command()
     async def tttnew(self, context, opponent: discord.User):
