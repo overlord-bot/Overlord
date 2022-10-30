@@ -2,9 +2,12 @@
 
 This is a tool to be used within discord that allows generating out schedules of one's curriculum at RPI, with requirement checking and automated suggestions based on user's preferences.
 
+
 ## Commands:
 
-`!dp`: displays option menu
+`!dp`: displays option menu 
+
+(currently, the menu is as follows: 1: test, 2: load course data from files, 9: scheduling mode. It is possilbe other numbers will be used for temporary testing purposes
 
 `!dp <#>`: directly runs option from menu
 
