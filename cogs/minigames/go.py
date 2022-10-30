@@ -31,10 +31,8 @@ class String:
         self.points.append([x,y])
 
     def libertyCheck(self, board) -> bool:
-        print("LIBERTY CHECK")
         dir = [0,1,0,-1,0]
         for point in self.points:
-            print(point)
             for i in range(4):
                 x = point[0] + dir[i]
                 y = point[1] = dir[i+1]
@@ -69,7 +67,6 @@ class GoMinigame(commands.Cog, name = "Go"):
 
         # 0 represents place without a move, 1 represents move from player 1, 2 for player 2
         self.board = [[0]*9 for i in range(9)]
-        # TESTING BOARD
 
     """
     Blank state is presented by brown square
@@ -154,7 +151,7 @@ class GoMinigame(commands.Cog, name = "Go"):
 
         #making a move
         if context.message.mentions == []:
-            await self.makeMove(context, context.message.content.split()[1])
+            await self.makeMove(context, context.message.content.split()[1], False)
             return
 
         if context.message.mentions == [] and self.gameStarted == False:
@@ -162,7 +159,6 @@ class GoMinigame(commands.Cog, name = "Go"):
             return
 
         # starting the game, resetting the board
-        # comment out if testing with board states
         self.reset()
         self.player1 = context.message.author
         self.player2 = context.message.mentions[0]
@@ -173,14 +169,18 @@ class GoMinigame(commands.Cog, name = "Go"):
         await self.printBoardState(context)
         await context.send("Game Started:")
 
-    async def makeMove(self, context, move):
-        user = context.message.author
-        if (self.turn == 1 and user != self.player1) or (self.turn == 2 and user != self.player2):
-            print("Not the right player!")
-            return
-        if len(move) != 5:
-            await context.send("Please write your move command like '(x,y)'")
-            return
+        # FOR TESTING MOVES
+        # await self.testMovesSuite(context)
+
+    async def makeMove(self, context, move, test):
+        if test == False:
+            user = context.message.author
+            if (self.turn == 1 and user != self.player1) or (self.turn == 2 and user != self.player2):
+                print("Not the right player!")
+                return
+            if len(move) != 5:
+                await context.send("Please write your move command like '(x,y)'")
+                return
 
         self.passMove = 0
         x = 9-int(move[3])
@@ -218,6 +218,7 @@ class GoMinigame(commands.Cog, name = "Go"):
                 neighboringStrings.append(self.stringBoard[j][k])
 
         # remove duplicates
+        print(neighboringStrings)
         setNeighbors = list(set(neighboringStrings))
         if len(setNeighbors) == 0:
             self.stringMatch[self.stringCounter] = String(self.turn)
@@ -225,7 +226,10 @@ class GoMinigame(commands.Cog, name = "Go"):
             self.stringBoard[x][y] = self.stringCounter
             self.stringCounter += 1
         else:
+            print(self.stringMatch[setNeighbors[0]].points)
+            print(self.stringMatch[setNeighbors[0]].player)
             self.stringMatch[setNeighbors[0]].addPoint(x,y)
+            self.stringBoard[x][y] = setNeighbors[0]
             for i in range(1,len(setNeighbors)):
                 self.stringMatch[setNeighbors[0]].combineStrings(self.stringMatch[setNeighbors[i]])
 
@@ -241,6 +245,12 @@ class GoMinigame(commands.Cog, name = "Go"):
             result = self.endGame()
             self.reset()
             await context.send("Game ended! GG!")
+
+    async def testMovesSuite(self, context):
+        await self.makeMove(context, "(1,1)", True)
+        await self.makeMove(context, "(1,3)", True)
+        await self.makeMove(context, "(1,2)", True)
+        await self.makeMove(context, "(2,2)", True)
 
 async def setup(bot):
     await bot.add_cog(GoMinigame(bot))
