@@ -100,7 +100,7 @@ def main_fast():
     intents.message_content = True  # permission to read message content
 
     # Set up the bot object and its descriptions
-    bot_status = "alone"
+    bot_status = "with souls of the damned"
     bot_description = "fastbot version"
     bot = commands.Bot(command_prefix="!", description=bot_description, intents=intents,
                        activity=discord.Game(name=bot_status))
