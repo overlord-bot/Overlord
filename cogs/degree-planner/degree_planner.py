@@ -111,11 +111,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             elif msg.casefold() == "2":
                 print("INPUT 2 REGISTERED")
 
-
                 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TEMPORARY FLAG ADDED HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 user.flag.add(Flag.DEBUG)
                 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TEMPORARY FLAG ADDED HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
                 # There are currently three acceptable places to store the course_data.json file, and this function
                 # will check through them in the listed order:
@@ -143,7 +141,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     return
                 json_data = json.load(f)
                 f.close()
-                await self.parse_courses_set(message, json_data)
+                await self.parse_courses(message, json_data)
                 await user.msg(message, "Sucessfully parsed json data, printing catalog")
                 await user.msg_hold(self.catalog.to_string())
                 await user.msg_release(message, False)
@@ -152,6 +150,12 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
                 await user.force_msg(message, "parsing completed")
 
+            #CASE 5: Search course
+            elif msg.casefold() == "5":
+                print("INPUT 5 REGISTERED")
+                await user.msg(message, "Enter the course")
+                user.flag.add(Flag.CASE_5)
+
             # CASE 9: Begin actual scheduler
             elif msg.casefold() == "9":
                 print("INPUT 9 REGISTERED")
@@ -159,12 +163,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 user.flag.add(Flag.SCHEDULE_SELECTION)
                 await user.msg(message, "You are now in scheduling mode!")
                 await user.msg(message, "Please enter the name of the schedule to modify. If the schedule entered does not exist, it will be created")
-
-            #CASE 5: Search course
-            elif msg.casefold() == "5":
-                print("INPUT 5 REGISTERED")
-                await user.msg(message, "Enter the course")
-                user.flag.add(Flag.CASE_5)
 
             # CASE 0: cancel selection operation
             elif msg.casefold() == "0":
@@ -181,12 +179,11 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         elif Flag.SCHEDULING in user.flag:
 
             command_raw = msg.split(",") # user input split up, will parse as a command
-            command = [e.strip() for e in command_raw] # strips all strings
+            command = [e.strip().casefold() for e in command_raw] # strips all strings and converts to lowercase
             command[:] = [e for e in command if e] # removes empty strings from list in place
-            print("scheduling command: " + str(command))
+            print("Inputted scheduling command: " + str(command))
+            cmd = command[0]
             l = len(command)
-
-            cmd = command[0].casefold()
 
             if not l:
                 await user.msg(message, "no command detected")
@@ -257,11 +254,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             elif cmd == "exit":
                 await user.msg(message, "exiting scheduling mode")
                 user.flag.remove(Flag.SCHEDULING)
-                user.flag.remove(Flag.SCHEDULE_SELECTION)
 
             else:
                 await user.msg(message, "unrecognized action")
-
 
 
     #-----------------------------------------------------------------------
@@ -275,90 +270,30 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         await test_suite.test(message, user)
         user.flag.remove(Flag.DEBUG)   
 
-    #-----------------------------------------------------------------------
-    # Loads json file data representing course data into course objects
-    # and stores it into the catalog
-    #-----------------------------------------------------------------------
+
+    # parses json data of format [{course attribute : value}] into a set of Course objects stored in Catalog
     async def parse_courses(self, message, json_data):
         
         user = self.users.get(message.author)
 
+        # will not parse if the test is running to prevent data loss, since the Catalog is shared
+        # note that running a test will destroy all data within the Catalog, so rerunning this method is necessary after a test
         if Flag.TEST_RUNNING in user.flag:
             await user.msg(message, "Operation unavailable due to another user operation running")
             return
-
-        await user.msg(message, "Beginning parsing json data into catalog")
-        
-        for element in json_data['courses']:
-
-            # gets course name, major and course_id
-            course = Course(element['course_name'], element['course_subject'], int(element['course_number']))
-
-            if 'course_credit_hours' in element:
-                course.credits = element['course_credit_hours']
-            
-            if 'course_is_ci' in element:
-                course.CI = element['course_is_ci']
-
-            if 'HASS_pathway' in element:
-                HASS_pathway = element['HASS_pathway'] # list of pathways
-                if isinstance(HASS_pathway, list):
-                    for pathway in HASS_pathway: # add each individual pathway (stripped of whitespace)
-                        course.add_pathway(pathway.strip())
-                elif HASS_pathway != "":
-                    course.add_pathway(HASS_pathway.strip())
-
-            if 'concentration' in element:
-                concentration = element['concentration']
-                if isinstance(concentration, list):
-                    for con in concentration:
-                        course.add_concentration(con.strip())
-                elif concentration != "":
-                    course.add_concentration(concentration.strip())
-
-            if 'course_requisites' in element:
-                prereqs = element['course_requisites']
-                if isinstance(prereqs, list):
-                    for prereq in prereqs:
-                        course.add_prerequisite(prereq.strip())
-                elif prereqs != "":
-                    course.add_prerequisite(prereqs.strip())
-
-            if 'course_crosslisted' in element:
-                cross_listed = element['course_crosslisted']
-                if isinstance(cross_listed, list):
-                    for cross in cross_listed:
-                        course.add_cross_listed(cross.strip())
-                elif cross_listed != "":
-                    course.add_cross_listed(cross_listed.strip())
-
-            if 'restricted' in element:
-                course.restricted = element['restricted']
-
-            if 'course_description' in element:
-                course.description = element['course_description']
-
-            self.catalog.add_course(course)
-            await user.msg_hold(course.to_string())
-        await user.msg_release(message, False)
-
-        
-    async def parse_courses_set(self, message, json_data):
-        
-        user = self.users.get(message.author)
-
-        if Flag.TEST_RUNNING in user.flag:
-            await user.msg(message, "Operation unavailable due to another user operation running")
-            return
-
         await user.msg(message, "Beginning parsing json data into catalog")
 
-        # json data format: list[dict(attribute : value)]
-
+        #--------------------------------------------------------------------------
+        # Begin iterating through every dictionary stored inside the json_data
+        #
+        # json data format: list of dictionaries with each dictionary representing 
+        # a single course and its data
+        #--------------------------------------------------------------------------
         for element in json_data:
-            #print(str(element))
 
-            # gets course name, major and course_id
+            #--------------------------------------------------------------------------
+            # Begin parsing the course_id, course_id2, course_name and course_subject.
+            #--------------------------------------------------------------------------
             if 'course_name' in element and 'course_subject' in element and 'course_number' in element:
                 if len(element['course_subject']) != 4:
                     print("PARSING ERROR: course subject not 4 characters for course " + str(element))
@@ -391,12 +326,17 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 else:
                     course_id = int(float(element['course_number']))
 
-                course = Course(element['course_name'], element['course_subject'], course_id)
+                course = Course(element['course_name'].casefold(), element['course_subject'], course_id)
                 course.course_id2 = course_id2
 
             else:
                 print("PARSING ERROR: course name, subject or number not found " + str(element))
                 continue
+
+            #--------------------------------------------------------------------------
+            # At this point, we have completed parsing the course_id, course_id2, 
+            # course_name and course_subject.
+            #--------------------------------------------------------------------------
 
             if 'course_credit_hours' in element:
                 course.credits = element['course_credit_hours']
@@ -443,8 +383,11 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 course.description = element['course_description']
 
             self.catalog.add_course(course)
-            #await user.msg_hold(course.to_string())
-        #await user.msg_release(message, False)
+
+
+    async def parse_degrees(self, message, json_data):
+        pass
+
 
 async def setup(bot):
     await bot.add_cog(Degree_Planner(bot))

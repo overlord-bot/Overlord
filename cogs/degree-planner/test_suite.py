@@ -151,31 +151,36 @@ class Test1():
         assert bundle5 == bundle5_ans
         
         
-        # List_and_rules tests
-        await user.msg(message, "Beginning testing of class List_and_rules")
+        # Rules tests
+        await user.msg(message, "Beginning testing of class Rules")
 
-        lar1 = Rules()
+        r1 = Rules()
  
-        lar1.course_list = [course1, course2]
-        lar1.min_courses = 2
-        lar1.min_2000_courses = 1
-        lar1.required_courses = [course1]
-        assert lar1.fulfilled()
+        r1.course_list = [course1, course2]
+        r1.min_courses = 2
+        r1.min_2000_courses = 1
+        r1.required_courses = [course1]
+        assert r1.fulfilled()
+        await user.msg(message, f"test 1 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
 
-        lar1.course_list = [course1]
-        assert not lar1.fulfilled()
+        r1.course_list = [course1]
+        assert not r1.fulfilled()
+        await user.msg(message, f"test 2 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
 
-        lar1.course_list = [course1, course4]
-        assert not lar1.fulfilled()
+        r1.course_list = [course1, course4]
+        assert not r1.fulfilled()
+        await user.msg(message, f"test 3 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
 
-        lar1.course_list = [course1, course2, course6]
-        lar1.min_same_concentration = 2
-        assert not lar1.fulfilled()
+        r1.course_list = [course1, course2, course5, course6]
+        r1.min_same_concentration = 2
+        assert not r1.fulfilled()
+        await user.msg(message, f"test 4 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
 
-        lar1.course_list = [course1, course2, course6, course7]
-        assert lar1.fulfilled()
+        r1.course_list = [course1, course2, course6, course7]
+        assert r1.fulfilled()
+        await user.msg(message, f"test 5 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
 
-        await user.msg(message, "List_and_rules assertions successful")
+        await user.msg(message, "Rules assertions successful")
 
         await user.msg(message, f"Printing user data: {user.to_string()}")
 
