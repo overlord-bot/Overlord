@@ -15,6 +15,7 @@ class Flag(Enum):
     DEBUG = 2
     TEST_RUNNING = 3
     SCHEDULE_SELECTION = 4
+    CASE_5 = 5
 
 
 class User():
@@ -96,6 +97,13 @@ class User():
             print(self.msg_header + str(content))
         else:
             await message.channel.send(f"[Degree Planner] {str(content)}")
+
+
+    # identical to msg(message, content) except this one will print to discord regardless of debug mode
+    async def force_msg(self, message, content:str):
+        if Flag.DEBUG in self.flag:
+            print(self.msg_header + str(content))
+        await message.channel.send(f"[Degree Planner] {str(content)}")
 
 
     def to_string(self):

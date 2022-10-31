@@ -15,3 +15,17 @@ To use the commands, type `!calendar` or `!calendar_timer` followed by the comma
 `!calendar clear` will clear the calendar of its data and its events.
 
 `!calendar_timer <MM/DD/YYYY>` will set a timer for the specified date.
+
+### Plans for the Week:
+
+Current plans for the week are to create a working copy of the calendar module, only it uses a json file as well as creating a calendar for each discord user.
+
+#### Development Plans
+
+Currently, the calendar module is in development. The following features are planned for the future:
+
+-Redesign of the calendar file, storing and reading from a json file instead of a text file.
+
+-Fix remove command, currently does not work correctly with the events dictionary. (will change with the redesign)
+
+-Add a command to edit events.
