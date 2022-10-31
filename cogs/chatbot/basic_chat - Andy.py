@@ -22,7 +22,11 @@ gifs_react = {"johncena": "https://media.giphy.com/media/zgJj5O3peaTrg95T46/giph
               "turner": "https://media.giphy.com/media/tzV14WYQwgDQ61GCvt/giphy.gif",
               "kuzman": "https://media.giphy.com/media/7PbdlEW2fyXDubicsU/giphy.gif",
               "therock": "https://media.giphy.com/media/26ghbWoXv3G6ypo8o/giphy.gif",
-              "hillaryclinton": "https://media.giphy.com/media/l0HlE56oAxpngfnWM/giphy.gif"}
+              "hillaryclinton": "https://media.giphy.com/media/l0HlE56oAxpngfnWM/giphy.gif",
+              "ksi": "https://media.giphy.com/media/1MdRrNmfucoxnunjhN/giphy.gif",
+              "spiderman": "https://giphy.com/clips/plusQA-test-partner-1iemyTrXywCBcE8WOi",
+              "batman": "https://media.giphy.com/media/yuoeTyJ2qie2x3tvJL/giphy.gif",
+              "superman": "https://media.giphy.com/media/R8MIGe47XWx68/giphy.gif"}
 
 
 class AndyChat(commands.Cog, name="Andy Chat"):
