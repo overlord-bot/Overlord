@@ -138,8 +138,18 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
     @commands.has_permissions(ban_members = True,administrator = True)
     async def unban(self,ctx,Member: discord.Member, reasons=None):
         await Member.unban(reason = reasons)
-    
         
+    @commands.command()
+    @commands.has_permissions(ban_members = True,administrator = True)
+    async def mute(self,ctx,Member: discord.Member, reasons=None):
+        muterole = discord.utils.get(ctx.guild.roles,name="Muted")
+        
+        if not muterole:
+            muterole = await ctx.guild.create_role(name = "Muted")
+            for channel in ctx.guild.channels:
+               await channel.set_permmissions(muterole, speak = False, send_message=False)     
+        await Member.add_roles(muterole,reason=reasons)
+        await ctx.send(f"Muted {Member.mention} for reason {reasons}")   
         
 async def setup(bot):
     await bot.add_cog(BijunChat(bot))
