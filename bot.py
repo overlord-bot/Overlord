@@ -35,7 +35,8 @@ class Bot(commands.Bot):
 
 # loads all subdirectories of folder, and loads all .py files that are inside a specified folder to load
 async def load_folder(bot, folder, folder_names, flag_loadall):
-    print("traversing folder: " + folder.split('/')[-1])
+    if folder.split('/')[-1] in folder_names or flag_loadall:
+        print("loading folder: " + folder.split('/')[-1])
 
     # traversing all files within directory
     for file in os.listdir(os.path.join(f"{folder}")):
@@ -64,6 +65,8 @@ async def load_cogs(bot):
     flag_loadall = False
 
     # adds folders specified to load from command line arguments into [folder_names]
+    folder_names = []
+
     if "-all" in arguments or "-load" not in arguments:
         print(f"{'-all flag found,' if '-all' in arguments else 'no args specified,'} loading all modules \\(^.^)/")
         flag_loadall = True
