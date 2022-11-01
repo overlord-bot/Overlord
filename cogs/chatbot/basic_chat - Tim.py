@@ -23,7 +23,7 @@ class TimChat(commands.Cog, name="TimChat"):
 
         if message.author == self.bot.user or message.author.bot:
             return
-        elif message.content.lower().startswith("hi"):
+        elif message.content.lower() == "hi":
             await message.channel.send("Great " + message.author.name + " !")  # reacts with message in the location it was sent from
         elif message.content == "msg":
             await message.author.send('👋')  # sends a direct message to the user
