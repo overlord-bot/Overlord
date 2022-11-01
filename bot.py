@@ -33,19 +33,21 @@ class Bot(commands.Bot):
         await load_cogs(self)
 
 
-# loads all subdirectories of folder, and loads all .py files within folder only if folder is found with folder_names
+# loads all subdirectories of folder, and loads all .py files that are inside a specified folder to load
 async def load_folder(bot, folder, folder_names, flag_loadall):
-    print("loading folder: " + folder.split('/')[-1])
+    print("traversing folder: " + folder.split('/')[-1])
 
     # traversing all files within directory
     for file in os.listdir(os.path.join(f"{folder}")):
-        # load subdirectories
+        # load all subdirectories
         if os.path.isdir(f"{str(folder)}/{file}") and not file.startswith("_") and not file.startswith("."):
+            if folder.split('/')[-1] in folder_names:
+                await load_folder(bot, folder + "/" + file, folder_names, True)
             await load_folder(bot, folder + "/" + file, folder_names, flag_loadall)
             continue
 
         # if the content of this folder should be loaded:
-        if folder.split('/')[-1] in folder_names or flag_loadall:
+        elif folder.split('/')[-1] in folder_names or flag_loadall:
             if file.endswith(".py"):
                 try:
                     await bot.load_extension(f"{folder.replace('/', '.')}.{file[:-3]}")

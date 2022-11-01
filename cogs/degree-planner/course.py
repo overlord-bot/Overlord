@@ -4,7 +4,7 @@ class Course():
 
     def __init__(self, name, major, cid):
         self.name = name.strip().casefold()
-        if len(major) is not 4:
+        if len(major) != 4:
             print("PARSING ERROR: major is not 4 characters for course " + self.name)
             self.major = 0000
         else:

@@ -405,7 +405,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 if requirement[type] == 'course':
                     required_courses.add(Catalog.get_course(requirement['name']))
                 elif requirement[type] == 'elective':
-
+                    pass
                 
 
 
