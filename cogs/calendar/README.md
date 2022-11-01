@@ -16,7 +16,7 @@ To use the old commands, type `!calendar` or `!calendar_timer` followed by the c
 
 `!calendar_timer <MM/DD/YYYY>` will set a timer for the specified date.
 
-### Commands (New)
+## Commands (New)
 
 To use the new commands, type `!calendarv2` followed by the command.
 
@@ -28,13 +28,13 @@ To use the new commands, type `!calendarv2` followed by the command.
 
 `!calendarv2 clear` will clear the calendar of its data and its events.
 
-#### Plans for the Week:
+## Plans for the Week:
 
 Current plans for the week:
 
 Get new version to run properly with the new data managment system, as well as fix any bugs that may be present.
 
-##### Development Plans
+## Development Plans
 
 Currently, the calendar module is in development. The following features are planned for the future:
 
