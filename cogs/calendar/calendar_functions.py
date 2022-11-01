@@ -31,8 +31,6 @@ class CalHelper():
 
     #used to print remove embed
     def print_remove_embed(self, event):
-        for key0 in self.events.values():
-            print(key0)
         if event == "last":
             self.calendar.pop()
         elif event in self.events.keys():
@@ -151,8 +149,8 @@ class CalHelper():
                         week_string += str(day)
                         week_string = self.check_event(week_string, day)
                         week_string += "\t\t"
-                embed.add_field(name=week_string, value="\u200b", inline=False)
-                week_string = ""
+                week_string += "\n"
+            embed.add_field(name=week_string, value="\u200b", inline=False)
         for date in sorted(self.events):
             if int(date[:2]) == month:
                 embed.add_field(name=date, value="\n".join(self.events[date]), inline=False)
