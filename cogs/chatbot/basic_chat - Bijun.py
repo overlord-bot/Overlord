@@ -147,9 +147,20 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         if not muterole:
             muterole = await ctx.guild.create_role(name = "Muted")
             for channel in ctx.guild.channels:
-               await channel.set_permmissions(muterole, speak = False, send_message=False)     
+                await channel.set_permmissions(muterole, speak = False, send_message=False)  
+        role_get = discord.utils.get(Member.guild.roles, name="Friends") #Returns a role object.
+        await Member.remove_roles(role_get) #Remove the role (object) from the user.   
         await Member.add_roles(muterole,reason=reasons)
-        await ctx.send(f"Muted {Member.mention} for reason {reasons}")   
+        await ctx.send(f"Muted {Member.mention} for reason {reasons}")  
+    
+    @commands.command()
+    @commands.has_permissions(ban_members = True,administrator = True)
+    async def unmute(self,ctx,Member: discord.Member, reasons=None):
+        muterole = discord.utils.get(ctx.guild.roles,name="Muted")
+        role_get = discord.utils.get(Member.guild.roles, name="Friends") #Returns a role object.
+        await Member.remove_roles(muterole,reason=reasons) #Remove the role (object) from the user.   
+        await Member.add_roles(role_get)
+        await ctx.send(f"Unmuted {Member.mention} for reason {reasons}")
         
 async def setup(bot):
     await bot.add_cog(BijunChat(bot))
