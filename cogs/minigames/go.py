@@ -65,6 +65,9 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.stringBoard = [[-1]*9 for i in range(9)]
         self.stringCounter = 0
 
+        self.player1LostStones = 0
+        self.player2LostStones = 0
+
         # 0 represents place without a move, 1 represents move from player 1, 2 for player 2
         self.board = [[0]*9 for i in range(9)]
 
@@ -170,7 +173,7 @@ class GoMinigame(commands.Cog, name = "Go"):
         await context.send("Game Started:")
 
         # FOR TESTING MOVES
-        # await self.testMovesSuite(context)
+        await self.testMovesSuite(context)
 
     async def makeMove(self, context, move, test):
         if test == False:
@@ -200,19 +203,25 @@ class GoMinigame(commands.Cog, name = "Go"):
             k = y + dir[i+1]
             if j < 0 or j > 8:
                 continue
-            elif k < 0 or k > 9:
+            elif k < 0 or k > 8:
                 continue
             elif self.board[j][k] == 0:
                 continue
             # checks if any of the strings around have no liberties and if so, those pieces are eliminated
             elif self.board[j][k] != self.turn:
                 string = self.stringMatch[self.stringBoard[j][k]]
+                lostPoints = len(string.points)
                 # eliminates string and resets it in our internal representation
                 if string.libertyCheck(self.board) == True:
+                    if self.turn == 1:
+                        self.player2LostStones += lostPoints
+                    else:
+                        self.player1LostStones += lostPoints
                     del self.stringMatch[self.stringBoard[j][k]]
                     for point in string.points:
                         self.stringBoard[point[0]][point[1]] = -1
                         self.board[point[0]][point[1]] = 0
+                    await context.send(str(lostPoints) + " Pieces of Player " + str(3-self.turn) + " Were Captured!")
             # this means that 
             else:
                 neighboringStrings.append(self.stringBoard[j][k])
@@ -251,6 +260,14 @@ class GoMinigame(commands.Cog, name = "Go"):
         await self.makeMove(context, "(1,3)", True)
         await self.makeMove(context, "(1,2)", True)
         await self.makeMove(context, "(2,2)", True)
+        await self.makeMove(context, "(1,4)", True)
+        await self.makeMove(context, "(2,1)", True)
+        await self.makeMove(context, "(2,3)", True)
+        await self.makeMove(context, "(1,2)", True)
+        await self.makeMove(context, "(3,2)", True)
+        await self.makeMove(context, "(1,1)", True)
+        await self.makeMove(context, "(3,1)", True)
+
 
 async def setup(bot):
     await bot.add_cog(GoMinigame(bot))
