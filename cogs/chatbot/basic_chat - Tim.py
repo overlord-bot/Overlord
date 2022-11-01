@@ -19,7 +19,7 @@ class TimChat(commands.Cog, name="TimChat"):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        BAD_WORDS = ("fuck", "motherfucker", "shit")
+        BAD_WORDS = ("fuck", "motherfucker", "shit", "fk", "mf")
 
         if message.author == self.bot.user or message.author.bot:
             return
@@ -58,6 +58,12 @@ class TimChat(commands.Cog, name="TimChat"):
     async def on_member_join(self, member):
         role = discord.utils.get(member.guild.roles, name='Friends')
         await member.add_roles(role)
+        channel = discord.utils.get(member.guild.channels, name="new-friends")
+        channel_id = channel.id
+        channels = self.bot.get_channel(channel_id)
+        await channels.send("Don't use dirty, inappropriate, NSFW languages in this server!")
+        await channels.send("Enter agree or disagree to determine which way you go.")
+
         
 
 #   def cog_unload(self):
