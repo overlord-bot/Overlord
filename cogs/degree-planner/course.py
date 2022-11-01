@@ -3,10 +3,32 @@ from array import *
 class Course():
 
     def __init__(self, name, major, cid):
-        self.name = name
-        self.major = major # major tag i.e. CSCI, ECSE
-        self.course_id = cid # number of course, i.e. 1200, 2500
+        self.name = name.strip().casefold()
+        if len(major) != 4:
+            print("PARSING ERROR: major is not 4 characters for course " + self.name)
+            self.major = 0000
+        else:
+            self.major = major # major tag i.e. CSCI, ECSE
+        self.course_id = 0
         self.course_id2 = 0
+        if isinstance(cid, str):
+            if '.' in cid:
+                split_num = cid.split('.')
+                if len(split_num) == 2 and split_num[0].isdigit() and split_num[1].isdigit():
+                    course_id = int(float(split_num[0]))
+                    course_id2 = int(float(split_num[1]))
+                else:
+                    print("PARSING ERROR: 2 part ID not <int>.<int> for course " + self.name)
+                    
+            elif not cid.isdigit():
+                print("PARSING ERROR: course number is not a number for course " + self.name)
+            else:
+                course_id = int(float(cid))
+        elif isinstance(cid, int):
+            self.course_id = cid
+        else:
+            print("PARSING ERROR: course number is not a number for course " + self.name)
+
         self.credits = 0 # credit hours of this course
         self.cross_listed = set() # set of cross listed courses that should be treated as same course
 

@@ -4,7 +4,7 @@ class Degree():
 
     def __init__(self, name):
         self.name = name # name of the degree program
-        self.rules = [] # list of List_and_rules objects that dictate requirements for this degree
+        self.rules = set() # set of Rules that dictate requirements for this degree
 
     def get_core(self):
         pass

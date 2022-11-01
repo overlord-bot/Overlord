@@ -97,11 +97,11 @@ class Test1():
         await user.msg(message, "Beginning testing of class Bundle")
 
         bundle1 = Bundle("core CS1", "CSCI", 0)
-        bundle1.course_bundle = {course1, course2}
+        bundle1.set_bundle({course1, course2})
         bundle2 = Bundle("core CS2", "CSCI", 10)
-        bundle2.course_bundle = {course2, course1}
+        bundle2.set_bundle({course2, course1})
         bundle3 = Bundle("A schedule", "ECSE", 0)
-        bundle3.course_bundle = {course1, course2, course3}
+        bundle3.set_bundle({course1, course2, course3})
             
         assert bundle1 == bundle2
         assert bundle1 != bundle3
@@ -111,12 +111,12 @@ class Test1():
 
         # testing course attribute search
         await user.msg(message, "Beginning testing of course attribute search")
-        course_target1 = Course("Default", "Default", 0) # all CI courses
+        course_target1 = Course("default", "0000", 0) # all CI courses
         course_target1.CI = True
-        course_target2 = Course("Default", "Default", 4000) # all 4000 level courses
-        course_target3 = Course("Data Structures", "Default", 0) # data structures
-        course_target4 = Course("Data Structures", "Default", 2000) # none
-        course_target5 = Course("Default", "Default", 0) # all theory concentration courses
+        course_target2 = Course("default", "0000", 4000) # all 4000 level courses
+        course_target3 = Course("Data Structures", "0000", 0) # data structures
+        course_target4 = Course("Data Structures", "0000", 2000) # none
+        course_target5 = Course("default", "0000", 0) # all theory concentration courses
         course_target5.concentration.add("Theory, Algorithms and Mathematics")
 
         bundle1 = catalog.get_course_match(course_target1)
@@ -130,13 +130,13 @@ class Test1():
         bundle2 = catalog.get_course_match(course_target2)
         await user.msg(message, f"Bundle2: {bundle2.to_string()}")
         bundle2_ans = Bundle("4000", "NONE", 2)
-        bundle2_ans.course_bundle = [course4, course5, course6]
+        bundle2_ans.set_bundle({course4, course5, course6})
         await user.msg(message, f"Bundle2_ans: {bundle2_ans.to_string()}")
         assert bundle2 == bundle2_ans
 
         bundle3 = catalog.get_course_match(course_target3)
         bundle3_ans = Bundle("DS", "NONE", 3)
-        bundle3_ans.course_bundle = [course1]
+        bundle3_ans.set_bundle({course1})
         assert bundle3 == bundle3_ans
 
         bundle4 = catalog.get_course_match(course_target4)
@@ -146,36 +146,41 @@ class Test1():
         bundle5 = catalog.get_course_match(course_target5)
         await user.msg(message, f"Bundle5: {bundle5.to_string()}")
         bundle5_ans = Bundle("Theory", "NONE", 5)
-        bundle5_ans.course_bundle = [course6]
+        bundle5_ans.set_bundle({course6})
         await user.msg(message, f"Bundle5_ans: {bundle5_ans.to_string()}")
         assert bundle5 == bundle5_ans
         
         
-        # List_and_rules tests
-        await user.msg(message, "Beginning testing of class List_and_rules")
+        # Rules tests
+        await user.msg(message, "Beginning testing of class Rules")
 
-        lar1 = Rules()
+        r1 = Rules()
  
-        lar1.course_list = [course1, course2]
-        lar1.min_courses = 2
-        lar1.min_2000_courses = 1
-        lar1.required_courses = [course1]
-        assert lar1.fulfilled()
+        r1.course_list = [course1, course2]
+        r1.min_courses = 2
+        r1.min_2000_courses = 1
+        r1.required_courses = [course1]
+        assert r1.fulfilled()
+        await user.msg(message, f"test 1 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
 
-        lar1.course_list = [course1]
-        assert not lar1.fulfilled()
+        r1.course_list = [course1]
+        assert not r1.fulfilled()
+        await user.msg(message, f"test 2 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
 
-        lar1.course_list = [course1, course4]
-        assert not lar1.fulfilled()
+        r1.course_list = [course1, course4]
+        assert not r1.fulfilled()
+        await user.msg(message, f"test 3 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
 
-        lar1.course_list = [course1, course2, course6]
-        lar1.min_same_concentration = 2
-        assert not lar1.fulfilled()
+        r1.course_list = [course1, course2, course5, course6]
+        r1.min_same_concentration = 2
+        assert not r1.fulfilled()
+        await user.msg(message, f"test 4 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
 
-        lar1.course_list = [course1, course2, course6, course7]
-        assert lar1.fulfilled()
+        r1.course_list = [course1, course2, course6, course7]
+        assert r1.fulfilled()
+        await user.msg(message, f"test 5 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
 
-        await user.msg(message, "List_and_rules assertions successful")
+        await user.msg(message, "Rules assertions successful")
 
         await user.msg(message, f"Printing user data: {user.to_string()}")
 
