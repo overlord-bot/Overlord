@@ -31,8 +31,6 @@ class CalHelper():
 
     #used to print remove embed
     def print_remove_embed(self, event):
-        for key0 in self.events.values():
-            print(key0)
         if event == "last":
             self.calendar.pop()
         elif event in self.events.keys():

@@ -1,4 +1,28 @@
 #helper file containing functions for the calendar json cog
+"""
+format to add user data to json file:
+{
+    "user1": 
+    [
+        "events": 
+        [
+            "date": ["event1", "event2"],
+            ...
+        ],
+        "calendar": string,
+    ],
+    "user2":
+    [
+        "events":
+        [
+            "date": ["event1", "event2"],
+            ...
+        ],
+        "calendar": string,
+    ],
+    ...
+}
+"""
 import discord
 from discord.ext import commands
 import os
@@ -40,6 +64,7 @@ class CalHelperJson():
         embed = discord.Embed(title="Calendar", description="Calendar cleared!", color=0xff0000)
         return embed
 
+    #checks to see if the user exists
     def check_user(self, user):
         if user not in self.events.keys():
             self.events = {user: {"events": {}, "calendar": ""}}
@@ -47,41 +72,15 @@ class CalHelperJson():
             return False
         return True
 
+    #adds the event to the json file
     def print_add_embed(self, event, user):
-        """
-        format to add user data to json file:
-        {
-            "user1": 
-            [
-                "events": 
-                [
-                    "date": ["event1", "event2"],
-                    ...
-                ],
-                "calendar": string,
-            ],
-            "user2":
-            [
-                "events":
-                [
-                    "date": ["event1", "event2"],
-                    ...
-                ],
-                "calendar": string,
-            ],
-            ...
-        }
-        """
-        #split event into date and event
         date = event.split(" ")[-1]
         event = event.replace(date, "")
         event = event[:-1]
 
-        #if user is not in the json file, add them
         if self.check_user(user) == False:
-            self.events[user]["events"][date].append(event)
+            self.events[user]["events"][date] = [event]
         else:
-            #if date is not in the json file, add it
             if date not in self.events[user]["events"].keys():
                 self.events[user]["events"][date] = [event]
             elif date in self.events[user]["events"].keys():
@@ -94,7 +93,10 @@ class CalHelperJson():
         embed = discord.Embed(title="Calendar", description="Event added!", color=0xff0000)
         return embed
         
+    #checks to see if that day has an event
     def check_event(self, week_string, date, user):
+        if self.check_user(user) == False:
+            return week_string
         curr = ""
         if date < 10:  
             curr = "0" + str(date)
@@ -106,8 +108,8 @@ class CalHelperJson():
                     week_string += "*"
         return week_string
 
+    #constructs a visual of the calendar for the user
     def print_view_embed(self, user, username):
-        self.check_user(user)
         now = datetime.datetime.now()
         year = now.year
         month = now.month
@@ -136,8 +138,25 @@ class CalHelperJson():
                     week_string += str(day)
                     week_string = self.check_event(week_string, day, user)
                     week_string += "\t\t"
-            week_string = "\n"
+            week_string += "\n"
         embed.add_field(name=week_string, value="\u200b", inline=False)
+        for key in sorted(self.events[user]["events"].keys()):
+            if key[0:2] == str(month):
+                embed.add_field(name=key, value="\n".join(self.events[user]["events"][key]), inline=False)
         self.events[user]["calendar"] = week_string
         self.save_json()
         return embed
+
+    #removes an event from the json file
+    def print_remove_embed(self, event, user):
+        if self.check_user(user) == False:
+            embed = discord.Embed(title="Calendar", description="No events to remove!", color=0xff0000)
+            return embed
+        if event not in self.events[user]["events"].keys():
+            embed = discord.Embed(title="Calendar", description="Event does not exist!", color=0xff0000)
+            return embed
+        else:
+            del self.events[user]["events"][event]
+            self.save_json()
+            embed = discord.Embed(title="Calendar", description="Event removed!", color=0xff0000)
+            return embed
