@@ -139,7 +139,7 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
         return tuple(sorted([author.id, opponent.id]))
 
     @commands.command()
-    async def tttnew(self, context, opponent: discord.User):
+    async def tttstart(self, context, opponent: discord.User):
         """
         Start a new game by pinging someone, with yourself as X and your
         opponent as O.
