@@ -44,60 +44,21 @@ class Blackjack(commands.Cog, name="Blackjack"):
     def emoji(card):
         emoji1 = ""
         emoji2 = ""
+        emojinumbers = {"J": ":regional_indicator_j:","K": ":regional_indicator_k:","Q": ":regional_indicator_q:",
+        "1": ":one:","2":":two:","3":":three:","4":":four:","5":":five:","6":":six:","7":":seven:","8":":eight:",
+        "9": ":nine","10":":keycap_ten:"}
+        emojisuites = {"H": ":hearts:","C": ":clubs:","S": ":spades:","D": ":diamonds:"}
         if(card[0] == "J" or card[0] == "K" or card[0] == "Q"):
-                if(card[0] == "J"):
-                    emoji1 == ":regional_indicator_j:"
-                if(card[0] == "K"):
-                    emoji1 = ":regional_indicator_k:"
-                if(card[0] == "Q"):
-                    emoji1 = ":regional_indicator_q:"
-                if(card[1] == "H"):
-                    emoji2 = ":hearts:"
-                if(card[1] == "C"):
-                    emoji2 = ":clubs:"
-                if(card[1] == "S"):
-                    emoji2 = ":spades:"
-                if(card[1] == "D"):
-                    emoji2 = ":diamonds:"
+                emoji1 = emojinumbers[card[0]]
+                emoji2 = emojisuites[card[1]]
         else:
             cardscore = int(re.search(r'\d+',card).group())
             if(cardscore == 10):
-                emoji1 = ":keycap_ten:"
-                if(card[2] == "H"):
-                    emoji2 = ":hearts:"
-                if(card[2] == "C"):
-                    emoji2 = ":clubs:"
-                if(card[2] == "S"):
-                    emoji2 = ":spades:"
-                if(card[2] == "D"):
-                    emoji2 = ":diamonds:"
+                emoji1 = emojinumbers[str(cardscore)]
+                emoji2 = emojisuites[card[2]]
             else:
-                if(cardscore == 1):
-                    emoji1 = ":one:"
-                if(cardscore == 2):
-                    emoji1 = ":two:"
-                if(cardscore == 3):
-                    emoji1 = ":three:"
-                if(cardscore == 4):
-                    emoji1 = ":four:"
-                if(cardscore == 5):
-                    emoji1 = ":five:"
-                if(cardscore == 6):
-                    emoji1 = ":six:"
-                if(cardscore == 7):
-                    emoji1 = ":seven:"
-                if(cardscore == 8):
-                    emoji1 = ":eight:"
-                if(cardscore == 9):
-                    emoji1 = ":nine:"
-                if(card[1] == "H"):
-                    emoji2 = ":hearts:"
-                if(card[1] == "C"):
-                    emoji2 = ":clubs:"
-                if(card[1] == "S"):
-                    emoji2 = ":spades:"
-                if(card[1] == "D"):
-                    emoji2 = ":diamonds:"
+                emoji1 = emojinumbers[str(cardscore)]
+                emoji2 = emojisuites[card[1]]
         emojis = [emoji1,emoji2]
         return emojis
 
@@ -207,4 +168,3 @@ class Blackjack(commands.Cog, name="Blackjack"):
     
 async def setup(bot):
     await bot.add_cog(Blackjack(bot))
-
