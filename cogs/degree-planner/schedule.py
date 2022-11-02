@@ -6,7 +6,6 @@ import asyncio
 from .course import Course
 from .catalog import Catalog
 from .degree import Degree
-from .bundle import Bundle
 from .rules import Rules
 
 

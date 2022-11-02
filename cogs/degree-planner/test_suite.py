@@ -6,7 +6,7 @@ import asyncio
 from .course import Course
 from .catalog import Catalog, get_course_match
 from .degree import Degree
-from .template_rules import TRules
+from .rules import Rules
 from .schedule import Schedule
 
 class Test1():    
@@ -129,39 +129,6 @@ class Test1():
         bundle5_ans = {course6}
         await user.msg(message, f"Bundle5_ans: {str(bundle5_ans)}")
         assert bundle5 == bundle5_ans
-        
-        '''
-        # Rules tests
-        await user.msg(message, "Beginning testing of class Rules")
-
-        r1 = Rules()
- 
-        r1.course_list = [course1, course2]
-        r1.min_courses = 2
-        r1.min_2000_courses = 1
-        r1.required_courses = [course1]
-        assert r1.fulfilled()
-        await user.msg(message, f"test 1 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
-
-        r1.course_list = [course1]
-        assert not r1.fulfilled()
-        await user.msg(message, f"test 2 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
-
-        r1.course_list = [course1, course4]
-        assert not r1.fulfilled()
-        await user.msg(message, f"test 3 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
-
-        r1.course_list = [course1, course2, course5, course6]
-        r1.min_same_concentration = 2
-        assert not r1.fulfilled()
-        await user.msg(message, f"test 4 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
-
-        r1.course_list = [course1, course2, course6, course7]
-        assert r1.fulfilled()
-        await user.msg(message, f"test 5 fulfillment: \n{str(r1.fulfillment())}\n{r1.fulfillment_return_message()}")
-
-        await user.msg(message, "Rules assertions successful")
-        '''
 
         await user.msg(message, f"Beginning wildcard course matching tests!")
 
