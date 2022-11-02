@@ -56,7 +56,7 @@ class Schedule():
             print("cannot add course as it's duplicated")
         else:
             self.__master_list[semester].append(course)
-            print(f"added course: {course.to_string()}, semester: {semester}")
+            print(f"added course: {str(course)}, semester: {semester}")
 
 
     def remove_course(self, course, semester):
@@ -76,7 +76,7 @@ class Schedule():
     # Parameters: course to find
     # Returns: semesters that the course is present in
     def find_course(self, course):
-        i = 0;
+        i = 0
         present_in = []
         for courselist in self.__master_list:
             if course in courselist:
@@ -86,7 +86,7 @@ class Schedule():
 
 
     # prints student's schedule to a string
-    def to_string(self):
+    def __str__(self):
         count = 0
         s = "Schedule: " + self.name + "\n"
         for courselist in self.__master_list:

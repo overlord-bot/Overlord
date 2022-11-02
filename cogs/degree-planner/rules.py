@@ -162,3 +162,6 @@ class Rules():
     # returns boolean if this rule is fulfilled
     def fulfilled(self) -> bool:
         return not len(self.fulfillment())
+
+
+    

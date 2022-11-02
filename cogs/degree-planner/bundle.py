@@ -25,7 +25,7 @@ class Bundle(Course):
     def contains(self, course:Course) -> bool:
         return course in self.__course_bundle
 
-    def to_string(self) -> str:
+    def __str__(self) -> str:
         return ",".join(self.__course_bundle)
 
     def __len__(self) -> int:

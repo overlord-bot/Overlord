@@ -18,8 +18,8 @@ class Degree():
     def get_electives(self):
         pass
 
-    def to_string(self):
-        return self.name
+    def __repr__(self):
+        return f"{self.name}: {str(self.rules)}"
 
     def __eq__(self, other):
         if self.name == other.name:

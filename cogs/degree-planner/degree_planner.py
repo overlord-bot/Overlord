@@ -9,7 +9,6 @@ import sys
 from .course import Course
 from .catalog import Catalog
 from .degree import Degree
-from .bundle import Bundle
 from .rules import Rules
 from .schedule import Schedule
 from .test_suite import Test1
@@ -171,7 +170,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
                 await self.parse_degrees(message, json_degree_results)
                 await user.msg(message, "Sucessfully parsed degree data, printing catalog")
-                await user.msg_hold(self.catalog.to_string())
+                await user.msg_hold(str(self.catalog))
                 await user.msg_release(message, False)
                 #------------------------------------------------------------------------
 
@@ -269,7 +268,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await user.msg(message, f"successfully removed course {course_name} from semester {semester}")
 
             elif cmd == "print":
-                await user.msg_hold(sche.to_string())
+                await user.msg_hold(str(sche))
                 await user.msg_release(message, False)
 
             #elif cmd == "fulfillment":

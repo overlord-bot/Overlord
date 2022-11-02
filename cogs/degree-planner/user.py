@@ -106,7 +106,7 @@ class User():
         await message.channel.send(f"[Degree Planner] {str(content)}")
 
 
-    def to_string(self):
+    def __str__(self):
         schedule_names = ""
         for s in self.__schedules.keys():
             schedule_names += "[" + s + "] "
