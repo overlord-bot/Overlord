@@ -41,6 +41,69 @@ class Blackjack(commands.Cog, name="Blackjack"):
             totalscore = card1score + card2score
         return totalscore
 
+    def emoji(card):
+        emoji1 = ""
+        emoji2 = ""
+        if(card[0] == "J" or card[0] == "K" or card[0] == "Q"):
+                if(card[0] == "J"):
+                    emoji1 == ":regional_indicator_j:"
+                if(card[0] == "K"):
+                    emoji1 = ":regional_indicator_k:"
+                if(card[0] == "Q"):
+                    emoji1 = ":regional_indicator_q:"
+                if(card[1] == "H"):
+                    emoji2 = ":hearts:"
+                if(card[1] == "C"):
+                    emoji2 = ":clubs:"
+                if(card[1] == "S"):
+                    emoji2 = ":spades:"
+                if(card[1] == "D"):
+                    emoji2 = ":diamonds:"
+        else:
+            cardscore = int(re.search(r'\d+',card).group())
+            if(cardscore == 10):
+                emoji1 = ":keycap_ten:"
+                if(card[2] == "H"):
+                    emoji2 = ":hearts:"
+                if(card[2] == "C"):
+                    emoji2 = ":clubs:"
+                if(card[2] == "S"):
+                    emoji2 = ":spades:"
+                if(card[2] == "D"):
+                    emoji2 = ":diamonds:"
+            else:
+                if(cardscore == 1):
+                    emoji1 = ":one:"
+                if(cardscore == 2):
+                    emoji1 = ":two:"
+                if(cardscore == 3):
+                    emoji1 = ":three:"
+                if(cardscore == 4):
+                    emoji1 = ":four:"
+                if(cardscore == 5):
+                    emoji1 = ":five:"
+                if(cardscore == 6):
+                    emoji1 = ":six:"
+                if(cardscore == 7):
+                    emoji1 = ":seven:"
+                if(cardscore == 8):
+                    emoji1 = ":eight:"
+                if(cardscore == 9):
+                    emoji1 = ":nine:"
+                if(card[1] == "H"):
+                    emoji2 = ":hearts:"
+                if(card[1] == "C"):
+                    emoji2 = ":clubs:"
+                if(card[1] == "S"):
+                    emoji2 = ":spades:"
+                if(card[1] == "D"):
+                    emoji2 = ":diamonds:"
+        emojis = [emoji1,emoji2]
+        return emojis
+
+
+
+
     @commands.command()
     async def blackjack(self, context):
         """Play the casino game blackjack"""  # this is the description that will show up in !help
@@ -56,10 +119,16 @@ class Blackjack(commands.Cog, name="Blackjack"):
             hiddencarddealer = Blackjack.draw(self.cardsindeck)
             self.dealercard1 = card1dealer
             self.dealercard2 = hiddencarddealer
-            await context.send("Dealers cards are: " + card1dealer + " X")
+            emojii = Blackjack.emoji(card1dealer)
+            await context.send("Dealers cards are")
+            await context.send(emojii[0] + emojii[1] + ":heavy_plus_sign:" + ":regional_indicator_x:")
+            
             card1player = Blackjack.draw(self.cardsindeck)
             card2player = Blackjack.draw(self.cardsindeck)
-            await context.send("Your cards are: " + card1player + " " + card2player)
+            emojii1 = Blackjack.emoji(card1player)
+            emojii2 = Blackjack.emoji(card2player)
+            await context.send("Your cards are:")
+            await context.send(emojii1[0]+emojii1[1] + ":heavy_plus_sign:" + emojii2[0] + emojii2[1])
             self.dealerscore = Blackjack.points(card1dealer,hiddencarddealer)
             self.playerscore = Blackjack.points(card1player,card2player)
             #check to see if the game ends when a player or dealer gets a blackjack
@@ -88,7 +157,9 @@ class Blackjack(commands.Cog, name="Blackjack"):
                 cardscore = 10
             else:
                 cardscore = int(re.search(r'\d+',card).group())
-            await context.send("You drew " + card)
+            cardemoji = Blackjack.emoji(card)
+            await context.send("You drew")
+            await context.send(cardemoji[0]+cardemoji[1])
             self.playerscore+=cardscore
             if(self.playerscore>21):
                 await context.send("YOU LOSE")
@@ -104,14 +175,20 @@ class Blackjack(commands.Cog, name="Blackjack"):
         #DEALER KEEPS ON HITTING UNTIL THEY HAVE A HIGHER NUMBER THAN THE PLAYER THEN THEY WIN
         #OUTPUT GAMES WINNER
         if(self.gamestart == True and self.gameend == False):
-            await context.send("dealer has the cards " + self.dealercard1 + " " + self.dealercard2)
+            dealercards1 = Blackjack.emoji(self.dealercard1)
+            dealercards2 = Blackjack.emoji(self.dealercard2)
+            await context.send("dealer has the cards")
+            await context.send(dealercards1[0]+dealercards1[1] + ":heavy_plus_sign:" + dealercards2[0] + dealercards2[1])
+
             while(self.dealerscore <= self.playerscore):
                 card = Blackjack.draw(self.cardsindeck)
                 if(card[0] == "J" or card[0] == "K" or card[0] == "Q"):
                     cardscore = 10
                 else:
                     cardscore = int(re.search(r'\d+',card).group())
-                await context.send("Dealer drew " + card)
+                dealeremoji = Blackjack.emoji(card)
+                await context.send("Dealer drew")
+                await context.send(dealeremoji[0] + dealeremoji[1])
                 self.dealerscore+=cardscore
             if(self.dealerscore > 21):
                 await context.send("YOU WIN")
@@ -130,3 +207,4 @@ class Blackjack(commands.Cog, name="Blackjack"):
     
 async def setup(bot):
     await bot.add_cog(Blackjack(bot))
+
