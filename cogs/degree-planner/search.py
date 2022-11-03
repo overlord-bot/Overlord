@@ -4,24 +4,16 @@ from .catalog import Catalog
 
 class Search():
 
-
-    def __init__(self, catalog):
-        self.catalog_obj = catalog
+    def __init__(self, course_list):
+        self.course_list = course_list
         self.__course_index = dict()
-
-
-    # updates catalog and generates new index
-    # should be called everytime catalog gets updated
-    def initialize(self):
-        self.catalog = self.catalog_obj.get_all_courses()
-        self.generate_index()
-        
 
     # generates <course key name : [all possible courses' full name]>
     # where course key name is the first 3 letters of each of the words inside its name
+    # should be called everytime course list gets updated
     def generate_index(self):
         self.__course_index.clear()
-        for course in self.catalog:
+        for course in self.course_list:
             name = course.name
             words = name.split(' ')
 
@@ -35,7 +27,6 @@ class Search():
                     self.__course_index.update({word_key:[name]})
                 else:
                     self.__course_index[word_key].append(name)
-
 
     # searches for possible courses based on msg, 
     # taking into account only words inside msg of 3 letters and above

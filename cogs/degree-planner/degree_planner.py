@@ -36,7 +36,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         self.users = dict()
         # a single copy of the catalog is kept in this class
         self.catalog = Catalog()
-        self.search = Search(self.catalog)
+        self.search = Search(self.catalog.get_all_courses())
         self.debug_id = 0
     #-----------------------------------------------------------------------
     # Main message listener
@@ -153,9 +153,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await self.parse_courses(message, json_catalog_results)
                 await user.msg(message, "Sucessfully parsed catalog data")
                 #------------------------------------------------------------------------
-
-                self.search.initialize()
-
+                
+                self.search.generate_index()
+                
                 #------------------------------------------------------------------------
                 # LOADING DEGREES
                 if os.path.isfile(os.getcwd() + "/cogs/webcrawling/" + degree_results):

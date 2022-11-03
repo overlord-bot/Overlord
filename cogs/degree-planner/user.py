@@ -73,6 +73,10 @@ class User():
         if Flag.DEBUG in self.flag:
             print(self.__msg_cache)
             self.__msg_cache = ""
+        elif len(self.__msg_cache) > 1800:
+            await message.channel.send(f"message too long, won't be sent to discord, printing to console...")
+            print(self.__msg_cache)
+            self.__msg_cache = ""
         elif not fancy:
             await message.channel.send(f"```yaml\n{self.__msg_cache}```")
             self.__msg_cache = ""
@@ -88,12 +92,16 @@ class User():
     async def msg(self, message, content:str):
         if Flag.DEBUG in self.flag:
             print(self.msg_header + str(content))
+        elif len(content) > 1800:
+            await message.channel.send(f"message too long, won't be sent to discord, printing to console...")
+            print(self.msg_header + str(content))
+            self.__msg_cache = ""
         else:
             await message.channel.send(f"{self.msg_header} {str(content)}")
 
 
     # identical to msg(message, content) except this one will print to discord 
-    # regardless of debug mode
+    # regardless of debug mode or other checks
     async def force_msg(self, message, content:str):
         if Flag.DEBUG in self.flag:
             print(self.msg_header + str(content))
