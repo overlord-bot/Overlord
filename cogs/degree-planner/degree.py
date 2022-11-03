@@ -22,9 +22,13 @@ class Degree():
         return f"{self.name}: {str(self.rules)}"
 
     def __eq__(self, other):
-        if self.name == other.name:
+        if self.name == other.name and self.rules == other.rules:
             return True
         return False
 
     def __hash__(self):
-        return hash(self.name)
+        i = 0
+        for r in self.rules:
+            i += hash(r)
+        i += hash(self.name)
+        return i

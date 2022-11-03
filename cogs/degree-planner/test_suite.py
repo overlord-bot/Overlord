@@ -1,12 +1,9 @@
 from array import *
-from discord.ext import commands
-import discord
-import asyncio
 
 from .course import Course
-from .catalog import Catalog, get_course_match
+from .catalog import Catalog, get_course_match, get_best_course_match
 from .degree import Degree
-from .rules import Rules
+from .rules import Rule
 from .schedule import Schedule
 
 class Test1():    
@@ -39,9 +36,12 @@ class Test1():
         assert course1.name == "data structures" and course1.major == "CSCI" and course1.course_id == 1200
         assert course2.name == "algorithms" and course2.major == "CSCI" and course2.course_id == 2300
         assert course3.name == "circuits" and course3.major == "ECSE" and course3.course_id == 2010
-        assert course4.name == "animation" and course4.major == "ARTS" and course4.course_id == 4070 and "Digital Arts" in course4.HASS_pathway
-        assert course5.name == "networking in the linux kernel" and course5.major == "CSCI" and course5.course_id == 4310 and course5.CI == True and "Systems and Software" in course5.concentration
-        assert course6.name == "cryptography 1" and course6.major == "CSCI" and course6.course_id == 4230 and course6.CI == True and "Theory, Algorithms and Mathematics" in course6.concentration
+        assert (course4.name == "animation" and course4.major == "ARTS" and course4.course_id == 4070 and 
+                "Digital Arts" in course4.HASS_pathway)
+        assert (course5.name == "networking in the linux kernel" and course5.major == "CSCI" and 
+                course5.course_id == 4310 and course5.CI == True and "Systems and Software" in course5.concentration)
+        assert (course6.name == "cryptography 1" and course6.major == "CSCI" and course6.course_id == 4230 and 
+                course6.CI == True and "Theory, Algorithms and Mathematics" in course6.concentration)
 
         # adding courses to catalog
 
@@ -80,7 +80,8 @@ class Test1():
         schedule2 = user.get_schedule("test")
         schedule2.add_course(catalog.get_course("Animation"), 0)
         
-        #checks to make sure add and remove worked properly, without duplicates within one semester but allowing for duplicates across semesters
+        # checks to make sure add and remove worked properly
+        # no duplicates within one semester but allowing for duplicates across semesters
         assert len(user.get_schedule("test").get_semester(0)) == 1
         assert len(user.get_schedule("test").get_semester(1)) == 1
         assert len(user.get_schedule("test").get_semester(4)) == 2
@@ -102,7 +103,7 @@ class Test1():
         course_target5 = Course("", "", 0) # all theory concentration courses
         course_target5.concentration.add("Theory, Algorithms and Mathematics")
 
-        bundle1 = catalog.get_course_match(course_target1)
+        bundle1 = catalog.get_best_course_match(course_target1)
         await user.msg(message, f"Bundle1: {str(bundle1)}")
         bundle1_ans = set()
         bundle1_ans.add(catalog.get_course("Networking in the Linux Kernel"))
@@ -110,21 +111,21 @@ class Test1():
         await user.msg(message, f"Bundle1_ans: {str(bundle1_ans)}")
         assert bundle1 == bundle1_ans
 
-        bundle2 = catalog.get_course_match(course_target2)
+        bundle2 = catalog.get_best_course_match(course_target2)
         await user.msg(message, f"Bundle2: {set(bundle2)}")
         bundle2_ans = {course4, course5, course6}
         await user.msg(message, f"Bundle2_ans: {str(bundle2_ans)}")
         assert bundle2 == bundle2_ans
 
-        bundle3 = catalog.get_course_match(course_target3)
+        bundle3 = catalog.get_best_course_match(course_target3)
         bundle3_ans = {course1}
         assert bundle3 == bundle3_ans
 
-        bundle4 = catalog.get_course_match(course_target4)
+        bundle4 = catalog.get_best_course_match(course_target4)
         bundle4_ans = set()
         assert bundle4 == bundle4_ans
 
-        bundle5 = catalog.get_course_match(course_target5)
+        bundle5 = catalog.get_best_course_match(course_target5)
         await user.msg(message, f"Bundle5: {str(bundle5)}")
         bundle5_ans = {course6}
         await user.msg(message, f"Bundle5_ans: {str(bundle5_ans)}")
@@ -136,18 +137,19 @@ class Test1():
 
         template1 = Course("", "", 2000)
         template1ans = {course2,course3}
-        await user.msg(message, f"template1response: {str(catalog.get_course_match(template1))}\ntemplate1ans: {str(template1ans)}")
-        assert catalog.get_course_match(template1) == template1ans
+        await user.msg(message, f"template1response: {str(catalog.get_course_match(template1))}\n" + \
+            f"template1ans: {str(template1ans)}")
+        assert catalog.get_best_course_match(template1) == template1ans
 
         template2 = Course("", "", 4000)
         template2.concentration = "*"
         template2ans1 = {course5}
         template2ans2 = {course6, course7}
-        await user.msg(message, f"template2response: {str(catalog.get_course_match(template2))}\ntemplate2ans: course5, course6 course7")
-        template2.concentration = "*"
+        await user.msg(message, f"template2response: {str(catalog.get_course_match(template2))}\n" + \
+            f"template2ans: course5, course6 course7")
         assert template2ans1 in catalog.get_course_match(template2).values()
-        template2.concentration = "*"
         assert template2ans2 in catalog.get_course_match(template2).values()
+        assert catalog.get_best_course_match(template2) == template2ans2
 
         await user.msg(message, f"Printing user data: {str(user)}")
 

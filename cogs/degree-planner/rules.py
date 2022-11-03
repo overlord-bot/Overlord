@@ -4,14 +4,14 @@ from .course_template import Template
 from .catalog import *
 
 
-class Rules():
+class Rule():
 
     def __init__(self, name):
 
-        # name should explain what this rule is, i.e. "in-major core classes", "HASS electives", etc
+        # name should explain what this rule is, i.e. "in-major core", "HASS electives", etc
         self.name = name 
 
-        #------------------------------------------------------------------------------------------------
+        #------------------------------------------------------------------------------------------
         # course_template usage:
         #
         # <Course template object : number of courses that need to fulfill this template>
@@ -27,7 +27,7 @@ class Rules():
         # that field but must remain consistent for all the courses (e.g. use wildcard to
         # specify if X amount of courses must be within the same pathway, but doesn't matter
         # which pathway)
-        #-------------------------------------------------------------------------------------------------
+        #------------------------------------------------------------------------------------------
         self.course_templates = dict()
 
 
@@ -45,23 +45,33 @@ class Rules():
 
     def fulfillment(self, taken_courses:set):
 
-        # Data structure of status_return: {unfulfilled template name : {attribute : value}}
+        # Data structure of status_return: {template name : {attribute : value}}
         status_return = dict()
 
         # iterates through all the templates
         for template, required_count in self.course_templates.items():
 
             # 1) checks for courses within taken_bundle that fulfills this templated requirement
-            fulfilled_courses = get_course_match(template.template_course, taken_courses)
+            # return format is <template : {fulfilled courses}>
+            fulfilled_courses = get_course_match(template, taken_courses)
 
-            # 2) checks if lists are specified. If it is, enforces that all courses within
-            # fulfilled_courses to be within the specified bundle within template
-            if len(template.course_set):
-                fulfilled_courses = [x for x in fulfilled_courses if x in template.get_bundle_set()]
+            # 2) get biggest fulfillment within fulfilled_courses
+            size = 0
+            best_template = template
+            best_fulfillment = set()
+            for k, v in fulfilled_courses.items():
+                if len(v) > size:
+                    size = len(v)
+                    best_template = k
+                    best_fulfillment = v
 
-            # 3) let's count how many courses were fulfilled and if it's enough :D
-            if len(fulfilled_courses) < required_count:
-                status_return.update({template.name:{"required":required_count, "actual":len(fulfilled_courses)}})
+            # 3) return fulfillment status
+            status_return.update({template:{
+                    "required":required_count, 
+                    "actual":size,
+                    "fulfilled":size >= required_count,
+                    "fulfillment set":best_fulfillment,
+                    "best_template":best_template}})
 
 
     # returns a formatted message instead of a dictionary, use this for easy debugging
@@ -70,10 +80,26 @@ class Rules():
         status_return = ""
 
         for status_entry_name, status_entry in status.items():
-            status_return += f"Template {status_entry_name} has unfulfilled courses: requires {status_entry['required']}, actual {status_entry['actual']}\n"
+            status_return += f"Template {status_entry_name} status: " + \
+                f"requires {status_entry['required']}, actual {status_entry['actual']}\n"
 
         return status_return
 
 
     def __repr__(self):
-        return f"rule {self.name}: {self.course_templates}" 
+        s = f"rule {self.name}:\n" 
+        for k, v in self.course_templates:
+            s += f"  template {k.name} requires {v} counts: \n{str(k)}"
+        return s
+
+    def __eq__(self, other):
+        return self.course_templates == other.course_templates
+
+    def __len__(self):
+        return len(self.course_templates)
+
+    def __hash__(self):
+        i = 0
+        for k, v in self.course_templates.items():
+            i += hash(k) + v
+        return i

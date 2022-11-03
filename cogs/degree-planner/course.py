@@ -4,34 +4,11 @@ class Course():
 
     def __init__(self, name, major, cid):
         self.name = name.strip().casefold()
-        if len(major) != 4 and major != "":
-            print("COURSE INITIALIZATION WARNING: major is not 4 characters for course " + self.name + ", setting to empty string")
-            self.major = ""
-        else:
-            self.major = major # major tag i.e. CSCI, ECSE
-        self.course_id = 0
+        self.major = major # major tag i.e. CSCI, ECSE
+        self.course_id = cid
         self.course_id2 = 0
-        if isinstance(cid, str):
-            if '.' in cid:
-                split_num = cid.split('.')
-                if len(split_num) == 2 and split_num[0].isdigit() and split_num[1].isdigit():
-                    course_id = int(float(split_num[0]))
-                    course_id2 = int(float(split_num[1]))
-                else:
-                    print("COURSE INITIALIZATION ERROR: 2 part ID not <int>.<int> for course " + self.name)
-                    
-            elif not cid.isdigit():
-                print("COURSE INITIALIZATION WARNING: course number is not a number for course " + self.name)
-            else:
-                course_id = int(float(cid))
-        elif isinstance(cid, int):
-            self.course_id = cid
-        else:
-            print("COURSE INITIALIZATION WARNING: course number is not a number for course " + self.name)
-
         self.credits = 0 # credit hours of this course
         self.cross_listed = set() # set of cross listed courses that should be treated as same course
-
         self.syllabus = dict() # this should be a dictionary of <professor, link>
 
         # critical attributes
@@ -44,9 +21,29 @@ class Course():
         self.restricted = False # if this is a major restricted class
 
         # optional attributes
-        self.description = "" # text to be displayed describing the class
-        
+        self.description = "" # text to be displayed describing the clas
         self.available_semesters = set() # if empty, means available in all semesters
+
+        self.validate_course_data()
+
+
+    # some input data for courses may not be in the desired format. We will correct those problems here
+    def validate_course_data(self):
+        if isinstance(self.course_id, str):
+            if '.' in self.course_id:
+                split_num = self.course_id.split('.')
+                if len(split_num) == 2 and split_num[0].isdigit() and split_num[1].isdigit():
+                    self.course_id = int(float(split_num[0]))
+                    self.course_id2 = int(float(split_num[1]))
+                else:
+                    print("COURSE INITIALIZATION ERROR: 2 part ID not <int>.<int> for course " + self.name)
+                    
+            elif not self.course_id.isdigit():
+                print("COURSE INITIALIZATION WARNING: course number is not a number for course " + self.name)
+            else:
+                self.course_id = int(float(self.course_id))
+        elif not isinstance(self.course_id, int):
+            print("COURSE INITIALIZATION WARNING: course number is not a number for course " + self.name)
 
     def add_prerequisite(self, prereq):
         self.prerequisites.add(prereq)
@@ -80,15 +77,18 @@ class Course():
         return (self.course_id//1000)
 
     def __repr__(self):
-        st = (f"{self.name}: {self.major} {str(self.course_id)}{f'.{self.course_id2}' if self.course_id2 != 0 else ''}, {self.credits} credits {'(CI)' if self.CI else ''}"
-            f"{f', concentrations: {str(self.concentration)}' if len(self.concentration) != 0 else ''}"
+        st = (f"{self.name if self.name else 'None'}: {self.major if self.major else 'None'} " + \
+            f"{str(self.course_id)}{f'.{self.course_id2}' if self.course_id2 != 0 else ''}, " + \
+            f"{self.credits} credits{' (CI)' if self.CI else ''}" + \
+            f"{f', concentrations: {str(self.concentration)}' if len(self.concentration) != 0 else ''}" + \
             f"{f', pathways: {str(self.HASS_pathway)}' if len(self.HASS_pathway) != 0 else ''}")
         return st.replace("set()", "none")
 
     def __eq__(self, other):
         if (self.name == other.name and self.course_id == other.course_id and self.major == other.major and
-            self.CI == other.CI and self.concentration == other.concentration and self.HASS_pathway == other.HASS_pathway and
-            self.credits == other.credits and self.HASS_inquiry == other.HASS_inquiry and self.cross_listed == other.cross_listed and
+            self.CI == other.CI and self.concentration == other.concentration and 
+            self.HASS_pathway == other.HASS_pathway and self.credits == other.credits and 
+            self.HASS_inquiry == other.HASS_inquiry and self.cross_listed == other.cross_listed and
             self.restricted == other.restricted and self.prerequisites == other.prerequisites):
             return True
         return False

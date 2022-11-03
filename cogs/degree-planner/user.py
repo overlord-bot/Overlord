@@ -1,13 +1,8 @@
 from array import *
+from enum import Enum
 from discord.ext import commands
 import discord
-import asyncio
-import os
-import json
-from enum import Enum
-
 from .schedule import Schedule
-
 
 class Flag(Enum):
     MENU_SELECT = 0
@@ -17,19 +12,17 @@ class Flag(Enum):
     SCHEDULE_SELECTION = 4
     CASE_5 = 5
 
-
 class User():
     
     def __init__(self, name:str):
         self.username = name
-        self.__schedules = dict() # List of all schedules this person has created <schedule name, Schedule obj>
+        self.__schedules = dict() # all schedules this user created <schedule name, Schedule()>
         self.curr_schedule = "" # empty string signifies no current schedule
 
-         # temporary variables
-        self.__msg_cache = "" # holds a string so it can be outputted to discord at the same time to avoid long waits due to network delays when printing individually
-        self.msg_header = "" # this is added before every msg, after the [degree planner]
+        # temporary variables
+        self.__msg_cache = "" # holds a string so it can be outputted at the same time
+        self.msg_header = "" # this is added before every msg
 
-        # flags
         self.flag = set()
 
     def get_all_schedules(self):
@@ -84,7 +77,7 @@ class User():
             await message.channel.send(f"```yaml\n{self.__msg_cache}```")
             self.__msg_cache = ""
         else:
-            # little embed test
+            # embed test
             embed = discord.Embed(title="Slime",color=discord.Color.blue())
             embed.add_field(name="*info*", value=self.__msg_cache, inline = False)
             await message.channel.send(embed=embed)
@@ -96,20 +89,21 @@ class User():
         if Flag.DEBUG in self.flag:
             print(self.msg_header + str(content))
         else:
-            await message.channel.send(f"[Degree Planner] {str(content)}")
+            await message.channel.send(f"{self.msg_header} {str(content)}")
 
 
-    # identical to msg(message, content) except this one will print to discord regardless of debug mode
+    # identical to msg(message, content) except this one will print to discord 
+    # regardless of debug mode
     async def force_msg(self, message, content:str):
         if Flag.DEBUG in self.flag:
             print(self.msg_header + str(content))
-        await message.channel.send(f"[Degree Planner] {str(content)}")
+        await message.channel.send(f"{self.msg_header} {str(content)}")
 
 
-    def __str__(self):
+    def __repr__(self):
         schedule_names = ""
         for s in self.__schedules.keys():
-            schedule_names += "[" + s + "] "
+            schedule_names += f"[ {s} ] "
         return f"{str(self.username)}'s schedules: {schedule_names}"
 
 
@@ -120,4 +114,7 @@ class User():
 
 
     def __hash__(self):
-        return self.username
+        i = 0
+        for c in self.username:
+            i += ord(c)
+        return i

@@ -3,13 +3,17 @@ from .course import Course
 
 class Template():
 
-    def __init__(self, name, template_course):
+    def __init__(self, name, template_course=Course("", "", 0)):
         self.name = name
         self.template_course = template_course
         self.course_set = set()
 
     def __repr__(self) -> str:
-        return ",".join(self.course_set)
+        s = f"Template {self.name}:\n"
+        s += f"  {str(self.template_course)}\n"
+        s += f"course_set: "
+        s += ",".join(self.course_set)
+        return s
 
     def __len__(self) -> int:
         return len(self.course_set)
@@ -28,7 +32,7 @@ class Template():
         return True
 
     def __hash__(self) -> int:
-        i = hash(self.template_course)*hash(self.template_course)
+        i = hash(self.template_course)**2
         for course in self.course_set:
             i+=hash(course)
         return i
