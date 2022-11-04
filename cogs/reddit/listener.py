@@ -49,10 +49,12 @@ def runPostCheck(context, subreddit, newest_post):
     return new_post
 
 def call_repeatedly(interval, context, subreddit, newest_post):
+    global npost
+    print(npost)
     stopped = Event()
     def loop():
         while not stopped.wait(interval): # the first call is in `interval` secs
-            runPostCheck(context, subreddit, newest_post)
+            npost = runPostCheck(context, subreddit, newest_post)
     Thread(target=loop).start()    
     return stopped.set
 

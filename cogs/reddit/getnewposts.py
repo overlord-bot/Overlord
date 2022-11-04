@@ -7,8 +7,6 @@ import json
 import discord
 from discord.ext import commands
 
-from threading import Event, Thread
-#https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds
 
 
 class NewRedditPosts(commands.Cog, name="Newest Reddit Post Retriever"):
@@ -23,7 +21,7 @@ class NewRedditPosts(commands.Cog, name="Newest Reddit Post Retriever"):
         if amount.isdigit():
             amount = int(amount)
         else:
-            await context.reply("Input integer amount")
+            await context.reply("Input possible integer")
             return
 
         if amount < 1 or amount > 24:
@@ -31,6 +29,9 @@ class NewRedditPosts(commands.Cog, name="Newest Reddit Post Retriever"):
             return
         
         reddit_data = getRedditData(subreddit)
+        if reddit_data["data"]["dist"] == 0:
+            await context.reply("Invalid subreddit / Error fetching subreddits")
+            return
         newest_post = reddit_data["data"]["children"][int(amount)]["data"]["name"]
 
         new_posts = getNewPosts(context, reddit_data, newest_post)
