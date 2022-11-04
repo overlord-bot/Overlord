@@ -15,6 +15,7 @@ from .test_suite import Test1
 from .user import User
 from .user import Flag
 from .search import Search
+from .course_template import Template
 
 
 #########################################################################
@@ -38,6 +39,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         self.catalog = Catalog()
         self.search = Search(self.catalog.get_all_courses())
         self.debug_id = 0
+    
+    
     #-----------------------------------------------------------------------
     # Main message listener
     #
@@ -65,6 +68,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
         print(f"end of message handler function; msg id: {self.debug_id}")
 
+
     #-----------------------------------------------------------------------
     # This function is a temporary text based system to control the bot
     # it can all be replaced with different UI system later
@@ -77,12 +81,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             await user.msg(message, "Test running, please hold on")
             return
 
-        # case 5 is a temporary test case for the search function in search.py
-        if Flag.CASE_5 in user.flag:
-            user.flag.remove(Flag.CASE_5)
-            possible_courses = self.search.search(message.content.casefold())
-            await user.msg(message, "possible courses: " + str(possible_courses))
-
+        # if we receive a command in the format !dp <int>
         if msg.casefold().startswith("!dp") and len(msg.split(' ')) == 2 and msg.split(' ')[1].isdigit():
             print("detected compound dp command")
             # simulates as if the user typed in !dp and <int> separately
@@ -90,10 +89,10 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             # changes msg to be the !dp number
             msg = msg.split(' ')[1]
 
+        # main menu command
         if msg.casefold() == "!dp":
             user.flag.clear()
-            
-            # What would you like to do, <username without tag>?
+            # prints "what would you like to do, <username without tag>?"
             await user.msg(message, f"Hiyaa, what would you like to do, " + \
                 f"{str(message.author)[0:str(message.author).find('#'):1]}?") 
             await user.msg(message, "input the number in chat:  " + \
@@ -235,7 +234,21 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await user.msg_hold(str(sche))
                 await user.msg_release(message, False)
 
-            #elif cmd == "fulfillment":
+            elif cmd == "degree":
+                command.pop(0)
+                if l != 2:
+                    await user.msg(message, "incorrect amount of arguments, use degree <degree name> to set your schedule's degree")
+                else:
+                    user.get_current_schedule().degree = self.catalog.get_degree(command.pop(0))
+                    await user.msg(message, f"set your degree to {user.get_current_schedule().degree.name}")
+
+
+            elif cmd == "fulfillment":
+                if user.get_current_schedule().degree == None:
+                    await user.msg(message, "no degree specified")
+                else:
+                    await user.msg_hold(user.get_current_schedule().degree.fulfillment_msg(user.get_current_schedule().get_all_courses()))
+                    await user.msg_release(message, False)
 
             elif cmd == "reschedule":
                 await user.msg(message, "Understood, please enter schedule name to modify:")
@@ -247,6 +260,14 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
             else:
                 await user.msg(message, "Unrecognized action")
+
+        #----------------------------------------------------------------------------------
+        # case 5 is a temporary test case for the search function in search.py
+        #----------------------------------------------------------------------------------
+        elif Flag.CASE_5 in user.flag:
+            user.flag.remove(Flag.CASE_5)
+            possible_courses = self.search.search(message.content.casefold())
+            await user.msg(message, "possible courses: " + str(possible_courses))
 
 
     #-----------------------------------------------------------------------
@@ -397,6 +418,29 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
         json_data = json.load(file_degree_results)
         file_degree_results.close()
+
+        # TESTING DEGREES FOR NOW:
+        degree = Degree("computer science")
+
+        rule = Rule("concentration")
+
+        template1 = Template("concentration requirement", Course("", "", 4000))
+        template1.template_course.concentration = "*"
+
+        template2 = Template("intensity requirement", Course("", "", 4000))
+
+        template3 = Template("data structures", Course("data structures", "", 0))
+
+        rule.add_template(template1, 2)
+        rule.add_template(template2, 3)
+        rule.add_template(template3)
+        
+        degree.add_rule(rule)
+        self.catalog.add_degree(degree)
+
+        print(f"added degree {str(degree)} containing rule {str(rule)} to catalog")
+
+        '''
         #--------------------------------------------------------------------------
         # Begin iterating through json_data
         #
@@ -412,7 +456,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     required_courses.add(self.catalog.get_course(requirement['name']))
                 elif requirement['type'] == 'elective':
                     pass
-                
+                '''
 
 async def setup(bot):
     await bot.add_cog(Degree_Planner(bot))

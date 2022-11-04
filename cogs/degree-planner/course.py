@@ -85,6 +85,8 @@ class Course():
         return st.replace("set()", "none")
 
     def __eq__(self, other):
+        if not isinstance(other, Course):
+            return False
         if (self.name == other.name and self.course_id == other.course_id and self.major == other.major and
             self.CI == other.CI and self.concentration == other.concentration and 
             self.HASS_pathway == other.HASS_pathway and self.credits == other.credits and 

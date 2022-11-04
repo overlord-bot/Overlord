@@ -26,6 +26,7 @@ class Schedule():
         self.__master_list = []
         self.SEMESTERS_MAX = 12
         self.name = name
+        self.degree = None
         self.master_list_init()
 
     #-----------------------------------------------------------------------
@@ -67,6 +68,14 @@ class Schedule():
             return ""
         return self.__master_list[semester]
 
+    def get_all_courses(self):
+        courses = set()
+        for a in self.__master_list:
+            for c in a:
+                courses.add(c)
+        return courses
+
+
 
     # Parameters: course to find
     # Returns: semesters that the course is present in
@@ -96,7 +105,7 @@ class Schedule():
         return s
 
     def __hash__(self):
-        i = 0
+        i = hash(self.degree)
         sem = 0
         for sem in self.__master_list:
             for course in sem:

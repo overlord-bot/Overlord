@@ -18,10 +18,27 @@ class Degree():
     def get_electives(self):
         pass
 
+    def add_rule(self, rule):
+        self.rules.add(rule)
+
+    def fulfillment(self, taken_courses:set):
+        status_return = dict()
+        for rule in self.rules:
+            status_return.update(rule.fulfillment(taken_courses))
+        return status_return
+
+    def fulfillment_msg(self, taken_courses:set):
+        status_return = ""
+        for rule in self.rules:
+            status_return = f"Rule {rule.name}: {rule.fulfillment_return_message(taken_courses)}\n\n"
+        return status_return
+
     def __repr__(self):
         return f"{self.name}: {str(self.rules)}"
 
     def __eq__(self, other):
+        if not isinstance(other, Degree):
+            return False
         if self.name == other.name and self.rules == other.rules:
             return True
         return False

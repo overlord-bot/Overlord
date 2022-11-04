@@ -6,7 +6,7 @@ from .catalog import *
 
 class Rule():
 
-    def __init__(self, name):
+    def __init__(self, name="Untitled rule"):
 
         # name should explain what this rule is, i.e. "in-major core", "HASS electives", etc
         self.name = name 
@@ -31,7 +31,7 @@ class Rule():
         self.course_templates = dict()
 
 
-    def add_template(self, template:Template, required_count):
+    def add_template(self, template:Template, required_count=1):
         self.course_templates.update({template:required_count})
 
 
@@ -83,8 +83,9 @@ class Rule():
 
         if status != None:
             for template, data in status.items():
-                status_return += f"Template {template.name} status: " + \
-                    f"requires {data['required']}, actual {data['actual']}, fulfillment set: {str(data['fulfillment set'])}\n"
+                status_return += f"Template {template.name} status: \n" + \
+                    f"  requires {data['required']}, actual {data['actual']}, " + \
+                    f"fulfilled: {data['fulfilled']}, \n  fulfillment set: {str(data['fulfillment set'])}\n"
 
         return status_return
 
@@ -96,6 +97,8 @@ class Rule():
         return s
 
     def __eq__(self, other):
+        if not isinstance(other, Rule):
+            return False
         return self.course_templates == other.course_templates
 
     def __len__(self):
