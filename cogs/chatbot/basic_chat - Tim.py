@@ -63,6 +63,8 @@ class TimChat(commands.Cog, name="TimChat"):
         channels = self.bot.get_channel(channel_id)
         await channels.send("Don't use dirty, inappropriate, NSFW languages or content in this server!")
         await channels.send("Enter agree or disagree to determine which way you go.")
+        with open('joining_user.txt', 'w') as f:
+            f.write
 
         
 
