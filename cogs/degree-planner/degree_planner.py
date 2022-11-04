@@ -35,7 +35,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         # each user is assigned a User object and stored in this dictionary
         # Users = <username, User>
         self.users = dict()
-        # a single copy of the catalog is kept in this class
         self.catalog = Catalog()
         self.search = Search(self.catalog.get_all_courses())
         self.debug_id = 0
@@ -44,13 +43,12 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         self.VERSION = "dev 10.1 (working fulfillment checker)" 
     
     
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # Main message listener
     #
-    # Generates a schedule for each user and then passes the message
-    # content to a helper function which will read the message and
-    # determine responses.
-    #-----------------------------------------------------------------------
+    # passes the message content to a helper function which will 
+    # read the message and determine responses.
+    #--------------------------------------------------------------------------
     @commands.Cog.listener()
     async def on_message(self, message):
 
@@ -59,7 +57,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             return
         else:
             self.debug_id+=1
-            # self.users is a dictionary of existing users that link their name to a User object
             if message.author in self.users:
                 print(f"received msg from returning user: {message.author}; msg id: {self.debug_id}")
                 await self.message_handler(message)
@@ -72,20 +69,21 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         print(f"end of message handler function; msg id: {self.debug_id}")
 
 
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # This function is a temporary text based system to control the bot
     # it can all be replaced with different UI system later
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     async def message_handler(self, message):
         user:User = self.users.get(message.author)
         msg = message.content
 
         if Flag.TEST_RUNNING in user.flag:
-            await user.msg(message, "Test running, please hold on")
+            await user.msg(message, "Test running, please try again later")
             return
 
         # if we receive a command in the format !dp <int>
-        if msg.casefold().startswith("!dp") and len(msg.split(' ')) == 2 and msg.split(' ')[1].isdigit():
+        if (msg.casefold().startswith("!dp") and len(msg.split(' ')) == 2 and 
+            msg.split(' ')[1].isdigit()):
             print("detected compound dp command")
             # simulates as if the user typed in !dp and <int> separately
             user.flag.add(Flag.MENU_SELECT)
@@ -98,15 +96,19 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             # prints "what would you like to do, <username without tag>?"
             await user.msg(message, f"Hiyaa, what would you like to do, " + \
                 f"{str(message.author)[0:str(message.author).find('#'):1]}?") 
-            await user.msg(message, "input the number in chat:  " + \
-                "1: begin test sequence 2: import courses from json file 9: run scheduler 0: cancel")
-            await user.msg(message, f"Degree Planner version status: {self.VERSION}")
+            await user.msg(message, 
+                "Please input a number in chat:  " + \
+                "1: begin test sequence " + \
+                "2: import courses from json file " + \
+                "9: run scheduler " + \
+                "0: cancel")
+            await user.msg(message, f"Degree Planner version: {self.VERSION}")
 
             user.flag.add(Flag.MENU_SELECT)
         
-        #----------------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         # main menu command !dp argument cases:
-        #----------------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         elif Flag.MENU_SELECT in user.flag:
             user.flag.clear()
 
@@ -117,14 +119,17 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 print("BEGINNING TEST")
                 await self.test(message)
                 print("FINISHED TEST")
-                await user.msg(message, "Test completed successfully, all assertions are met")
+                await user.msg(message, 
+                    "Test completed successfully, all assertions met")
                 user.flag.remove(Flag.TEST_RUNNING)
 
             # CASE 2: run data fetch from json
             # this will load both courses and degrees
             elif msg.casefold() == "2":
                 print("INPUT 2 REGISTERED")
-                user.flag.add(Flag.DEBUG) # redirects user messages into terminal, too much data for discord chat
+
+                # redirects user messages into terminal, too much data for discord chat
+                user.flag.add(Flag.DEBUG)
 
                 catalog_file = "catalog_results.json"
                 degree_file = "class_results.json"
@@ -153,7 +158,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 user.flag.add(Flag.SCHEDULING)
                 user.flag.add(Flag.SCHEDULE_SELECTION)
                 await user.msg(message, "You are now in scheduling mode!")
-                await user.msg(message, "Please enter the name of the schedule to modify. " + \
+                await user.msg(message, "Enter the name of the schedule to modify. " + \
                     "If the schedule entered doesn't exist, it will be created")
 
             # CASE 0: cancel selection operation
@@ -167,17 +172,17 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             else:
                 await user.msg(message, "Unknown response, cancelling")
 
-        #----------------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         # course scheduling mode, the feature intended to be used in the end
-        #----------------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         elif Flag.SCHEDULING in user.flag:
 
             command_raw = msg.split(",") # user input split up, will parse as a command
-            command = [e.strip().casefold() for e in command_raw] # strips and lowercases all strings
+            command = [e.strip().casefold() for e in command_raw] # strips and lowercases all args
             command = [e for e in command if e] # removes empty strings from list
             print("Inputted scheduling command: " + str(command))
-            cmd = command[0] # command will be modified later, so this assignment is absolutely necessary!
-            l = len(command) # command will be modified later, so this assignment is absolutely necessary!
+            cmd = command[0] # command str will be modified later, this assignment is necessary!
+            l = len(command) # command str will be modified later, this assignment is necessary!
 
             if not l:
                 await user.msg(message, "no command detected")
@@ -185,7 +190,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
             if Flag.SCHEDULE_SELECTION in user.flag:
                 schedule = user.get_schedule(cmd)
-                if isinstance(schedule, str):
+                if schedule == None:
                     await user.msg(message, f"Schedule {cmd} not found, generating new one!")
                     user.new_schedule(cmd)
                     user.curr_schedule = cmd
@@ -204,12 +209,12 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     return
                 semester = int(command.pop(0))
                 if semester not in range(0, sche.SEMESTERS_MAX):
-                    await user.msg(message, "Invalid semester, please enter number between 0 and 11")
+                    await user.msg(message, "Invalid semester, enter number between 0 and 11")
                     return
 
                 for course_name in command:
                     course = self.catalog.get_course(course_name)
-                    if isinstance(course, str):
+                    if course == None:
                         await user.msg(message, f"Course {course_name} not found")
                         continue
 
@@ -223,12 +228,12 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     return
                 semester = int(command.pop(0))
                 if semester not in range(0, sche.SEMESTERS_MAX):
-                    await user.msg(message, "Invalid semester, please enter number between 0 and 11")
+                    await user.msg(message, "Invalid semester, enter number between 0 and 11")
                     return
 
                 for course_name in command:
                     course = self.catalog.get_course(course_name)
-                    if isinstance(course, str) or course not in sche.get_semester(semester):
+                    if course == None or course not in sche.get_semester(semester):
                         await user.msg(message, f"Can't find course {course_name} in semester {semester}")
                         continue
                     sche.remove_course(course, semester)
@@ -241,17 +246,19 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             elif cmd == "degree":
                 command.pop(0)
                 if l != 2:
-                    await user.msg(message, "incorrect amount of arguments, use degree <degree name> to set your schedule's degree")
+                    await user.msg(message, "incorrect amount of arguments, " + \
+                        "use degree,<degree name> to set your schedule's degree")
                 else:
                     user.get_current_schedule().degree = self.catalog.get_degree(command.pop(0))
-                    await user.msg(message, f"set your degree to {user.get_current_schedule().degree.name}")
+                    await user.msg(message, f"set degree to {user.get_current_schedule().degree.name}")
 
 
             elif cmd == "fulfillment":
                 if user.get_current_schedule().degree == None:
                     await user.msg(message, "no degree specified")
                 else:
-                    await user.msg_hold(user.get_current_schedule().degree.fulfillment_msg(user.get_current_schedule().get_all_courses()))
+                    await user.msg_hold(user.get_current_schedule().
+                        degree.fulfillment_msg(user.get_current_schedule().get_all_courses()))
                     await user.msg_release(message, False)
 
             elif cmd == "reschedule":
@@ -265,19 +272,19 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             else:
                 await user.msg(message, "Unrecognized action")
 
-        #----------------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         # case 5 is a temporary test case for the search function in search.py
-        #----------------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         elif Flag.CASE_5 in user.flag:
             user.flag.remove(Flag.CASE_5)
             possible_courses = self.search.search(message.content.casefold())
             await user.msg(message, "possible courses: " + str(possible_courses))
 
 
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # Helper function that starts running the test_suite, can be replaced
     # by pytest later
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     async def test(self, message):
         user = self.users.get(message.author)
         test_suite = Test1()
@@ -286,10 +293,10 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         user.flag.remove(Flag.DEBUG)   
 
 
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # parses json data of format [{course attribute : value}] 
     # into a set of Course objects stored in Catalog
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     async def parse_courses(self, message, file_name):
         
         user = self.users.get(message.author)
@@ -302,7 +309,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             return
         await user.msg(message, "Beginning parsing course data into catalog")
 
-        # There are currently 4 places to store catalog_results.json and class_results, checked in this order
+        # There are 4 locations for catalog_results and class_results, checked in this order:
         # 1) /cogs/webcrawling/
         # 2) /cogs/degree-planner/data/
         # 3) /cogs/degree-planner/
@@ -325,14 +332,14 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
         json_data = json.load(file_catalog_results)
         file_catalog_results.close()
-        #------------------------------------------------------------------------
+        #----------------------------------------------------------------------
 
-        #--------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         # Begin iterating through every dictionary stored inside the json_data
         #
         # json data format: list of dictionaries with each dictionary representing 
         # a single course and its data
-        #--------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         for element in json_data:
 
             if 'course_name' in element and 'course_subject' in element and 'course_number' in element:
@@ -388,10 +395,10 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             self.catalog.add_course(course)
 
 
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # parses degree info from json into Degree objects, and then
     # stored inside the Catalog
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     async def parse_degrees(self, message, file_name):
         
         user = self.users.get(message.author)
@@ -445,12 +452,12 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         print(f"added degree {str(degree)} containing rule {str(rule)} to catalog")
 
         '''
-        #--------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         # Begin iterating through json_data
         #
         # json data format: dictionary of degrees : list of dictionaries each representing a course
         # <degree name : [<course attribute : value>]
-        #--------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         for degree_name, degree_data in json_data.items():
             degree = Degree(degree_name)
             required_courses = set()

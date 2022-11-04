@@ -30,9 +30,9 @@ class User():
 
 
     def get_schedule(self, schedule_name:str):
-        if isinstance(self.__schedules.get(schedule_name, ""), str):
+        if schedule_name not in self.__schedules:
             print(f"Schedule {schedule_name} not found")
-            return ""
+            return None
         return self.__schedules.get(schedule_name)
 
 
@@ -50,9 +50,9 @@ class User():
 
 
     def rename_schedule(self, old_name:str, new_name:str):
-        if isinstance(self.__schedules.get(old_name, ""), str):
+        if old_name not in self.__schedules:
             print(f"Schedule {old_name} not found")
-        elif not isinstance(self.__schedules.get(new_name, ""), str):
+        elif new_name in self.__schedules:
             print(f"Schedule {new_name} already exists, can't change name")
         else:
             self.__schedules.update({new_name : self.__schedules.get(old_name)})
@@ -73,7 +73,7 @@ class User():
 
 
     # prints all text within cache into discord's chat
-    async def msg_release(self, message:str, fancy:bool):
+    async def msg_release(self, message:str, fancy:bool=False):
         if Flag.DEBUG in self.flag:
             print(self.__msg_cache)
             self.__msg_cache = ""

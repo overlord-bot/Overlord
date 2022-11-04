@@ -12,7 +12,7 @@ class Test1():
     async def test(self, message, user):
         await user.msg(message, "Generating synthetic test data set")
 
-        if isinstance(user.get_schedule("test"), str):
+        if user.get_schedule("test") == None:
             await user.msg(message, "No previous schedule named 'test' exists, creating new test schedule")
             user.new_schedule("test")
         else:

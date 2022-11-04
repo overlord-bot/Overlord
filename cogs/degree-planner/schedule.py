@@ -94,6 +94,11 @@ class Schedule():
             i += len(sem)
         return i
 
+    def __eq__(self, other):
+        if not isinstance(other, Schedule):
+            return False
+        return self.__master_list == other.__master_list
+
     def __repr__(self):
         count = 0
         s = f"Schedule: {self.name}\n"

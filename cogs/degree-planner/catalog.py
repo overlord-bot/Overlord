@@ -78,6 +78,11 @@ class Catalog():
             count1+=1
         return printout
 
+    def __eq__(self, other):
+        if not isinstance(other, Catalog):
+            return False
+        return self.get_all_courses() == other.get_all_courses()
+
     def __len__(self):
         return len(self.__course_list)
 
