@@ -4,7 +4,7 @@
 from cogs.calendar.calendarv2_functions import CalHelperJson
 from discord.ext import commands
 
-class CalendarJson(commands.Cog, name="CalendarJson"):
+class CalendarJson(commands.Cog, name="Calendarv2"):
     def __init__(self, bot):
         self.bot = bot
         self.calhelper = CalHelperJson(bot)
@@ -34,7 +34,23 @@ class CalendarJson(commands.Cog, name="CalendarJson"):
                 await context.send(embed=self.calhelper.print_remove_embed(event, user_id))
             else:
                 await context.send("Please specify an event.")
-        
+        else:
+            await context.send("Please specify an action.")
+
+    @commands.command(
+        name="calendaredit",
+        help="Used to edit events/dates within the calendar. Usage is !calendaredit <action> <event>"
+    )
+    async def calendaredit(self, context, action: str, *, event: str = None):
+        """Used to edit events/dates within the calendar. Usage is !calendaredit <action> <event>"""
+        user_id = str(context.message.author.id)
+        user_name = str(context.message.author.name)
+        if action.lower() == "event":
+            pass
+        elif action.lower() == "date":
+            await context.send(embed=self.calhelper.edit_date(event, user_id))
+        elif action.lower() == "both":
+            pass
         else:
             await context.send("Please specify an action.")
 
