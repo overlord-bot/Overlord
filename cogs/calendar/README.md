@@ -28,11 +28,13 @@ To use the new commands, type `!calendarv2` followed by the command.
 
 `!calendarv2 clear` will clear the calendar of its data and its events.
 
+`!calendaredit date <event> <MM/DD/YYYY>` is a planned event in which users can edit events for the date
+
 ## Plans for the Week:
 
 Current plans for the week:
 
-Get new version to run properly with the new data managment system, as well as fix any bugs that may be present.
+Create and get an edit function working for events, and maybe go into fixing remove with events themselves.
 
 ## Development Plans
 
@@ -42,4 +44,4 @@ Currently, the calendar module is in development. The following features are pla
 
 -Fix remove command, currently does not work correctly with the events dictionary. (Implemented)
 
--Add a command to edit events. (Ongoing)
+-Add a command to edit events. (In progress)
