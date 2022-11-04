@@ -3,13 +3,17 @@ from .course import Course
 
 class Template():
 
-    def __init__(self, name, template_course):
+    def __init__(self, name, template_course=Course("", "", 0), course_set=set()):
         self.name = name
         self.template_course = template_course
-        self.course_set = set()
+        self.course_set = course_set
 
-    def to_string(self) -> str:
-        return ",".join(self.course_set)
+    def __repr__(self) -> str:
+        s = f"Template {self.name}:\n"
+        s += f"  {str(self.template_course)}\n"
+        s += f"course_set: "
+        s += ",".join(self.course_set)
+        return s
 
     def __len__(self) -> int:
         return len(self.course_set)
@@ -27,19 +31,8 @@ class Template():
                 return False
         return True
 
-    # see if other is a sublist of self
-    def __ge__(self, other) -> bool:
-        mylist = self.__course_bundle
-        otherlist = other.__course_bundle
-
-        for course in otherlist:
-            if course not in mylist:
-                if other.template_course != self.template_course:
-                    return False
-        return True
-
     def __hash__(self) -> int:
-        i = 0
-        for course in self.__course_bundle:
-            i+=course.id
+        i = hash(self.template_course)**2
+        for course in self.course_set:
+            i+=hash(course)
         return i

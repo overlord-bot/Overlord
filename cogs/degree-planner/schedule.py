@@ -1,13 +1,9 @@
 from array import *
-from discord.ext import commands
-import discord
-import asyncio
 
 from .course import Course
 from .catalog import Catalog
 from .degree import Degree
-from .bundle import Bundle
-from .rules import Rules
+from .rules import Rule
 
 
 #########################################################################
@@ -38,7 +34,6 @@ class Schedule():
     #-----------------------------------------------------------------------
 
     def master_list_init(self):
-        print("initializing master_list")
         self.__master_list.clear()
 
         # Generates 12 empty lists within master_list. Each list represents a semester
@@ -56,7 +51,7 @@ class Schedule():
             print("cannot add course as it's duplicated")
         else:
             self.__master_list[semester].append(course)
-            print(f"added course: {course.to_string()}, semester: {semester}")
+            print(f"added course: {str(course)}, semester: {semester}")
 
 
     def remove_course(self, course, semester):
@@ -76,7 +71,7 @@ class Schedule():
     # Parameters: course to find
     # Returns: semesters that the course is present in
     def find_course(self, course):
-        i = 0;
+        i = 0
         present_in = []
         for courselist in self.__master_list:
             if course in courselist:
@@ -84,14 +79,27 @@ class Schedule():
             i+=1
         return present_in
 
+    def __len__(self):
+        i = 0
+        for sem in self.__master_list:
+            i += len(sem)
+        return i
 
-    # prints student's schedule to a string
-    def to_string(self):
+    def __repr__(self):
         count = 0
-        s = "Schedule: " + self.name + "\n"
+        s = f"Schedule: {self.name}\n"
         for courselist in self.__master_list:
-            s+="  Semester " + str(count) + ":\n"
+            s+=f"  Semester {str(count)}:\n"
             count+=1
             for course in courselist:
-                s+="    Course info: " + course.name + " " + course.major + " " + str(course.course_id) + "\n"
+                s+=f"    Course info: {course.name} {course.major} {str(course.course_id)}\n"
         return s
+
+    def __hash__(self):
+        i = 0
+        sem = 0
+        for sem in self.__master_list:
+            for course in sem:
+                i += hash(course) * sem
+            sem += 1
+        return i

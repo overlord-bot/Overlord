@@ -1,164 +1,108 @@
 from array import *
 from .course import Course
+from .course_template import Template
+from .catalog import *
 
 
-class Rules():
+class Rule():
 
-    label = '' # label should explain what this rule is, i.e. "in-major core classes", "free electives", "HASS electives", etc
-    course_list = set()
-    min_courses = 0
-    min_2000_courses = 0
-    min_4000_courses = 0
-    min_CI = 0
-    required_courses = set()
-    min_same_concentration = 0
-    min_same_pathway = 0
+    def __init__(self, name):
+
+        # name should explain what this rule is, i.e. "in-major core", "HASS electives", etc
+        self.name = name 
+
+        #------------------------------------------------------------------------------------------
+        # course_template usage:
+        #
+        # <Course template object : number of courses that need to fulfill this template>
+        #
+        # note: a course template contains a course (called template_course) where fields 
+        # that are filled in will be treated as required attributes of target courses. 
+        # This is used to search for all courses that fulfills the template's criteria.
+        #
+        # If template course contains a course_set, then it will be treated as a disjunction,
+        # as in courses must be selected from that pool of courses
+        #
+        # Wildcard * may be used for any field. This means that any value may be assigned for
+        # that field but must remain consistent for all the courses (e.g. use wildcard to
+        # specify if X amount of courses must be within the same pathway, but doesn't matter
+        # which pathway)
+        #------------------------------------------------------------------------------------------
+        self.course_templates = dict()
 
 
-    #########################################################################################
-    # HELPER FUNCTIONS
-    #########################################################################################
+    def add_template(self, template:Template, required_count):
+        self.course_templates.update({template:required_count})
 
-    # finds the longest set within dictionary values
-    def longest(self, main_list):
-        i = 0
-        longest_path = set()
-        for path in main_list.values():
-            if i < len(path):
-                i = len(path)
-                longest_path = path
-                
-        return longest_path
 
-    # finds the key with the longest set as a value
-    def longest_names(self, main_list):
-        i = 0
-        longest_path_names = set()
-        for path_name in main_list.keys():
-            if i < len(main_list[path_name]):
-                i = len(main_list[path_name])
-                longest_path_names = {path_name}
-            elif i == len(main_list[path_name]):
-                longest_path_names.add(path_name)
-                
-        return longest_path_names
-
+    def remove_template(self, template:Template):
+        self.course_templates.pop(template)
+    
 
     #########################################################################################
     # FULFILLMENT CALCULATIONS
     #########################################################################################
 
-    # returns fulfillment status, data format is <fulfillment category : <data category: data value>>
-    # data category includes: "fulfilled", "required_amount", "actual_amount", "details"
-    def fulfillment(self) -> dict():
-        courses = 0
-        courses_2k = 0
-        courses_4k = 0
-        courses_CI = 0
-        required_copy = self.required_courses
-        same_concentration = dict()
-        same_pathway = dict()
+    def fulfillment(self, taken_courses:set):
 
-        status_return = dict() # status that is returned
+        # Data structure of status_return: {template name : {attribute : value}}
+        status_return = dict()
 
-        for course in self.course_list:
+        # iterates through all the templates
+        for template, required_count in self.course_templates.items():
 
-            # counts required course amounts and required courses
-            courses+=1
-            if course.level() == 2:
-                courses_2k+=1
-            if course.level() == 4:
-                courses_4k+=1
-            if course.CI:
-                courses_CI+=1
-            if course in required_copy:
-                required_copy.remove(course)
+            # 1) checks for courses within taken_bundle that fulfills this templated requirement
+            # return format is <template : {fulfilled courses}>
+            fulfilled_courses = get_course_match(template, taken_courses)
 
-            # generates a dictionary of <pathway : [courses]> in same_pathway
-            for pathway in course.HASS_pathway:
-                if pathway in same_pathway:
-                    existing_list = same_pathway.get(pathway)
-                    existing_list.add(course)
-                    same_pathway.update({pathway:existing_list})
-                else:
-                    same_pathway.update({pathway:{course}})
+            # 2) get biggest fulfillment within fulfilled_courses
+            size = 0
+            best_template = template
+            best_fulfillment = set()
+            for k, v in fulfilled_courses.items():
+                if len(v) > size:
+                    size = len(v)
+                    best_template = k
+                    best_fulfillment = v
 
-            # generates a dictionary of <concentration : [courses]> in same_concentration
-            for concentration in course.concentration:
-                if concentration in same_concentration:
-                    existing_list = same_concentration.get(concentration)
-                    existing_list.add(course)
-                    same_concentration.update({concentration:existing_list})
-                else:
-                    same_concentration.update({concentration:{course}})
-
-        # course fulfillment
-        if (courses < self.min_courses):
-            status_return.update({"min_courses":{"fulfilled":False , "required":self.min_courses, "actual":courses}})
-
-        if (courses_2k < self.min_2000_courses):
-            status_return.update({"min_2000_courses":{"fulfilled":False , "required":self.min_2000_courses, "actual":courses_2k}})
-
-        if (courses_4k < self.min_4000_courses):
-            status_return.update({"min_4000_courses":{"fulfilled":False , "required":self.min_4000_courses, "actual":courses_4k}})
-
-        if (courses_CI < self.min_CI):
-            status_return.update({"min_CI":{"fulfilled":False , "required":self.min_CI, "actual":courses_CI}})
-
-        for c in required_copy:
-            status_return.update({"required_course":{"fulfilled":False , "required":c}})
-
-        if (len(self.longest(same_concentration)) < self.min_same_concentration):
-            status_return.update({"min_same_concentration":{
-                "fulfilled":False, 
-                "required":self.min_same_concentration, 
-                "actual":len(self.longest(same_concentration)),
-                "longest_concentrations":self.longest_names(same_concentration),
-                "all_concentrations":same_concentration}})
-
-        if (len(self.longest(same_pathway)) < self.min_same_pathway):
-            status_return.update({"min_same_pathway":{
-                "fulfilled":False, 
-                "required":self.min_same_pathway, 
-                "actual":len(self.longest(same_pathway)),
-                "longest_pathways":self.longest_names(same_pathway),
-                "all_pathways":same_pathway}})
+            # 3) return fulfillment status
+            status_return.update({template:{
+                    "required":required_count, 
+                    "actual":size,
+                    "fulfilled":size >= required_count,
+                    "fulfillment set":best_fulfillment,
+                    "best_template":best_template}})
 
         return status_return
 
 
     # returns a formatted message instead of a dictionary, use this for easy debugging
-    def fulfillment_return_message(self) -> str:
-        status = self.fulfillment()
+    def fulfillment_return_message(self, taken_courses:set) -> str:
+        status = self.fulfillment(taken_courses)
         status_return = ""
 
-        for status_entry_name, status_entry in status.items():
-            if status_entry_name == "min_courses":
-                status_return += f"Minimum course number not met: {status_entry['actual']} of minimum {status_entry['required']} taken for {self.label}\n"
-
-            if status_entry_name == "min_2000_courses":
-                status_return += f"Minimum course number not met: {status_entry['actual']} of minimum {status_entry['required']} 2000 level couress taken for {self.label}\n"
-        
-            if status_entry_name == "min_4000_courses":
-                status_return += f"Minimum course number not met: {status_entry['actual']} of minimum {status_entry['required']} 4000 level couress taken for {self.label}\n"
-
-            if status_entry_name == "min_CI":
-                status_return += f"Minimum CI not met: {status_entry['actual']} of minimum {status_entry['required']} CI couress taken for {self.label}\n"
-
-            if status_entry_name == "required_course":
-                status_return += f"Required course not taken: {status_entry['required']}\n"
-
-            if status_entry_name == "min_same_concentration":
-                status_return += f"Minimum {status_entry['required']} courses needed in the same concentration.\n"
-                status_return += f"Your longest concentrations are {str(status_entry['longest_concentrations'])} of size {status_entry['actual']}\n"
-                           
-            if status_entry_name == "min_same_pathway":
-                status_return += f"Minimum {status_entry['required']} courses needed in the same pathway.\n"
-                status_return += f"Your longest pathways are {str(status_entry['longest_pathways'])} of size {status_entry['actual']}\n"
+        if status != None:
+            for template, data in status.items():
+                status_return += f"Template {template.name} status: " + \
+                    f"requires {data['required']}, actual {data['actual']}, fulfillment set: {str(data['fulfillment set'])}\n"
 
         return status_return
 
 
-    # returns boolean if this rule is fulfilled
-    def fulfilled(self) -> bool:
-        return not len(self.fulfillment())
+    def __repr__(self):
+        s = f"rule {self.name}:\n" 
+        for k, v in self.course_templates.items():
+            s += f"  template {k.name} requires {v} counts: \n{str(k)}"
+        return s
+
+    def __eq__(self, other):
+        return self.course_templates == other.course_templates
+
+    def __len__(self):
+        return len(self.course_templates)
+
+    def __hash__(self):
+        i = 0
+        for k, v in self.course_templates.items():
+            i += hash(k) + v
+        return i
