@@ -2,9 +2,8 @@
 #by using the command !overlordfacts <character>
 #sends a link to the overlord wiki page for that character
 
-import discord
 from discord.ext import commands
-import random
+
 
 class OverlordFacts(commands.Cog, name="Overlord Facts"):
     
@@ -19,6 +18,7 @@ class OverlordFacts(commands.Cog, name="Overlord Facts"):
         """Sends the wiki link of the specified Overlord Character."""
         character = character.title().replace(" ", "_")
         await context.send("https://overlordmaruyama.fandom.com/wiki/" + character)
+
 
 async def setup(bot):
     await bot.add_cog(OverlordFacts(bot))

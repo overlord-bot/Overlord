@@ -1,13 +1,8 @@
 from array import *
+from enum import Enum
 from discord.ext import commands
 import discord
-import asyncio
-import os
-import json
-from enum import Enum
-
 from .schedule import Schedule
-
 
 class Flag(Enum):
     MENU_SELECT = 0
@@ -15,20 +10,19 @@ class Flag(Enum):
     DEBUG = 2
     TEST_RUNNING = 3
     SCHEDULE_SELECTION = 4
-
+    CASE_5 = 5
 
 class User():
     
     def __init__(self, name:str):
         self.username = name
-        self.__schedules = dict() # List of all schedules this person has created <schedule name, Schedule obj>
+        self.__schedules = dict() # all schedules this user created <schedule name, Schedule()>
         self.curr_schedule = "" # empty string signifies no current schedule
 
-         # temporary variables
-        self.__msg_cache = "" # holds a string so it can be outputted to discord at the same time to avoid long waits due to network delays when printing individually
-        self.msg_header = "" # this is added before every msg, after the [degree planner]
+        # temporary variables
+        self.__msg_cache = "" # holds a string so it can be outputted at the same time
+        self.msg_header = "" # this is added before every msg
 
-        # flags
         self.flag = set()
 
     def get_all_schedules(self):
@@ -49,6 +43,10 @@ class User():
 
     def add_schedule(self, schedule_name:str, schedule:Schedule):
         self.__schedules.update({schedule_name : schedule})
+
+
+    def get_current_schedule(self):
+        return self.get_schedule(self.curr_schedule)
 
 
     def rename_schedule(self, old_name:str, new_name:str):
@@ -79,11 +77,15 @@ class User():
         if Flag.DEBUG in self.flag:
             print(self.__msg_cache)
             self.__msg_cache = ""
+        elif len(self.__msg_cache) > 1800:
+            await message.channel.send(f"message too long, won't be sent to discord, printing to console...")
+            print(self.__msg_cache)
+            self.__msg_cache = ""
         elif not fancy:
             await message.channel.send(f"```yaml\n{self.__msg_cache}```")
             self.__msg_cache = ""
         else:
-            # little embed test
+            # embed test
             embed = discord.Embed(title="Slime",color=discord.Color.blue())
             embed.add_field(name="*info*", value=self.__msg_cache, inline = False)
             await message.channel.send(embed=embed)
@@ -94,22 +96,39 @@ class User():
     async def msg(self, message, content:str):
         if Flag.DEBUG in self.flag:
             print(self.msg_header + str(content))
+        elif len(content) > 1800:
+            await message.channel.send(f"message too long, won't be sent to discord, printing to console...")
+            print(self.msg_header + str(content))
+            self.__msg_cache = ""
         else:
-            await message.channel.send(f"[Degree Planner] {str(content)}")
+            await message.channel.send(f"{self.msg_header} {str(content)}")
 
 
-    def to_string(self):
+    # identical to msg(message, content) except this one will print to discord 
+    # regardless of debug mode or other checks
+    async def force_msg(self, message, content:str):
+        if Flag.DEBUG in self.flag:
+            print(self.msg_header + str(content))
+        await message.channel.send(f"{self.msg_header} {str(content)}")
+
+
+    def __repr__(self):
         schedule_names = ""
         for s in self.__schedules.keys():
-            schedule_names += "[" + s + "] "
+            schedule_names += f"[ {s} ] "
         return f"{str(self.username)}'s schedules: {schedule_names}"
 
 
     def __eq__(self, other):
+        if not isinstance(other, User):
+            return False
         if self.username == other.username:
             return True
         return False
 
 
     def __hash__(self):
-        return self.username
+        i = 0
+        for c in self.username:
+            i += ord(c)
+        return i
