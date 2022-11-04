@@ -1,4 +1,5 @@
 # Go minigame
+from collections import deque 
 
 """
 Outline for the game:
@@ -127,9 +128,54 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.gameStarted = False
         self.board = [[0]*9 for i in range(9)]
 
+    # this helps with scoring at the end. we perform bfs at a point to see if it is surrounded by all one piece
+    def BFS(self, starti, startj):
+        dq = deque()
+        visited = set()
+        res = -1
+        dir = [0,1,0,-1,0]
+
+        dq.append((starti,startj))
+
+        while dq:
+            point = dq.popleft()
+            visited.add(point)
+            i = point[0]
+            j = point[1]
+            for a in range(4):
+                x = i + dir[a]
+                y = j + dir[a+1]
+                if x > 8 and x < 0 and y > 8 and y < 0:
+                    continue
+                elif self.board[x][y] == 0 and (x,y) not in visited:
+                    dq.append((x,y))
+                elif res == -1:
+                    res = self.board[x][y]
+                elif self.board[x][y] != res:
+                    return -1
+
+        return res
+
     # ends the game by checking the score of both players and returns tuple of (1st player score, 2nd player score)
     def endGame(self):
-        return (0,0)
+        p1 = 0
+        p2 = 0
+        for i in range(9):
+            for j in range(9):
+                res = self.BFS(i,j)
+                if res == 1:
+                    p1 += 1
+                elif res == 2:
+                    p2 += 1
+    
+        # komi is given to player 2 since player 1 makes the first move and it prevents draws. Adjustable
+        p2 += 7.5
+
+        # we deduct the points for the pieces captured by the other player
+        p1 -= self.player1LostStones
+        p2 -= self.player2LostStones
+
+        return (p1,p2)
 
     # primary go command, used for: starting game, making move, and ending game
     @commands.command()
@@ -255,6 +301,12 @@ class GoMinigame(commands.Cog, name = "Go"):
             self.reset()
             await context.send("Game ended! GG!")
 
+            # A draw is not possible given komi
+            if result[0] > result[1]:
+                await context.send("Player 1 won with " + result[0] + "points compared to player 2's " + result[1] + "points")
+            else:
+                await context.send("Player 2 won with " + result[1] + "points compared to player 1's " + result[0] + "points")
+
     async def testMovesSuite(self, context):
         await self.makeMove(context, "(1,1)", True)
         await self.makeMove(context, "(1,3)", True)
@@ -267,7 +319,6 @@ class GoMinigame(commands.Cog, name = "Go"):
         await self.makeMove(context, "(3,2)", True)
         await self.makeMove(context, "(1,1)", True)
         await self.makeMove(context, "(3,1)", True)
-
 
 async def setup(bot):
     await bot.add_cog(GoMinigame(bot))
