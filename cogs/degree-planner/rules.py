@@ -73,22 +73,25 @@ class Rule():
                     "fulfillment set":best_fulfillment,
                     "best_template":best_template}})
 
+        return status_return
+
 
     # returns a formatted message instead of a dictionary, use this for easy debugging
     def fulfillment_return_message(self, taken_courses:set) -> str:
         status = self.fulfillment(taken_courses)
         status_return = ""
 
-        for status_entry_name, status_entry in status.items():
-            status_return += f"Template {status_entry_name} status: " + \
-                f"requires {status_entry['required']}, actual {status_entry['actual']}\n"
+        if status != None:
+            for template, data in status.items():
+                status_return += f"Template {template.name} status: " + \
+                    f"requires {data['required']}, actual {data['actual']}, fulfillment set: {str(data['fulfillment set'])}\n"
 
         return status_return
 
 
     def __repr__(self):
         s = f"rule {self.name}:\n" 
-        for k, v in self.course_templates:
+        for k, v in self.course_templates.items():
             s += f"  template {k.name} requires {v} counts: \n{str(k)}"
         return s
 

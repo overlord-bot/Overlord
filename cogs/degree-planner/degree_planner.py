@@ -111,7 +111,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             if msg.casefold() == "1":
                 print("INPUT 1 REGISTERED")
                 user.flag.add(Flag.TEST_RUNNING)
+                print("BEGINNING TEST")
                 await self.test(message)
+                print("FINISHED TEST")
                 await user.msg(message, "Test completed successfully, all assertions are met")
                 user.flag.remove(Flag.TEST_RUNNING)
 
@@ -121,67 +123,18 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 print("INPUT 2 REGISTERED")
                 user.flag.add(Flag.DEBUG) # redirects user messages into terminal, too much data for discord chat
 
-                # There are currently 4 places to store catalog_results.json and class_results, checked in this order
-                # 1) /cogs/webcrawling/
-                # 2) /cogs/degree-planner/data/
-                # 3) /cogs/degree-planner/
-                # 4) / (root directory of bot)
-                catalog_results = "catalog_results.json"
-                degree_results = "class_results.json"
+                catalog_file = "catalog_results.json"
+                degree_file = "class_results.json"
 
-                #------------------------------------------------------------------------
-                # LOADING COURSES
-                if os.path.isfile(os.getcwd() + "/cogs/webcrawling/" + catalog_results):
-                    await user.msg(message, f"file found: {os.getcwd()}/cogs/webcrawling/" + catalog_results)
-                    file_catalog_results = open(os.getcwd() + "/cogs/webcrawling/" + catalog_results)
-                elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/data/" + catalog_results):
-                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/data/" + catalog_results)
-                    file_catalog_results = open(os.getcwd() + "/cogs/degree-planner/data/" + catalog_results)
-                elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/" + catalog_results):
-                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/" + catalog_results)
-                    file_catalog_results = open(os.getcwd() + "/cogs/degree-planner/" + catalog_results)
-                elif os.path.isfile(os.getcwd() + "/" + catalog_results):
-                    await user.msg(message, f"file found: {os.getcwd()}/" + catalog_results)
-                    file_catalog_results = open(os.getcwd() + "/" + catalog_results)
-                else:
-                    await user.msg(message, "catalog file not found")
-                    return
-
-                json_catalog_results = json.load(file_catalog_results)
-                file_catalog_results.close()
-
-                await self.parse_courses(message, json_catalog_results)
+                await self.parse_courses(message, catalog_file)
                 await user.msg(message, "Sucessfully parsed catalog data")
-                #------------------------------------------------------------------------
                 
                 self.search.generate_index()
-                
-                #------------------------------------------------------------------------
-                # LOADING DEGREES
-                if os.path.isfile(os.getcwd() + "/cogs/webcrawling/" + degree_results):
-                    await user.msg(message, f"file found: {os.getcwd()}/cogs/webcrawling/" + degree_results)
-                    file_degree_results = open(os.getcwd() + "/cogs/webcrawling/" + degree_results)
-                elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/data/" + degree_results):
-                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/data/" + degree_results)
-                    file_degree_results = open(os.getcwd() + "/cogs/degree-planner/data/" + degree_results)
-                elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/" + degree_results):
-                    await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/" + degree_results)
-                    file_degree_results = open(os.getcwd() + "/cogs/degree-planner/" + degree_results)
-                elif os.path.isfile(os.getcwd() + "/" + degree_results):
-                    await user.msg(message, f"file found: {os.getcwd()}/" + degree_results)
-                    file_degree_results = open(os.getcwd() + "/" + degree_results)
-                else:
-                    await user.msg(message, "degree file not found")
-                    return
 
-                json_degree_results = json.load(file_degree_results)
-                file_degree_results.close()
-
-                await self.parse_degrees(message, json_degree_results)
+                await self.parse_degrees(message, degree_file)
                 await user.msg(message, "Sucessfully parsed degree data, printing catalog")
                 await user.msg_hold(str(self.catalog))
                 await user.msg_release(message, False)
-                #------------------------------------------------------------------------
 
                 await user.force_msg(message, "parsing completed")
 
@@ -312,7 +265,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     # parses json data of format [{course attribute : value}] 
     # into a set of Course objects stored in Catalog
     #-----------------------------------------------------------------------
-    async def parse_courses(self, message, json_data):
+    async def parse_courses(self, message, file_name):
         
         user = self.users.get(message.author)
 
@@ -323,6 +276,31 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             await user.msg(message, "Operation unavailable due to another user operation running")
             return
         await user.msg(message, "Beginning parsing course data into catalog")
+
+        # There are currently 4 places to store catalog_results.json and class_results, checked in this order
+        # 1) /cogs/webcrawling/
+        # 2) /cogs/degree-planner/data/
+        # 3) /cogs/degree-planner/
+        # 4) / (root directory of bot)
+        if os.path.isfile(os.getcwd() + "/cogs/webcrawling/" + file_name):
+            await user.msg(message, f"file found: {os.getcwd()}/cogs/webcrawling/" + file_name)
+            file_catalog_results = open(os.getcwd() + "/cogs/webcrawling/" + file_name)
+        elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/data/" + file_name):
+            await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/data/" + file_name)
+            file_catalog_results = open(os.getcwd() + "/cogs/degree-planner/data/" + file_name)
+        elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/" + file_name):
+            await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/" + file_name)
+            file_catalog_results = open(os.getcwd() + "/cogs/degree-planner/" + file_name)
+        elif os.path.isfile(os.getcwd() + "/" + file_name):
+            await user.msg(message, f"file found: {os.getcwd()}/" + file_name)
+            file_catalog_results = open(os.getcwd() + "/" + file_name)
+        else:
+            await user.msg(message, "catalog file not found")
+            return
+
+        json_data = json.load(file_catalog_results)
+        file_catalog_results.close()
+        #------------------------------------------------------------------------
 
         #--------------------------------------------------------------------------
         # Begin iterating through every dictionary stored inside the json_data
@@ -389,7 +367,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     # parses degree info from json into Degree objects, and then
     # stored inside the Catalog
     #-----------------------------------------------------------------------
-    async def parse_degrees(self, message, json_data : dict):
+    async def parse_degrees(self, message, file_name):
         
         user = self.users.get(message.author)
 
@@ -401,6 +379,24 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             return
         await user.msg(message, "Beginning parsing degree data into catalog")
 
+        if os.path.isfile(os.getcwd() + "/cogs/webcrawling/" + file_name):
+            await user.msg(message, f"file found: {os.getcwd()}/cogs/webcrawling/" + file_name)
+            file_degree_results = open(os.getcwd() + "/cogs/webcrawling/" + file_name)
+        elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/data/" + file_name):
+            await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/data/" + file_name)
+            file_degree_results = open(os.getcwd() + "/cogs/degree-planner/data/" + file_name)
+        elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/" + file_name):
+            await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/" + file_name)
+            file_degree_results = open(os.getcwd() + "/cogs/degree-planner/" + file_name)
+        elif os.path.isfile(os.getcwd() + "/" + file_name):
+            await user.msg(message, f"file found: {os.getcwd()}/" + file_name)
+            file_degree_results = open(os.getcwd() + "/" + file_name)
+        else:
+            await user.msg(message, "degree file not found")
+            return
+
+        json_data = json.load(file_degree_results)
+        file_degree_results.close()
         #--------------------------------------------------------------------------
         # Begin iterating through json_data
         #

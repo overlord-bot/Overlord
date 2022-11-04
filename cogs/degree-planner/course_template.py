@@ -3,10 +3,10 @@ from .course import Course
 
 class Template():
 
-    def __init__(self, name, template_course=Course("", "", 0)):
+    def __init__(self, name, template_course=Course("", "", 0), course_set=set()):
         self.name = name
         self.template_course = template_course
-        self.course_set = set()
+        self.course_set = course_set
 
     def __repr__(self) -> str:
         s = f"Template {self.name}:\n"
