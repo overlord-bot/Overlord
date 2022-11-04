@@ -45,6 +45,10 @@ class User():
         self.__schedules.update({schedule_name : schedule})
 
 
+    def get_current_schedule(self):
+        return self.get_schedule(self.curr_schedule)
+
+
     def rename_schedule(self, old_name:str, new_name:str):
         if isinstance(self.__schedules.get(old_name, ""), str):
             print(f"Schedule {old_name} not found")
@@ -116,6 +120,8 @@ class User():
 
 
     def __eq__(self, other):
+        if not isinstance(other, User):
+            return False
         if self.username == other.username:
             return True
         return False

@@ -7,9 +7,10 @@ from .course_template import Template
 
 class Catalog():
 
-    def __init__(self):
+    def __init__(self, name="main"):
         # catalog will  be a list of courses and degrees
         # TODO also store graphs for further analysis and course prediction of free electives
+        self.name = name
         self.__course_list = dict() # course name as key
         self.__degree_list = dict() # degree name as key
         self.lock = False
@@ -20,9 +21,19 @@ class Catalog():
     def add_course(self, course:Course):
         self.__course_list.update({course.name:course})
 
+    
+    def add_courses(self, courses:set):
+        for c in courses:
+            self.__course_list.update({c.name:c})
+
 
     def add_degree(self, degree:Degree):
         self.__degree_list.update({degree.name:degree})
+
+
+    def add_degrees(self, degrees:set):
+        for d in degrees:
+            self.__degree_list.update({d.name:d})
 
 
     def get_course(self, course_name:str):
@@ -34,7 +45,11 @@ class Catalog():
 
 
     def get_degree(self, degree_name:str):
-        return self.__degree_list.get(degree_name, "")
+        return self.__degree_list.get(degree_name, None)
+
+
+    def get_all_degrees(self):
+        return self.__degree_list.values()
 
 
     # initializes default templates to use
@@ -45,6 +60,7 @@ class Catalog():
     # matches against entire catalog
     def get_course_match(self, target_course:Course) -> dict:
         return get_course_match(target_course, self.__course_list.values())
+
 
     def get_best_course_match(self, target_course:Course) -> set:
         return get_best_course_match(target_course, self.__course_list.values())
@@ -150,6 +166,7 @@ def get_course_match(target_course, course_pool:set, possible_values=None) -> di
             matched_pools[target_course_copy].add(course)
 
     return matched_pools
+
 
 def get_best_course_match(target_course, course_pool:set, possible_values=None) -> set:
     matched_pools = get_course_match(target_course, course_pool, possible_values)
