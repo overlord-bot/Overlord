@@ -21,8 +21,15 @@ class RottenTomatoesScraper(commands.Cog, name="Rotten Tomatoes Scraper"):
         result = soup.find('search-page-media-row')
 
         if result is not None:
-            name = result.find(slot="title")
-            print("Printing name:" + name.string.strip())
+            link = result.find(href=True).get("href")
+            page_data = requests.get(link)
+            page_soup = BeautifulSoup(page_data.text, 'html.parser')
+
+            score_board = page_soup.find("score-board")
+            name = score_board.find('h1', class_="scoreboard__title").string.strip()
+            percent = score_board.get("tomatometerscore")
+            audience = score_board.get("audiencescore")
+            await context.send(f"Name: {name} | URL: {link} | Tomatometer: {percent}% | Audience Score: {audience}%")
 
 async def setup(bot):
     await bot.add_cog(RottenTomatoesScraper(bot))
