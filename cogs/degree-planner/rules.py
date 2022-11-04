@@ -1,67 +1,111 @@
 from array import *
 from .course import Course
-
-# A list of classes and the rules that determines requirement fulfillment statuses.
-
-class Rules():
-
-    course_list = []
-    min_courses = 0
-    min_2000_courses = 0
-    min_4000_courses = 0
-    min_CI = 0
-    required_courses = []
-    min_same_concentration = 0
-    min_same_pathway = 0
-
-    # finds the longest list within a list of lists
-    def longest(self, main_list):
-        i = 0
-        for path in main_list.values():
-            if i < len(path):
-                i = len(path)
-        return i
-
-    def fulfilled(self):
-        courses = 0
-        courses_2k = 0
-        courses_4k = 0
-        courses_CI = 0
-        required_copy = self.required_courses
-        same_concentration = dict()
-        same_pathway = dict()
-
-        for course in self.course_list:
-
-            courses+=1
-            if course.level() == 2:
-                courses_2k+=1
-            if course.level() == 4:
-                courses_4k+=1
-            if course.CI:
-                courses_CI+=1
-            if course in required_copy:
-                required_copy.remove(course)
-
-            for pathway in course.HASS_pathway:
-                if pathway in same_pathway:
-                    list_returned = same_pathway.get(pathway)
-                    list_returned.append(course)
-                    same_pathway.update({pathway:list_returned})
-                else:
-                    same_pathway.update({pathway:[course]})
-
-            for concentration in course.concentration:
-                if concentration in same_concentration:
-                    list_returned = same_concentration.get(concentration)
-                    list_returned.append(course)
-                    same_concentration.update({concentration:list_returned})
-                else:
-                    same_concentration.update({concentration:[course]})
+from .course_template import Template
+from .catalog import *
 
 
-        if (courses < self.min_courses or courses_2k < self.min_2000_courses or courses_4k < self.min_4000_courses 
-            or courses_CI < self.min_CI or required_copy or self.longest(same_concentration) < self.min_same_concentration
-            or self.longest(same_pathway) < self.min_same_pathway):
+class Rule():
+
+    def __init__(self, name="Untitled rule"):
+
+        # name should explain what this rule is, i.e. "in-major core", "HASS electives", etc
+        self.name = name 
+
+        #------------------------------------------------------------------------------------------
+        # course_template usage:
+        #
+        # <Course template object : number of courses that need to fulfill this template>
+        #
+        # note: a course template contains a course (called template_course) where fields 
+        # that are filled in will be treated as required attributes of target courses. 
+        # This is used to search for all courses that fulfills the template's criteria.
+        #
+        # If template course contains a course_set, then it will be treated as a disjunction,
+        # as in courses must be selected from that pool of courses
+        #
+        # Wildcard * may be used for any field. This means that any value may be assigned for
+        # that field but must remain consistent for all the courses (e.g. use wildcard to
+        # specify if X amount of courses must be within the same pathway, but doesn't matter
+        # which pathway)
+        #------------------------------------------------------------------------------------------
+        self.course_templates = dict()
+
+
+    def add_template(self, template:Template, required_count=1):
+        self.course_templates.update({template:required_count})
+
+
+    def remove_template(self, template:Template):
+        self.course_templates.pop(template)
+    
+
+    #########################################################################################
+    # FULFILLMENT CALCULATIONS
+    #########################################################################################
+
+    def fulfillment(self, taken_courses:set):
+
+        # Data structure of status_return: {template name : {attribute : value}}
+        status_return = dict()
+
+        # iterates through all the templates
+        for template, required_count in self.course_templates.items():
+
+            # 1) checks for courses within taken_bundle that fulfills this templated requirement
+            # return format is <template : {fulfilled courses}>
+            fulfilled_courses = get_course_match(template, taken_courses)
+
+            # 2) get biggest fulfillment within fulfilled_courses
+            size = 0
+            best_template = template
+            best_fulfillment = set()
+            for k, v in fulfilled_courses.items():
+                if len(v) > size:
+                    size = len(v)
+                    best_template = k
+                    best_fulfillment = v
+
+            # 3) return fulfillment status
+            status_return.update({template:{
+                    "required":required_count, 
+                    "actual":size,
+                    "fulfilled":size >= required_count,
+                    "fulfillment set":best_fulfillment,
+                    "best_template":best_template}})
+
+        return status_return
+
+
+    # returns a formatted message instead of a dictionary, use this for easy debugging
+    def fulfillment_return_message(self, taken_courses:set) -> str:
+        status = self.fulfillment(taken_courses)
+        status_return = ""
+
+        if status != None:
+            for template, data in status.items():
+                status_return += f"Template {template.name} status: \n" + \
+                    f"  requires {data['required']}, actual {data['actual']}, " + \
+                    f"fulfilled: {data['fulfilled']}, \n  fulfillment set: {str(data['fulfillment set'])}\n"
+
+        return status_return
+
+
+    def __repr__(self):
+        s = f"rule {self.name}:\n" 
+        for k, v in self.course_templates.items():
+            s += f"  template {k.name} requires {v} counts: \n{str(k)}"
+        return s
+
+    def __eq__(self, other):
+        if not isinstance(other, Rule):
             return False
-        return True
+        return self.course_templates == other.course_templates
+
+    def __len__(self):
+        return len(self.course_templates)
+
+    def __hash__(self):
+        i = 0
+        for k, v in self.course_templates.items():
+            i += hash(k) + v
+        return i

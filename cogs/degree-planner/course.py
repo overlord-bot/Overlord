@@ -3,13 +3,12 @@ from array import *
 class Course():
 
     def __init__(self, name, major, cid):
-        self.name = name
+        self.name = name.strip().casefold()
         self.major = major # major tag i.e. CSCI, ECSE
-        self.course_id = cid # number of course, i.e. 1200, 2500
+        self.course_id = cid
         self.course_id2 = 0
         self.credits = 0 # credit hours of this course
         self.cross_listed = set() # set of cross listed courses that should be treated as same course
-
         self.syllabus = dict() # this should be a dictionary of <professor, link>
 
         # critical attributes
@@ -22,10 +21,29 @@ class Course():
         self.restricted = False # if this is a major restricted class
 
         # optional attributes
-        self.description = "" # text to be displayed describing the class
-        self.not_fall = False # if this class is usually unavailable in fall semesters
-        self.not_spring = False # if this class is usually unavailable in spring
-        self.not_summer = False # if this class is usually unavailable in the summer
+        self.description = "" # text to be displayed describing the clas
+        self.available_semesters = set() # if empty, means available in all semesters
+
+        self.validate_course_data()
+
+
+    # some input data for courses may not be in the desired format. We will correct those problems here
+    def validate_course_data(self):
+        if isinstance(self.course_id, str):
+            if '.' in self.course_id:
+                split_num = self.course_id.split('.')
+                if len(split_num) == 2 and split_num[0].isdigit() and split_num[1].isdigit():
+                    self.course_id = int(float(split_num[0]))
+                    self.course_id2 = int(float(split_num[1]))
+                else:
+                    print("COURSE INITIALIZATION ERROR: 2 part ID not <int>.<int> for course " + self.name)
+                    
+            elif not self.course_id.isdigit():
+                print("COURSE INITIALIZATION WARNING: course number is not a number for course " + self.name)
+            else:
+                self.course_id = int(float(self.course_id))
+        elif not isinstance(self.course_id, int):
+            print("COURSE INITIALIZATION WARNING: course number is not a number for course " + self.name)
 
     def add_prerequisite(self, prereq):
         self.prerequisites.add(prereq)
@@ -45,35 +63,37 @@ class Course():
     def add_concentration(self, concentration):
         self.concentration.add(concentration)
 
-    def fall_only(self):
-        self.not_fall = False
-        self.not_spring = True
-        self.not_summer = True
+    def add_available(self, semester:str) -> None:
+        self.available_semesters.add(semester)
 
-    def spring_only(self):
-        self.not_fall = True
-        self.not_spring = False
-        self.not_summer = True
+    def remove_available(self, semester:str) -> None:
+        self.available_semesters.remove(semester)
 
-    def summer_only(self):
-        self.not_fall = True
-        self.not_spring = True
-        self.not_summer = False
+    def is_available(self, semester:str) -> bool:
+        return not self.available_semesters or semester.casefold() in self.available_semesters
 
     # determines the level of the course, 1000=1, 2000=2, 4000=4, etc
     def level(self):
         return (self.course_id//1000)
 
-    def to_string(self):
-        st = (f"{self.name}: {self.major} {str(self.course_id)}{f'.{self.course_id2}' if self.course_id2 != 0 else ''}, {self.credits} credits {'(CI)' if self.CI else ''}"
-            f"{f', concentrations: {str(self.concentration)}' if len(self.concentration) != 0 else ''}"
+    def __repr__(self):
+        st = (f"{self.name if self.name else 'None'}: {self.major if self.major else 'None'} " + \
+            f"{str(self.course_id)}{f'.{self.course_id2}' if self.course_id2 != 0 else ''}, " + \
+            f"{self.credits} credits{' (CI)' if self.CI else ''}" + \
+            f"{f', concentrations: {str(self.concentration)}' if len(self.concentration) != 0 else ''}" + \
             f"{f', pathways: {str(self.HASS_pathway)}' if len(self.HASS_pathway) != 0 else ''}")
         return st.replace("set()", "none")
 
     def __eq__(self, other):
-        if self.name == other.name and self.course_id == other.course_id:
+        if not isinstance(other, Course):
+            return False
+        if (self.name == other.name and self.course_id == other.course_id and self.major == other.major and
+            self.CI == other.CI and self.concentration == other.concentration and 
+            self.HASS_pathway == other.HASS_pathway and self.credits == other.credits and 
+            self.HASS_inquiry == other.HASS_inquiry and self.cross_listed == other.cross_listed and
+            self.restricted == other.restricted and self.prerequisites == other.prerequisites):
             return True
         return False
 
     def __hash__(self):
-        return self.course_id
+        return self.course_id + len(self.HASS_pathway)*10 + len(self.concentration)*100 + len(self.prerequisites)*1000
