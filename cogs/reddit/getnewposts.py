@@ -18,18 +18,25 @@ class NewRedditPosts(commands.Cog, name="Newest Reddit Post Retriever"):
         self.bot = bot
 
     @commands.command()
-    async def newpost(self, context, subreddit, amount = 1):
+    async def newpost(self, context, subreddit, amount):
         print(amount)
+        if amount.isdigit():
+            amount = int(amount)
+        else:
+            await context.reply("Input integer amount")
+            return
+
+        if amount < 1 or amount > 24:
+            await context.reply("Invalid amount input. Must be between 1 and 24")
+            return
+        
         reddit_data = getRedditData(subreddit)
         newest_post = reddit_data["data"]["children"][int(amount)]["data"]["name"]
 
         new_posts = getNewPosts(context, reddit_data, newest_post)
 
         
-        await sendPosts(context, new_posts)
-
-    #await context.reply("Your file is:", file=discord.File(file, "list_of_commits.txt"))
-
+        await sendPosts(context, new_posts, subreddit, amount)
 
 def getRedditData(subreddit): #https://www.reddit.com/r/rpi/new.json?sort=new
     url = "https://www.reddit.com/r/" + subreddit + "/new.json?sort=new"
@@ -48,15 +55,20 @@ def getNewPosts(context, data, new_post):
     return new_posts
 
 
-async def sendPosts(context, new_posts):
-    for num_post in range(len(new_posts)):
-        post = new_posts[num_post]
-        embedMessage = getEmbedMessage(post)
-        await context.send(embed=embedMessage)
+async def sendPosts(context, new_posts, subreddit, amount):
+    embedMessage = getEmbedMessage(new_posts, subreddit, amount)
+    await context.send(embed=embedMessage)
+    #for num_post in range(len(new_posts)):
+    #    post = new_posts[num_post]
+    #    embedMessage = getEmbedMessage(post)
+    #    await context.send(embed=embedMessage)
 
-def getEmbedMessage(post):
-    embed=discord.Embed(title=post["title"], url="https://www.reddit.com" + post["permalink"], color=discord.Color.blue())
-    return embed
+def getEmbedMessage(posts, subreddit, amount):
+    embed = discord.Embed(title="Displaying the {} newest posts from {}".format(amount, subreddit))
+    for num_post in range(len(posts)):
+        post = posts[num_post]
+        embed.add_field(name=post["title"], value="https://www.reddit.com" + post["permalink"], inline=False)
+    return embed    
         
     
 async def setup(bot):
