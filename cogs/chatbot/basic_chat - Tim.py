@@ -2,8 +2,11 @@
 import random 
 #from discord.ext import tasks
 from discord.ext import commands
+import discord
 import datetime
 from datetime import date
+
+from bot import Bot
 
 
 class TimChat(commands.Cog, name="TimChat"):
@@ -16,11 +19,11 @@ class TimChat(commands.Cog, name="TimChat"):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        BAD_WORDS = ("fuck", "motherfucker", "shit")
+        BAD_WORDS = ("fuck", "motherfucker", "shit", "fk", "mf")
 
         if message.author == self.bot.user or message.author.bot:
             return
-        elif message.content.lower().startswith("hi"):
+        elif message.content.lower() == "hi":
             await message.channel.send("Great " + message.author.name + " !")  # reacts with message in the location it was sent from
         elif message.content == "msg":
             await message.author.send('👋')  # sends a direct message to the user
@@ -50,6 +53,18 @@ class TimChat(commands.Cog, name="TimChat"):
                 await message.delete()
                 await message.channel.send("https://c.tenor.com/fzrYWO2l7KkAAAAC/captain-america-language.gif")
                 await message.channel.send("Watch your language!")
+
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        role = discord.utils.get(member.guild.roles, name='Friends')
+        await member.add_roles(role)
+        channel = discord.utils.get(member.guild.channels, name="new-friends")
+        channel_id = channel.id
+        channels = self.bot.get_channel(channel_id)
+        await channels.send("Don't use dirty, inappropriate, NSFW languages or content in this server!")
+        await channels.send("Enter agree or disagree to determine which way you go.")
+
+        
 
 #   def cog_unload(self):
 #         self.taskLoop.cancel()

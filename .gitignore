@@ -3,6 +3,7 @@ __pycache__/
 .idea/
 .vs
 env5
+env
 .git
 OverLordEnv
 OverlordTestEnv
