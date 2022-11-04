@@ -7,6 +7,7 @@ import json
 import discord
 from discord.ext import commands
 
+import asyncio
 from threading import Event, Thread
 #https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds
 
@@ -39,8 +40,8 @@ def runPostCheck(context, subreddit, newest_post):
     reddit_data = getRedditData(subreddit)
     #print(reddit_data)
     new_post = reddit_data["data"]["children"][0]["data"]["name"]
-    print("Checking new: " + new_post + " against newest: " + str(newest_post))
-    if new_post == newest_post:
+    print("Checking new: " + new_post + " against newest: " + str(newest_post[0]))
+    if new_post == newest_post[0]:
         return new_post
     
     print("is a new post")
@@ -49,13 +50,14 @@ def runPostCheck(context, subreddit, newest_post):
     return new_post
 
 def call_repeatedly(interval, context, subreddit, newest_post):
-    global npost
-    print(npost)
+    npost = [newest_post]
     stopped = Event()
     def loop():
         while not stopped.wait(interval): # the first call is in `interval` secs
-            npost = runPostCheck(context, subreddit, newest_post)
-    Thread(target=loop).start()    
+            found_newst_post = runPostCheck(context, subreddit, npost)
+            npost[0] = found_newst_post
+    Thread(target=loop).start()  
+    #Thread(target=asyncio.run)
     return stopped.set
 
 def getRedditData(subreddit): #https://www.reddit.com/r/rpi/new.json?sort=new
