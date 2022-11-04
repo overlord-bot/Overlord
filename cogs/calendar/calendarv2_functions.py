@@ -160,3 +160,16 @@ class CalHelperJson():
             self.save_json()
             embed = discord.Embed(title="Calendar", description="Event removed!", color=0xff0000)
             return embed
+
+    #edit an event, in progress
+    def edit_event(self, event, user):
+        if self.check_user(user) == False:
+            embed = discord.Embed(title="Calendar", description="No events to edit!", color=0xff0000)
+            return embed
+        if event not in self.events[user]["events"].keys():
+            embed = discord.Embed(title="Calendar", description="Event does not exist!", color=0xff0000)
+            return embed
+        else:
+            embed = discord.Embed(title="Calendar", description="Event edited!", color=0xff0000)
+            return embed
+            
