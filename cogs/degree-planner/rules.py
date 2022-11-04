@@ -83,9 +83,9 @@ class Rule():
 
         if status != None:
             for template, data in status.items():
-                status_return += f"Template {template.name} status: \n" + \
-                    f"  requires {data['required']}, actual {data['actual']}, " + \
-                    f"fulfilled: {data['fulfilled']}, \n  fulfillment set: {str(data['fulfillment set'])}\n"
+                status_return += f"{'' if data['fulfilled'] else '(UNFULFILLED)'} " + \
+                    f"Template {template.name} status: \n  requires {data['required']}, " + \
+                    f"actual {data['actual']},\n  fulfillment set: {str(data['fulfillment set'])}\n"
 
         return status_return
 

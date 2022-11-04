@@ -39,6 +39,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         self.catalog = Catalog()
         self.search = Search(self.catalog.get_all_courses())
         self.debug_id = 0
+
+        # just to help keep track of deployed versions through discord commands
+        self.VERSION = "dev 10.1 (working fulfillment checker)" 
     
     
     #-----------------------------------------------------------------------
@@ -97,6 +100,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 f"{str(message.author)[0:str(message.author).find('#'):1]}?") 
             await user.msg(message, "input the number in chat:  " + \
                 "1: begin test sequence 2: import courses from json file 9: run scheduler 0: cancel")
+            await user.msg(message, f"Degree Planner version status: {self.VERSION}")
 
             user.flag.add(Flag.MENU_SELECT)
         
@@ -434,7 +438,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         rule.add_template(template1, 2)
         rule.add_template(template2, 3)
         rule.add_template(template3)
-        
+
         degree.add_rule(rule)
         self.catalog.add_degree(degree)
 
