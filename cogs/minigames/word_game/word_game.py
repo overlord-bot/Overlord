@@ -4,25 +4,27 @@ from discord.ext import commands
 import emoji
 import random
 import os
+
+
 class WordGame(commands.Cog, name="Word Game"):
     """Plays the word game that is similar to Wordle"""
     """words.txt from https://github.com/charlesreid1/five-letter-words/blob/master/sgb-words.txt"""
 
     def __init__(self, bot):
         self.bot = bot
-        #A list of words to reference
+        # A list of words to reference
         self.word_list = self.get_words()
         self.emojidict = {"G": ":green_square:",
                           "Y": ":yellow_square:",
-                          "B": ":black_large_square:",}
-        #A dictionary with discord channel ids as keys, and game data dictionaries as values
+                          "B": ":black_large_square:", }
+        # A dictionary with discord channel ids as keys, and game data dictionaries as values
         self.channel_dict = dict()
 
     def get_words(self):
         """From https://github.com/charlesreid1/five-letter-words/blob/master/get_words.py"""
 
         # Load the file.
-        with open(os.path.join(os.getcwd(), "cogs", "minigames", "words.txt"),'r') as f:
+        with open(os.path.join(os.getcwd(), "cogs", "minigames", "word_game", "words.txt"), 'r') as f:
             # This drops the \n at the end of each line:
             words = f.read().splitlines()
 
@@ -58,7 +60,7 @@ class WordGame(commands.Cog, name="Word Game"):
                     letterdict[currentlet] -= 1
                 else:
                     currentlist.append("B")
-        
+
         return currentlist
 
     def print_status(self, channel_id):
@@ -66,19 +68,20 @@ class WordGame(commands.Cog, name="Word Game"):
         return_status = str()
         current_progress = self.channel_dict[channel_id]["progress"]
         for i in range(0, len(current_progress)):
-                       return_status = return_status + ''.join(current_progress[i][1]) + ": " + current_progress[i][0] + '\n'
+            return_status = return_status + ''.join(current_progress[i][1]) + ": " + current_progress[i][0] + '\n'
         return return_status
 
     def to_emoji(self, message):
         """Replaces letters with emoji names"""
-        new_message = message.replace('G', self.emojidict['G']).replace('Y', self.emojidict['Y']).replace('B', self.emojidict['B'])
+        new_message = message.replace('G', self.emojidict['G']).replace('Y', self.emojidict['Y']).replace('B',
+                                                                                                          self.emojidict[
+                                                                                                              'B'])
         return new_message
 
     def clear_game(self, channel_id):
         """Clears game state"""
         self.channel_dict.pop(channel_id)
 
-    
     """@commands.command()
     async def getword(self, ctx):
         #Returns the test word. FOR DEBUG ONLY!
@@ -93,26 +96,26 @@ class WordGame(commands.Cog, name="Word Game"):
             await ctx.send("The Word Game has already started!")
         else:
             current_word = random.choice(self.word_list)
-            #Dictionary of current game data
-            current_dict = {"word": current_word, "progress" : [], "rounds" : 0, "max_round" : -1}
+            # Dictionary of current game data
+            current_dict = {"word": current_word, "progress": [], "rounds": 0, "max_round": -1}
             self.channel_dict[ctx.channel.id] = current_dict
             if (rounds >= 1):
                 current_dict["max_round"] = rounds
                 await ctx.send("Word Game started with " + str(current_dict["max_round"]) + " rounds!")
             else:
                 await ctx.send("Word Game started!")
-    
+
     @wordgame.error
     async def wordgame_error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
             await ctx.send("I couldn't read how many rounds that was! Try typing an integer number.")
-    
+
     @commands.command()
     async def addword(self, ctx, word: to_lower):
         """Add 5-lettered word to list of words"""
-        if(ctx.channel.id in self.channel_dict.keys()):
+        if (ctx.channel.id in self.channel_dict.keys()):
             current_dict = self.channel_dict[ctx.channel.id]
-            if(word in self.word_list):
+            if (word in self.word_list):
                 current_dict["rounds"] += 1
                 wordlist = self.checkword(word, current_dict["word"])
                 current_dict["progress"].append((word, wordlist))
@@ -122,8 +125,8 @@ class WordGame(commands.Cog, name="Word Game"):
                     self.clear_game(ctx.channel.id)
                     await ctx.send("You win!")
                     return
-                
-                if(current_dict["rounds"] >= current_dict["max_round"] and current_dict["max_round"] != -1):
+
+                if (current_dict["rounds"] >= current_dict["max_round"] and current_dict["max_round"] != -1):
                     await ctx.send("Word Game ended! The word was " + current_dict["word"])
                     self.clear_game(ctx.channel.id)
             else:
@@ -154,11 +157,12 @@ class WordGame(commands.Cog, name="Word Game"):
                 return_text = self.print_status(ctx.channel.id)
                 emoji_text = self.to_emoji(return_text)
                 await ctx.send(emoji.emojize(emoji_text))
-            
+
             elif (current_dict["rounds"] == 0):
-                 await ctx.send("No one has added any words!")
+                await ctx.send("No one has added any words!")
         else:
             await ctx.send("The Word Game has not started!")
+
 
 async def setup(bot):
     await bot.add_cog(WordGame(bot))
