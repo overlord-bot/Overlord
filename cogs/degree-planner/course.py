@@ -3,7 +3,8 @@ from array import *
 class Course():
 
     def __init__(self, name, major, cid):
-        self.name = name.strip().casefold()
+        self.display_name = name
+        self.name = name
         self.major = major # major tag i.e. CSCI, ECSE
         self.course_id = cid
         self.course_id2 = 0
@@ -25,6 +26,11 @@ class Course():
         self.available_semesters = set() # if empty, means available in all semesters
 
         self.validate_course_data()
+        
+        if name == "":
+            self.name = ""
+        else:
+            self.name = f"{self.major.casefold()} {str(self.course_id)} {name.strip().casefold()}"
 
 
     # some input data for courses may not be in the desired format. We will correct those problems here
@@ -77,7 +83,7 @@ class Course():
         return (self.course_id//1000)
 
     def __repr__(self):
-        st = (f"{self.name if self.name else 'None'}: {self.major if self.major else 'None'} " + \
+        st = (f"{self.display_name if self.display_name else 'None'}: {self.major if self.major else 'None'} " + \
             f"{str(self.course_id)}{f'.{self.course_id2}' if self.course_id2 != 0 else ''}, " + \
             f"{self.credits} credits{' (CI)' if self.CI else ''}" + \
             f"{f', concentrations: {str(self.concentration)}' if len(self.concentration) != 0 else ''}" + \

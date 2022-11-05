@@ -101,12 +101,12 @@ class Schedule():
 
     def __repr__(self):
         count = 0
-        s = f"Schedule: {self.name}\n"
+        s = f"Schedule: {self.name} [{self.degree.name if self.degree != None else ''}]\n"
         for courselist in self.__master_list:
             s+=f"  Semester {str(count)}:\n"
             count+=1
             for course in courselist:
-                s+=f"    Course info: {course.name} {course.major} {str(course.course_id)}\n"
+                s+=f"    Course info: {course.display_name} {course.major} {str(course.course_id)}\n"
         return s
 
     def __hash__(self):

@@ -11,6 +11,8 @@ class Flag(Enum):
     TEST_RUNNING = 3
     SCHEDULE_SELECTION = 4
     CASE_5 = 5
+    SCHEDULE_COURSE_SELECT = 6
+    SCHEDULE_COURSE_DELETE = 7
 
 class User():
     
@@ -24,6 +26,8 @@ class User():
         self.msg_header = "" # this is added before every msg
 
         self.flag = set()
+        self.schedule_course_search = set()
+        self.schedule_course_search_sem = []
 
     def get_all_schedules(self):
         return self.__schedules.values()

@@ -36,14 +36,15 @@ class Test1():
         course7 = Course("Algorithm Analysis", "CSCI", 4020)
         course7.concentration.add("Theory, Algorithms and Mathematics")
 
-        assert course1.name == "data structures" and course1.major == "CSCI" and course1.course_id == 1200
-        assert course2.name == "algorithms" and course2.major == "CSCI" and course2.course_id == 2300
-        assert course3.name == "circuits" and course3.major == "ECSE" and course3.course_id == 2010
-        assert (course4.name == "animation" and course4.major == "ARTS" and course4.course_id == 4070 and 
+        assert (course1.display_name == "Data Structures" and course1.major == "CSCI" and course1.course_id == 1200 and
+                course1.name == "csci 1200 data structures")
+        assert course2.display_name == "Algorithms" and course2.major == "CSCI" and course2.course_id == 2300
+        assert course3.display_name == "Circuits" and course3.major == "ECSE" and course3.course_id == 2010
+        assert (course4.display_name == "Animation" and course4.major == "ARTS" and course4.course_id == 4070 and 
                 "Digital Arts" in course4.HASS_pathway)
-        assert (course5.name == "networking in the linux kernel" and course5.major == "CSCI" and 
+        assert (course5.display_name == "Networking in the Linux Kernel" and course5.major == "CSCI" and 
                 course5.course_id == 4310 and course5.CI == True and "Systems and Software" in course5.concentration)
-        assert (course6.name == "cryptography 1" and course6.major == "CSCI" and course6.course_id == 4230 and 
+        assert (course6.display_name == "Cryptography 1" and course6.major == "CSCI" and course6.course_id == 4230 and 
                 course6.CI == True and "Theory, Algorithms and Mathematics" in course6.concentration)
 
         #------------------------------------------------------------------------------------------
@@ -67,32 +68,32 @@ class Test1():
         #------------------------------------------------------------------------------------------
         # Add courses to user's schedule
         #------------------------------------------------------------------------------------------
-        user.get_schedule("test").add_course(catalog.get_course("data structures"), 1)
-        user.get_schedule("test").add_course(catalog.get_course("algorithms"), 2)
-        user.get_schedule("test").add_course(catalog.get_course("circuits"), 4)
-        user.get_schedule("test").add_course(catalog.get_course("animation"), 4)
-        user.get_schedule("test").add_course(catalog.get_course("data structures"), 1)
-        user.get_schedule("test").add_course(catalog.get_course("data structures"), 1)
-        user.get_schedule("test").add_course(catalog.get_course("data structures"), 5)
-        user.get_schedule("test").remove_course(catalog.get_course("data structures"), 5)
-        user.get_schedule("test").add_course(catalog.get_course("data structures"), 8)
-        user.get_schedule("test").add_course(catalog.get_course("networking in the linux kernel"), 8)
-        user.get_schedule("test").add_course(catalog.get_course("cryptography 1"), 8)
-        user.get_schedule("test").add_course(catalog.get_course("Animation"), 0)
+        user.get_schedule("test").add_course(catalog.get_course("csci 1200 data structures"), 1)
+        user.get_schedule("test").add_course(catalog.get_course("csci 2300 algorithms"), 2)
+        user.get_schedule("test").add_course(catalog.get_course("ecse 2010 circuits"), 4)
+        user.get_schedule("test").add_course(catalog.get_course("arts 4070 animation"), 4)
+        user.get_schedule("test").add_course(catalog.get_course("csci 1200 data structures"), 1)
+        user.get_schedule("test").add_course(catalog.get_course("csci 1200 data structures"), 1)
+        user.get_schedule("test").add_course(catalog.get_course("csci 1200 data structures"), 5)
+        user.get_schedule("test").remove_course(catalog.get_course("csci 1200 data structures"), 5)
+        user.get_schedule("test").add_course(catalog.get_course("csci 1200 data structures"), 8)
+        user.get_schedule("test").add_course(catalog.get_course("csci 4310 networking in the linux kernel"), 8)
+        user.get_schedule("test").add_course(catalog.get_course("csci 4230 cryptography 1"), 8)
+        user.get_schedule("test").add_course(catalog.get_course("arts 4070 animation"), 0)
         
         #------------------------------------------------------------------------------------------
         # checks to make sure add and remove worked properly
         # no duplicates within one semester but allowing for duplicates across semesters
         #------------------------------------------------------------------------------------------
+        await user.msg(message, "\nAdded courses to schedule, printing schedule")
+        await user.msg_hold(str(user.get_schedule("test")))
+        await user.msg_release(message)
+
         assert len(user.get_schedule("test").get_semester(0)) == 1
         assert len(user.get_schedule("test").get_semester(1)) == 1
         assert len(user.get_schedule("test").get_semester(4)) == 2
         assert len(user.get_schedule("test").get_semester(5)) == 0
         assert len(user.get_schedule("test").get_semester(8)) == 3
-
-        await user.msg(message, "\nAdded courses to schedule, printing schedule")
-        await user.msg_hold(str(user.get_schedule("test")))
-        await user.msg_release(message, False)
 
         #------------------------------------------------------------------------------------------
         # testing course attribute search with get_best_course_match
@@ -102,14 +103,13 @@ class Test1():
         course_target1 = Course("", "", 0) # all CI courses
         course_target1.CI = True
         course_target2 = Course("", "", 4000) # all 4000 level courses
-        course_target3 = Course("Data Structures", "", 0) # data structures
-        course_target4 = Course("Data Structures", "", 2000) # none
+        course_target3 = Course("Data Structures", "CSCI", 1200) # data structures
         course_target5 = Course("", "", 0) # all theory concentration courses
         course_target5.concentration.add("Theory, Algorithms and Mathematics")
 
         bundle1 = catalog.get_best_course_match(course_target1)
         await user.msg(message, f"Bundle1: {str(bundle1)}")
-        bundle1_ans = {catalog.get_course("Networking in the Linux Kernel"),catalog.get_course("Cryptography 1")}
+        bundle1_ans = {catalog.get_course("networking in the linux kernel"),catalog.get_course("Cryptography 1")}
         await user.msg(message, f"Bundle1_ans: {str(bundle1_ans)}")
         assert bundle1 == bundle1_ans
 
@@ -122,10 +122,6 @@ class Test1():
         bundle3 = catalog.get_best_course_match(course_target3)
         bundle3_ans = {course1}
         assert bundle3 == bundle3_ans
-
-        bundle4 = catalog.get_best_course_match(course_target4)
-        bundle4_ans = set()
-        assert bundle4 == bundle4_ans
 
         bundle5 = catalog.get_best_course_match(course_target5)
         await user.msg(message, f"Bundle5: {str(bundle5)}")
@@ -176,8 +172,8 @@ class Test1():
         # Search testing
         #------------------------------------------------------------------------------------------
         await user.msg(message, f"\nbeginning search tests!")
-        search = Search(catalog.get_all_courses())
-        assert search.search("dat str") == ["data structures"]
+        search = Search(catalog.get_all_course_names())
+        assert search.search("dat str") == ["csci 1200 data structures"]
 
         await user.msg(message, f"\nPrinting user data: {str(user)}")
 
