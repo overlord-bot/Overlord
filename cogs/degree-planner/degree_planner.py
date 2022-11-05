@@ -60,12 +60,10 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             return
         else:
             if message.author.id in self.users:
-                print(f"received msg from returning user: {message.author}; " + \
-                    f"user id: {message.author.id}")
+                print(f"received msg from returning user: {message.author}, user id: {message.author.id}")
                 await self.message_handler(message)
             else:
-                print(f"received msg from new user: {message.author}; " + \
-                    f"user id: {message.author.id}")
+                print(f"received msg from new user: {message.author}, user id: {message.author.id}")
                 user = User(message.author)
                 self.users.update({message.author.id:user})
                 await self.message_handler(message)
@@ -87,6 +85,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             await output.print("Test running, please try again later")
             return
 
+        #----------------------------------------------------------------------
+        # !dp parsing
+        #----------------------------------------------------------------------
         # if we receive a command in the format !dp <arg>
         if (msg.casefold().startswith("!dp") and len(msg.split(' ')) == 2):
             # simulates as if the user typed in !dp and <int> separately
@@ -137,7 +138,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             #CASE 5: Search course (TEMPORARY TESTING PURPOSES)
             elif msg.casefold() == "5":
                 print("INPUT 5 REGISTERED")
-                await output.print(message, "Enter the course")
+                await output.print(message, "Enter the course to search for:")
                 user.flag.add(Flag.CASE_5)
                 return
 
@@ -170,6 +171,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         #----------------------------------------------------------------------
         if Flag.SCHEDULING in user.flag:
 
+            # parses command into command, and then initializes variables cmd and l
             command_raw = msg.split(",") # user input split up, will parse as a command
             command = [e.strip().casefold() for e in command_raw] # strips and lowercases all args
             command = [e for e in command if e] # removes empty strings from list
@@ -363,8 +365,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     # HELPER FUNCTIONS FOR THE TEXT UI
     #--------------------------------------------------------------------------
 
-    # Helper function that starts running the test_suite, can be replaced
-    # by pytest later
+    # Helper function that starts running the test_suite
     async def test(self, output:Output=Output(OUT.CONSOLE)):
         test_suite = Test1()
         output.flags.add(Flag.DEBUG)
