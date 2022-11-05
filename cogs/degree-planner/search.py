@@ -1,7 +1,12 @@
 class Search():
 
-    def __init__(self, items_list:set=[]):
-        self.__items = items_list
+    def __init__(self, items_list:set={}, convert_items_to_string=False):
+        if convert_items_to_string:
+            self.__items = set()
+            for i in items_list:
+                self.__items.add(str(i))
+        else:
+            self.__items = items_list
         self.__index = dict()
         self.generate_index()
 
@@ -25,8 +30,13 @@ class Search():
                     self.__index[word_key].add(name)
 
 
-    def update_items(self, item_set):
-        self.__items = item_set
+    def update_items(self, item_set, convert_items_to_string=False):
+        if convert_items_to_string:
+            self.__items = set()
+            for i in item_set:
+                self.__items.add(str(i))
+        else:
+            self.__items = item_set
 
 
     # searches for possible items based on msg, 

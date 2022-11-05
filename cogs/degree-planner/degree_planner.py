@@ -32,14 +32,17 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
     def __init__(self, bot):
         self.bot = bot
+
         # each user is assigned a User object and stored in this dictionary
-        # Users = <user id, User>
+        # Users = <discord user id, User>
         self.users = dict()
         self.catalog = Catalog()
-        self.search = Search()
+        self.course_search = Search()
+
+        # used to track message begin and ends, mostly for use during testing
         self.debug_id = 0
 
-        # just to help keep track of deployed versions through discord commands
+        # just to help keep track of deployed versions without needing access to host
         self.VERSION = "dev 10.1 (working fulfillment checker)" 
     
     
@@ -72,8 +75,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
 
     #--------------------------------------------------------------------------
-    # This function is a temporary text based system to control the bot
-    # it can all be replaced with different UI system later
+    # This function is a text based system to control the degree planner
+    # it can be replaced with different UI system later
     #--------------------------------------------------------------------------
     async def message_handler(self, message):
         user:User = self.users.get(message.author.id)
@@ -83,10 +86,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             await user.msg(message, "Test running, please try again later")
             return
 
-        # if we receive a command in the format !dp <int>
-        if (msg.casefold().startswith("!dp") and len(msg.split(' ')) == 2 and 
-            msg.split(' ')[1].isdigit()):
-            print("detected compound dp command")
+        # if we receive a command in the format !dp <arg>
+        if (msg.casefold().startswith("!dp") and len(msg.split(' ')) == 2):
             # simulates as if the user typed in !dp and <int> separately
             user.flag.add(Flag.MENU_SELECT)
             # changes msg to be the !dp number
@@ -94,7 +95,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
         # main menu command
         if msg.casefold() == "!dp":
-            user.flag.clear()
             # prints "what would you like to do, <username without tag>?"
             await user.msg(message, f"Hiyaa, what would you like to do, " + \
                 f"{str(message.author)[0:str(message.author).find('#'):1]}?") 
@@ -107,12 +107,13 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             await user.msg(message, f"Degree Planner version: {self.VERSION}")
 
             user.flag.add(Flag.MENU_SELECT)
+            return
         
         #----------------------------------------------------------------------
         # main menu command !dp argument cases:
         #----------------------------------------------------------------------
-        elif Flag.MENU_SELECT in user.flag:
-            user.flag.clear()
+        if Flag.MENU_SELECT in user.flag:
+            user.flag.remove(Flag.MENU_SELECT)
 
             # CASE 1: run test suite
             if msg.casefold() == "1":
@@ -124,6 +125,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await user.msg(message, 
                     "Test completed successfully, all assertions met")
                 user.flag.remove(Flag.TEST_RUNNING)
+                return
 
             # CASE 2: run data fetch from json
             # this will load both courses and degrees
@@ -139,21 +141,23 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await self.parse_courses(message, catalog_file)
                 await user.msg(message, "Sucessfully parsed catalog data")
                 
-                self.search.update_items(self.catalog.get_all_course_names())
-                self.search.generate_index()
+                # set up searcher for finding courses based on incomplete user input
+                self.course_search.update_items(self.catalog.get_all_course_names())
+                self.course_search.generate_index()
 
                 await self.parse_degrees(message, degree_file)
                 await user.msg(message, "Sucessfully parsed degree data, printing catalog")
                 await user.msg_hold(str(self.catalog))
                 await user.msg_release(message, False)
-
                 await user.force_msg(message, "parsing completed")
+                return
 
             #CASE 5: Search course (TEMPORARY TESTING PURPOSES)
             elif msg.casefold() == "5":
                 print("INPUT 5 REGISTERED")
                 await user.msg(message, "Enter the course")
                 user.flag.add(Flag.CASE_5)
+                return
 
             # CASE 9: Begin actual scheduler, the main feature of this program
             elif msg.casefold() == "9":
@@ -163,22 +167,26 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await user.msg(message, "You are now in scheduling mode!")
                 await user.msg(message, "Enter the name of the schedule to modify. " + \
                     "If the schedule entered doesn't exist, it will be created")
+                return
 
             # CASE 0: cancel selection operation
             elif msg.casefold() == "0":
                 await user.msg(message, "ok :(")
+                return
 
             # CASE 69: nice
             elif msg.casefold() == "69":
                 await user.msg(message, "nice")
+                return
 
             else:
                 await user.msg(message, "Unknown response, cancelling")
+                return
 
         #----------------------------------------------------------------------
         # course scheduling mode, the feature intended to be used in the end
         #----------------------------------------------------------------------
-        elif Flag.SCHEDULING in user.flag:
+        if Flag.SCHEDULING in user.flag:
 
             command_raw = msg.split(",") # user input split up, will parse as a command
             command = [e.strip().casefold() for e in command_raw] # strips and lowercases all args
@@ -187,11 +195,15 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             cmd = command[0] # command str will be modified later, this assignment is necessary!
             l = len(command) # command str will be modified later, this assignment is necessary!
 
+            current_schedule = user.get_schedule(user.curr_schedule)
+
             if not l:
                 await user.msg(message, "no command detected")
                 return
 
+            # sets the current schedule to modify
             if Flag.SCHEDULE_SELECTION in user.flag:
+                cmd = cmd.casefold()
                 schedule = user.get_schedule(cmd)
                 if schedule == None:
                     await user.msg(message, f"Schedule {cmd} not found, generating new one!")
@@ -203,8 +215,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 user.flag.remove(Flag.SCHEDULE_SELECTION)
                 return
 
-            sche = user.get_schedule(user.curr_schedule)
-
+            # user currently selecting a course from a list of choices to add to schedule
             if Flag.SCHEDULE_COURSE_SELECT in user.flag:
                 courses = user.schedule_course_search
                 if not cmd.isdigit():
@@ -220,7 +231,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 l = 3
                 user.flag.remove(Flag.SCHEDULE_COURSE_SELECT)
                 
-                
+            # user currently selecting a course froma list of choices to remove from schedule
             if Flag.SCHEDULE_COURSE_DELETE in user.flag:
                 courses = user.schedule_course_search
                 if not cmd.isdigit():
@@ -236,18 +247,19 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 l = 3
                 user.flag.remove(Flag.SCHEDULE_COURSE_DELETE)
 
+            # user initiates process to add course to schedule
             if cmd == "add":
                 command.pop(0)
                 if l < 3:
                     await user.msg(message, "Not enough arguments")
                     return
                 semester = int(command.pop(0))
-                if semester not in range(0, sche.SEMESTERS_MAX):
+                if semester not in range(0, current_schedule.SEMESTERS_MAX):
                     await user.msg(message, "Invalid semester, enter number between 0 and 11")
                     return
 
                 for course_name in command:
-                    returned_courses = self.search.search(course_name)
+                    returned_courses = self.course_search.search(course_name)
                     returned_courses = [self.catalog.get_course(c) for c in returned_courses]
                     if len(returned_courses) == 0:
                         await user.msg(message, f"Course {course_name} not found")
@@ -270,21 +282,28 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                         await user.msg(message, f"Course {course_name} not found")
                         continue
 
-                    sche.add_course(course, semester)
+                    current_schedule.add_course(course, semester)
                     await user.msg(message, f"Added course {course.name} to semester {semester}")
                     
+            # user intiates process to remove course from schedule
             elif cmd == "remove":
                 command.pop(0)
                 if l < 3:
                     await user.msg(message, "Not enough arguments")
                     return
                 semester = int(command.pop(0))
-                if semester not in range(0, sche.SEMESTERS_MAX):
+                if semester not in range(0, current_schedule.SEMESTERS_MAX):
                     await user.msg(message, "Invalid semester, enter number between 0 and 11")
                     return
+                this_semester_courses = current_schedule.get_semester(semester)
+                if not len(this_semester_courses):
+                    await user.msg(message, f"No courses in semester {semester}")
+                    return
+
+                semester_course_search = Search(this_semester_courses, True)
 
                 for course_name in command:
-                    returned_courses = self.search.search(course_name)
+                    returned_courses = semester_course_search.search(course_name)
                     returned_courses = [self.catalog.get_course(c) for c in returned_courses]
                     if len(returned_courses) == 0:
                         await user.msg(message, f"Course {course_name} not found")
@@ -303,16 +322,17 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                         user.schedule_course_search_sem = semester
                         continue
 
-                    if course == None or course not in sche.get_semester(semester):
+                    if course == None or course not in current_schedule.get_semester(semester):
                         await user.msg(message, f"Can't find course {course_name} in semester {semester}")
                         continue
-                    sche.remove_course(course, semester)
+                    current_schedule.remove_course(course, semester)
                     await user.msg(message, f"Removed course {course.name} from semester {semester}")
 
             elif cmd == "print":
-                await user.msg_hold(str(sche))
+                await user.msg_hold(str(current_schedule))
                 await user.msg_release(message, False)
 
+            # sets degree of user, replaces previous selection
             elif cmd == "degree":
                 command.pop(0)
                 if l != 2:
@@ -326,7 +346,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     user.get_current_schedule().degree = degree
                     await user.msg(message, f"set your degree to {degree.name}")
 
-
+            # displays fulfillment status of current degree
             elif cmd == "fulfillment":
                 if user.get_current_schedule().degree == None:
                     await user.msg(message, "no degree specified")
@@ -335,10 +355,12 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                         degree.fulfillment_msg(user.get_current_schedule().get_all_courses()))
                     await user.msg_release(message, False)
 
+            # change the current schedule to modify
             elif cmd == "reschedule":
                 await user.msg(message, "Understood, please enter schedule name to modify:")
                 user.flag.add(Flag.SCHEDULE_SELECTION)
 
+            # exits from scheduling mode
             elif cmd == "exit":
                 await user.msg(message, "Exiting scheduling mode")
                 user.flag.remove(Flag.SCHEDULING)
@@ -351,7 +373,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         #----------------------------------------------------------------------
         elif Flag.CASE_5 in user.flag:
             user.flag.remove(Flag.CASE_5)
-            possible_courses = self.search.search(message.content.casefold())
+            possible_courses = self.course_search.search(message.content.casefold())
             await user.msg(message, "possible courses: " + str(possible_courses))
 
 

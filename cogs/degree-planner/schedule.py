@@ -62,24 +62,21 @@ class Schedule():
             self.__master_list[semester].remove(course)
 
 
-    def get_semester(self, semester):
-        if semester >= len(self.__master_list):
+    def get_semester(self, semester:int) -> list:
+        if semester not in range(0, self.SEMESTERS_MAX):
             print("invalid semester")
             return ""
         return self.__master_list[semester]
 
-    def get_all_courses(self):
+    def get_all_courses(self) -> set:
         courses = set()
         for a in self.__master_list:
             for c in a:
                 courses.add(c)
         return courses
 
-
-
-    # Parameters: course to find
-    # Returns: semesters that the course is present in
-    def find_course(self, course):
+    # Returns list of semesters that the course is present in
+    def find_course(self, course:Course) -> list:
         i = 0
         present_in = []
         for courselist in self.__master_list:

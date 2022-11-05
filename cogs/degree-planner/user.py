@@ -18,7 +18,7 @@ class User():
     
     def __init__(self, name:str):
         self.username = name
-        self.__schedules = dict() # all schedules this user created <schedule name, Schedule()>
+        self.__schedules = dict() # all schedules this user created <schedule name, Schedule>
         self.curr_schedule = "" # empty string signifies no current schedule
 
         # temporary variables
@@ -26,14 +26,15 @@ class User():
         self.msg_header = "" # this is added before every msg
 
         self.flag = set()
+
         self.schedule_course_search = set()
         self.schedule_course_search_sem = []
 
-    def get_all_schedules(self):
+    def get_all_schedules(self) -> Schedule:
         return self.__schedules.values()
 
 
-    def get_schedule(self, schedule_name:str):
+    def get_schedule(self, schedule_name:str) -> Schedule:
         if schedule_name not in self.__schedules:
             print(f"Schedule {schedule_name} not found")
             return None
@@ -61,6 +62,18 @@ class User():
         else:
             self.__schedules.update({new_name : self.__schedules.get(old_name)})
             self.__schedules.pop(old_name)
+
+
+    '''
+    def add_flag(self, flag:Flag, attribute_key=None, attribute_value=None):
+        print(f"attribute key {attribute_key}, value {attribute_value}")
+        if flag in self.__flags:
+            flag_attributes = self.__flags[flag]
+            flag_attributes.update({attribute_key:attribute_value})
+            self.__flags.update({flag:flag_attributes})
+        else:
+            self.__flags.update({flag:{attribute_key:attribute_value}})
+    '''
 
 
     #-----------------------------------------------------------------------
