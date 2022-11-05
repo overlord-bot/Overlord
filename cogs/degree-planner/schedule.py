@@ -62,24 +62,21 @@ class Schedule():
             self.__master_list[semester].remove(course)
 
 
-    def get_semester(self, semester):
-        if semester >= len(self.__master_list):
+    def get_semester(self, semester:int) -> list:
+        if semester not in range(0, self.SEMESTERS_MAX):
             print("invalid semester")
             return ""
         return self.__master_list[semester]
 
-    def get_all_courses(self):
+    def get_all_courses(self) -> set:
         courses = set()
         for a in self.__master_list:
             for c in a:
                 courses.add(c)
         return courses
 
-
-
-    # Parameters: course to find
-    # Returns: semesters that the course is present in
-    def find_course(self, course):
+    # Returns list of semesters that the course is present in
+    def find_course(self, course:Course) -> list:
         i = 0
         present_in = []
         for courselist in self.__master_list:
@@ -94,14 +91,19 @@ class Schedule():
             i += len(sem)
         return i
 
+    def __eq__(self, other):
+        if not isinstance(other, Schedule):
+            return False
+        return self.__master_list == other.__master_list
+
     def __repr__(self):
         count = 0
-        s = f"Schedule: {self.name}\n"
+        s = f"Schedule: {self.name} [{self.degree.name if self.degree != None else ''}]\n"
         for courselist in self.__master_list:
             s+=f"  Semester {str(count)}:\n"
             count+=1
             for course in courselist:
-                s+=f"    Course info: {course.name} {course.major} {str(course.course_id)}\n"
+                s+=f"    Course info: {course.display_name} {course.major} {str(course.course_id)}\n"
         return s
 
     def __hash__(self):

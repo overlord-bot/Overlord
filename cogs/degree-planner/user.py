@@ -11,28 +11,30 @@ class Flag(Enum):
     TEST_RUNNING = 3
     SCHEDULE_SELECTION = 4
     CASE_5 = 5
+    SCHEDULE_COURSE_SELECT = 6
+    SCHEDULE_COURSE_DELETE = 7
 
 class User():
     
-    def __init__(self, name:str):
-        self.username = name
-        self.__schedules = dict() # all schedules this user created <schedule name, Schedule()>
+    def __init__(self, discord_user):
+        self.discord_user = discord_user
+        self.username = str(discord_user)
+        self.__schedules = dict() # all schedules this user created <schedule name, Schedule>
         self.curr_schedule = "" # empty string signifies no current schedule
-
-        # temporary variables
-        self.__msg_cache = "" # holds a string so it can be outputted at the same time
-        self.msg_header = "" # this is added before every msg
 
         self.flag = set()
 
-    def get_all_schedules(self):
+        self.schedule_course_search = set()
+        self.schedule_course_search_sem = []
+
+    def get_all_schedules(self) -> Schedule:
         return self.__schedules.values()
 
 
-    def get_schedule(self, schedule_name:str):
-        if isinstance(self.__schedules.get(schedule_name, ""), str):
+    def get_schedule(self, schedule_name:str) -> Schedule:
+        if schedule_name not in self.__schedules:
             print(f"Schedule {schedule_name} not found")
-            return ""
+            return None
         return self.__schedules.get(schedule_name)
 
 
@@ -50,15 +52,15 @@ class User():
 
 
     def rename_schedule(self, old_name:str, new_name:str):
-        if isinstance(self.__schedules.get(old_name, ""), str):
+        if old_name not in self.__schedules:
             print(f"Schedule {old_name} not found")
-        elif not isinstance(self.__schedules.get(new_name, ""), str):
+        elif new_name in self.__schedules:
             print(f"Schedule {new_name} already exists, can't change name")
         else:
             self.__schedules.update({new_name : self.__schedules.get(old_name)})
             self.__schedules.pop(old_name)
 
-
+    '''
     #-----------------------------------------------------------------------
     # Functions to help format and sent messages to the user,
     # it can all be replaced with different UI system later
@@ -73,7 +75,7 @@ class User():
 
 
     # prints all text within cache into discord's chat
-    async def msg_release(self, message:str, fancy:bool):
+    async def msg_release(self, message:str, fancy:bool=False):
         if Flag.DEBUG in self.flag:
             print(self.__msg_cache)
             self.__msg_cache = ""
@@ -110,6 +112,7 @@ class User():
         if Flag.DEBUG in self.flag:
             print(self.msg_header + str(content))
         await message.channel.send(f"{self.msg_header} {str(content)}")
+    '''
 
 
     def __repr__(self):

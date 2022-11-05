@@ -8,17 +8,20 @@ class Template():
         self.template_course = template_course
         self.course_set = course_set
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         s = f"Template {self.name}:\n"
         s += f"  {str(self.template_course)}\n"
         s += f"course_set: "
         s += ",".join(self.course_set)
         return s
 
-    def __len__(self) -> int:
+    def __len__(self):
         return len(self.course_set)
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other):
+        if not isinstance(other, Template):
+            return False
+        
         mylist = self.course_set
         otherlist = other.course_set
 
@@ -31,7 +34,7 @@ class Template():
                 return False
         return True
 
-    def __hash__(self) -> int:
+    def __hash__(self):
         i = hash(self.template_course)**2
         for course in self.course_set:
             i+=hash(course)

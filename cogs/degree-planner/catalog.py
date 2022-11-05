@@ -4,6 +4,7 @@ import copy
 from .course import Course
 from .degree import Degree
 from .course_template import Template
+from .search import Search
 
 class Catalog():
 
@@ -13,16 +14,27 @@ class Catalog():
         self.name = name
         self.__course_list = dict() # course name as key
         self.__degree_list = dict() # degree name as key
+
+        self.search = Search()
         self.lock = False
+
+        self.reindex_flag = False
 
         self.build_templates()
 
+    
+    def reindex(self):
+        self.search.update_items(self.__course_list.keys())
+        self.search.generate_index()
+
 
     def add_course(self, course:Course):
+        self.reindex_flag = True
         self.__course_list.update({course.name:course})
 
     
     def add_courses(self, courses:set):
+        self.reindex_flag = True
         for c in courses:
             self.__course_list.update({c.name:c})
 
@@ -37,11 +49,23 @@ class Catalog():
 
 
     def get_course(self, course_name:str):
-        return self.__course_list.get(course_name.casefold(), "")
+        if self.reindex_flag:
+            self.reindex()
+            self.reindex_flag = False
+        name = self.search.search(course_name.casefold())
+        if len(name) == 1:
+            return self.__course_list.get(name[0], "")
+        else:
+            print("catalog get course non unique course found: " + str(name))
+        return ""
 
 
     def get_all_courses(self):
         return self.__course_list.values()
+
+
+    def get_all_course_names(self):
+        return self.__course_list.keys()
 
 
     def get_degree(self, degree_name:str):
@@ -70,13 +94,18 @@ class Catalog():
         count1 = 1
         printout = ""
         for course in self.__course_list.values():
-            printout+=str(count1) + ": " + str(course) + "\n"
+            printout+=str(count1) + ": " + repr(course) + "\n"
             count1+=1
         count1 = 1
         for degree in self.__degree_list.values():
-            printout+=str(count1) + ": " + str(degree) + "\n"
+            printout+=str(count1) + ": " + repr(degree) + "\n"
             count1+=1
         return printout
+
+    def __eq__(self, other):
+        if not isinstance(other, Catalog):
+            return False
+        return self.get_all_courses() == other.get_all_courses()
 
     def __len__(self):
         return len(self.__course_list)

@@ -16,6 +16,7 @@ from .user import User
 from .user import Flag
 from .search import Search
 from .course_template import Template
+from .output import *
 
 
 #########################################################################
@@ -32,22 +33,25 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
     def __init__(self, bot):
         self.bot = bot
+
         # each user is assigned a User object and stored in this dictionary
-        # Users = <username, User>
+        # Users = <discord user id, User>
         self.users = dict()
-        # a single copy of the catalog is kept in this class
         self.catalog = Catalog()
-        self.search = Search(self.catalog.get_all_courses())
-        self.debug_id = 0
+        self.course_search = Search()
+
+        self.flags = set()
+
+        # just to help keep track of deployed versions without needing access to host
+        self.VERSION = "dev 10.1 (working fulfillment checker)" 
     
     
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # Main message listener
     #
-    # Generates a schedule for each user and then passes the message
-    # content to a helper function which will read the message and
-    # determine responses.
-    #-----------------------------------------------------------------------
+    # passes the message content to a helper function which will 
+    # read the message and determine responses.
+    #--------------------------------------------------------------------------
     @commands.Cog.listener()
     async def on_message(self, message):
 
@@ -55,35 +59,37 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if message.author == self.bot.user or message.author.bot:
             return
         else:
-            self.debug_id+=1
-            # self.users is a dictionary of existing users that link their name to a User object
-            if message.author in self.users:
-                print(f"received msg from returning user: {message.author}; msg id: {self.debug_id}")
+            if message.author.id in self.users:
+                print(f"received msg from returning user: {message.author}, user id: {message.author.id}")
                 await self.message_handler(message)
             else:
-                print(f"received msg from new user: {message.author}; msg id: {self.debug_id}")
+                print(f"received msg from new user: {message.author}, user id: {message.author.id}")
                 user = User(message.author)
-                self.users.update({message.author:user})
+                self.users.update({message.author.id:user})
                 await self.message_handler(message)
 
-        print(f"end of message handler function; msg id: {self.debug_id}")
+        print(f"end of message handler function")
 
 
-    #-----------------------------------------------------------------------
-    # This function is a temporary text based system to control the bot
-    # it can all be replaced with different UI system later
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
+    # This function is a text based system to control the degree planner
+    # it can be replaced with different UI system later
+    #--------------------------------------------------------------------------
     async def message_handler(self, message):
-        user:User = self.users.get(message.author)
+        user:User = self.users.get(message.author.id)
         msg = message.content
+        output = Output(OUT.DISCORD_CHANNEL, {ATTRIBUTE.CHANNEL:message.channel})
+        output_debug = Output(OUT.CONSOLE)
 
-        if Flag.TEST_RUNNING in user.flag:
-            await user.msg(message, "Test running, please hold on")
+        if Flag.TEST_RUNNING in self.flags:
+            await output.print("Test running, please try again later")
             return
 
-        # if we receive a command in the format !dp <int>
-        if msg.casefold().startswith("!dp") and len(msg.split(' ')) == 2 and msg.split(' ')[1].isdigit():
-            print("detected compound dp command")
+        #----------------------------------------------------------------------
+        # !dp parsing
+        #----------------------------------------------------------------------
+        # if we receive a command in the format !dp <arg>
+        if (msg.casefold().startswith("!dp") and len(msg.split(' ')) == 2):
             # simulates as if the user typed in !dp and <int> separately
             user.flag.add(Flag.MENU_SELECT)
             # changes msg to be the !dp number
@@ -91,244 +97,348 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
         # main menu command
         if msg.casefold() == "!dp":
-            user.flag.clear()
             # prints "what would you like to do, <username without tag>?"
-            await user.msg(message, f"Hiyaa, what would you like to do, " + \
+            await output.print(f"Hiyaa, what would you like to do, " + \
                 f"{str(message.author)[0:str(message.author).find('#'):1]}?") 
-            await user.msg(message, "input the number in chat:  " + \
-                "1: begin test sequence 2: import courses from json file 9: run scheduler 0: cancel")
+            await output.print("Please input a number in chat:  " + \
+                "1: begin test sequence " + \
+                "2: import courses from json file " + \
+                "9: run scheduler " + \
+                "0: cancel")
+            await output.print(f"Degree Planner version: {self.VERSION}")
 
             user.flag.add(Flag.MENU_SELECT)
+            return
         
-        #----------------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         # main menu command !dp argument cases:
-        #----------------------------------------------------------------------------------
-        elif Flag.MENU_SELECT in user.flag:
-            user.flag.clear()
+        #----------------------------------------------------------------------
+        if Flag.MENU_SELECT in user.flag:
+            user.flag.remove(Flag.MENU_SELECT)
 
             # CASE 1: run test suite
             if msg.casefold() == "1":
-                print("INPUT 1 REGISTERED")
-                user.flag.add(Flag.TEST_RUNNING)
-                print("BEGINNING TEST")
-                await self.test(message)
-                print("FINISHED TEST")
-                await user.msg(message, "Test completed successfully, all assertions are met")
-                user.flag.remove(Flag.TEST_RUNNING)
+                await output_debug.print("INPUT 1 REGISTERED")
+                self.flags.add(Flag.TEST_RUNNING)
+                await output_debug.print("BEGINNING TEST")
+                await self.test(output_debug)
+                await output_debug.print("FINISHED TEST")
+                await output.print("Test completed successfully, all assertions met")
+                self.flags.remove(Flag.TEST_RUNNING)
+                return
 
             # CASE 2: run data fetch from json
             # this will load both courses and degrees
             elif msg.casefold() == "2":
-                print("INPUT 2 REGISTERED")
-                user.flag.add(Flag.DEBUG) # redirects user messages into terminal, too much data for discord chat
-
-                catalog_file = "catalog_results.json"
-                degree_file = "class_results.json"
-
-                await self.parse_courses(message, catalog_file)
-                await user.msg(message, "Sucessfully parsed catalog data")
-                
-                self.search.generate_index()
-
-                await self.parse_degrees(message, degree_file)
-                await user.msg(message, "Sucessfully parsed degree data, printing catalog")
-                await user.msg_hold(str(self.catalog))
-                await user.msg_release(message, False)
-
-                await user.force_msg(message, "parsing completed")
+                await output_debug.print("INPUT 2 REGISTERED")
+                await self.parse_data()
+                await output.print("parsing completed")
+                return
 
             #CASE 5: Search course (TEMPORARY TESTING PURPOSES)
             elif msg.casefold() == "5":
                 print("INPUT 5 REGISTERED")
-                await user.msg(message, "Enter the course")
+                await output.print(message, "Enter the course to search for:")
                 user.flag.add(Flag.CASE_5)
+                return
 
             # CASE 9: Begin actual scheduler, the main feature of this program
             elif msg.casefold() == "9":
                 print("INPUT 9 REGISTERED")
                 user.flag.add(Flag.SCHEDULING)
                 user.flag.add(Flag.SCHEDULE_SELECTION)
-                await user.msg(message, "You are now in scheduling mode!")
-                await user.msg(message, "Please enter the name of the schedule to modify. " + \
+                await output.print("You are now in scheduling mode!")
+                await output.print("Enter the name of the schedule to modify. " + \
                     "If the schedule entered doesn't exist, it will be created")
+                return
 
             # CASE 0: cancel selection operation
             elif msg.casefold() == "0":
-                await user.msg(message, "ok :(")
+                await output.print("ok :(")
+                return
 
             # CASE 69: nice
             elif msg.casefold() == "69":
-                await user.msg(message, "nice")
-
-            else:
-                await user.msg(message, "Unknown response, cancelling")
-
-        #----------------------------------------------------------------------------------
-        # course scheduling mode, the feature intended to be used in the end
-        #----------------------------------------------------------------------------------
-        elif Flag.SCHEDULING in user.flag:
-
-            command_raw = msg.split(",") # user input split up, will parse as a command
-            command = [e.strip().casefold() for e in command_raw] # strips and lowercases all strings
-            command = [e for e in command if e] # removes empty strings from list
-            print("Inputted scheduling command: " + str(command))
-            cmd = command[0] # command will be modified later, so this assignment is absolutely necessary!
-            l = len(command) # command will be modified later, so this assignment is absolutely necessary!
-
-            if not l:
-                await user.msg(message, "no command detected")
+                await output.print("nice")
                 return
 
+            else:
+                await output.print("Unknown response, cancelling")
+                return
+
+        #----------------------------------------------------------------------
+        # course scheduling mode, the feature intended to be used in the end
+        #----------------------------------------------------------------------
+        if Flag.SCHEDULING in user.flag:
+
+            # parses command into command, and then initializes variables cmd and l
+            command_raw = msg.split(",") # user input split up, will parse as a command
+            command = [e.strip().casefold() for e in command_raw] # strips and lowercases all args
+            command = [e for e in command if e] # removes empty strings from list
+            await output_debug.print("Inputted scheduling command: " + str(command))
+            cmd = command[0] # command str will be modified later, this assignment is necessary!
+            l = len(command) # command str will be modified later, this assignment is necessary!
+
+            current_schedule = user.get_schedule(user.curr_schedule)
+
+            if not l:
+                await output.print("no command detected")
+                return
+
+            # sets the current schedule to modify
             if Flag.SCHEDULE_SELECTION in user.flag:
+                cmd = cmd.casefold()
                 schedule = user.get_schedule(cmd)
-                if isinstance(schedule, str):
-                    await user.msg(message, f"Schedule {cmd} not found, generating new one!")
+                if schedule == None:
+                    await output.print(f"Schedule {cmd} not found, generating new one!")
                     user.new_schedule(cmd)
                     user.curr_schedule = cmd
                 else:
-                    await user.msg(message, f"Successfully switched to schedule {cmd}!")
+                    await output.print(f"Successfully switched to schedule {cmd}!")
                     user.curr_schedule = cmd
                 user.flag.remove(Flag.SCHEDULE_SELECTION)
                 return
 
-            sche = user.get_schedule(user.curr_schedule)
+            # user currently selecting a course from a list of choices to add to schedule
+            if Flag.SCHEDULE_COURSE_SELECT in user.flag:
+                courses = user.schedule_course_search
+                if not cmd.isdigit():
+                    await output.print("Please enter a number")
+                    return
+                num_select = int(cmd)
+                if num_select not in range(1, len(courses) + 1):
+                    await output.print("Please enter a valid selection number")
+                    return
+                course = courses[num_select - 1]
+                command = ["add", user.schedule_course_search_sem, course.name]
+                cmd = command[0]
+                l = 3
+                user.flag.remove(Flag.SCHEDULE_COURSE_SELECT)
+                
+            # user currently selecting a course froma list of choices to remove from schedule
+            if Flag.SCHEDULE_COURSE_DELETE in user.flag:
+                courses = user.schedule_course_search
+                if not cmd.isdigit():
+                    await output.print("Please enter a number")
+                    return
+                num_select = int(cmd)
+                if num_select not in range(1, len(courses) + 1):
+                    await output.print("Please enter a valid selection number")
+                    return
+                course = courses[num_select - 1]
+                command = ["remove", user.schedule_course_search_sem, course.name]
+                cmd = command[0]
+                l = 3
+                user.flag.remove(Flag.SCHEDULE_COURSE_DELETE)
 
+            # user initiates process to add course to schedule
             if cmd == "add":
                 command.pop(0)
                 if l < 3:
-                    await user.msg(message, "Not enough arguments")
+                    await output.print("Not enough arguments")
                     return
                 semester = int(command.pop(0))
-                if semester not in range(0, sche.SEMESTERS_MAX):
-                    await user.msg(message, "Invalid semester, please enter number between 0 and 11")
+                if semester not in range(0, current_schedule.SEMESTERS_MAX):
+                    await output.print("Invalid semester, enter number between 0 and 11")
                     return
 
                 for course_name in command:
-                    course = self.catalog.get_course(course_name)
-                    if isinstance(course, str):
-                        await user.msg(message, f"Course {course_name} not found")
+                    returned_courses = self.course_search.search(course_name)
+                    returned_courses = [self.catalog.get_course(c) for c in returned_courses]
+                    if len(returned_courses) == 0:
+                        await output.print(f"Course {course_name} not found")
+                        continue
+                    elif len(returned_courses) == 1:
+                        course = returned_courses[0]
+                    else:
+                        await output.print(f"query {course_name} has multiple valid courses, please choose from list:")
+                        i = 1
+                        for c in returned_courses:
+                            output.print_hold(f"{i}: {repr(c)}")
+                            i += 1
+                        await output.print_cache()
+                        user.flag.add(Flag.SCHEDULE_COURSE_SELECT)
+                        user.schedule_course_search = returned_courses
+                        user.schedule_course_search_sem = semester
                         continue
 
-                    sche.add_course(course, semester)
-                    await user.msg(message, f"Added course {course_name} to semester {semester}")
+                    if course == None:
+                        await output.print(f"Course {course_name} not found")
+                        continue
+
+                    current_schedule.add_course(course, semester)
+                    await output.print(f"Added course {course.name} to semester {semester}")
                     
+            # user intiates process to remove course from schedule
             elif cmd == "remove":
                 command.pop(0)
                 if l < 3:
-                    await user.msg(message, "Not enough arguments")
+                    await output.print("Not enough arguments")
                     return
                 semester = int(command.pop(0))
-                if semester not in range(0, sche.SEMESTERS_MAX):
-                    await user.msg(message, "Invalid semester, please enter number between 0 and 11")
+                if semester not in range(0, current_schedule.SEMESTERS_MAX):
+                    await output.print("Invalid semester, enter number between 0 and 11")
+                    return
+                this_semester_courses = current_schedule.get_semester(semester)
+                if not len(this_semester_courses):
+                    await output.print(f"No courses in semester {semester}")
                     return
 
+                semester_course_search = Search(this_semester_courses, True)
+
                 for course_name in command:
-                    course = self.catalog.get_course(course_name)
-                    if isinstance(course, str) or course not in sche.get_semester(semester):
-                        await user.msg(message, f"Can't find course {course_name} in semester {semester}")
+                    returned_courses = semester_course_search.search(course_name)
+                    returned_courses = [self.catalog.get_course(c) for c in returned_courses]
+                    if len(returned_courses) == 0:
+                        await output.print(f"Course {course_name} not found")
                         continue
-                    sche.remove_course(course, semester)
-                    await user.msg(message, f"Removed course {course_name} from semester {semester}")
+                    elif len(returned_courses) == 1:
+                        course = returned_courses[0]
+                    else:
+                        await output.print(f"query {course_name} has multiple valid courses, please choose from list:")
+                        i = 1
+                        for c in returned_courses:
+                            output.print_hold(f"{i}: {repr(c)}")
+                            i += 1
+                        await output.print_cache()
+                        user.flag.add(Flag.SCHEDULE_COURSE_DELETE)
+                        user.schedule_course_search = returned_courses
+                        user.schedule_course_search_sem = semester
+                        continue
+
+                    if course == None or course not in current_schedule.get_semester(semester):
+                        await output.print(f"Can't find course {course_name} in semester {semester}")
+                        continue
+                    current_schedule.remove_course(course, semester)
+                    await output.print(f"Removed course {course.name} from semester {semester}")
 
             elif cmd == "print":
-                await user.msg_hold(str(sche))
-                await user.msg_release(message, False)
+                output.print_hold(str(current_schedule))
+                await output.print_cache()
 
+            # sets degree of user, replaces previous selection
             elif cmd == "degree":
                 command.pop(0)
                 if l != 2:
-                    await user.msg(message, "incorrect amount of arguments, use degree <degree name> to set your schedule's degree")
+                    await output.print("incorrect amount of arguments, " + \
+                        "use degree,<degree name> to set your schedule's degree")
                 else:
-                    user.get_current_schedule().degree = self.catalog.get_degree(command.pop(0))
-                    await user.msg(message, f"set your degree to {user.get_current_schedule().degree.name}")
+                    degree = self.catalog.get_degree(command[0])
+                    if degree == None:
+                        await output.print(f"invalid degree entered: {command[0]}")
+                        return
+                    user.get_current_schedule().degree = degree
+                    await output.print(f"set your degree to {degree.name}")
 
-
+            # displays fulfillment status of current degree
             elif cmd == "fulfillment":
                 if user.get_current_schedule().degree == None:
-                    await user.msg(message, "no degree specified")
+                    await output.print("no degree specified")
                 else:
-                    await user.msg_hold(user.get_current_schedule().degree.fulfillment_msg(user.get_current_schedule().get_all_courses()))
-                    await user.msg_release(message, False)
+                    output.print_hold(user.get_current_schedule().
+                        degree.fulfillment_msg(user.get_current_schedule().get_all_courses()))
+                    await output.print_cache()
 
+            # change the current schedule to modify
             elif cmd == "reschedule":
-                await user.msg(message, "Understood, please enter schedule name to modify:")
+                await output.print("Understood, please enter schedule name to modify:")
                 user.flag.add(Flag.SCHEDULE_SELECTION)
 
+            # exits from scheduling mode
             elif cmd == "exit":
-                await user.msg(message, "Exiting scheduling mode")
+                await output.print("Exiting scheduling mode")
                 user.flag.remove(Flag.SCHEDULING)
 
             else:
-                await user.msg(message, "Unrecognized action")
+                await output.print("Unrecognized action")
 
-        #----------------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         # case 5 is a temporary test case for the search function in search.py
-        #----------------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         elif Flag.CASE_5 in user.flag:
             user.flag.remove(Flag.CASE_5)
-            possible_courses = self.search.search(message.content.casefold())
-            await user.msg(message, "possible courses: " + str(possible_courses))
+            possible_courses = self.course_search.search(message.content.casefold())
+            await output.print("possible courses: " + str(possible_courses))
 
 
-    #-----------------------------------------------------------------------
-    # Helper function that starts running the test_suite, can be replaced
-    # by pytest later
-    #-----------------------------------------------------------------------
-    async def test(self, message):
-        user = self.users.get(message.author)
+    #--------------------------------------------------------------------------
+    # HELPER FUNCTIONS FOR THE TEXT UI
+    #--------------------------------------------------------------------------
+
+    # Helper function that starts running the test_suite
+    async def test(self, output:Output=Output(OUT.CONSOLE)):
         test_suite = Test1()
-        user.flag.add(Flag.DEBUG)
-        await test_suite.test(message, user)
-        user.flag.remove(Flag.DEBUG)   
+        output.flags.add(Flag.DEBUG)
+        await test_suite.test(output)
+        output.flags.remove(Flag.DEBUG)   
+
+    
+    async def parse_data(self, output:Output=Output(OUT.CONSOLE)):
+        output.flags.add(Flag.DEBUG)
+        # redirects user messages into terminal, too much data for discord chat
+
+        catalog_file = "catalog_results.json"
+        degree_file = "class_results.json"
+
+        await self.parse_courses(catalog_file, output)
+        await output.print("Sucessfully parsed catalog data")
+        
+        # set up searcher for finding courses based on incomplete user input
+        self.course_search.update_items(self.catalog.get_all_course_names())
+        self.course_search.generate_index()
+
+        await self.parse_degrees(degree_file, output)
+        await output.print("Sucessfully parsed degree data, printing catalog")
+        output.print_hold(str(self.catalog))
+        await output.print_cache()
+        output.flags.remove(Flag.DEBUG)
 
 
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # parses json data of format [{course attribute : value}] 
     # into a set of Course objects stored in Catalog
-    #-----------------------------------------------------------------------
-    async def parse_courses(self, message, file_name):
+    #--------------------------------------------------------------------------
+    async def parse_courses(self, file_name, output:Output=Output(OUT.CONSOLE)):
         
-        user = self.users.get(message.author)
-
         # will not parse if the test is running to prevent data loss since Catalog is shared
         # note that running a test will destroy all data within the Catalog, 
         # so rerunning this method is necessary after a test
-        if Flag.TEST_RUNNING in user.flag:
-            await user.msg(message, "Operation unavailable due to another user operation running")
+        if Flag.TEST_RUNNING in self.flags:
+            await output.print("Operation unavailable due to another user operation running")
             return
-        await user.msg(message, "Beginning parsing course data into catalog")
+        await output.print("Beginning parsing course data into catalog")
 
-        # There are currently 4 places to store catalog_results.json and class_results, checked in this order
+        # There are 4 locations for catalog_results and class_results, checked in this order:
         # 1) /cogs/webcrawling/
         # 2) /cogs/degree-planner/data/
         # 3) /cogs/degree-planner/
         # 4) / (root directory of bot)
         if os.path.isfile(os.getcwd() + "/cogs/webcrawling/" + file_name):
-            await user.msg(message, f"file found: {os.getcwd()}/cogs/webcrawling/" + file_name)
+            await output.print(f"file found: {os.getcwd()}/cogs/webcrawling/" + file_name)
             file_catalog_results = open(os.getcwd() + "/cogs/webcrawling/" + file_name)
         elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/data/" + file_name):
-            await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/data/" + file_name)
+            await output.print(f"file found: {os.getcwd()}/cogs/degree-planner/data/" + file_name)
             file_catalog_results = open(os.getcwd() + "/cogs/degree-planner/data/" + file_name)
         elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/" + file_name):
-            await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/" + file_name)
+            await output.print(f"file found: {os.getcwd()}/cogs/degree-planner/" + file_name)
             file_catalog_results = open(os.getcwd() + "/cogs/degree-planner/" + file_name)
         elif os.path.isfile(os.getcwd() + "/" + file_name):
-            await user.msg(message, f"file found: {os.getcwd()}/" + file_name)
+            await output.print(f"file found: {os.getcwd()}/" + file_name)
             file_catalog_results = open(os.getcwd() + "/" + file_name)
         else:
-            await user.msg(message, "catalog file not found")
+            await output.print("catalog file not found")
             return
 
         json_data = json.load(file_catalog_results)
         file_catalog_results.close()
-        #------------------------------------------------------------------------
+        #----------------------------------------------------------------------
 
-        #--------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         # Begin iterating through every dictionary stored inside the json_data
         #
         # json data format: list of dictionaries with each dictionary representing 
         # a single course and its data
-        #--------------------------------------------------------------------------
+        #----------------------------------------------------------------------
         for element in json_data:
 
             if 'course_name' in element and 'course_subject' in element and 'course_number' in element:
@@ -384,36 +494,34 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             self.catalog.add_course(course)
 
 
-    #-----------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # parses degree info from json into Degree objects, and then
     # stored inside the Catalog
-    #-----------------------------------------------------------------------
-    async def parse_degrees(self, message, file_name):
-        
-        user = self.users.get(message.author)
+    #--------------------------------------------------------------------------
+    async def parse_degrees(self, file_name, output:Output=Output(OUT.CONSOLE)):
 
         # will not parse if the test is running to prevent data loss since Catalog is shared
         # note that running a test will destroy all data within the Catalog, 
         # so rerunning this method is necessary after a test
-        if Flag.TEST_RUNNING in user.flag:
-            await user.msg(message, "Operation unavailable due to another user operation running")
+        if Flag.TEST_RUNNING in self.flags:
+            await output.print("Operation unavailable due to another user operation running")
             return
-        await user.msg(message, "Beginning parsing degree data into catalog")
+        await output.print("Beginning parsing degree data into catalog")
 
         if os.path.isfile(os.getcwd() + "/cogs/webcrawling/" + file_name):
-            await user.msg(message, f"file found: {os.getcwd()}/cogs/webcrawling/" + file_name)
+            await output.print(f"file found: {os.getcwd()}/cogs/webcrawling/" + file_name)
             file_degree_results = open(os.getcwd() + "/cogs/webcrawling/" + file_name)
         elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/data/" + file_name):
-            await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/data/" + file_name)
+            await output.print(f"file found: {os.getcwd()}/cogs/degree-planner/data/" + file_name)
             file_degree_results = open(os.getcwd() + "/cogs/degree-planner/data/" + file_name)
         elif os.path.isfile(os.getcwd() + "/cogs/degree-planner/" + file_name):
-            await user.msg(message, f"file found: {os.getcwd()}/cogs/degree-planner/" + file_name)
+            await output.print(f"file found: {os.getcwd()}/cogs/degree-planner/" + file_name)
             file_degree_results = open(os.getcwd() + "/cogs/degree-planner/" + file_name)
         elif os.path.isfile(os.getcwd() + "/" + file_name):
-            await user.msg(message, f"file found: {os.getcwd()}/" + file_name)
+            await output.print(f"file found: {os.getcwd()}/" + file_name)
             file_degree_results = open(os.getcwd() + "/" + file_name)
         else:
-            await user.msg(message, "degree file not found")
+            await output.print("degree file not found")
             return
 
         json_data = json.load(file_degree_results)
@@ -434,19 +542,23 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         rule.add_template(template1, 2)
         rule.add_template(template2, 3)
         rule.add_template(template3)
-        
+
         degree.add_rule(rule)
         self.catalog.add_degree(degree)
 
-        print(f"added degree {str(degree)} containing rule {str(rule)} to catalog")
+        output.print(f"added degree {str(degree)} containing rule {str(rule)} to catalog")
 
         '''
-        #--------------------------------------------------------------------------
-        # Begin iterating through json_data
+        #----------------------------------------------------------------------
+        # Iterating through 'class_results.json', storing data on the core and
+        # elective information of each major
         #
-        # json data format: dictionary of degrees : list of dictionaries each representing a course
-        # <degree name : [<course attribute : value>]
-        #--------------------------------------------------------------------------
+        # note that further information describing all aspects of degrees are
+        # still needed, potentially in the form of manually created course
+        # templates.
+        #
+        # json data format: { degree name : [ { course attribute : value } ] }
+        #----------------------------------------------------------------------
         for degree_name, degree_data in json_data.items():
             degree = Degree(degree_name)
             required_courses = set()
