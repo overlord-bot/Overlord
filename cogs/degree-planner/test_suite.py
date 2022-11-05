@@ -62,7 +62,7 @@ class Test1():
         catalog.add_course(course5)
         catalog.add_course(course6)
 
-        await user.msg_hold("\nPrinting courses:")
+        output.print_hold("\nPrinting courses:")
 
         for course in catalog.get_all_courses():
             output.print_hold(str(course))

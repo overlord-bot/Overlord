@@ -16,8 +16,7 @@ from .user import User
 from .user import Flag
 from .search import Search
 from .course_template import Template
-from .output import Output
-from .output import OUT
+from .output import *
 
 
 #########################################################################
@@ -81,7 +80,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     async def message_handler(self, message):
         user:User = self.users.get(message.author.id)
         msg = message.content
-        output = Output(OUT.DISCORD_CHANNEL, {"channel":message.channel})
+        output = Output(OUT.DISCORD_CHANNEL, {ATTRIBUTE.CHANNEL:message.channel})
         output_debug = Output(OUT.CONSOLE)
 
         if Flag.TEST_RUNNING in self.flags:
@@ -118,21 +117,21 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
             # CASE 1: run test suite
             if msg.casefold() == "1":
-                output_debug.print("INPUT 1 REGISTERED")
+                await output_debug.print("INPUT 1 REGISTERED")
                 self.flags.add(Flag.TEST_RUNNING)
-                output_debug.print("BEGINNING TEST")
-                await self.test(message)
-                output_debug.print("FINISHED TEST")
-                output.print("Test completed successfully, all assertions met")
+                await output_debug.print("BEGINNING TEST")
+                await self.test(output_debug)
+                await output_debug.print("FINISHED TEST")
+                await output.print("Test completed successfully, all assertions met")
                 self.flags.remove(Flag.TEST_RUNNING)
                 return
 
             # CASE 2: run data fetch from json
             # this will load both courses and degrees
             elif msg.casefold() == "2":
-                output_debug.print("INPUT 2 REGISTERED")
-                self.parse_data()
-                
+                await output_debug.print("INPUT 2 REGISTERED")
+                await self.parse_data()
+                await output.print("parsing completed")
                 return
 
             #CASE 5: Search course (TEMPORARY TESTING PURPOSES)
@@ -174,7 +173,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             command_raw = msg.split(",") # user input split up, will parse as a command
             command = [e.strip().casefold() for e in command_raw] # strips and lowercases all args
             command = [e for e in command if e] # removes empty strings from list
-            output_debug.print("Inputted scheduling command: " + str(command))
+            await output_debug.print("Inputted scheduling command: " + str(command))
             cmd = command[0] # command str will be modified later, this assignment is necessary!
             l = len(command) # command str will be modified later, this assignment is necessary!
 
@@ -391,8 +390,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         await output.print("Sucessfully parsed degree data, printing catalog")
         output.print_hold(str(self.catalog))
         await output.print_cache()
-        await output.print("parsing completed")
-
         output.flags.remove(Flag.DEBUG)
 
 

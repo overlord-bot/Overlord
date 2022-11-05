@@ -22,10 +22,6 @@ class User():
         self.__schedules = dict() # all schedules this user created <schedule name, Schedule>
         self.curr_schedule = "" # empty string signifies no current schedule
 
-        # temporary variables
-        self.__msg_cache = "" # holds a string so it can be outputted at the same time
-        self.msg_header = "" # this is added before every msg
-
         self.flag = set()
 
         self.schedule_course_search = set()
@@ -64,19 +60,7 @@ class User():
             self.__schedules.update({new_name : self.__schedules.get(old_name)})
             self.__schedules.pop(old_name)
 
-
     '''
-    def add_flag(self, flag:Flag, attribute_key=None, attribute_value=None):
-        print(f"attribute key {attribute_key}, value {attribute_value}")
-        if flag in self.__flags:
-            flag_attributes = self.__flags[flag]
-            flag_attributes.update({attribute_key:attribute_value})
-            self.__flags.update({flag:flag_attributes})
-        else:
-            self.__flags.update({flag:{attribute_key:attribute_value}})
-    '''
-
-
     #-----------------------------------------------------------------------
     # Functions to help format and sent messages to the user,
     # it can all be replaced with different UI system later
@@ -128,6 +112,7 @@ class User():
         if Flag.DEBUG in self.flag:
             print(self.msg_header + str(content))
         await message.channel.send(f"{self.msg_header} {str(content)}")
+    '''
 
 
     def __repr__(self):

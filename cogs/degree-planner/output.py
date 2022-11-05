@@ -51,26 +51,26 @@ class Output():
         elif self.location == OUT.DISCORD_PRIVATE_MSG:
             if self.user == None:
                 print("no user specified for printing msg: " + msg)
-                return
-            if Flag.DEBUG in self.flags:
+            elif Flag.DEBUG in self.flags:
                 print(msg)
-                return
-            await self.user.discord_user.send(msg)
+            else:
+                await self.user.discord_user.send(msg)
         elif self.location == OUT.DISCORD_CHANNEL:
             if Flag.DEBUG in self.flags:
                 print(msg)
-                return
-            await self.channel.send(msg)
+            else:
+                await self.channel.send(msg)
 
     def print_hold(self, msg):
-        self.__msg_cache += msg
+        self.__msg_cache += msg + "\n"
 
     async def print_cache(self):
         if len(self.__msg_cache) > 1900:
             await self.print(f"message too long, won't be sent to discord, printing to console...")
             await self.print(self.__msg_cache)
-            self.__msg_cache = ""
-            return
         else:
-            await self.print(f"```yaml\n{self.__msg_cache}```")
-            self.__msg_cache = ""
+            if self.location == OUT.CONSOLE:
+                await self.print(f"\n{self.__msg_cache}")
+            else:
+                await self.print(f"```yaml\n{self.__msg_cache}```")
+        self.__msg_cache = ""
