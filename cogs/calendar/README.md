@@ -2,9 +2,9 @@
 
 This module is used to manage events and reminders for the server, and is currently in development.
 
-## Commands
+## Commands (Old)
 
-To use the commands, type `!calendar` or `!calendar_timer` followed by the command. 
+To use the old commands, type `!calendar` or `!calendar_timer` followed by the command. 
 
 `!calendar add <event> <MM/DD/YYYY>` will add an event for that date to the calendar.
 
@@ -16,16 +16,32 @@ To use the commands, type `!calendar` or `!calendar_timer` followed by the comma
 
 `!calendar_timer <MM/DD/YYYY>` will set a timer for the specified date.
 
-### Plans for the Week:
+## Commands (New)
 
-Current plans for the week are to create a working copy of the calendar module, only it uses a json file as well as creating a calendar for each discord user.
+To use the new commands, type `!calendarv2` followed by the command.
 
-#### Development Plans
+`!calendarv2 add <event> <MM/DD/YYYY>` will add an event for that date to the calendar.
+
+`!calendarv2 remove <MM/DD/YYYY>` will remove an event from the calendar.
+
+`!calendarv2 view` will pull up a calendar visual with all the events for the month.
+
+`!calendarv2 clear` will clear the calendar of its data and its events.
+
+`!calendaredit date <event> <MM/DD/YYYY>` is a planned event in which users can edit events for the date
+
+## Plans for the Week:
+
+Current plans for the week:
+
+Create and get an edit function working for events, and maybe go into fixing remove with events themselves.
+
+## Development Plans
 
 Currently, the calendar module is in development. The following features are planned for the future:
 
--Redesign of the calendar file, storing and reading from a json file instead of a text file.
+-Redesign of the calendar file, storing and reading from a json file instead of a text file. (Implemented)
 
--Fix remove command, currently does not work correctly with the events dictionary. (will change with the redesign)
+-Fix remove command, currently does not work correctly with the events dictionary. (Implemented)
 
--Add a command to edit events.
+-Add a command to edit events. (In progress)
