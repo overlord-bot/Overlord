@@ -150,6 +150,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await user.msg_hold(str(self.catalog))
                 await user.msg_release(message, False)
                 await user.force_msg(message, "parsing completed")
+                user.flag.remove(Flag.DEBUG)
                 return
 
             #CASE 5: Search course (TEMPORARY TESTING PURPOSES)
@@ -270,7 +271,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                         await user.msg(message, f"query {course_name} has multiple valid courses, please choose from list:")
                         i = 1
                         for c in returned_courses:
-                            await user.msg_hold(f"{i}: {c}")
+                            await user.msg_hold(f"{i}: {repr(c)}")
                             i += 1
                         await user.msg_release(message)
                         user.flag.add(Flag.SCHEDULE_COURSE_SELECT)
@@ -314,7 +315,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                         await user.msg(message, f"query {course_name} has multiple valid courses, please choose from list:")
                         i = 1
                         for c in returned_courses:
-                            await user.msg_hold(f"{i}: {c}")
+                            await user.msg_hold(f"{i}: {repr(c)}")
                             i += 1
                         await user.msg_release(message)
                         user.flag.add(Flag.SCHEDULE_COURSE_DELETE)

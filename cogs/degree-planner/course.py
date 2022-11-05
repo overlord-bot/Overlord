@@ -90,6 +90,9 @@ class Course():
             f"{f', pathways: {str(self.HASS_pathway)}' if len(self.HASS_pathway) != 0 else ''}")
         return st.replace("set()", "none")
 
+    def __str__(self):
+        return self.name
+
     def __eq__(self, other):
         if not isinstance(other, Course):
             return False

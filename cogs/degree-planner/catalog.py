@@ -94,11 +94,11 @@ class Catalog():
         count1 = 1
         printout = ""
         for course in self.__course_list.values():
-            printout+=str(count1) + ": " + str(course) + "\n"
+            printout+=str(count1) + ": " + repr(course) + "\n"
             count1+=1
         count1 = 1
         for degree in self.__degree_list.values():
-            printout+=str(count1) + ": " + str(degree) + "\n"
+            printout+=str(count1) + ": " + repr(degree) + "\n"
             count1+=1
         return printout
 
