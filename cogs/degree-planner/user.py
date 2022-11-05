@@ -16,8 +16,9 @@ class Flag(Enum):
 
 class User():
     
-    def __init__(self, name:str):
-        self.username = name
+    def __init__(self, discord_user):
+        self.discord_user = discord_user
+        self.username = str(discord_user)
         self.__schedules = dict() # all schedules this user created <schedule name, Schedule>
         self.curr_schedule = "" # empty string signifies no current schedule
 
