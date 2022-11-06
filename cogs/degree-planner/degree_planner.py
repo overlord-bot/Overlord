@@ -178,6 +178,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await output.print(f"Successfully switched to schedule {schedule_name}!")
                     user.curr_schedule = schedule_name
                 user.flag.remove(Flag.SCHEDULE_SELECTION)
+                user.command_cache = []
                 return
 
             # user currently selecting a course from a list of choices to add to schedule
@@ -188,10 +189,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await output.print("Please enter a valid selection number")
                     return
                 course = courses[int(input) - 1]
-                cont = self.add_course(user, course.name, user.schedule_course_search_sem, output)
-                if not cont:
-                    user.flag.remove(Flag.SCHEDULE_COURSE_SELECT)
-                return
+                self.add_course(user, course.name, user.schedule_course_search_sem, output)
+                user.flag.remove(Flag.SCHEDULE_COURSE_DELETE)
                 
             # user currently selecting a course froma list of choices to remove from schedule
             if Flag.SCHEDULE_COURSE_DELETE in user.flag:
@@ -202,51 +201,56 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     return
                 course = courses[int(input) - 1]
                 cont = self.remove_course(user, course.name, user.schedule_course_search_sem, output)
-                if not cont:
-                    user.flag.remove(Flag.SCHEDULE_COURSE_DELETE)
-                return
+                user.flag.remove(Flag.SCHEDULE_COURSE_DELETE)
 
             # user initiates process to add or delete course to schedule
             if command[0] == "add" or command[0] == "remove":
                 if len(command) < 3:
                     await output.print("Not enough arguments")
+                    user.command_cache = []
                     return
                 cmd = command.pop(0)
                 semester = int(command.pop(0))
                 if semester not in range(0, current_schedule.SEMESTERS_MAX):
                     await output.print("Invalid semester, enter number between 0 and 11")
+                    user.command_cache = []
                     return
                 # iterate over all courses provided in command
                 # if we meet one with multiple possibilities then iteration will stop
-                for course_name in command:
+                while command:
                     if cmd == "add":
-                        cont = self.add_course(user, course_name, semester, output)
+                        cont = self.add_course(user, command.pop(0), semester, output)
                     else:
-                        cont = self.remove_course(user, course_name, semester, output)
-                    if not cont:
+                        cont = self.remove_course(user, command.pop(0), semester, output)
+                    if not cont and command:
+                        user.command_cache = [cmd, semester] + command
                         return
+                user.command_cache = []
 
             # prints semester table to output
-            elif command[0] == "print":
+            if command[0] == "print":
+                command.pop(0)
                 output.print_hold(str(current_schedule))
                 await output.print_cache()
 
             # sets degree of user, replaces previous selection
-            elif command[0] == "degree":
+            if command[0] == "degree":
                 command.pop(0)
                 if len(command) != 1:
                     await output.print("incorrect amount of arguments, " + \
                         "use degree,<degree name> to set your schedule's degree")
                 else:
-                    degree = self.catalog.get_degree(command[0])
+                    input = command.pop(0)
+                    degree = self.catalog.get_degree(input)
                     if degree == None:
-                        await output.print(f"invalid degree entered: {command[0]}")
-                        return
-                    user.get_current_schedule().degree = degree
-                    await output.print(f"set your degree to {degree.name}")
+                        await output.print(f"invalid degree entered: {input}")
+                    else:
+                        user.get_current_schedule().degree = degree
+                        await output.print(f"set your degree to {degree.name}")
 
             # displays fulfillment status of current degree
-            elif command[0] == "fulfillment":
+            if command[0] == "fulfillment":
+                command.pop(0)
                 if user.get_current_schedule().degree == None:
                     await output.print("no degree specified")
                 else:
@@ -255,17 +259,23 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await output.print_cache()
 
             # change the current schedule to modify
-            elif command[0] == "reschedule":
+            if command[0] == "reschedule":
+                command.pop(0)
                 await output.print("Understood, please enter schedule name to modify:")
                 user.flag.add(Flag.SCHEDULE_SELECTION)
 
             # exits from scheduling mode
-            elif command[0] == "exit":
+            if command[0] == "exit":
                 await output.print("Exiting scheduling mode")
                 user.flag.remove(Flag.SCHEDULING)
+                user.command_cache = []
+                return
 
-            else:
-                await output.print("Unrecognized action")
+            user.command_cache = command
+
+            if user.command_cache:
+                await output.print(f"recursively calling message_handler with {user.command_cache}")
+                await self.message_handler(user, ",".join(command), output)
 
         #----------------------------------------------------------------------
         # case 5 is a temporary test case for the search function in search.py
