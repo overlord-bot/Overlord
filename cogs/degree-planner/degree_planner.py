@@ -61,7 +61,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             self.users.update({message.author.id:user})
             print(f"received msg from new user: {message.author}, user id: {message.author.id}")
         await self.message_handler(self.users[message.author.id], message.content, 
-            Output(OUT.DISCORD_CHANNEL), {ATTRIBUTE.CHANNEL:message.channel})
+            Output(OUT.DISCORD_CHANNEL, {ATTRIBUTE.CHANNEL:message.channel}))
 
 
     #--------------------------------------------------------------------------
@@ -189,7 +189,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await output.print("Please enter a valid selection number")
                     return
                 course = courses[int(input) - 1]
-                self.add_course(user, course.name, user.schedule_course_search_sem, output)
+                await self.add_course(user, course.name, user.schedule_course_search_sem, output)
+                command.pop(2)
                 user.flag.remove(Flag.SCHEDULE_COURSE_DELETE)
                 
             # user currently selecting a course froma list of choices to remove from schedule
@@ -200,7 +201,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await output.print("Please enter a valid selection number")
                     return
                 course = courses[int(input) - 1]
-                cont = self.remove_course(user, course.name, user.schedule_course_search_sem, output)
+                await self.remove_course(user, course.name, user.schedule_course_search_sem, output)
+                command.pop(2)
                 user.flag.remove(Flag.SCHEDULE_COURSE_DELETE)
 
             # user initiates process to add or delete course to schedule
@@ -218,26 +220,27 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 # iterate over all courses provided in command
                 # if we meet one with multiple possibilities then iteration will stop
                 while command:
+                    course = command.pop(0)
                     if cmd == "add":
-                        cont = self.add_course(user, command.pop(0), semester, output)
+                        cont = await self.add_course(user, course, semester, output)
                     else:
-                        cont = self.remove_course(user, command.pop(0), semester, output)
+                        cont = await self.remove_course(user, course, semester, output)
                     if not cont and command:
                         user.command_cache = [cmd, semester] + command
                         return
                 user.command_cache = []
 
             # prints semester table to output
-            if command[0] == "print":
+            elif command[0] == "print":
                 command.pop(0)
                 output.print_hold(str(current_schedule))
                 await output.print_cache()
 
             # sets degree of user, replaces previous selection
-            if command[0] == "degree":
+            elif command[0] == "degree":
                 command.pop(0)
-                if len(command) != 1:
-                    await output.print("incorrect amount of arguments, " + \
+                if len(command) < 1:
+                    await output.print("no arguments found, " + \
                         "use degree,<degree name> to set your schedule's degree")
                 else:
                     input = command.pop(0)
@@ -249,7 +252,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                         await output.print(f"set your degree to {degree.name}")
 
             # displays fulfillment status of current degree
-            if command[0] == "fulfillment":
+            elif command[0] == "fulfillment":
                 command.pop(0)
                 if user.get_current_schedule().degree == None:
                     await output.print("no degree specified")
@@ -259,13 +262,13 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await output.print_cache()
 
             # change the current schedule to modify
-            if command[0] == "reschedule":
+            elif command[0] == "reschedule":
                 command.pop(0)
                 await output.print("Understood, please enter schedule name to modify:")
                 user.flag.add(Flag.SCHEDULE_SELECTION)
 
             # exits from scheduling mode
-            if command[0] == "exit":
+            elif command[0] == "exit":
                 await output.print("Exiting scheduling mode")
                 user.flag.remove(Flag.SCHEDULING)
                 user.command_cache = []

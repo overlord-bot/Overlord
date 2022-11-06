@@ -65,9 +65,9 @@ class Output():
         self.__msg_cache += msg + "\n"
 
     async def print_cache(self):
-        if len(self.__msg_cache) > 1900:
+        if len(self.__msg_cache) > 1800:
             await self.print(f"message too long, won't be sent to discord, printing to console...")
-            await self.print(self.__msg_cache)
+            print(self.__msg_cache)
         else:
             if self.location == OUT.CONSOLE:
                 await self.print(f"\n{self.__msg_cache}")
