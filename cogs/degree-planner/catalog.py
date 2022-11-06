@@ -130,7 +130,6 @@ def get_course_match(target_course, course_pool:set, possible_values=None) -> di
 
     # finds union of template's available course pool and taken courses
     if isinstance(target_course, Template):
-        print("converting template course into course in get_course_match. This should only happen ONCE per call")
         if target_course.course_set:
             course_pool = target_course.course_set.intersection(course_pool)
         target_course = target_course.template_course
