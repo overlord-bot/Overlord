@@ -55,9 +55,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         # ignore messages not from users
         if message.author == self.bot.user or message.author.bot:
             return
-        # ignore messages that doesn't start with !d
-        if not message.content.startswith('!dp '):
-            return
+
         userid = str(message.author.id)
         if userid in self.users:
             user = self.users[userid]
@@ -67,8 +65,18 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             self.users.update({userid:user})
             print(f"received msg from new user: {message.author}, user id: {userid}")
 
+        if Flag.CMD_PAUSED in user.flag:
+            output = Output(OUT.DISCORD_CHANNEL, {ATTRIBUTE.CHANNEL:message.channel})
+            await self.message_handler(user, message.content, output)
+            return
+
+        # ignore messages that doesn't start with !d unless it's for a paused cmd
+        if not message.content.startswith('!dp '):
+            return
+
         output = Output(OUT.DISCORD_CHANNEL, {ATTRIBUTE.CHANNEL:message.channel})
         await self.message_handler(user, message.content[4:], output)
+        return
 
 
     #--------------------------------------------------------------------------
