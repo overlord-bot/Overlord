@@ -3,16 +3,13 @@ from enum import Enum
 from discord.ext import commands
 import discord
 from .schedule import Schedule
+from queue import Queue
 
 class Flag(Enum):
-    MENU_SELECT = 0
-    SCHEDULING = 1
-    DEBUG = 2
-    TEST_RUNNING = 3
-    SCHEDULE_SELECTION = 4
-    CASE_5 = 5
-    SCHEDULE_COURSE_SELECT = 6
-    SCHEDULE_COURSE_DELETE = 7
+    DEBUG = 0
+
+    CMD_PAUSED = 100
+    CMD_RUNNING = 101
 
 class User():
     
@@ -24,8 +21,11 @@ class User():
 
         self.flag = set()
 
-        self.schedule_course_search = set()
-        self.schedule_course_search_sem = []
+        self.command_queue = Queue()
+        self.command_queue_locked = False
+        self.command_decision = None
+        self.command_paused = None
+
 
     def get_all_schedules(self) -> Schedule:
         return self.__schedules.values()
@@ -59,60 +59,6 @@ class User():
         else:
             self.__schedules.update({new_name : self.__schedules.get(old_name)})
             self.__schedules.pop(old_name)
-
-    '''
-    #-----------------------------------------------------------------------
-    # Functions to help format and sent messages to the user,
-    # it can all be replaced with different UI system later
-    #
-    # These message methods must be inside the schedule because they hold
-    # data over time that's unique for every user.
-    #-----------------------------------------------------------------------
-
-    # stores the string inside a cache
-    async def msg_hold(self, content:str):
-        self.__msg_cache = self.__msg_cache + content + "\n"
-
-
-    # prints all text within cache into discord's chat
-    async def msg_release(self, message:str, fancy:bool=False):
-        if Flag.DEBUG in self.flag:
-            print(self.__msg_cache)
-            self.__msg_cache = ""
-        elif len(self.__msg_cache) > 1800:
-            await message.channel.send(f"message too long, won't be sent to discord, printing to console...")
-            print(self.__msg_cache)
-            self.__msg_cache = ""
-        elif not fancy:
-            await message.channel.send(f"```yaml\n{self.__msg_cache}```")
-            self.__msg_cache = ""
-        else:
-            # embed test
-            embed = discord.Embed(title="Slime",color=discord.Color.blue())
-            embed.add_field(name="*info*", value=self.__msg_cache, inline = False)
-            await message.channel.send(embed=embed)
-            self.__msg_cache = ""
-
-
-    # immediately prints a string to discord's chat
-    async def msg(self, message, content:str):
-        if Flag.DEBUG in self.flag:
-            print(self.msg_header + str(content))
-        elif len(content) > 1800:
-            await message.channel.send(f"message too long, won't be sent to discord, printing to console...")
-            print(self.msg_header + str(content))
-            self.__msg_cache = ""
-        else:
-            await message.channel.send(f"{self.msg_header} {str(content)}")
-
-
-    # identical to msg(message, content) except this one will print to discord 
-    # regardless of debug mode or other checks
-    async def force_msg(self, message, content:str):
-        if Flag.DEBUG in self.flag:
-            print(self.msg_header + str(content))
-        await message.channel.send(f"{self.msg_header} {str(content)}")
-    '''
 
 
     def __repr__(self):
