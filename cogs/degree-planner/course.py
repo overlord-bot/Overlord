@@ -31,6 +31,7 @@ class Course():
             self.name = ""
         else:
             self.name = f"{self.major.casefold()} {str(self.course_id)} {name.strip().casefold()}"
+            self.name = self.name.replace(',', '')
 
 
     # some input data for courses may not be in the desired format. We will correct those problems here

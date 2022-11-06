@@ -3,6 +3,7 @@ from enum import Enum
 from discord.ext import commands
 import discord
 from .schedule import Schedule
+from queue import Queue
 
 class Flag(Enum):
     MENU_SELECT = 0
@@ -14,6 +15,9 @@ class Flag(Enum):
     SCHEDULE_COURSE_SELECT = 6
     SCHEDULE_COURSE_DELETE = 7
 
+    CMD_PAUSED = 100
+    CMD_RUNNING = 101
+
 class User():
     
     def __init__(self, discord_user):
@@ -24,10 +28,10 @@ class User():
 
         self.flag = set()
 
-        self.command_cache = [] # if there is a pending command on hold
-        self.command_cache_locked = False
-        self.schedule_course_search = set()
-        self.schedule_course_search_sem = []
+        self.command_queue = Queue()
+        self.command_decision = ''
+        self.command_paused = None
+
 
     def get_all_schedules(self) -> Schedule:
         return self.__schedules.values()
