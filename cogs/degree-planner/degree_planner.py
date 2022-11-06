@@ -4,7 +4,6 @@ import discord
 import asyncio
 import json
 import os
-import random
 
 from .course import Course
 from .catalog import Catalog
@@ -19,16 +18,15 @@ from .course_template import Template
 from .output import *
 from .command import *
 
-
 #########################################################################
 #                            IMPORTANT NOTE:                            #
 #                                                                       #
 # This class is created once and is not instigated for each user.       #
-# It is essential to keep all user specific data, such as input flags   #
-# (i.e. flag.MENU_SELECT) inside the User class, which is instigated    #
-# for each user.                                                        #
+# It is essential to keep all user specific data inside the User class  #
 #########################################################################
 
+# just to help keep track of deployed versions without needing access to host
+VERSION = "dev 10.1 (working fulfillment checker)"
 
 class Degree_Planner(commands.Cog, name="Degree Planner"):
 
@@ -45,9 +43,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         self.catalog = Catalog()
         self.course_search = Search()
         self.flags = set()
-        
-        # just to help keep track of deployed versions without needing access to host
-        self.VERSION = "dev 10.1 (working fulfillment checker)" 
 
 
     #--------------------------------------------------------------------------
@@ -74,17 +69,27 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         await self.message_handler(user, message.content, output)
 
 
-    async def message_handler(self, user:User, msg:str, output:Output=Output(OUT.CONSOLE)):
+    #--------------------------------------------------------------------------
+    # returns whether or not the input was successfully processed
+    # catch the return value to determine if a command needs to be re-entered
+    #--------------------------------------------------------------------------
+    async def message_handler(self, user:User, msg:str, output:Output=Output(OUT.CONSOLE)) -> bool:
         if Flag.CMD_PAUSED in user.flag:
             user.command_decision = msg.strip().casefold()
         else:
+            if user.command_queue_locked:
+                await output.print("queue busy, please try again later")
+                return False
+            user.command_queue_locked = True
             #await output.print("waiting for previous tasks to finish")
             user.command_queue.join()
             #await output.print("previous commands finshed, starting new ones!")
             commands = await self.parse_command(msg, output)
             for command in commands:
                 user.command_queue.put(command)
+
         await self.command_handler(user, output)
+        return True
 
 
     async def parse_command(self, cmd:str, output:Output=Output(OUT.CONSOLE)) -> list:
@@ -144,6 +149,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
             if command.command == CMD.TEST:
                 await output_debug.print("BEGINNING TEST")
+                await output.print(f"Testing Degree Planner {VERSION}")
                 await self.test(output_debug)
                 await output_debug.print("FINISHED TEST")
                 await output.print("Test completed successfully, all assertions met")
@@ -161,9 +167,19 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 continue
 
             if command.command == CMD.FIND:
+                if len(command.arguments) == 0:
+                    await output.print("no arguments found, use find, [courses] to find matching courses")
+                    if flag_done: 
+                        user.command_queue.task_done()
+                    continue
                 for query in command.arguments:
                     possible_courses = self.course_search.search(query)
-                    output.print_hold(f"courses matching {query}: {str(possible_courses)}")
+                    output.print_hold(f"courses matching {query}: ")
+                    i = 1
+                    for c in possible_courses:
+                        course = self.catalog.get_course(c)
+                        output.print_hold(f"  {i}: {course.major} {course.course_id} {course.display_name}")
+                        i += 1
                     await output.print_cache()
                 if flag_done: 
                     user.command_queue.task_done()
@@ -201,7 +217,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     courses = command.data_store
                     if not decision.isdigit() or int(decision) not in range(1, len(courses) + 1):
                         await output.print("Please enter a valid selection number")
-                        return
+                        break
                     course:Course = courses[int(decision) - 1]
                     command.arguments[1] = course.name
                     user.flag.remove(Flag.CMD_PAUSED)
@@ -235,7 +251,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     user.flag.add(Flag.CMD_PAUSED)
                     if flag_done: 
                         user.command_queue.task_done()
-                    return
+                    break
 
                 if flag_done: 
                     user.command_queue.task_done()
@@ -277,6 +293,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     user.command_queue.task_done()
                 continue
 
+        # we're done :D
+        user.command_queue_locked = False
 
     #--------------------------------------------------------------------------
     # HELPER FUNCTIONS FOR THE TEXT UI
@@ -350,13 +368,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     # into a set of Course objects stored in Catalog
     #--------------------------------------------------------------------------
     async def parse_courses(self, file_name, output:Output=Output(OUT.CONSOLE)):
-        
-        # will not parse if the test is running to prevent data loss since Catalog is shared
-        # note that running a test will destroy all data within the Catalog, 
-        # so rerunning this method is necessary after a test
-        if Flag.TEST_RUNNING in self.flags:
-            await output.print("Operation unavailable due to another user operation running")
-            return
+
         await output.print("Beginning parsing course data into catalog")
 
         # There are 4 locations for catalog_results and class_results, checked in this order:
@@ -451,12 +463,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     #--------------------------------------------------------------------------
     async def parse_degrees(self, file_name, output:Output=Output(OUT.CONSOLE)):
 
-        # will not parse if the test is running to prevent data loss since Catalog is shared
-        # note that running a test will destroy all data within the Catalog, 
-        # so rerunning this method is necessary after a test
-        if Flag.TEST_RUNNING in self.flags:
-            await output.print("Operation unavailable due to another user operation running")
-            return
         await output.print("Beginning parsing degree data into catalog")
 
         if os.path.isfile(os.getcwd() + "/cogs/webcrawling/" + file_name):
