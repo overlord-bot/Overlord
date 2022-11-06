@@ -24,8 +24,8 @@ from .output import *
 #                                                                       #
 # This class is created once and is not instigated for each user.       #
 # It is essential to keep all user specific data, such as input flags   #
-# (i.e. flag.MENU_SELECT) or message delivery methods (i.e. msg())      #
-# inside the User class, which is instigated for each user.             #
+# (i.e. flag.MENU_SELECT) inside the User class, which is instigated    #
+# for each user.                                                        #
 #########################################################################
 
 
@@ -33,48 +33,69 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
     def __init__(self, bot):
         self.bot = bot
+
         # each user is assigned a User object and stored in this dictionary
-        # Users = <discord user id, User>
+        # Users = <user id, User>
+
+        # note that the User object is meant to represent any user and does not
+        # specifically have to be a discord user. It can be generated as long as 
+        # a unique user ID is provided in the form of a string.
         self.users = dict()
         self.catalog = Catalog()
         self.course_search = Search()
         self.flags = set()
+        
         # just to help keep track of deployed versions without needing access to host
         self.VERSION = "dev 10.1 (working fulfillment checker)" 
-    
-    
+
+
     #--------------------------------------------------------------------------
     # Main message listener
     #
-    # passes the message content to a helper function which will 
-    # read the message and determine responses.
+    # passes the message content to a helper functions.
     #--------------------------------------------------------------------------
     @commands.Cog.listener()
     async def on_message(self, message):
         # ignore messages not from users
         if message.author == self.bot.user or message.author.bot:
             return
-        elif message.author.id in self.users:
-            print(f"received msg from returning user: {message.author}, user id: {message.author.id}")
+
+        userid = str(message.author.id)
+        if userid in self.users:
+            user = self.users[userid]
+            print(f"received msg from returning user: {message.author}, user id: {userid}")
         else:
-            user = User(message.author)
-            self.users.update({message.author.id:user})
-            print(f"received msg from new user: {message.author}, user id: {message.author.id}")
-        await self.message_handler(self.users[message.author.id], message.content, 
-            Output(OUT.DISCORD_CHANNEL, {ATTRIBUTE.CHANNEL:message.channel}))
+            user = User(userid)
+            self.users.update({userid:user})
+            print(f"received msg from new user: {message.author}, user id: {userid}")
+
+        output = Output(OUT.DISCORD_CHANNEL, {ATTRIBUTE.CHANNEL:message.channel})
+        await self.message_handler(user, message.content, output)
 
 
     #--------------------------------------------------------------------------
-    # This function is a text based system to control the degree planner
-    # it can be replaced with different UI system later
+    # handles message locks and user input control
+    #
+    # IMPORTANT: this method should be called for all input purposes 
+    # rather than input_handler
     #--------------------------------------------------------------------------
     async def message_handler(self, user:User, msg:str, output:Output=Output(OUT.CONSOLE)):
+        # we shouldn't be able to run commands while there are other commands in the queue
+        if user.command_cache_locked:
+            await output.print("please hold on for next command!")
+            return
+        user.command_cache_locked = True
+        await self.input_handler(user, msg, output)
+
+
+    # parser for input and executes commands
+    async def input_handler(self, user:User, msg:str, output:Output=Output(OUT.CONSOLE)):
         output_debug = Output(OUT.CONSOLE)
 
         if Flag.TEST_RUNNING in self.flags:
             await output.print("Test running, please try again later")
+            user.command_cache_locked = False
             return
-
         #----------------------------------------------------------------------
         # !dp parsing
         #----------------------------------------------------------------------
@@ -96,6 +117,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             output.print_hold(f"Degree Planner version: {self.VERSION}")
             await output.print_cache()
             user.flag.add(Flag.MENU_SELECT)
+            user.command_cache_locked = False
             return
         
         #----------------------------------------------------------------------
@@ -103,6 +125,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         #----------------------------------------------------------------------
         if Flag.MENU_SELECT in user.flag:
             user.flag.remove(Flag.MENU_SELECT)
+            user.command_cache_locked = False
 
             # CASE 1: run test suite
             if msg.casefold() == "1":
@@ -134,11 +157,9 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             elif msg.casefold() == "9":
                 await output_debug.print("DP 9 REGISTERED")
                 user.flag.add(Flag.SCHEDULING)
-                user.flag.add(Flag.SCHEDULE_SELECTION)
                 await output.print("You are now in scheduling mode!")
-                await output.print("Enter the name of the schedule to modify. " + \
-                    "If the schedule entered doesn't exist, it will be created")
-                return
+                await output.print("Generated empty schedule 'default'")
+                msg = "reschedule, default"
 
             # CASE 0: cancel selection operation
             elif msg.casefold() == "0":
@@ -158,90 +179,75 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         # course scheduling mode, the feature intended to be used in the end
         #----------------------------------------------------------------------
         if Flag.SCHEDULING in user.flag:
+
             # strips + casefold args, removes empty strings
-            command = [e.strip().casefold() for e in msg.split(",") if e.strip()] 
-            current_schedule = user.get_schedule(user.curr_schedule)
+            input = msg.strip().casefold()
+            command = user.command_cache
+            user.command_cache = []
+            schedule = user.get_schedule(user.curr_schedule)
+            print("cached command:" + str(command))
+
+            # if we are awaiting a response to fix the next element in the command
+            if Flag.SCHEDULE_COURSE_SELECT in user.flag:
+                courses = user.schedule_course_search
+                if not input.isdigit() or int(input) not in range(1, len(courses) + 1):
+                    await output.print("Please enter a valid selection number")
+                    user.command_cache = command
+                    user.command_cache_locked = False
+                    return
+                course:Course = courses[int(input) - 1]
+                command[2] = course.name
+                user.flag.remove(Flag.SCHEDULE_COURSE_SELECT)
+
+            # meaning we weren't awaiting a response and that this was a command
+            else:
+                command += [e.strip().casefold() for e in msg.split(",") if e.strip()]
+                print("command: " + str(command))
 
             if len(command) == 0:
                 await output.print("no command detected")
+                user.command_cache_locked = False
                 return
 
-            # sets the schedule to modify
-            if Flag.SCHEDULE_SELECTION in user.flag:
-                schedule_name = command[0].casefold()
-                schedule = user.get_schedule(schedule_name)
-                if schedule == None:
-                    await output.print(f"Schedule {schedule_name} not found, generating new one!")
-                    user.new_schedule(schedule_name)
-                    user.curr_schedule = schedule_name
-                else:
-                    await output.print(f"Successfully switched to schedule {schedule_name}!")
-                    user.curr_schedule = schedule_name
-                user.flag.remove(Flag.SCHEDULE_SELECTION)
-                user.command_cache = []
-                return
-
-            # user currently selecting a course from a list of choices to add to schedule
-            if Flag.SCHEDULE_COURSE_SELECT in user.flag:
-                courses = user.schedule_course_search
-                input = command[0]
-                if not input.isdigit() or int(input) not in range(1, len(courses) + 1):
-                    await output.print("Please enter a valid selection number")
-                    return
-                course = courses[int(input) - 1]
-                await self.add_course(user, course.name, user.schedule_course_search_sem, output)
-                command.pop(2)
-                user.flag.remove(Flag.SCHEDULE_COURSE_DELETE)
-                
-            # user currently selecting a course froma list of choices to remove from schedule
-            if Flag.SCHEDULE_COURSE_DELETE in user.flag:
-                courses = user.schedule_course_search
-                input = command[0]
-                if not input.isdigit() or int(input) not in range(1, len(courses) + 1):
-                    await output.print("Please enter a valid selection number")
-                    return
-                course = courses[int(input) - 1]
-                await self.remove_course(user, course.name, user.schedule_course_search_sem, output)
-                command.pop(2)
-                user.flag.remove(Flag.SCHEDULE_COURSE_DELETE)
+            cmd = command.pop(0)
 
             # user initiates process to add or delete course to schedule
-            if command[0] == "add" or command[0] == "remove":
-                if len(command) < 3:
+            if cmd == "add" or cmd == "remove":
+                if len(command) < 2:
                     await output.print("Not enough arguments")
-                    user.command_cache = []
+                    user.command_cache_locked = False
                     return
-                cmd = command.pop(0)
                 semester = int(command.pop(0))
-                if semester not in range(0, current_schedule.SEMESTERS_MAX):
+                if semester not in range(0, schedule.SEMESTERS_MAX):
                     await output.print("Invalid semester, enter number between 0 and 11")
-                    user.command_cache = []
+                    user.command_cache_locked = False
                     return
                 # iterate over all courses provided in command
                 # if we meet one with multiple possibilities then iteration will stop
                 while command:
-                    course = command.pop(0)
+                    course = command[0]
                     if cmd == "add":
                         cont = await self.add_course(user, course, semester, output)
                     else:
                         cont = await self.remove_course(user, course, semester, output)
-                    if not cont and command:
+                    if cont:
                         user.command_cache = [cmd, semester] + command
+                        user.command_cache_locked = False
                         return
-                user.command_cache = []
+                    command.pop(0)
 
             # prints semester table to output
-            elif command[0] == "print":
-                command.pop(0)
-                output.print_hold(str(current_schedule))
+            elif cmd == "print":
+                output.print_hold(str(schedule))
                 await output.print_cache()
 
             # sets degree of user, replaces previous selection
-            elif command[0] == "degree":
-                command.pop(0)
-                if len(command) < 1:
+            elif cmd == "degree":
+                if not command:
                     await output.print("no arguments found, " + \
                         "use degree,<degree name> to set your schedule's degree")
+                    user.command_cache_locked = False
+                    return
                 else:
                     input = command.pop(0)
                     degree = self.catalog.get_degree(input)
@@ -252,8 +258,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                         await output.print(f"set your degree to {degree.name}")
 
             # displays fulfillment status of current degree
-            elif command[0] == "fulfillment":
-                command.pop(0)
+            elif cmd == "fulfillment":
                 if user.get_current_schedule().degree == None:
                     await output.print("no degree specified")
                 else:
@@ -262,24 +267,44 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     await output.print_cache()
 
             # change the current schedule to modify
-            elif command[0] == "reschedule":
-                command.pop(0)
-                await output.print("Understood, please enter schedule name to modify:")
-                user.flag.add(Flag.SCHEDULE_SELECTION)
+            elif cmd == "reschedule":
+                if not command:
+                    await output.print("invalid command, please use reschedule, <schedule name>")
+                    user.command_cache_locked = False
+                    return
+                schedule_name = command.pop(0).casefold()
+                schedule = user.get_schedule(schedule_name)
+                if schedule == None:
+                    await output.print(f"Schedule {schedule_name} not found, generating new one!")
+                    user.new_schedule(schedule_name)
+                    user.curr_schedule = schedule_name
+                else:
+                    await output.print(f"Successfully switched to schedule {schedule_name}!")
+                    user.curr_schedule = schedule_name                
 
             # exits from scheduling mode
-            elif command[0] == "exit":
+            elif cmd == "exit":
                 await output.print("Exiting scheduling mode")
                 user.flag.remove(Flag.SCHEDULING)
                 user.command_cache = []
+                user.command_cache_locked = False
+                return
+
+            else:
+                await output.print("invalid command")
+                user.command_cache = []
+                user.command_cache_locked = False
                 return
 
             user.command_cache = command
 
             if user.command_cache:
-                await output.print(f"recursively calling message_handler with {user.command_cache}")
-                await self.message_handler(user, ",".join(command), output)
-
+                await output.print(f"recursively calling message_handler with cached command {user.command_cache}")
+                await self.input_handler(user, "", output)
+            else:
+                await output_debug.print("successfully completed command sequence")
+                user.command_cache_locked = False
+                return
         #----------------------------------------------------------------------
         # case 5 is a temporary test case for the search function in search.py
         #----------------------------------------------------------------------
@@ -287,6 +312,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             user.flag.remove(Flag.CASE_5)
             possible_courses = self.course_search.search(msg.casefold())
             await output.print("courses: " + str(possible_courses))
+            user.command_cache_locked = False
+            return
 
 
     #--------------------------------------------------------------------------
@@ -346,7 +373,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 output.print_hold(f"{i}: {repr(c)}")
                 i += 1
             await output.print_cache()
-            user.flag.add(Flag.SCHEDULE_COURSE_DELETE)
+            user.flag.add(Flag.SCHEDULE_COURSE_SELECT)
             user.schedule_course_search = returned_courses
             user.schedule_course_search_sem = semester
             return True

@@ -25,6 +25,7 @@ class User():
         self.flag = set()
 
         self.command_cache = [] # if there is a pending command on hold
+        self.command_cache_locked = False
         self.schedule_course_search = set()
         self.schedule_course_search_sem = []
 
