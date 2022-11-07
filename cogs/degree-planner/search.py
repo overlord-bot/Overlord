@@ -59,7 +59,6 @@ class Search():
                 continue
             key = word[0:3]
             if key not in self.__index:
-                print("no courses found")
                 return []
             if len(results) == 0:
                 results = self.__index[key]

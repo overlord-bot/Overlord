@@ -13,9 +13,9 @@ class Flag(Enum):
 
 class User():
     
-    def __init__(self, discord_user):
-        self.discord_user = discord_user
-        self.username = str(discord_user)
+    def __init__(self, id):
+        self.id = id
+        self.username = str(id)
         self.__schedules = dict() # all schedules this user created <schedule name, Schedule>
         self.curr_schedule = "" # empty string signifies no current schedule
 
@@ -33,7 +33,6 @@ class User():
 
     def get_schedule(self, schedule_name:str) -> Schedule:
         if schedule_name not in self.__schedules:
-            print(f"Schedule {schedule_name} not found")
             return None
         return self.__schedules.get(schedule_name)
 
@@ -51,14 +50,13 @@ class User():
         return self.get_schedule(self.curr_schedule)
 
 
-    def rename_schedule(self, old_name:str, new_name:str):
-        if old_name not in self.__schedules:
-            print(f"Schedule {old_name} not found")
-        elif new_name in self.__schedules:
-            print(f"Schedule {new_name} already exists, can't change name")
+    def rename_schedule(self, old_name:str, new_name:str) -> bool:
+        if old_name not in self.__schedules or new_name in self.__schedules:
+            return False
         else:
             self.__schedules.update({new_name : self.__schedules.get(old_name)})
             self.__schedules.pop(old_name)
+            return True
 
 
     def __repr__(self):
@@ -77,7 +75,4 @@ class User():
 
 
     def __hash__(self):
-        i = 0
-        for c in self.username:
-            i += ord(c)
-        return i
+        return hash(self.id)

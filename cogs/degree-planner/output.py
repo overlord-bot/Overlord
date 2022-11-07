@@ -6,6 +6,8 @@ class OUT(Enum):
     DISCORD_PRIVATE_MSG = 2
     CONSOLE = 3
 
+    NONE = 100
+
 class ATTRIBUTE(Enum):
     CHANNEL = 1
     USER = 2
@@ -48,21 +50,28 @@ class Output():
     async def print(self, msg):
         if self.location == OUT.CONSOLE:
             print(msg)
+            return
         elif self.location == OUT.DISCORD_PRIVATE_MSG:
             if self.user == None:
                 print("no user specified for printing msg: " + msg)
+                return
             elif Flag.DEBUG in self.flags:
                 print(msg)
+                return
             else:
                 await self.user.discord_user.send(msg)
+                return
         elif self.location == OUT.DISCORD_CHANNEL:
             if Flag.DEBUG in self.flags:
                 print(msg)
+                return
             else:
                 await self.channel.send(msg)
+                return
 
     def print_hold(self, msg):
         self.__msg_cache += msg + "\n"
+        return
 
     async def print_cache(self):
         if len(self.__msg_cache) > 1800:
@@ -74,3 +83,4 @@ class Output():
             else:
                 await self.print(f"```yaml\n{self.__msg_cache}```")
         self.__msg_cache = ""
+        return

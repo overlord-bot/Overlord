@@ -41,32 +41,32 @@ class Schedule():
         # with element 0 representing semester 1 and so on.
         for x in range(0, 12):
             self.__master_list.append([])
-        print("initializing master_list complete")
 
     #-----------------------------------------------------------------------
     # Main scheduling functions
     #-----------------------------------------------------------------------
 
-    def add_course(self, course, semester):
+    def add_course(self, course, semester) -> bool:
         if semester in self.find_course(course):
-            print("cannot add course as it's duplicated")
+            return False
         else:
             self.__master_list[semester].append(course)
-            print(f"added course: {str(course)}, semester: {semester}")
+            return True
 
 
-    def remove_course(self, course, semester):
+    def remove_course(self, course, semester) -> bool:
         if semester not in self.find_course(course):
-            print(f"course not present in semester {str(semester)}")
+            return False
         else:
             self.__master_list[semester].remove(course)
+            return True
 
 
     def get_semester(self, semester:int) -> list:
         if semester not in range(0, self.SEMESTERS_MAX):
-            print("invalid semester")
-            return ""
-        return self.__master_list[semester]
+            return None
+        else:
+            return self.__master_list[semester]
 
     def get_all_courses(self) -> set:
         courses = set()
