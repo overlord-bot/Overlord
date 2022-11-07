@@ -1,6 +1,11 @@
 from enum import Enum
 
 class CMD(Enum):
+
+    # getting enums require unique values so ONLY THE LAST DIGIT
+    # of each enum represents their actual value, which is how
+    # many arguments that command needs
+
     ADD = 12
     REMOVE = 22
     SCHEDULE = 11
