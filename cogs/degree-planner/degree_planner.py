@@ -230,7 +230,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     command.arguments[1] = course.name
                     user.flag.remove(Flag.CMD_PAUSED)
 
-                semester = int(command.arguments[0])
+                semester = command.arguments[0]
                 course = command.arguments[1]
 
                 if command.command == CMD.ADD:
