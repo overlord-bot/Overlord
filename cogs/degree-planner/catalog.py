@@ -48,16 +48,16 @@ class Catalog():
             self.__degree_list.update({d.name:d})
 
 
-    def get_course(self, course_name:str):
+    def get_course(self, course_name:str) -> Course:
         if self.reindex_flag:
             self.reindex()
             self.reindex_flag = False
         name = self.search.search(course_name.casefold())
         if len(name) == 1:
-            return self.__course_list.get(name[0], "")
+            return self.__course_list.get(name[0], None)
         else:
-            print("catalog get course non unique course found: " + str(name))
-        return ""
+            print(f"CATALOG ERROR: catalog get course non unique course found: {str(name)}")
+        return None
 
 
     def get_all_courses(self):
@@ -135,7 +135,7 @@ def get_course_match(target_course, course_pool:set, possible_values=None) -> di
         target_course = target_course.template_course
 
     if not isinstance(target_course, Course):
-        print("FATAL ERROR: get_course_match target_course is not instance of Course after initial call")
+        print("CATALOG ERROR: get_course_match target_course is not instance of Course after initial call")
 
     # makes a copy of target_course because it will be altered later on
     target_course = copy.deepcopy(target_course)
