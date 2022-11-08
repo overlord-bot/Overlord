@@ -36,7 +36,7 @@ class String:
         for point in self.points:
             for i in range(4):
                 x = point[0] + dir[i]
-                y = point[1] = dir[i+1]
+                y = point[1] + dir[i+1]
                 if x < 0 or x > 8:
                     pass
                 elif y < 0 or y > 8:
@@ -145,7 +145,7 @@ class GoMinigame(commands.Cog, name = "Go"):
             for a in range(4):
                 x = i + dir[a]
                 y = j + dir[a+1]
-                if x > 8 and x < 0 and y > 8 and y < 0:
+                if x > 8 or x < 0 or y > 8 or y < 0:
                     continue
                 elif self.board[x][y] == 0 and (x,y) not in visited:
                     dq.append((x,y))
@@ -234,6 +234,8 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.passMove = 0
         x = 9-int(move[3])
         y = int(move[1])-1
+
+        print("Move made: ("+ move[1] + "," + move[3] + ") by player " + str(self.turn))
         
         if x < 0 or x > 8 or y < 0 or y > 8 or self.board[x][y] != 0:
             await context.send("Invalid move, please pick a valid tile")
@@ -273,25 +275,36 @@ class GoMinigame(commands.Cog, name = "Go"):
                 neighboringStrings.append(self.stringBoard[j][k])
 
         # remove duplicates
-        print(neighboringStrings)
         setNeighbors = list(set(neighboringStrings))
+        # the case where the new piece placed borders no new strings
         if len(setNeighbors) == 0:
             self.stringMatch[self.stringCounter] = String(self.turn)
             self.stringMatch[self.stringCounter].addPoint(x,y)
             self.stringBoard[x][y] = self.stringCounter
             self.stringCounter += 1
         else:
-            print(self.stringMatch[setNeighbors[0]].points)
-            print(self.stringMatch[setNeighbors[0]].player)
+            # combining neighboring strings
             self.stringMatch[setNeighbors[0]].addPoint(x,y)
             self.stringBoard[x][y] = setNeighbors[0]
             for i in range(1,len(setNeighbors)):
                 self.stringMatch[setNeighbors[0]].combineStrings(self.stringMatch[setNeighbors[i]])
+                # update the board keeping track of the different strings
+                for point in self.stringMatch[setNeighbors[0]].points:
+                    self.stringBoard[point[0]][point[1]] = setNeighbors[0]
 
         if self.turn == 1:
             self.turn = 2
         else:
             self.turn = 1
+
+        # for debugging
+        for o in range(9):
+            print(self.board[o])
+        for o in range(9):
+            print(self.stringBoard[o])
+        print("STRINGS: ")
+        for li in self.stringMatch.values():
+            print(li.points)
 
         await self.printBoardState(context)
 
