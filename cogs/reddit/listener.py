@@ -9,6 +9,8 @@ from discord.ext import commands
 
 import asyncio
 from threading import Event, Thread
+import threading
+import datetime
 #https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds
 
 
@@ -25,7 +27,15 @@ class RedditListener(commands.Cog, name="Reddit Listener"):
         print(newest_post)
 
         
-        cancel_future_calls = call_repeatedly(5, context, subreddit, newest_post)
+        #cancel_future_calls = call_repeatedly(5, context, subreddit, newest_post)
+        #f_stop = threading.Event()
+        #await f(f_stop, context, subreddit, newest_post)
+
+        loop = asyncio.get_event_loop()
+        # Blocking call which returns when the display_date() coroutine is done
+        loop.run_until_complete(do_stuff(loop, context, subreddit, newest_post))
+        loop.close()
+
         #cancel_future_calls() # stop future calls
 
         new_posts = getNewPosts(context, reddit_data, newest_post)
@@ -36,7 +46,7 @@ class RedditListener(commands.Cog, name="Reddit Listener"):
     #await context.reply("Your file is:", file=discord.File(file, "list_of_commits.txt"))
 
 
-def runPostCheck(context, subreddit, newest_post):
+async def runPostCheck(context, subreddit, newest_post):
     reddit_data = getRedditData(subreddit)
     #print(reddit_data)
     new_post = reddit_data["data"]["children"][0]["data"]["name"]
@@ -45,20 +55,45 @@ def runPostCheck(context, subreddit, newest_post):
         return new_post
     
     print("is a new post")
-    #new_posts = getNewPosts(context, reddit_data, newest_post)
-    #await sendPosts(context, new_posts)
+    new_posts = getNewPosts(context, reddit_data, newest_post)
+    await sendPosts(context, new_posts)
     return new_post
 
+
+'''
 def call_repeatedly(interval, context, subreddit, newest_post):
     npost = [newest_post]
     stopped = Event()
-    def loop():
+    async def loop():
         while not stopped.wait(interval): # the first call is in `interval` secs
-            found_newst_post = runPostCheck(context, subreddit, npost)
-            npost[0] = found_newst_post
-    Thread(target=loop).start()  
+            found_newest_post = await runPostCheck(context, subreddit, npost)
+            npost[0] = found_newest_post
+    #Thread(target=loop).start()  
+    Thread(target=asyncio.run, args=(loop())).start()  
     #Thread(target=asyncio.run)
     return stopped.set
+
+async def f(f_stop, context, subreddit, newest_post):
+    # do something here ...
+    found_newest_post = await runPostCheck(context, subreddit, newest_post)
+    newest_post = found_newest_post
+    if not f_stop.is_set():
+        # call f() again in 5 seconds
+        threading.Timer(5, f, [f_stop, context, subreddit, newest_post]).start()
+
+'''
+
+async def do_stuff(loop, context, subreddit, newest_post):
+    end_time = loop.time() + 60.0
+    while True:
+        found_newest_post = await runPostCheck(context, subreddit, newest_post)
+        newest_post = found_newest_post
+
+        #Exit
+        if (loop.time() + 1.0) >= end_time:
+            break
+        await asyncio.sleep(5)
+
 
 def getRedditData(subreddit): #https://www.reddit.com/r/rpi/new.json?sort=new
     url = "https://www.reddit.com/r/" + subreddit + "/new.json?sort=new"
