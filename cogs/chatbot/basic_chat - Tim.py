@@ -61,8 +61,10 @@ class TimChat(commands.Cog, name="TimChat"):
         channel = discord.utils.get(member.guild.channels, name="new-friends")
         channel_id = channel.id
         channels = self.bot.get_channel(channel_id)
-        await channels.send("Don't use dirty, inappropriate, NSFW languages in this server!")
+        await channels.send("Don't use dirty, inappropriate, NSFW languages or content in this server!")
         await channels.send("Enter agree or disagree to determine which way you go.")
+        with open('joining_user.txt', 'w') as f:
+            f.write
 
         
 
