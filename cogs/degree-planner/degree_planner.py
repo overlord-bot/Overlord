@@ -2,6 +2,7 @@ from array import *
 from discord.ext import commands
 import discord
 
+from .output import *
 from .course import Course
 from .catalog import Catalog
 from .degree import Degree
@@ -12,7 +13,6 @@ from .user import User
 from .user import Flag
 from .search import Search
 from .course_template import Template
-from .output import *
 from .command import *
 from .parse import *
 
@@ -86,6 +86,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if message.author == self.bot.user or message.author.bot:
             return
 
+        # users from discord will be assigned user id equal to their discord id
         userid = str(message.author.id)
         if userid in self.users:
             user = self.users[userid]
@@ -93,21 +94,21 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         else:
             user = User(userid)
             user.username = str(message.author)
+            user.output = Output(OUT.DISCORD_CHANNEL, 
+                {ATTRIBUTE.CHANNEL:message.channel, 
+                ATTRIBUTE.FLAG:ATTRIBUTE.FANCY})
             self.users.update({userid:user})
             print(f"received msg from new user: {message.author}, user id: {userid}")
 
+        # only allows message through to message handler if there's a paused command
+        # waiting for user input or if the message starts with !dp
         if Flag.CMD_PAUSED in user.flag:
-            output = Output(OUT.DISCORD_CHANNEL, {ATTRIBUTE.CHANNEL:message.channel})
-            await self.message_handler(user, message.content, output)
+            await self.message_handler(user, message.content, user.output)
             return
 
-        # ignore messages that doesn't start with !d unless it's for a paused cmd
-        if not message.content.startswith('!dp '):
+        if message.content.startswith('!dp '):
+            await self.message_handler(user, message.content[4:], user.output)
             return
-
-        output = Output(OUT.DISCORD_CHANNEL, {ATTRIBUTE.CHANNEL:message.channel})
-        await self.message_handler(user, message.content[4:], output)
-        return
 
 
     """ MAIN FUNCTION FOR ACCEPTING COMMAND ENTRIES
@@ -124,19 +125,18 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     async def message_handler(self, user:User, message:str, output:Output=None) -> bool:
         if output == None: output = Output(OUT.CONSOLE)
         if Flag.CMD_PAUSED in user.flag:
+            user.command_queue_locked = True
             user.command_decision = message.strip().casefold()
         else:
             # if queue is available, immediately lock it and proceed
-            if not user.command_queue_locked:
-                user.command_queue_locked = True
-            else:
-                await output.print("queue busy, please try again later")
+            if user.command_queue_locked:
+                await output.print("ERROR/queue busy, please try again later")
                 return False
+            user.command_queue_locked = True
             user.command_queue.join()
             commands = await self.parse_command(message, output)
             for command in commands:
                 user.command_queue.put(command)
-
         await self.command_handler(user, output)
         user.command_queue_locked = False
         return True
@@ -171,30 +171,31 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 command:Command = user.command_queue.get()
 
             if command.command == CMD.NONE:
-                await output("there was an error understanding your command")
+                await output("ERROR/there was an error understanding your command")
                 user.command_queue.task_done()
                 continue
 
             if command.command == CMD.TEST:
                 await output_debug.print("BEGINNING TEST")
-                await output.print(f"Testing Degree Planner {VERSION}")
+                await output.print(f"ADMIN/Testing Degree Planner {VERSION}")
                 await self.test(output_debug)
                 await output_debug.print("FINISHED TEST")
-                await output.print("Test completed successfully, all assertions met")
+                await output.print("ADMIN/Test completed successfully, all assertions met")
                 user.command_queue.task_done()
                 continue
 
             if command.command == CMD.IMPORT:
                 await output_debug.print("BEGINNING DATA IMPORTING")
+                await output.print("ADMIN/begin parsing data")
                 await self.parse_data()
                 await output_debug.print("FINISHED DATA IMPORTING")
-                await output.print("parsing completed")
+                await output.print("ADMIN/parsing completed")
                 user.command_queue.task_done()
                 continue
 
             if command.command == CMD.FIND:
                 if len(command.arguments) == 0:
-                    await output.print("no arguments found. Use find, [courses] to find courses")
+                    await output.print("FIND/no arguments found. Use find, [courses] to find courses")
                 else:
                     for entry in command.arguments:
                         await self.print_matches(entry, output)
@@ -203,7 +204,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
             if command.command == CMD.SCHEDULE:
                 if not command.arguments:
-                    await output.print("not enough arguments, please specify a schedule name")
+                    await output.print("SCHEDULE/not enough arguments, please specify a schedule name")
                 else:
                     await self.set_active_schedule(user, command.arguments[0], output)
                 user.command_queue.task_done()
@@ -213,7 +214,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             # all commands after this requires an active schedule inside User
             schedule = user.get_current_schedule()
             if schedule == None:
-                await output.print("no schedule selected")
+                await output.print("SCHEDULE/no schedule selected")
                 user.command_queue.task_done()
                 continue
             #------------------------------------------------------------------
@@ -224,7 +225,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     decision = user.command_decision
                     courses = command.data_store
                     if not decision.isdigit() or int(decision) not in range(1, len(courses) + 1):
-                        await output.print("Please enter a valid selection number")
+                        await output.print("SCHEDULE/Please enter a valid selection number")
                         break
                     course:Course = courses[int(decision) - 1]
                     command.arguments[1] = course.name
@@ -239,7 +240,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                     possible_courses = await self.remove_course(user, course, semester, output)
 
                 if possible_courses:
-                    await output.print(f"entry {course} has multiple choices, please choose from list:")
+                    await output.print(f"SCHEDULE/entry {course} has multiple choices, please choose from list:")
                     i = 1
                     for c in possible_courses:
                         output.print_hold(f"{i}: {repr(c)}")
@@ -262,7 +263,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
             if command.command == CMD.DEGREE:
                 if not command.arguments:
-                    await output.print("no arguments found. " + \
+                    await output.print("SCHEDULE/no arguments found. " + \
                         "Use degree, <degree name> to set your schedule's degree")
                 else:
                     await self.set_degree(schedule, command.arguments[0], output)
@@ -271,7 +272,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
             if command.command == CMD.FULFILLMENT:
                 if schedule.degree == None:
-                    await output.print("no degree specified")
+                    await output.print("SCHEDULE/no degree specified")
                 else:
                     output.print_hold(schedule.degree.fulfillment_msg(schedule.get_all_courses()))
                     await output.print_cache()
@@ -310,7 +311,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 if last_command != None:
                     last_command.arguments.append(e)
                 else:
-                    await output.print("invalid command")
+                    await output.print(f"ERROR/invalid command '{e}'")
         # after exiting the loop, push the last command if it exists into the queue
         if last_command != None:
             cmd_queue.append(last_command)
@@ -318,7 +319,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         # validates all commands
         for e in cmd_queue:
             if not e.valid():
-                await output.print(f"invalid arguments for command {str(e)}")
+                await output.print(f"ERROR/invalid arguments for command {str(e)}")
         cmd_queue = [e for e in cmd_queue if e.valid()]
 
         return cmd_queue
@@ -349,12 +350,12 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if output == None: output = Output(OUT.CONSOLE)
         schedule = user.get_schedule(entry)
         if schedule == None:
-            await output.print(f"Schedule {entry} not found, generating new one!")
+            await output.print(f"SCHEDULE/Schedule {entry} not found, generating new one!")
             user.new_schedule(entry)
             user.curr_schedule = entry
             return
         else:
-            await output.print(f"Successfully switched to schedule {entry}!")
+            await output.print(f"SCHEDULE/Successfully switched to schedule {entry}!")
             user.curr_schedule = entry
             return
 
@@ -375,11 +376,11 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if output == None: output = Output(OUT.CONSOLE)
         degree = self.catalog.get_degree(entry)
         if degree == None:
-            await output.print(f"invalid degree entered: {entry}")
+            await output.print(f"SCHEDULE/invalid degree entered: {entry}")
             return False
         else:
             schedule.degree = degree
-            await output.print(f"set your degree to {degree.name}")
+            await output.print(f"SCHEDULE/set your degree to {degree.name}")
             return True
 
 
@@ -392,7 +393,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     async def print_matches(self, entry:str, output:Output=None) -> None:
         if output == None: output = Output(OUT.CONSOLE)
         possible_courses = self.course_search.search(entry)
-        output.print_hold(f"courses matching {entry}: ")
+        await output.print(f"FIND/courses matching {entry}: ")
         i = 1
         for c in possible_courses:
             course = self.catalog.get_course(c)
@@ -416,24 +417,24 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     async def add_course(self, user:User, entry:str, semester, output:Output=None):
         if output == None: output = Output(OUT.CONSOLE)
         if isinstance(semester, str) and not semester.isdigit():
-            await output.print("semester must be a number")
+            await output.print("SCHEDULE/semester must be a number")
             return False
         semester = int(semester)
         if semester not in range(0, SEMESTERS_MAX):
-            await output.print(f"Invalid semester {semester}, enter number between 0 and 11")
+            await output.print(f"SCHEDULE/Invalid semester {semester}, enter number between 0 and 11")
             return False
         
         returned_courses = [self.catalog.get_course(c) for c in self.course_search.search(entry)]
 
         if len(returned_courses) == 0:
-            await output.print(f"Course {entry} not found")
+            await output.print(f"SCHEDULE/Course {entry} not found")
             return False
         elif len(returned_courses) > 1:
             return returned_courses
         
         course = returned_courses[0]
         user.get_current_schedule().add_course(course, semester)
-        await output.print(f"Added course {course.name} to semester {semester}")
+        await output.print(f"SCHEDULE/Added course {course.name} to semester {semester}")
         return False
 
 
@@ -452,31 +453,31 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     async def remove_course(self, user:User, entry:str, semester, output:Output=None):
         if output == None: output = Output(OUT.CONSOLE)
         if isinstance(semester, str) and not semester.isdigit():
-            await output.print("semester must be a number")
+            await output.print("SCHEDULE/semester must be a number")
             return False
         semester = int(semester)
         if semester not in range(0, SEMESTERS_MAX):
-            await output.print(f"Invalid semester {semester}, enter number between 0 and 11")
+            await output.print(f"SCHEDULE/Invalid semester {semester}, enter number between 0 and 11")
             return False
         
         this_semester_courses = user.get_current_schedule().get_semester(semester)
 
         if len(this_semester_courses) == 0:
-            await output.print(f"No courses in semester {semester}")
+            await output.print(f"SCHEDULE/No courses in semester {semester}")
             return False
         
         semester_course_search = Search(this_semester_courses, True)
         returned_courses = [self.catalog.get_course(c) for c in semester_course_search.search(entry)]
 
         if len(returned_courses) == 0:
-            await output.print(f"Course {entry} not found")
+            await output.print(f"SCHEDULE/Course {entry} not found")
             return False
         elif len(returned_courses) > 1:
             return returned_courses
         
         course = returned_courses[0]
         user.get_current_schedule().remove_course(course, semester)
-        await output.print(f"Removed course {course.name} from semester {semester}")
+        await output.print(f"SCHEDULE/Removed course {course.name} from semester {semester}")
         return False
 
     
@@ -498,20 +499,20 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
         try:
             await parse_courses(catalog_file, self.catalog, output)
-            await output.print("Sucessfully parsed catalog data")
+            await output.print("ADMIN/Sucessfully parsed catalog data")
             
             # set up searcher for finding courses based on incomplete user input
             self.course_search.update_items(self.catalog.get_all_course_names())
             self.course_search.generate_index()
 
             await parse_degrees(degree_file, self.catalog, output)
-            await output.print("Sucessfully parsed degree data, printing catalog")
+            await output.print("ADMIN/Sucessfully parsed degree data, printing catalog")
             output.print_hold(str(self.catalog))
             await output.print_cache()
 
         except Exception as e:
             output.flags.remove(Flag.DEBUG)
-            await output.print(f"An exception has occurred during parsing: {e}")
+            await output.print(f"ERROR/An exception has occurred during parsing: {e}")
             return e
 
         else:
