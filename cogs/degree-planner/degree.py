@@ -30,7 +30,7 @@ class Degree():
     def fulfillment_msg(self, taken_courses:set):
         status_return = ""
         for rule in self.rules:
-            status_return = f"Rule {rule.name}: {rule.fulfillment_return_message(taken_courses)}\n\n"
+            status_return = f"Rule {rule.name}: \n{rule.fulfillment_return_message(taken_courses)}\n"
         return status_return
 
     def __repr__(self):
