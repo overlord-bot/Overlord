@@ -125,19 +125,18 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     async def message_handler(self, user:User, message:str, output:Output=None) -> bool:
         if output == None: output = Output(OUT.CONSOLE)
         if Flag.CMD_PAUSED in user.flag:
+            user.command_queue_locked = True
             user.command_decision = message.strip().casefold()
         else:
             # if queue is available, immediately lock it and proceed
-            if not user.command_queue_locked:
-                user.command_queue_locked = True
-            else:
+            if user.command_queue_locked:
                 await output.print("ERROR/queue busy, please try again later")
                 return False
+            user.command_queue_locked = True
             user.command_queue.join()
             commands = await self.parse_command(message, output)
             for command in commands:
                 user.command_queue.put(command)
-
         await self.command_handler(user, output)
         user.command_queue_locked = False
         return True
