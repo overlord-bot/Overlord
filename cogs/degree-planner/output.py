@@ -33,7 +33,6 @@ class Output():
     """
     def __init__(self, location, attributes:dict=None):
         self.location = location
-        #self.user = None
         self.channel = None
         self.flags = set()
         self.__msg_cache_hold = ""
@@ -42,6 +41,7 @@ class Output():
         self.last_message = None
         self.last_message_content = ''
         self.last_message_time = 1
+        self.editlast = False
 
         if attributes != None and isinstance(attributes, dict):
             for k, v in attributes.items():
@@ -79,74 +79,91 @@ class Output():
 
     """70 lines of pure organic undocumented spaghetti code for formatting and printing embeds written at 3am while sleep deprived, good luck
     """
-    async def print_fancy(self, msg):
+    async def print_fancy(self, msg:str):
         if self.location == OUT.CONSOLE or self.channel == None:
             print("OUTPUT ERROR: can't print fancy")
             return
-        edit_last = False
+
+        # blocks represent a title/message
+
+        # sanitize input:
+        msg.replace('##', '')
+
+        self.editlast = False
+        # determines whether we should add on to the previous message or generate new one
         if len(msg) + len(self.last_message_content) < 1000 and time.time() - self.last_message_time < 3:
-            edit_last = True
-        if edit_last:
+            self.editlast = True
             msg = self.last_message_content + "##" + msg
+
         # concatnate messages with same title or no titles
-        msg_split = msg.split('##')
-        title = ''
-        last_valid_msg = ''
-        msg_split_valid = []
-        for e in msg_split:
+        msg_blocks = msg.split('##')
+        title_element = ''
+        message_element = ''
+        msg_blocks_titled = []
+        for e in msg_blocks:
+            # if we do not find a title separator inside block
             if '/' not in e:
-                last_valid_msg += '\n\n' + e
+                # if this is the first message to be pushed, add title 'untitled'
+                if not len(title_element):
+                    title_element = 'untitled'
+                message_element += '\n\n' + e
             else:
-                if title != '':
-                    msg_split_valid.append(title + "/" + last_valid_msg)
-                title = e.split('/')[0]
-                last_valid_msg = e.split('/')[1]
-        msg_split_valid.append(title + "/" + last_valid_msg)
+                # if there exists previous blocks to push
+                if len(title_element):
+                    msg_blocks_titled.append(title_element + "/" + message_element)
+                title_element = e.split('/')[0]
+                message_element = e.split('/')[1]
+        msg_blocks_titled.append(title_element + "/" + message_element)
 
-        msg_split_valid2 = []
-        last_title = ''
-        last_msg = ''
-        for e in msg_split_valid:
-            if e.split('/')[0] == last_title:
-                last_msg += '\n\n' + e.split('/')[1]
+        # combines consecutive blocks with the same title
+        msg_blocks_condensed = []
+        title_element = ''
+        message_element = ''
+        for e in msg_blocks_titled:
+            if e.split('/')[0] == title_element:
+                message_element += '\n\n' + e.split('/')[1]
             else:
-                if last_title != '':
-                    msg_split_valid2.append(last_title + "/" + last_msg)
-                last_title = e.split('/')[0]
-                last_msg = e.split('/')[1]
-        msg_split_valid2.append(last_title + "/" + last_msg)
+                if title_element != '':
+                    msg_blocks_condensed.append(title_element + "/" + message_element)
+                title_element = e.split('/')[0]
+                message_element = e.split('/')[1]
+        msg_blocks_condensed.append(title_element + "/" + message_element)
 
-
-        msg_combo = OrderedDict()
-        #print("original msg: " + msg)
-        #print("valid split: " + str(msg_split_valid))
-        #print("valid split2: " + str(msg_split_valid2))
-        titledict = dict()
-        for i in range(0, len(msg_split_valid2)):
-            e = msg_split_valid2[i]
-            elementtitle = e.split('/')[0]
-            if elementtitle in titledict:
-                msg_split_valid2[i] = elementtitle + f" ({titledict[elementtitle]})/" + e.split('/')[1]
-                titledict[elementtitle] = titledict[elementtitle] + 1
+        # if duplicated titles are found, add a counter to the title so it's not duplicated
+        titles = dict()
+        for i in range(0, len(msg_blocks_condensed)):
+            e = msg_blocks_condensed[i]
+            element_title = e.split('/')[0]
+            if element_title in titles:
+                msg_blocks_condensed[i] = element_title + f" ({titles[element_title]})/" + e.split('/')[1]
+                titles[element_title] += 1
             else:
-                titledict.update({elementtitle:1})
-        i = 1
-        for e in msg_split_valid2:
-            msg_splitsplit = e.split("/")
-            msg_combo.update({msg_splitsplit[0] if len(msg_splitsplit) > 1 else f'{i}. Output' : msg_splitsplit[1] if len(msg_splitsplit) > 1 else msg_splitsplit[0]})
-            i += 1
+                titles.update({element_title:1})
+
+        # generate msg_blocks dictionary to be submitted to print_embed
+        msg_blocks = OrderedDict()
+        for e in msg_blocks_condensed:
+            title_element = e.split("/")[0]
+            message_element = e.split("/")[1]
+            msg_blocks.update({title_element : message_element})
+        
+        await self.print_embed(msg_blocks)
+        self.last_message_content = msg
+        self.last_message_time = time.time()
+        return
+
+
+    async def print_embed(self, msg_blocks:dict):
         embed = discord.Embed(title="Degree Planner",color=discord.Color.blue())
-        for k, v in msg_combo.items():
+        for k, v in msg_blocks.items():
             if len(k) == 0:
                 embed.add_field(name=f"Untitled", value=v, inline = False)
             else:
                 embed.add_field(name=k, value=v, inline = False)
-        if edit_last:
+        if self.editlast:
             await self.last_message.edit(embed=embed)
         else:
             self.last_message = await self.channel.send(embed=embed)
-        self.last_message_content = msg
-        self.last_message_time = time.time()
         return
 
 
