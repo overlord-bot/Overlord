@@ -28,8 +28,18 @@ class RottenTomatoesScraper(commands.Cog, name="Rotten Tomatoes Scraper"):
             score_board = page_soup.find("score-board")
             name = score_board.find('h1', class_="scoreboard__title").string.strip()
             percent = score_board.get("tomatometerscore")
+            if len(percent) == 0:
+                percent = "N/A"
+            else:
+                percent = f"{percent}%"
             audience = score_board.get("audiencescore")
-            await context.send(f"Name: {name} | URL: {link} | Tomatometer: {percent}% | Audience Score: {audience}%")
+            if len(audience) == 0:
+                audience = "N/A"
+            else:
+                audience = f"{audience}%"
+            await context.send(f"Name: {name} | URL: {link} | Tomatometer: {percent} | Audience Score: {audience}")
+        else:
+            await context.send("I couldn't find any results from that query. Try another one.")
 
 async def setup(bot):
     await bot.add_cog(RottenTomatoesScraper(bot))
