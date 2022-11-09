@@ -4,6 +4,5 @@ requests
 beautifulsoup4
 yfinance
 emoji
-aiohttp
-vt
+vt-py
 bs4

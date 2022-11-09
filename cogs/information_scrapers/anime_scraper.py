@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 
 from discord.ext import commands
 
+from cogs.moderation.virus_scanner import test_function
+
 
 class AnimeScraper(commands.Cog, name="Anime Scraper"):
     """Scrapes MyAnimeList.net"""
@@ -17,6 +19,7 @@ class AnimeScraper(commands.Cog, name="Anime Scraper"):
 
         url = "https://myanimelist.net/search/all?q=" + '%20'.join(search) + "&cat=all"
         print(f"Url of search result page: {url}")
+        test_function(url)
 
         search_data = requests.get(url)
         search_soup = BeautifulSoup(search_data.text, 'html.parser')
