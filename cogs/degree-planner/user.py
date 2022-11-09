@@ -16,6 +16,7 @@ class User():
     def __init__(self, id, output=None):
         self.id = id
         self.username = str(id)
+        self.discord_user = None
         self.__schedules = dict() # all schedules this user created <schedule name, Schedule>
         self.curr_schedule = "" # empty string signifies no current schedule
 
@@ -26,7 +27,6 @@ class User():
         self.command_decision = None
         self.command_paused = None
 
-        self.output = output
         self.admin = False # admin for the bot
 
 
