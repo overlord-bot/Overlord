@@ -5,8 +5,8 @@ import vt
 
 
 # Checks the safety of a link by running it through VirusTotal's api. Returns True if safe and False if unsafe.
-def test_function(link):
-    print(f"---------------- Scanning {link} --------------")
+async def scan_link(link):
+    print(f"---------------- Virus Scan for: {link} --------------")
 
     load_dotenv()
     vt_token = os.getenv("VT_TOKEN")
@@ -16,24 +16,26 @@ def test_function(link):
         return False  # no API key, so link is unchecked, therefore not safe by default
 
     print("Opening Virus Total Client")
-    client = vt.Client(vt_token)
+    vt_client = vt.Client(vt_token)
 
     url_id = vt.url_id(link)
-    url = client.get_object(f"/urls/{url_id}")
-    recent_stats = url.last_analysis_stats
+    url = vt_client.get_object(f"/urls/{url_id}")
+    # if url.times_submitted < 100:
+    #     client.scan_url(link, wait_for_completion=True)
+    #     url = client.get_object(f"/urls/{url_id}")
 
     print(f"Times link has been submitted for scan: {url.times_submitted}")
-    print(f"Result of last scan: {recent_stats}")  # format {'harmless': 61, 'malicious': 0, 'suspicious': 1, 'timeout': 0, 'undetected': 8}
+    print(f"Result of last scan: {url.last_analysis_stats}")  # format {'harmless': 61, 'malicious': 0, 'suspicious': 1, 'timeout': 0, 'undetected': 8}
 
-    client.close()
+    vt_client.close()
     print("Closed Virus Total Client")
 
-    if recent_stats["malicious"] > 0:
-        print(f"-------------------- Link is malicious. Ending scan. ------------------------")
+    if url.last_analysis_stats["malicious"] > 0:
+        print(f"-------------------- Link is malicious, ending scan. ------------------------")
         return False
     else:
-        print(f"----------------------- Link is safe. Ending scan. --------------------------")
+        print(f"----------------------- Link is safe, ending scan. --------------------------")
         return True
 
 
-test_function("https://myanimelist.net/anime/29803/Overlord")
+# scan_link("https://myanimelist.net/anime/29803/Overlord")
