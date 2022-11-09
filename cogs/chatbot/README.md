@@ -11,6 +11,7 @@ This module is used to manage chats messages sent in channels and give users fun
 `what <time or day> is it` sends time or day depending on which keyword user chooses.
 
 `!count <integer> min` starts a timer with the specified number of minutes and gives alerts as it counts down.
+`!count <integer> sec` starts a timer with the specified number of seconds and gives alerts as it counts down.
 
 
 ## In-chat

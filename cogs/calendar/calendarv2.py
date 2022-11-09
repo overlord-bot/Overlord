@@ -34,23 +34,19 @@ class CalendarJson(commands.Cog, name="Calendarv2"):
                 await context.send(embed=self.calhelper.print_remove_embed(event, user_id))
             else:
                 await context.send("Please specify an event.")
-        else:
-            await context.send("Please specify an action.")
 
-    @commands.command(
-        name="calendaredit",
-        help="Used to edit events/dates within the calendar. Usage is !calendaredit <action> <event>"
-    )
-    async def calendaredit(self, context, action: str, *, event: str = None):
-        """Used to edit events/dates within the calendar. Usage is !calendaredit <action> <event>"""
-        user_id = str(context.message.author.id)
-        user_name = str(context.message.author.name)
-        if action.lower() == "event":
-            pass
-        elif action.lower() == "date":
-            await context.send(embed=self.calhelper.edit_date(event, user_id))
-        elif action.lower() == "both":
-            pass
+        elif action.lower() == "edit":
+            if event:
+                temp = str(event.split(" ")[0])
+                new_event = event[len(temp)+1:]
+                if temp.lower() == "date":
+                    await context.send(embed=self.calhelper.edit_date(new_event, user_id))
+                elif temp.lower() == "event":
+                    await context.send(embed=self.calhelper.edit_event(new_event, user_id))
+                elif temp.lower() == "both":
+                    pass
+            else:
+                await context.send("Please specify an event.")
         else:
             await context.send("Please specify an action.")
 

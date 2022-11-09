@@ -13,7 +13,7 @@ class Flag(Enum):
 
 class User():
     
-    def __init__(self, id):
+    def __init__(self, id, output=None):
         self.id = id
         self.username = str(id)
         self.__schedules = dict() # all schedules this user created <schedule name, Schedule>
@@ -25,6 +25,9 @@ class User():
         self.command_queue_locked = False
         self.command_decision = None
         self.command_paused = None
+
+        self.output = output
+        self.admin = False # admin for the bot
 
 
     def get_all_schedules(self) -> Schedule:

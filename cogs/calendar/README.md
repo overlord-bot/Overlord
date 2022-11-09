@@ -28,13 +28,15 @@ To use the new commands, type `!calendarv2` followed by the command.
 
 `!calendarv2 clear` will clear the calendar of its data and its events.
 
-`!calendaredit date <event> <MM/DD/YYYY>` is a planned event in which users can edit events for the date
+`!calendarv2 edit date <old date> <new date>` will change the events of one day to another and remove the old date's events.
 
 ## Plans for the Week:
 
 Current plans for the week:
 
 Create and get an edit function working for events, and maybe go into fixing remove with events themselves.
+
+Edit: Busy this week so will have less time to work on development.
 
 ## Development Plans
 
