@@ -1662,6 +1662,17 @@
   },
   {
     "course_subject": "ARTS",
+    "course_number": "4100",
+    "course_name": "Electronic Arts Theory Seminar",
+    "course_description": "This course will be devoted to the investigation of diverse topics of electronic arts history, theory, and practice.",
+    "course_is_ci": false,
+    "course_requisites": "Prerequisite: 2000-level ARTS course or permission of instructor.",
+    "course_offered": "Fall and spring terms annually.",
+    "course_crosslisted": "Not Crosslisted",
+    "course_credit_hours": "4"
+  },
+  {
+    "course_subject": "ARTS",
     "course_number": "4120",
     "course_name": "Biopunk: Arts Lab Practice",
     "course_description": "Biopunk: Arts Lab Practice is a studio, lab and lecture class introducing students to bioart, and microbial life and resilient ecological practices. We use punk, queer and biological laboratory techniques to creatively produce science, design and art works. Students will be required to complete readings, experiment, and create their own visions of a speculative biofuture. Emphasis will be on the history and contemporary investigations of the microbiome and how to culturally explore these scenarios of how we live amongst multiple diverse communities and species.",
@@ -1669,17 +1680,6 @@
     "course_requisites": "Prerequisites: ARTS 1020\u00a0, ARTS 1030\u00a0, ARTS 1040\u00a0, ARTS 1200\u00a0, ARTS 2020\u00a0, ARTS 2380\u00a0, ARTS 2220\u00a0, IHSS 1030\u00a0, IHSS 1040\u00a0, IHSS 1170\u00a0, IHSS 1180\u00a0, ARTS 4140\u00a0, or permission of instructor",
     "course_offered": "Fall term annually",
     "course_crosslisted": "ARTS 6120",
-    "course_credit_hours": "4"
-  },
-  {
-    "course_subject": "ARTS",
-    "course_number": "4130",
-    "course_name": "New Media Theory",
-    "course_description": "This course asks what is really new about New Media, and looks at creative practices, theoretical discourses, and social contexts to find answers. The course concentrates on cutting edge cultural expression using information and communication technologies. The objective to equip students with multiple perspectives - aesthetic, communications, historical - with which to analyze, critique, and develop original concepts about the uses of new media in art and culture.",
-    "course_is_ci": false,
-    "course_requisites": "Prerequisites:\u00a0 ARTS 2500\u00a0\u00a0, ARTS 2540\u00a0\u00a0, or a 2000-level history-theory course in Audio Culture.",
-    "course_offered": "Spring term annually.",
-    "course_crosslisted": "Cross listed with ARTS 6130\u00a0\u00a0; students cannot obtain credit for both courses.",
     "course_credit_hours": "4"
   },
   {
@@ -2097,7 +2097,7 @@
     "course_is_ci": false,
     "course_requisites": "None",
     "course_offered": "Unknown",
-    "course_crosslisted": "Cross listed with ARTS 4130\u00a0. Students cannot obtain credit for both courses.",
+    "course_crosslisted": "Cross listed with ARTS 4130. Students cannot obtain credit for both courses.",
     "course_credit_hours": "4"
   },
   {
@@ -2527,7 +2527,7 @@
     "course_requisites": "Permission of instructor.",
     "course_offered": "Fall, spring, and summer terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1 to 4"
+    "course_credit_hours": "1 to 4Contact, Lecture or Lab Hours: 3 to 12 contact hours"
   },
   {
     "course_subject": "BCBP",
@@ -2614,7 +2614,7 @@
     "course_is_ci": false,
     "course_requisites": "BIOL 4620\u00a0\u00a0(or equivalent) and BCBP 4760\u00a0\u00a0(or equivalent) or permission of the instructor.",
     "course_offered": "Spring term annually.",
-    "course_crosslisted": "BCBP 6650\u00a0,\u00a0BIOL 4660\u00a0,\u00a0BIOL 6650",
+    "course_crosslisted": "BIOL 4660\u00a0, BIOL 6660\u00a0.",
     "course_credit_hours": "4"
   },
   {
@@ -2625,7 +2625,7 @@
     "course_is_ci": true,
     "course_requisites": "Prerequisite:BIOL 2120\u00a0\u00a0and BIOL 2125\u00a0.",
     "course_offered": "Spring term annually.",
-    "course_crosslisted": "BIOL 4710",
+    "course_crosslisted": "Not Crosslisted",
     "course_credit_hours": "6"
   },
   {
@@ -2703,7 +2703,7 @@
     "course_requisites": "Permission of instructor.",
     "course_offered": "Fall, spring, and summer terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1-4"
+    "course_credit_hours": "1-4Contact, Lecture or Lab Hours: 3-12"
   },
   {
     "course_subject": "BCBP",
@@ -2790,7 +2790,7 @@
     "course_is_ci": false,
     "course_requisites": "BIOL 4620\u00a0\u00a0and BCBP 4760\u00a0\u00a0or permission of the instructor.",
     "course_offered": "Spring term annually.",
-    "course_crosslisted": "BIOL 4660\u00a0, BCBP 4660\u00a0, BIOL 6650\u00a0.",
+    "course_crosslisted": "BIOL 4660\u00a0, BCBP 4660\u00a0, BIOL 6660\u00a0.",
     "course_credit_hours": "4"
   },
   {
@@ -2923,7 +2923,7 @@
     "course_requisites": "Prerequisite BIOL 1010\u00a0\u00a0\nCorequisite: BIOL 2120",
     "course_offered": "Summer, fall and spring semesters annually",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1"
+    "course_credit_hours": "1Contact, Lecture or Lab Hours: 3"
   },
   {
     "course_subject": "BIOL",
@@ -2956,7 +2956,7 @@
     "course_requisites": "Permission of instructor.",
     "course_offered": "Fall, spring, and summer terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1 to 4"
+    "course_credit_hours": "1 to 4Contact, Lecture or Lab Hours: 3 to 12 contact hours"
   },
   {
     "course_subject": "BIOL",
@@ -3197,7 +3197,7 @@
     "course_is_ci": false,
     "course_requisites": "BIOL 4620\u00a0\u00a0and BIOL 4760\u00a0\u00a0or permission of the instructor.",
     "course_offered": "Spring term annually.",
-    "course_crosslisted": "BIOL 6650\u00a0\u00a0, BCBP 4660\u00a0, BCBP 6650\u00a0\u00a0. A student cannot get credit for both BIOL 4660 / BCBP 4660\u00a0\u00a0and BIOL 6650\u00a0\u00a0/ BCBP 6650\u00a0.",
+    "course_crosslisted": "BIOL 6660\u00a0, BCBP 4660\u00a0, BCBP 6660. A student cannot get credit for both BIOL 4660 / BCBP 4660\u00a0\u00a0and BIOL 6650\u00a0\u00a0/ BCBP 6650\u00a0.",
     "course_credit_hours": "4"
   },
   {
@@ -3252,7 +3252,7 @@
     "course_is_ci": false,
     "course_requisites": "Prerequisite: BIOL 4760\u00a0\u00a0or permission of instructor.",
     "course_offered": "Spring term annually.",
-    "course_crosslisted": "BCBP 4770\u00a0, CHEM 4770\u00a0\u00a0.",
+    "course_crosslisted": "Not Crosslisted",
     "course_credit_hours": "4"
   },
   {
@@ -3341,7 +3341,7 @@
     "course_requisites": "Permission of instructor.",
     "course_offered": "Fall, spring, and summer terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1 to 4"
+    "course_credit_hours": "1 to 4Contact, Lecture or Lab Hours: 3-12 contact hours."
   },
   {
     "course_subject": "BIOL",
@@ -3440,7 +3440,7 @@
     "course_requisites": "None",
     "course_offered": "Spring term annually.",
     "course_crosslisted": "BIOL 4310\u00a0. Students may not obtain credit for both this course and BIOL 4310\u00a0.",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "BIOL",
@@ -3527,7 +3527,7 @@
     "course_is_ci": false,
     "course_requisites": "BIOL 4620\u00a0\u00a0and BIOL 4760\u00a0\u00a0or permission of the instructor.",
     "course_offered": "Spring term annually.",
-    "course_crosslisted": "BIOL 4660\u00a0, BCBP 6650\u00a0\u00a0, BCBP 4660\u00a0.",
+    "course_crosslisted": "BIOL 4660\u00a0, BCBP 6660, BCBP 4660\u00a0.",
     "course_credit_hours": "4"
   },
   {
@@ -4726,7 +4726,7 @@
     "course_is_ci": false,
     "course_requisites": "Prerequisite: CHEM 4760\u00a0\u00a0or equivalent.",
     "course_offered": "Spring term annually.",
-    "course_crosslisted": "BIOL 4770\u00a0, BCBP 4770",
+    "course_crosslisted": "Not Crosslisted",
     "course_credit_hours": "4"
   },
   {
@@ -4760,7 +4760,7 @@
     "course_requisites": "None",
     "course_offered": "Fall term annually.Graded: S/U",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1"
+    "course_credit_hours": "1Contact, Lecture or Lab Hours: 1"
   },
   {
     "course_subject": "CHEM",
@@ -4870,7 +4870,7 @@
     "course_requisites": "None",
     "course_offered": "Fall term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 3"
   },
   {
     "course_subject": "CHEM",
@@ -4892,7 +4892,7 @@
     "course_requisites": "Prerequisite: a working knowledge of organic chemistry and biochemistry is required.",
     "course_offered": "Unknown",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 3"
   },
   {
     "course_subject": "CHEM",
@@ -4991,7 +4991,7 @@
     "course_requisites": "None",
     "course_offered": "Spring term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 3"
   },
   {
     "course_subject": "CHEM",
@@ -5849,7 +5849,7 @@
     "course_requisites": "Prerequisite: ENGR 2530\u00a0\u00a0.",
     "course_offered": "Spring term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "CIVL",
@@ -5915,7 +5915,7 @@
     "course_requisites": "Prerequisite: CIVL 2670\u00a0.",
     "course_offered": "Spring term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 Contact hours"
   },
   {
     "course_subject": "CIVL",
@@ -7133,7 +7133,7 @@
     "course_name": "Visual Poetics and Narrative",
     "course_description": "This studio course explores new directions in art and design that include visual poetry (visual expression in which they shape an arrangement of text, images, symbols to convey the message) and interactive narrative. Visual poetics and narrative appear in advertisement, music videos, and other forms of communication. Students will experiment with these forms of communication and learn how these concepts apply in artistic and commercial contexts. The class format includes lectures, discussions, and studio work.",
     "course_is_ci": false,
-    "course_requisites": "Prerequisite: At least 1 of the following: ARCH 2520\u00a0\u00a0- Digital Constructs 1, ARTS 1020\u00a0\u00a0- Digital Imaging, COMM 2660\u00a0\u00a0- Introduction to Graphic Design, COMM 2570\u00a0\u00a0- Typography.",
+    "course_requisites": "Prerequisite: At least 1 of the following: ARCH 2520\u00a0\u00a0- Digital Constructs 1, ARTS 1020\u00a0\u00a0- Digital Imaging, COMM 2660\u00a0\u00a0- Introduction to Graphic Design, COMM 2570\u00a0\u00a0- Typography, or GSAS 1040\u00a0\u00a0- Art for Interactive Media.",
     "course_offered": "Fall term, odd-numbered years",
     "course_crosslisted": "Not Crosslisted",
     "course_credit_hours": "4"
@@ -7477,7 +7477,7 @@
     "course_requisites": "None",
     "course_offered": "Fall, spring, and summer terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 5"
   },
   {
     "course_subject": "CSCI",
@@ -7499,7 +7499,7 @@
     "course_requisites": "Prerequisite: CSCI 1100\u00a0\u00a0or permission of instructor.",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6"
   },
   {
     "course_subject": "CSCI",
@@ -7510,7 +7510,7 @@
     "course_requisites": "Prerequisites: CSCI 1200\u00a0\u00a0and Introduction to Calculus (MATH 1010\u00a0\u00a0or MATH 1500\u00a0\u00a0or MATH 1020\u00a0\u00a0or MATH 2010\u00a0); MATH 1020\u00a0\u00a0is strongly recommended.",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 5"
   },
   {
     "course_subject": "CSCI",
@@ -7521,7 +7521,7 @@
     "course_requisites": "Prerequisites: CSCI 1200\u00a0, CSCI 2200\u00a0, and Introduction to Calculus (MATH 1010\u00a0\u00a0or MATH 1500\u00a0\u00a0or MATH 1020\u00a0\u00a0or MATH 2010\u00a0).",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6"
   },
   {
     "course_subject": "CSCI",
@@ -7532,7 +7532,7 @@
     "course_requisites": "Prerequisite: CSCI 1200\u00a0.",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6"
   },
   {
     "course_subject": "CSCI",
@@ -7916,7 +7916,7 @@
     "course_is_ci": false,
     "course_requisites": "Prerequisite: CSCI 4350\u00a0\u00a0/ CSCI 6350\u00a0\u00a0/ ERTH 4350\u00a0\u00a0/ ERTH 6350\u00a0\u00a0/ ITWS 4350\u00a0\u00a0/ ITWS 6350\u00a0\u00a0or permission of instructor.",
     "course_offered": "Spring terms annually.",
-    "course_crosslisted": "BCBP 4600\u00a0,\u00a0ITWS 4600\u00a0,\u00a0ITWS 6600\u00a0. Students can only obtain credit for one of these courses.",
+    "course_crosslisted": "ITWS 4600\u00a0\u00a0/ ITWS 6600\u00a0. Students can only obtain credit for one of these courses.",
     "course_credit_hours": "3"
   },
   {
@@ -9325,7 +9325,7 @@
     "course_requisites": "Prerequisites: MATH 2400\u00a0.",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -9336,7 +9336,7 @@
     "course_requisites": "Prerequisite: ECSE 2010\u00a0\u00a0and (PHYS 1200\u00a0\u00a0or PHYS 1250\u00a0).",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -9347,7 +9347,7 @@
     "course_requisites": "Prerequisites: ECSE 2010\u00a0\u00a0and MATH 2010\u00a0\u00a0and (PHYS 1200\u00a0\u00a0or PHYS 1250\u00a0).",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -9369,7 +9369,7 @@
     "course_requisites": "Prerequisites: ECSE 2010\u00a0\u00a0and (PHYS 1200\u00a0\u00a0or PHYS 1250\u00a0).",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 4"
   },
   {
     "course_subject": "ECSE",
@@ -9402,7 +9402,7 @@
     "course_requisites": "Prerequisite: CSCI 1100\u00a0.",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -9413,7 +9413,7 @@
     "course_requisites": "Prerequisite: ECSE 2610\u00a0.",
     "course_offered": "Fall, spring and summer terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -9435,7 +9435,7 @@
     "course_requisites": "Prerequisite: ECSE 2050\u00a0.",
     "course_offered": "Fall term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 3"
   },
   {
     "course_subject": "ECSE",
@@ -9446,7 +9446,7 @@
     "course_requisites": "Prerequisites: ECSE 2050\u00a0\u00a0and ECSE 2610\u00a0.",
     "course_offered": "Spring term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 5 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -9479,7 +9479,7 @@
     "course_requisites": "Prerequisites: MANE 4500\u00a0\u00a0or ECSE 2410\u00a0.",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "MANE 4520\u00a0. Students cannot obtain credit for both this course and the cross-listed course.",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 5 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -9556,7 +9556,7 @@
     "course_requisites": "Prerequisites: ECSE 2050\u00a0\u00a0and ECSE 2610\u00a0; ECSE 2210\u00a0\u00a0recommended.",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 4 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -9655,7 +9655,7 @@
     "course_requisites": "Prerequisite: ECSE 2410\u00a0.",
     "course_offered": "Upon availability of instructor",
     "course_crosslisted": "Co-listed as ECSE 6500\u00a0. Students cannot receive credit for both this course and ECSE 6500\u00a0.",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 3"
   },
   {
     "course_subject": "ECSE",
@@ -9732,7 +9732,7 @@
     "course_requisites": "Prerequisite: PHYS 2620\u00a0.",
     "course_offered": "Upon availability of instructor",
     "course_crosslisted": "PHYS 4640\u00a0. Students cannot receive credit for both this course and PHYS 4640\u00a0.",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 3 lecture hours and 3 laboratory hours per week."
   },
   {
     "course_subject": "ECSE",
@@ -9798,7 +9798,7 @@
     "course_requisites": "Prerequisites: ECSE 4440\u00a0\u00a0or ECSE 4560\u00a0.",
     "course_offered": "Spring term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 5 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -9809,7 +9809,7 @@
     "course_requisites": "Prerequisite: ECSE 2610\u00a0.",
     "course_offered": "Fall term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 5 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -9831,7 +9831,7 @@
     "course_requisites": "Prerequisites: ENGR 2350\u00a0; CSCI 1200\u00a0\u00a0strongly recommended but not required.",
     "course_offered": "Fall term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "ECSE",
@@ -10040,7 +10040,7 @@
     "course_requisites": "Prerequisite: ECSE 6230\u00a0.",
     "course_offered": "Upon availability of instructor",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 3"
   },
   {
     "course_subject": "ECSE",
@@ -10260,7 +10260,7 @@
     "course_requisites": "Prerequisite: ECSE 2410\u00a0\u00a0or equivalent.",
     "course_offered": "Upon availability of instructor",
     "course_crosslisted": "Co-Listed: ECSE 4500\u00a0.\u00a0 Students cannot receive credit for both this course and ECSE 4500\u00a0.",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 3"
   },
   {
     "course_subject": "ECSE",
@@ -10601,7 +10601,7 @@
     "course_requisites": "None",
     "course_offered": "Fall, spring, and summer terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1"
+    "course_credit_hours": "1Contact, Lecture or Lab Hours: 3 contact hours"
   },
   {
     "course_subject": "ENGR",
@@ -10623,7 +10623,7 @@
     "course_requisites": "Prerequisites:\u00a0 a mobile computing platform with Internet capability and working knowledge of the operating system is required. Microsoft Windows operating system strongly recommended.",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1"
+    "course_credit_hours": "1Contact, Lecture or Lab Hours: 3 contact hours"
   },
   {
     "course_subject": "ENGR",
@@ -10634,7 +10634,7 @@
     "course_requisites": "Prerequisite: CHEM 1100\u00a0.",
     "course_offered": "Fall, spring, and summer terms annually.",
     "course_crosslisted": "CHEM 1600\u00a0, PHYS 1600\u00a0, and ISCI 1600\u00a0. Students cannot receive credit for both this course and CHEM 1600\u00a0, PHYS 1600\u00a0, or ISCI 1600",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 5 contact hours"
   },
   {
     "course_subject": "ENGR",
@@ -10667,7 +10667,7 @@
     "course_requisites": "Prerequisites: ENGR 1100\u00a0\u00a0or ECSE 1010\u00a0, CIVL 1200\u00a0\u00a0or ENGR 1200\u00a0\u00a0or ENGR 1400\u00a0, and\u00a0PHYS 1200\u00a0\u00a0or PHYS 1250\u00a0.",
     "course_offered": "Fall, spring, and summer terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "ENGR",
@@ -10843,7 +10843,7 @@
     "course_requisites": "Prerequisites: Both ENGR 1300\u00a0\u00a0and ENGR 2710\u00a0\u00a0are suggested.",
     "course_offered": "Fall term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "ENGR",
@@ -10854,7 +10854,7 @@
     "course_requisites": "Prerequisite: ENGR 4710\u00a0.",
     "course_offered": "Spring term annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "ENGR",
@@ -12977,7 +12977,7 @@
     "course_requisites": "CHEM 1100\u00a0.",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "ENGR 1600\u00a0, PHYS 1600\u00a0, and CHEM 1600\u00a0. Students cannot receive credit for both this course and ENGR 1600\u00a0, PHYS 1600\u00a0, or CHEM 1600\u00a0.",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 5"
   },
   {
     "course_subject": "ISCI",
@@ -13010,7 +13010,7 @@
     "course_requisites": "Restricted to School of Science majors accepted into the Accelerated B.S./Ph.D. Program.",
     "course_offered": "Fall and spring terms annually.Graded: S/U",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "2-4"
+    "course_credit_hours": "2-4Contact, Lecture or Lab Hours: Variable"
   },
   {
     "course_subject": "ISCI",
@@ -13725,7 +13725,7 @@
     "course_requisites": "CSCI 2300",
     "course_offered": "Fall term annually.",
     "course_crosslisted": "ITWS 6250\u00a0. Students may receive credit for only one of ITWS 4250, ITWS 6250\u00a0\u00a0or CSCI 4380\u00a0.",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 3"
   },
   {
     "course_subject": "ITWS",
@@ -13812,7 +13812,7 @@
     "course_is_ci": false,
     "course_requisites": "None",
     "course_offered": "Fall and spring terms annually.",
-    "course_crosslisted": "BCBP 4600\u00a0\u00a0,\u00a0ITWS 6600\u00a0,\u00a0CSCI 4960\u00a0. Students can only obtain credit for one of these courses.",
+    "course_crosslisted": "ITWS 6600\u00a0\u00a0and CSCI 4960\u00a0. Students can only obtain credit for one of these courses.",
     "course_credit_hours": "3"
   },
   {
@@ -13857,7 +13857,7 @@
     "course_requisites": "Knowledge of data structures and algorithms, and proficiency in a higher-level programming langauge is an advantage.",
     "course_offered": "Fall term annually.",
     "course_crosslisted": "ITWS 4250\u00a0. Students may receive credit for only one of ITWS 4250\u00a0, ITWS 6250 or CSCI 4380\u00a0.",
-    "course_credit_hours": "3"
+    "course_credit_hours": "3Contact, Lecture or Lab Hours: 3"
   },
   {
     "course_subject": "ITWS",
@@ -15067,7 +15067,7 @@
     "course_requisites": "Prerequisites: Both ENGR 1300\u00a0\u00a0Engineering Processes and ENGR 2710\u00a0\u00a0General Manufacturing Processes are suggested.",
     "course_offered": "Fall term annually.",
     "course_crosslisted": "ENGR 4710\u00a0\u00a0Manufacturing Processes and Systems Lab I. Students cannot obtain credit for both this course and the cross-listed course.",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "MANE",
@@ -15078,7 +15078,7 @@
     "course_requisites": "Prerequisite: ENGR 4710\u00a0\u00a0Manufacturing Processes and Systems Lab I or MANE 4610\u00a0\u00a0Manufacturing Processes and Systems Lab I.",
     "course_offered": "Spring term annually.",
     "course_crosslisted": "ENGR 4720\u00a0\u00a0Manufacturing Processes and Systems Lab II. Students cannot obtain credit for both this course and the cross-listed course.",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 6 contact hours"
   },
   {
     "course_subject": "MANE",
@@ -17014,7 +17014,7 @@
     "course_requisites": "None",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 5 contact hours"
   },
   {
     "course_subject": "MGMT",
@@ -19511,7 +19511,7 @@
     "course_requisites": "Prerequisite: CHEM 1100\u00a0.",
     "course_offered": "Fall and spring terms annually.",
     "course_crosslisted": "ENGR 1600\u00a0, CHEM 1600\u00a0, and ISCI 1600\u00a0. Students cannot receive credit for both this course and ENGR 1600\u00a0, CHEM 1600\u00a0, or ISCI 1600\u00a0.",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 5"
   },
   {
     "course_subject": "PHYS",
@@ -19555,7 +19555,7 @@
     "course_requisites": "Prerequisite or co-requisite: PHYS 2220\u00a0.",
     "course_offered": "Fall, spring, and summer terms annually.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: 9 contact hours"
   },
   {
     "course_subject": "PHYS",
@@ -19676,7 +19676,7 @@
     "course_requisites": "Prerequisite: PHYS 2620\u00a0\u00a0recommended.",
     "course_offered": "Fall term odd-numbered years.",
     "course_crosslisted": "ECSE 4630\u00a0. Students cannot obtain credit for both this course and ECSE 4630\u00a0.",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: Three lecture hours and three laboratory hours per week."
   },
   {
     "course_subject": "PHYS",
@@ -19687,7 +19687,7 @@
     "course_requisites": "Prerequisite: PHYS 2620\u00a0.",
     "course_offered": "Fall term even-numbered years.",
     "course_crosslisted": "ECSE 4640\u00a0. Students cannot receive credit for both this course and ECSE 4640\u00a0.",
-    "course_credit_hours": "4"
+    "course_credit_hours": "4Contact, Lecture or Lab Hours: Three lecture hours and three laboratory hours per week."
   },
   {
     "course_subject": "PHYS",
@@ -20417,6 +20417,17 @@
   },
   {
     "course_subject": "STSO",
+    "course_number": "4330",
+    "course_name": "Environmental Justice",
+    "course_description": "What is environmental justice? Why are some people exposed to environmental hazards while others are not? In this class, we will explore the intersection of environmental concerns and social justice. We will read the works of activists and scholars working across a range of disciplines, engage in discussion, analysis, research, and mapping. We will learn about global historical processes that structure contemporary inequity and contemporary cases including environmental justice work in our own community.",
+    "course_is_ci": false,
+    "course_requisites": "Prerequisites: One of the following: IHSS 1240\u00a0, IHSS 1110\u00a0, STSO 1110\u00a0, STSO 2300\u00a0, or permission of instructor",
+    "course_offered": "spring term annually",
+    "course_crosslisted": "Not Crosslisted",
+    "course_credit_hours": "4"
+  },
+  {
+    "course_subject": "STSO",
     "course_number": "4340",
     "course_name": "Environmental Philosophy",
     "course_description": "While concepts such as quality of life, environment, nature, global ecology, and the like figure heavily in contemporary discussions, they are seldom integrated into an environmental philosophy. The course tries to achieve this integration by understanding some of the religious, mythic-poetic, and scientific dimensions of the human-nature matrix. Some specific environmental problems are examined to illustrate the system of values implied by various solutions.",
@@ -20820,7 +20831,7 @@
     "course_requisites": "None",
     "course_offered": "An eight-semester (fall and spring) sequence, beginning each fall.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "0"
+    "course_credit_hours": "0Contact, Lecture or Lab Hours: 2 contact hours"
   },
   {
     "course_subject": "USAF",
@@ -20831,7 +20842,7 @@
     "course_requisites": "None",
     "course_offered": "An eight-semester (fall and spring) sequence, beginning each fall.",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "0"
+    "course_credit_hours": "0Contact, Lecture or Lab Hours: 2 contact hours"
   },
   {
     "course_subject": "USAF",
@@ -21018,7 +21029,7 @@
     "course_requisites": "None",
     "course_offered": "Unknown",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1"
+    "course_credit_hours": "1Contact, Lecture or Lab Hours: Leadership Laboratories are held every week for two hours and attendance is required.  There is additional training conducted on weekends and attendance is  mandatory."
   },
   {
     "course_subject": "USAR",
@@ -21029,7 +21040,7 @@
     "course_requisites": "None",
     "course_offered": "Unknown",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1"
+    "course_credit_hours": "1Contact, Lecture or Lab Hours: Leadership Laboratories are held every week for two hours and attendance is required.  There is additional training conducted on weekends and attendance is  mandatory."
   },
   {
     "course_subject": "USAR",
@@ -21040,7 +21051,7 @@
     "course_requisites": "None",
     "course_offered": "Unknown",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1"
+    "course_credit_hours": "1Contact, Lecture or Lab Hours: Leadership Laboratories are held every week for two hours and labs are mandatory for contracted and enrolled Cadets. There is additional training conducted on weekends and attendance is  mandatory."
   },
   {
     "course_subject": "USAR",
@@ -21051,7 +21062,7 @@
     "course_requisites": "None",
     "course_offered": "Unknown",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "1"
+    "course_credit_hours": "1Contact, Lecture or Lab Hours: Leadership Laboratories are held every week for two hours and attendance is required.  There is additional training conducted on weekends and attendance is  mandatory."
   },
   {
     "course_subject": "USAR",
@@ -21062,7 +21073,7 @@
     "course_requisites": "None",
     "course_offered": "Unknown",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "2"
+    "course_credit_hours": "2Contact, Lecture or Lab Hours: Leadership Laboratories are held every week for two hours and attendance is required.  There is additional training conducted on weekends and attendance is  mandatory."
   },
   {
     "course_subject": "USAR",
@@ -21073,7 +21084,7 @@
     "course_requisites": "None",
     "course_offered": "Unknown",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "2"
+    "course_credit_hours": "2Contact, Lecture or Lab Hours: Leadership Laboratories are held every week for two hours and attendance is required.  There is additional training conducted on weekends and attendance is  mandatory."
   },
   {
     "course_subject": "USAR",
@@ -21084,7 +21095,7 @@
     "course_requisites": "None",
     "course_offered": "Unknown",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "2"
+    "course_credit_hours": "2Contact, Lecture or Lab Hours: Leadership Laboratories are held every week for two hours and attendance is required.  There is additional training conducted on weekends and attendance is  mandatory."
   },
   {
     "course_subject": "USAR",
@@ -21095,7 +21106,7 @@
     "course_requisites": "None",
     "course_offered": "Unknown",
     "course_crosslisted": "Not Crosslisted",
-    "course_credit_hours": "2"
+    "course_credit_hours": "2Contact, Lecture or Lab Hours: Leadership Laboratories are held every week for two hours and attendance is required.  There is additional training conducted on weekends and attendance is  mandatory."
   },
   {
     "course_subject": "USNA",

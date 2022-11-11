@@ -1,0 +1,110 @@
+from array import *
+from math import *
+from .bundle import Bundle
+
+# what I did here is not check fulfillment, it more like to recommend courses for user base on major, minor, pathway
+# 
+
+class Major():
+    name = ""
+
+    # !!!!
+    # each major class obj should be a major, a minor, a pathway, ( may be concentration ???? , in extend of major)
+    # course in the major should be treat depend on its level
+    #
+    core_course = []  # list of courses,the core course that the major required to graduate
+    ris_course = []  # list of pair, with number of courses need to take in the list, and bundle of restricted course in the category
+    # (1,bundle) means need to take one out of three course, NOT SURE ABOUT THIS YET
+    # only be use if the object is a actually major
+    taken_course = []  # a list of taken courses
+    ntaken_course = []  # a list of un taken courses
+
+    def __init__(self, major_name):
+        self.name = major_name
+
+    def __init__(self, major_name, core):
+        self.name = major_name
+        self.core_course = core
+
+    def add_core(self, course):
+        i = len(self.core_course)
+        while (i > 0):  # find the element in the list with the course major or loop to end
+            if (self.core_course[i].get_title == course.major):
+                break
+            i-=1
+
+        if not i:  # no such course bundle yet
+            self.core_course.append(Bundle(course.major, course, course))
+            self.core_course[-1].add(course)
+        else:  # find the element of the major courses
+            self.core_course[i].add(course)
+
+    def remove_core(self, course):
+        i = len(self.core_course)
+        while (i > 0):  # find the element in the list with the course major or loop to end
+            if (self.core_course[i].get_title() == course.major):
+                break
+            i-=1
+
+        if i:
+            self.core_course[i].remove(course)
+
+    def add_ris(self, bundle_index, course):
+        self.ris_course[bundle_index][2].add(course)
+
+    def remove_ris(self, bundle_index, course):
+        self.ris_course[bundle_index][2].remove(course)
+
+    # set taken_course, and copy non taken core course to ntaken_course
+    def set_taken(self, taken):
+        self.taken_course = taken
+        self.remove_taken()
+
+    # add not taken core course in to not taken list
+    def remove_taken(self):
+        for course in self.core_course:
+            if not course in self.taken_course:
+                self.ntaken_course.append(course)
+
+    def recommend(self):
+        for course_u in self.ntaken_course:
+            level = trunc(course_u.course_id / 1000)
+
+            for course_t in self.taken_course:
+                cnt = 0
+                if course_t in course_u.prerequisites:
+                    ++cnt
+
+            if level == 1:
+                pass
+                # recommend
+
+            if level == 2:
+                if cnt == len(course_u.prerequisites):  # 2000 level, all pre fulfilled
+                    pass
+                    # recommend
+                else:  # 2000 level, not all fulfilled
+                    pass
+                    # recommend pre
+
+            #if (level == 4):
+
+        # use all the taken course, loop through utaken
+        # if a course taken is a prerequisite of a utaken course
+
+        # recommend all utaken 1000 level requirement
+
+        # for the utaken course that is at 2000 level if all requirement is fulfilled, add to the list
+        # for 2000 level course that is not yet fulfilled all, recommend the prerequisite of the course
+
+        # 4000 level course generally have same prerequisite or none prerequisite
+        # how to recommend, we cant recommend all 4000 level course at same time\
+        # recommend courses as a bundle for different concentration
+        # or if taken_course have 4000 level class, find the concentration bundle that have the most overlaps
+
+        # minor can be treat as a class
+        # pathway generally have a suggesting minor, which can be treat as a major
+
+
+
+

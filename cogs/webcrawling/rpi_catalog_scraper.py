@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import time  # for calculating runtime
 import json
+from pprint import pprint
 
 
 # Finds all courses in an url based on its first child's "a" tag attributes
@@ -32,11 +33,8 @@ def get_course_info(course_list):
         course_crosslisted = "Not Crosslisted"
         course_offered = "Unknown"
         course_requisites = "None"
-        # course_prerequisites = []
-        # course_corequisites = []
-
-        if course_description.find("Contact, Lecture or Lab Hours: ") != -1:
-            course_description = course_description.split("Contact, Lecture or Lab Hours: ")[0].strip()
+        course_prerequisites = []
+        course_corequisites = []
 
         if course_description.find("Credit Hours: ") != -1:
             course_credit_hours = course_description.split("Credit Hours: ")[1].strip()
