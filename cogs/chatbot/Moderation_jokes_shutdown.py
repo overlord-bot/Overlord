@@ -4,6 +4,7 @@ import random
 from discord.ext import commands
 import discord
 import json
+import os
 
 from bot import Bot
 
@@ -58,7 +59,8 @@ class TimChat(commands.Cog, name="TimChat"):
     async def test(self, message):
         dic = {"bj":30,"xh":23}
         json_f = json.dumps(dic)
-        with open(".\cogs\chatbot\join_user.json", "w") as outwrite:
+        dir = os.path.dirname(os.path.realpath(__file__))
+        with open(f"{dir}/join_user.json", "w") as outwrite:
             outwrite.write(json_f)
         await message.channel.send("write_done")
         with open(".\cogs\chatbot\join_user.json") as read:
