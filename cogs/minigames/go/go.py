@@ -194,6 +194,11 @@ class GoMinigame(commands.Cog, name = "Go"):
 
             if self.passMove == 2:
                 result = self.endGame()
+                # A draw is not possible given komi
+                if result[0] > result[1]:
+                    await context.send("Player 1 won with " + result[0] + "points compared to player 2's " + result[1] + "points")
+                else:
+                    await context.send("Player 2 won with " + result[1] + "points compared to player 1's " + result[0] + "points")
                 self.reset()
                 await context.send("Game ended! GG!")
                 return
@@ -321,7 +326,6 @@ class GoMinigame(commands.Cog, name = "Go"):
             self.reset()
             await context.send("Game ended! GG!")
 
-            # A draw is not possible given komi
             if result[0] > result[1]:
                 await context.send("Player 1 won with " + result[0] + "points compared to player 2's " + result[1] + "points")
             else:
@@ -352,9 +356,20 @@ class GoMinigame(commands.Cog, name = "Go"):
         ]
         checkpoint3 = [
             [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,2,0,0,0,0,0],
+            [0,0,2,0,0,0,0,0,0],
+            [0,0,1,2,0,0,0,0,0],
+            [0,1,0,1,0,0,0,0,0],
+            [1,0,1,1,0,0,0,0,0],
+            [0,1,0,1,0,0,0,0,0],
             [0,0,1,0,0,0,0,0,0],
+            [0,0,1,0,0,0,0,0,0]
+        ]
+        checkpoint4 = [
+            [0,0,0,1,0,0,0,2,0],
+            [0,0,1,0,1,0,0,2,0],
+            [0,1,0,0,0,1,2,0,0],
+            [0,0,1,0,1,0,0,2,2],
             [0,1,0,1,0,0,0,0,0],
             [1,0,1,1,0,0,0,0,0],
             [0,1,0,1,0,0,0,0,0],
@@ -396,15 +411,36 @@ class GoMinigame(commands.Cog, name = "Go"):
         await self.makeMove(context, "(4,4)", True)
         await self.makeMove(context, "(3,5)", True)
         await self.makeMove(context, "(3,6)", True)
-        await self.makeMove(context, "(5,5)", True)
+        await self.makeMove(context, "(4,8)", True)
         await self.makeMove(context, "(4,5)", True)
-        await self.makeMove(context, "(5,7)", True)
+        await self.makeMove(context, "(3,7)", True)
         await self.makeMove(context, "(2,5)", True)
         await self.makeMove(context, "(4,6)", True)
         await self.makeMove(context, "(3,4)", True)
         assert self.board == checkpoint3, "Checkpoint 3: Failed to cancel out center pieces"
 
+        await self.makeMove(context, "(5,7)", True)
+        await self.makeMove(context, "(2,7)", True)
+        await self.makeMove(context, "(4,7)", True)
+        await self.makeMove(context, "(3,8)", True)
+        await self.makeMove(context, "(8,9)", True)
+        await self.makeMove(context, "(4,9)", True)
+        await self.makeMove(context, "(8,8)", True)
+        await self.makeMove(context, "(5,8)", True)
+        await self.makeMove(context, "(7,7)", True)
+        await self.makeMove(context, "(6,7)", True)
+        await self.makeMove(context, "(8,6)", True)
+        await self.makeMove(context, "(5,6)", True)
+        await self.makeMove(context, "(9,6)", True)
         await self.printBoardState(context)
+        assert self.board == checkpoint4, "Checkpoint 4: Failed to cancel out center pieces"
+
+        # SCORING
+        assert self.player1LostStones == 2, "Player 1 lost stones incorrect!"
+        assert self.player2LostStones == 13, "Player 2 lost stones incorrect!"
+        # TODO: FIX THIS BUG
+        print(self.endGame())
+        assert self.endGame() == (20,-2.5), "Scoring is incorrect!"
 
         # RESET AND CONFIRM
         self.reset()
