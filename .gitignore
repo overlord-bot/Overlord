@@ -3,6 +3,7 @@ __pycache__/
 .idea/
 .vs
 env5
+env
 .git
 OverLordEnv
 OverlordTestEnv
@@ -11,3 +12,5 @@ VSProject
 .env
 # other files to ignore
 calendar.txt
+list_of_commits.txt
+calendar.json
