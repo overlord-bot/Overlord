@@ -3,8 +3,7 @@ import random
 #from discord.ext import tasks
 from discord.ext import commands
 import discord
-import datetime
-from datetime import date
+import json
 
 from bot import Bot
 
@@ -26,8 +25,6 @@ class TimChat(commands.Cog, name="TimChat"):
         channels = self.bot.get_channel(channel_id)
         await channels.send("Don't use dirty, inappropriate, NSFW languages or content in this server!")
         await channels.send("Enter agree or disagree to determine which way you go.")
-        with open('joining_user.txt', 'w') as f:
-            f.write
 
         
 
@@ -56,6 +53,14 @@ class TimChat(commands.Cog, name="TimChat"):
         FAREWELL = ("See ya, ", "Bye bye, ", "See you around, ", "Alright, ", "Good to see you ", "Anytime ", "See you next time ")
         await message.channel.send(random.choice(FAREWELL) + message.author.name + ", have a great day!")
         await self.bot.close()
+    
+    @commands.command()
+    async def test(self, message):
+        dic = {"bj":30,"xh":23}
+        json_f = json.dumps(dic)
+        with open(".\cogs\chatbot\join_user.json", "w") as outwrite:
+            outwrite.write(json_f)
+        await message.channel.send("done")
 
 async def setup(bot):
     await bot.add_cog(TimChat(bot))
