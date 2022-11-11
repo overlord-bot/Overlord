@@ -1,5 +1,4 @@
-import discord, os, asyncio, time, random
-from cogs.poll.util.PollView import PollView
+import discord
 
 class PollInfoModal(discord.ui.Modal, title="Poll Information"):
 	'''
@@ -7,30 +6,34 @@ class PollInfoModal(discord.ui.Modal, title="Poll Information"):
 	timeout for a poll.
 	'''
 	max_num_options = 24
-	
+
 	'''
 	Default fields for the modal
 	'''
-	poll_title = discord.ui.TextInput(
+	title_field = discord.ui.TextInput(
 		label = "Title",
 		style=discord.TextStyle.short,
 		placeholder="What to eat?",
 		max_length=128
 	)
-	poll_information = discord.ui.TextInput(
+	options_field = discord.ui.TextInput(
 		label = "Poll Information",
 		placeholder="poll option 1\npoll option 2\n...",
 		style=discord.TextStyle.long
 	)
-	poll_timeout = discord.ui.TextInput(
+	timeout_field = discord.ui.TextInput(
 		label= "Timeout in minutes",
 		style=discord.TextStyle.short,
 		placeholder="How many minutes until poll times out?",
 		default="5"
 	)
 
-	def __init__(self, title:str = None) -> None:
-		self.poll_title.default = title
+	def __init__(self) -> None:
+		self.poll_title = None
+		self.poll_options = None
+		self.poll_timeout = 5.0
+		self.error = False
+		self.embed = None
 		super().__init__()
 
 	async def on_submit(self, interaction:discord.Interaction) -> None:
@@ -40,55 +43,49 @@ class PollInfoModal(discord.ui.Modal, title="Poll Information"):
 		Parameters
 		----------
 		interaction: :class:`discord.Interaction`
-			Interaction of a button click
+			interaction of the submit button being clicked
 		'''
-		# TODO add error checking for non float timeouts
-		title = self.poll_title.value
-		content = self.poll_information.value.split("\n")
-		send_followup_msg = False
-    
-		# Makes sure that the number of options is < the max
-		if (len(content) > PollInfoModal.max_num_options):
-			send_followup_msg = True
-			content = content[:PollInfoModal.max_num_options]
+		self.poll_title = self.title_field.value
+		self.poll_options = self.options_field.value.split("\n")
+		num_options = len(self.poll_options)
+		if (num_options > PollInfoModal.max_num_options):
+			raise OptionsOutOfRangeError(num_options, PollInfoModal.max_num_options) 
+		self.poll_timeout = float(self.timeout_field.value)
+		await interaction.response.defer()
 
-		# Creates an almost unique id for poll
-		poll_id = f"{hex(int(time.time()))[2:]}={hex(random.randrange(0, 4294967295))[2:]}"
+	async def on_error(self, interaction:discord.Interaction, error:Exception) -> None:
+		self.error = error
+		embed = discord.Embed(title=f"**ERROR {error}**")
+		embed.add_field(name="Title:", value=f"{self.title_field.value}", inline=False)
+		embed.add_field(name="Options:", value=f"{self.options_field.value}", inline=False)
+		embed.add_field(name="Timeout:", value=f"{self.timeout_field.value}", inline=False)
+		print(type(error))
+		if type(error) == OptionsOutOfRangeError:
+			embed.set_field_at(index=1, name="**OPTIONS: TOO MANY OPTIONS**", value=f"{self.options_field.value}", inline=False)
+		elif type(error) == ValueError:
+			embed.set_field_at(index=2, name="**TIMEOUT: NOT A NUMBER**", value=f"{self.timeout_field.value}", inline=False)
 
-		# Create an embed and add all the fields
-		# TODO randomize embed color?
-		# discord.Color(255)
-		# colour="FF00B5",
-		embed = discord.Embed(title=title, type="rich")
-		embed.set_author(name=interaction.user.nick, icon_url=interaction.user.display_avatar.url)
-		for i in range(len(content)):
-			embed.add_field(name=PollView.number_emojis[i], value=f"**{content[i]}**")
-		
-		view = PollView(
-			title=title,
-			content=content,
-			embed=embed,
-			timeout=float(self.poll_timeout.value),
-			poll_id=poll_id
-		)
+		self.embed = embed
+		await interaction.response.defer()
+		self.stop()
 
-		# TODO maybe ID looks better as an embed footer?
-		await interaction.response.send_message(
-			embed=embed,
-			view=view,
-			content=f"ID:{poll_id}"
-		)
+class OptionsOutOfRangeError(Exception):
+	'''
+	Custom error for when the number of options exceeds the maximum
 
-		if send_followup_msg:
-			await interaction.followup.send(
-				ephemeral=True,
-				content=f"You can't have more than {PollInfoModal.max_num_options} options, limiting to {PollInfoModal.max_num_options}."
-			)
-		
-		# Wait for the poll to end which creates a barplot with the "{poll_id}.png" as the name
-		# TODO might be a better way to do this
-		filename = f"{poll_id}.png"
-		while not(filename in os.listdir(os.getcwd())):
-			await asyncio.sleep(1)
-		await interaction.followup.send(file=discord.File(filename))
-		os.remove(os.path.join(os.getcwd(), filename))
+	Init Parameters	
+	----------
+	num_options:`int`
+		The number of options
+	max:`int`
+		The maximum number of options
+
+	TODO move to its own file
+	'''
+	def __init__(self, num_options:int, max:int) -> None:
+		self.num_options = num_options
+		self.max = max
+		self.message = f"Number of options ({self.num_options}) > Max number of options ({self.max})"
+		super().__init__()
+	def __str__(self):
+		return self.message
