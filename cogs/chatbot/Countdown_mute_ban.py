@@ -7,8 +7,9 @@ from discord.ext import commands
 from datetime import datetime
 from datetime import date
 import asyncio
-        
-                   
+import json 
+import jsonpickle
+       
 class ExtraFunc(commands.Cog, name="Additional Function "):
     def __init__(self, bot):
         self.bot = bot
@@ -105,9 +106,35 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
             muterole = await ctx.guild.create_role(name = "Muted")
             for channel in ctx.guild.channels:
                 await channel.set_permmissions(muterole, speak = False, send_message=False)  
-        role_get = discord.utils.get(Member.guild.roles, name="Friends") #Returns a role object.
-        await Member.remove_roles(role_get) #Remove the role (object) from the user.   
-        await Member.add_roles(muterole,reason=reasons)
+        group = {}
+        with open("./cogs/chatbot/Roles.json","r") as f:
+            js=f.read()
+        if len(js) == 0:
+            var = json.dumps(group)
+            f = open("./cogs/chatbot/Roles.json", "w")
+            f.write(var)
+            f.close()
+        else:
+            group = json.loads(js) #Group dictionary
+        data = {} #Detail data for each member
+        
+        
+        Roles = []
+        for role in Member.guild.roles:
+            Roles.append(jsonpickle.encode(role))
+        
+        data["was"] = Roles
+        data["now"] = jsonpickle.encode(muterole)
+        data["Time"] = reasons
+        group[Member.id] = data
+        print(group)
+        var = json.dumps(group)
+        f = open("./cogs/chatbot/Roles.json", "w")
+        f.write(var)
+        f.close()
+        'await Member.remove_roles(Member.roles) #Remove the role (object) from the user.  '
+        await Member.edit(roles=[muterole])
+        'await Member.add_roles(muterole,reason=reasons)'
         await ctx.send(f"Muted {Member.mention} for reason {reasons}")  
     
     @commands.command()
@@ -118,6 +145,7 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         await Member.remove_roles(muterole,reason=reasons) #Remove the role (object) from the user.   
         await Member.add_roles(role_get)
         await ctx.send(f"Unmuted {Member.mention} for reason {reasons}")
+    
         
 async def setup(bot):
     await bot.add_cog(ExtraFunc(bot))
