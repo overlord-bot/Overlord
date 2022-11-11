@@ -15,13 +15,14 @@ class AnimeScraper(commands.Cog, name="Anime Scraper"):
     async def anime(self, context, *search):
         """Searches for an anime"""  # this is the description that will show up in !help
 
-        url = "https://myanimelist.net/search/all?q=" + ' '.join(search) + "&cat=all"
+        url = "https://myanimelist.net/search/all?q=" + '%20'.join(search) + "&cat=all"
+        print(f"Url of search result page: {url}")
 
         search_data = requests.get(url)
         search_soup = BeautifulSoup(search_data.text, 'html.parser')
 
         anime_url = search_soup.find("a", {"class": "hoverinfo_trigger"}).get("href")
-        print(anime_url)
+        print(f"Url of first anime result: {anime_url}")
 
         # Gets data from the first search result's page
         anime_data = requests.get(anime_url)

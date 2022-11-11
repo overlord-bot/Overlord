@@ -19,8 +19,6 @@ class GitHubScraper(commands.Cog, name="GitHub Scraper"):
         if not organization:
             organization = username
 
-        # other repo_url = https://github.com/{organization}/{repo_name}/commits/{branch_name}/?author={username}
-        # linke to all branches https://github.com/{organization}/{repo_name}/branches/all
         commits_list = []
         branches = get_branches(organization, repo_name)
         for branch_name in branches:
@@ -31,9 +29,6 @@ class GitHubScraper(commands.Cog, name="GitHub Scraper"):
             for commit in found_commits:
                 if commit not in commits_list:
                     commits_list.append(commit)
-             
-        
-        #repo_url = f"https://github.com/{organization}/{repo_name}/commits?author={username}"
 
         # writes the commits list to a text file
         with open("list_of_commits.txt", "w") as file:
@@ -45,6 +40,7 @@ class GitHubScraper(commands.Cog, name="GitHub Scraper"):
         with open("list_of_commits.txt", "rb") as file:
             await context.reply("Your file is:", file=discord.File(file, "list_of_commits.txt"))
 
+
 def get_commits(repo_url):
     commits_list = []  # list of commits in the main branch
 
@@ -55,7 +51,8 @@ def get_commits(repo_url):
         search_soup = BeautifulSoup(search_data.text, 'html.parser')
 
         # finds all the commit links on the page
-        links = search_soup.find_all("a", {"class": "Link--primary text-bold js-navigation-open markdown-title"}, href=True)
+        links = search_soup.find_all("a", {"class": "Link--primary text-bold js-navigation-open markdown-title"},
+                                     href=True)
 
         # adds links into links_list if they are not already in it
         for link in links:
@@ -77,17 +74,18 @@ def get_commits(repo_url):
             break
     return commits_list
 
-def get_branches(organization, repo_name): #https://github.com/{organization}/{repo_name}/branches/all
+
+def get_branches(organization, repo_name):  # https://github.com/{organization}/{repo_name}/branches/all
     search_data = requests.get("https://github.com/" + organization + "/" + repo_name + "/branches/all")
     search_soup = BeautifulSoup(search_data.text, 'html.parser')
 
-    branches = search_soup.find_all("a", {"class": "branch-name css-truncate-target v-align-baseline width-fit mr-2 Details-content--shown"}, href=True)
+    branches = search_soup.find_all("a", {
+        "class": "branch-name css-truncate-target v-align-baseline width-fit mr-2 Details-content--shown"}, href=True)
     branches_list = []
     for branch in branches:
         branches_list.append(branch.text)
-    
-    return branches_list
 
+    return branches_list
 
 
 async def setup(bot):

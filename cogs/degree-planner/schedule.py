@@ -1,13 +1,9 @@
 from array import *
-from discord.ext import commands
-import discord
-import asyncio
 
 from .course import Course
 from .catalog import Catalog
 from .degree import Degree
-from .bundle import Bundle
-from .rules import Rules
+from .rules import Rule
 
 
 #########################################################################
@@ -30,6 +26,7 @@ class Schedule():
         self.__master_list = []
         self.SEMESTERS_MAX = 12
         self.name = name
+        self.degree = None
         self.master_list_init()
 
     #-----------------------------------------------------------------------
@@ -38,45 +35,49 @@ class Schedule():
     #-----------------------------------------------------------------------
 
     def master_list_init(self):
-        print("initializing master_list")
         self.__master_list.clear()
 
         # Generates 12 empty lists within master_list. Each list represents a semester
         # with element 0 representing semester 1 and so on.
         for x in range(0, 12):
             self.__master_list.append([])
-        print("initializing master_list complete")
 
     #-----------------------------------------------------------------------
     # Main scheduling functions
     #-----------------------------------------------------------------------
 
-    def add_course(self, course, semester):
+    def add_course(self, course, semester) -> bool:
         if semester in self.find_course(course):
-            print("cannot add course as it's duplicated")
+            return False
         else:
             self.__master_list[semester].append(course)
-            print(f"added course: {course.to_string()}, semester: {semester}")
+            return True
 
 
-    def remove_course(self, course, semester):
+    def remove_course(self, course, semester) -> bool:
         if semester not in self.find_course(course):
-            print(f"course not present in semester {str(semester)}")
+            return False
         else:
             self.__master_list[semester].remove(course)
+            return True
 
 
-    def get_semester(self, semester):
-        if semester >= len(self.__master_list):
-            print("invalid semester")
-            return ""
-        return self.__master_list[semester]
+    def get_semester(self, semester:int) -> list:
+        if semester not in range(0, self.SEMESTERS_MAX):
+            return None
+        else:
+            return self.__master_list[semester]
 
+    def get_all_courses(self) -> set:
+        courses = set()
+        for a in self.__master_list:
+            for c in a:
+                courses.add(c)
+        return courses
 
-    # Parameters: course to find
-    # Returns: semesters that the course is present in
-    def find_course(self, course):
-        i = 0;
+    # Returns list of semesters that the course is present in
+    def find_course(self, course:Course) -> list:
+        i = 0
         present_in = []
         for courselist in self.__master_list:
             if course in courselist:
@@ -84,14 +85,32 @@ class Schedule():
             i+=1
         return present_in
 
+    def __len__(self):
+        i = 0
+        for sem in self.__master_list:
+            i += len(sem)
+        return i
 
-    # prints student's schedule to a string
-    def to_string(self):
+    def __eq__(self, other):
+        if not isinstance(other, Schedule):
+            return False
+        return self.__master_list == other.__master_list
+
+    def __repr__(self):
         count = 0
-        s = "Schedule: " + self.name + "\n"
+        s = f"Schedule: {self.name} [{self.degree.name if self.degree != None else ''}]\n"
         for courselist in self.__master_list:
-            s+="  Semester " + str(count) + ":\n"
+            s+=f"  Semester {str(count)}:\n"
             count+=1
             for course in courselist:
-                s+="    Course info: " + course.name + " " + course.major + " " + str(course.course_id) + "\n"
+                s+=f"    Course info: {course.display_name} {course.major} {str(course.course_id)}\n"
         return s
+
+    def __hash__(self):
+        i = hash(self.degree)
+        sem = 0
+        for sem in self.__master_list:
+            for course in sem:
+                i += hash(course) * sem
+            sem += 1
+        return i
