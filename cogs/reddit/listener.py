@@ -8,6 +8,7 @@ import discord
 from discord.ext import commands
 
 import asyncio
+import time
 from threading import Event, Thread
 import threading
 import datetime
@@ -21,27 +22,31 @@ class RedditListener(commands.Cog, name="Reddit Listener"):
         self.bot = bot
 
     @commands.command()
-    async def redditlisten(self, context, subreddit):
+    async def redditlisten(self, context, subreddit, min_time):
+        await context.send("Starting listen for the subreddit '" + subreddit + "' for " + min_time + " minutes")
+        #await sendPosts(context, new_posts)
+
         reddit_data = getRedditData(subreddit)
         newest_post = reddit_data["data"]["children"][1]["data"]["name"]
         print(newest_post)
 
-        
-        #cancel_future_calls = call_repeatedly(5, context, subreddit, newest_post)
-        #f_stop = threading.Event()
-        #await f(f_stop, context, subreddit, newest_post)
 
-        loop = asyncio.get_event_loop()
-        # Blocking call which returns when the display_date() coroutine is done
-        loop.run_until_complete(do_stuff(loop, context, subreddit, newest_post))
-        loop.close()
+        #https://stackoverflow.com/questions/65881761/discord-gateway-warning-shard-id-none-heartbeat-blocked-for-more-than-10-second
+        #Do that
+        t_end = time.time() + 60 * int(min_time)
+        while time.time() < t_end:
+            newest_post = await runPostCheck(context, subreddit, newest_post)
+            try:
+                time.sleep(5)
+            except:
+                pass
 
         #cancel_future_calls() # stop future calls
 
-        new_posts = getNewPosts(context, reddit_data, newest_post)
+        #new_posts = getNewPosts(context, reddit_data, newest_post)
 
-        
-        await sendPosts(context, new_posts)
+        await context.send("Completed listen")
+        #await sendPosts(context, new_posts)
 
     #await context.reply("Your file is:", file=discord.File(file, "list_of_commits.txt"))
 
@@ -50,8 +55,8 @@ async def runPostCheck(context, subreddit, newest_post):
     reddit_data = getRedditData(subreddit)
     #print(reddit_data)
     new_post = reddit_data["data"]["children"][0]["data"]["name"]
-    print("Checking new: " + new_post + " against newest: " + str(newest_post[0]))
-    if new_post == newest_post[0]:
+    print("Checking new: " + new_post + " against newest: " + str(newest_post))
+    if new_post == newest_post:
         return new_post
     
     print("is a new post")
@@ -59,40 +64,6 @@ async def runPostCheck(context, subreddit, newest_post):
     await sendPosts(context, new_posts)
     return new_post
 
-
-'''
-def call_repeatedly(interval, context, subreddit, newest_post):
-    npost = [newest_post]
-    stopped = Event()
-    async def loop():
-        while not stopped.wait(interval): # the first call is in `interval` secs
-            found_newest_post = await runPostCheck(context, subreddit, npost)
-            npost[0] = found_newest_post
-    #Thread(target=loop).start()  
-    Thread(target=asyncio.run, args=(loop())).start()  
-    #Thread(target=asyncio.run)
-    return stopped.set
-
-async def f(f_stop, context, subreddit, newest_post):
-    # do something here ...
-    found_newest_post = await runPostCheck(context, subreddit, newest_post)
-    newest_post = found_newest_post
-    if not f_stop.is_set():
-        # call f() again in 5 seconds
-        threading.Timer(5, f, [f_stop, context, subreddit, newest_post]).start()
-
-'''
-
-async def do_stuff(loop, context, subreddit, newest_post):
-    end_time = loop.time() + 60.0
-    while True:
-        found_newest_post = await runPostCheck(context, subreddit, newest_post)
-        newest_post = found_newest_post
-
-        #Exit
-        if (loop.time() + 1.0) >= end_time:
-            break
-        await asyncio.sleep(5)
 
 
 def getRedditData(subreddit): #https://www.reddit.com/r/rpi/new.json?sort=new
