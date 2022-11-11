@@ -60,7 +60,11 @@ class TimChat(commands.Cog, name="TimChat"):
         json_f = json.dumps(dic)
         with open(".\cogs\chatbot\join_user.json", "w") as outwrite:
             outwrite.write(json_f)
-        await message.channel.send("done")
+        await message.channel.send("write_done")
+        with open(".\cogs\chatbot\join_user.json") as read:
+            data = json.load(read)
+        await message.channel.send(data)
+        await message.channel.send("All done")
 
 async def setup(bot):
     await bot.add_cog(TimChat(bot))
