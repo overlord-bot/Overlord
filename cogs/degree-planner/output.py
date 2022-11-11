@@ -1,16 +1,27 @@
 from discord.ext import commands
 import discord
+import logging
 from enum import Enum
 from collections import OrderedDict
-from .user import *
 import time
+
+DELIMITER_TITLE = '---'
+DELIMITER_BLOCK = '###'
+TAG_NOMERGE = '@nomerge'
+
+DEGREE_PLANNER_SIGNATURE = '~~~ Great Sage ~~~'
 
 
 class OUT(Enum):
-    DISCORD_CHANNEL = 1
-    DISCORD_PRIVATE_MSG = 2
-    CONSOLE = 3
-    NONE = 100
+    DISCORD_CHANNEL = 11
+    DISCORD_PRIVATE_MSG = 12
+    NONE = 0
+
+    CONSOLE = 21
+    INFO = 22 # INFORMATIONAL
+    DEBUG = 23 # DETAILED STATUS NORMALLY HIDDEN
+    WARN = 24 # SKILL ISSUE
+    ERROR = 25 # PROGRAM ISSUE
 
 
 class ATTRIBUTE(Enum):
@@ -37,7 +48,6 @@ class Output():
         self.output_channel = None
         self.user = None
         self.flags = set()
-
         self.__msg_cache_hold = ""
 
         self.last_message_object = None
@@ -47,9 +57,6 @@ class Output():
 
         self.message_max_length = 2000
         self.combine_message_time_limit = 5
-        self.body_delimiter = '---'
-        self.block_delimiter = '###'
-        self.no_merge = '@nomerge'
 
         if attributes != None and isinstance(attributes, dict):
             for k, v in attributes.items():
@@ -64,26 +71,75 @@ class Output():
         if ATTRIBUTE.EMBED in self.flags:
             self.message_max_length = 1000
 
+        logging.getLogger().setLevel(logging.DEBUG)
 
-    """ Print one line at a time to specified output
+
+    """ Determines appropriate printing channel and prints message
 
     Args:
         msg (str): message to print
+        logging_flag (OUT): temporary prints to this output location
+            without altering the stored location within this object
     """
-    async def print(self, msg):
-        if self.output_location == OUT.CONSOLE or Flag.DEBUG in self.flags:
+    async def print(self, msg:str, logging_location=None) -> None:
+        outloc = self.output_location
+        if logging_location != None and isinstance(logging_location, OUT) and logging_location.value//10 == 2:
+            self.output_location = logging_location
+        
+        tagged_msg = f'{DEGREE_PLANNER_SIGNATURE} {msg}'
+
+        if self.output_location == OUT.INFO:
+            logging.info(tagged_msg)
+        elif self.output_location == OUT.DEBUG:
+            logging.debug(tagged_msg)
+        elif self.output_location == OUT.WARN:
+            logging.warning(tagged_msg)
+        elif self.output_location == OUT.ERROR:
+            logging.error(tagged_msg)
+
+        elif self.output_location == OUT.CONSOLE:
             print(msg)
 
-        elif self.output_location == OUT.DISCORD_CHANNEL or self.output_location == OUT.DISCORD_PRIVATE_MSG:
+        # If printing to discord, will use block (title/message) formatting
+        elif (self.output_location == OUT.DISCORD_CHANNEL 
+                or self.output_location == OUT.DISCORD_PRIVATE_MSG):
             if self.output_channel == None:
-                print("OUTPUT ERROR: no channel specified for printing message: " + msg)
+                logging.warning('OUTPUT ERROR: no output channel specified')
             elif ATTRIBUTE.EMBED in self.flags:
-                await self.print_embed(self.get_blocks_with_updates(msg))
+                await self.print_embed(self.get_blocks(msg))
             else:
-                await self.print_fancy(self.get_blocks_with_updates(msg))
+                await self.print_fancy(self.get_blocks(msg))
+
+        self.output_location = outloc
 
 
-    def trim_to_limit(self, msg):
+    """ Goes through each function to generate the blocks from original input string
+
+    Args:
+        msg (str): message to print
+
+    Returns:
+        msg_blocks (OrderedDict): ordered dictionary of (title/message) blocks where each
+            member is guaranteed to be non-empty, and titles are all unique.
+    """
+    def get_blocks(self, msg):
+        msg = self.trim_to_limit(msg)
+        msg = self.try_combine_previous(msg)
+        blocks = self.format_title_and_body(msg)
+        return blocks
+
+
+    """ Trims message to abide by message limit, and adds appropriate delimiters such as yaml quotes
+
+    Args:
+        msg (str): message to print
+
+    Returns:
+        msg (str): trimmed message
+    """
+    def trim_to_limit(self, msg:str) -> str:
+        if self.message_max_length < 101:
+            return ''
         if len(msg) > self.message_max_length - 100:
             if msg[-3:] == '```':
                 msg = msg[:self.message_max_length - 100] + '...\n```'
@@ -92,65 +148,83 @@ class Output():
         return msg
 
 
-    def combine_previous(self, msg):
+    """ Determines whether to combine current message with previous one,
+    and if so, combines the two strings.
+
+    Args:
+        msg (str): current message to print
+
+    Returns:
+        msg (str): merged string if merging does not violate any message length
+            rules or 'no merge' tags, else returns original string minus tags.
+    """
+    def try_combine_previous(self, msg):
         self.edit_last_message = False
         # determines whether we should add on to the previous message or generate new one
         if (len(msg) + len(self.last_message_content) < self.message_max_length 
                 and time.time() - self.last_message_time < self.combine_message_time_limit
-                and not msg.startswith(self.no_merge)):
+                and not msg.startswith(TAG_NOMERGE)):
             self.edit_last_message = True
-            msg = self.last_message_content + self.block_delimiter + msg
-        msg = msg.replace('@nomerge', '')
+            msg = self.last_message_content + DELIMITER_BLOCK + msg
+        msg = msg.replace(TAG_NOMERGE, '')
         return msg
 
 
-    """Takes in a string with ### to delimit blocks and self.delimiter to delimit title from body
+    """ Formats string into a list of (title/message) blocks in the form of an OrderedDict
 
-    returns a dictionary with each entry being a title:body block
+    Args:
+        msg (str): message containing any number/combination of title and block delimiters
+
+    Returns:
+        msg_blocks (OrderedDict): ordered dictionary of (title/message) blocks where each
+            member is guaranteed to be non-empty, and titles are all unique.
     """
     def format_title_and_body(self, msg:str) -> dict:
-        # concatnate messages with same title or no titles
-        msg_blocks = msg.split(self.block_delimiter)
+        # assigns a title to messages without titles
+        msg_blocks = msg.split(DELIMITER_BLOCK)
         title_element = ''
         message_element = ''
         msg_blocks_titled = []
         for e in msg_blocks:
             # if we do not find a title separator inside block, merge with previous
-            if self.body_delimiter not in e:
+            if DELIMITER_TITLE not in e:
                 # if this is the first message to be pushed, add title 'untitled'
                 if not len(title_element): 
                     title_element = 'Untitled'
                 message_element += ('\n' if e.startswith('```') else '\n\u2022 ') + e
             else:
-                # push previous blocks to list if any
+                # push previous blocks (title_element+DELIMITER+message_element) to list if any
                 if len(title_element):
-                    msg_blocks_titled.append(title_element + self.body_delimiter + message_element)
+                    msg_blocks_titled.append(title_element + DELIMITER_TITLE + message_element)
                 # assigns title and body to temporary variables
-                title_element = e.split(self.body_delimiter)[0]
-                message_element = ('\n' if e.startswith('```') else '\u2022 ') + e.split(self.body_delimiter)[1]
-        msg_blocks_titled.append(title_element + self.body_delimiter + message_element)
+                title_element = e.split(DELIMITER_TITLE)[0]
+                message_element = ('\n' if e.startswith('```') else '\u2022 ') + e.split(DELIMITER_TITLE)[1]
+        msg_blocks_titled.append(title_element + DELIMITER_TITLE + message_element)
 
         # combines consecutive blocks with the same title
         msg_blocks_condensed = []
         title_element = ''
         message_element = ''
         for e in msg_blocks_titled:
-            if e.split(self.body_delimiter)[0] == title_element:
-                message_element += '\n' + e.split(self.body_delimiter)[1]
+            # if we find the title of this element to match the previous, merge bodies together
+            if e.split(DELIMITER_TITLE)[0] == title_element:
+                message_element += '\n' + e.split(DELIMITER_TITLE)[1]
             else:
-                if title_element != '':
-                    msg_blocks_condensed.append(title_element + self.body_delimiter + message_element)
-                title_element = e.split(self.body_delimiter)[0]
-                message_element = e.split(self.body_delimiter)[1]
-        msg_blocks_condensed.append(title_element + self.body_delimiter + message_element)
+                # push previous blocks (title_element+DELIMITER+message_element) to list if any
+                if len(title_element):
+                    msg_blocks_condensed.append(title_element + DELIMITER_TITLE + message_element)
+                 # assigns title and body to temporary variables
+                title_element = e.split(DELIMITER_TITLE)[0]
+                message_element = e.split(DELIMITER_TITLE)[1]
+        msg_blocks_condensed.append(title_element + DELIMITER_TITLE + message_element)
 
         # if duplicated titles are found, add a counter to the title so it's not duplicated
         titles = dict()
         for i in range(0, len(msg_blocks_condensed)):
             e = msg_blocks_condensed[i]
-            element_title = e.split(self.body_delimiter)[0]
+            element_title = e.split(DELIMITER_TITLE)[0]
             if element_title in titles:
-                msg_blocks_condensed[i] = element_title + f" ({titles[element_title]}){self.body_delimiter}" + e.split(self.body_delimiter)[1]
+                msg_blocks_condensed[i] = element_title + f" ({titles[element_title]}){DELIMITER_TITLE}" + e.split(DELIMITER_TITLE)[1]
                 titles[element_title] += 1
             else:
                 titles.update({element_title:1})
@@ -158,20 +232,13 @@ class Output():
         # generate msg_blocks dictionary to be submitted to print_embed
         msg_blocks = OrderedDict()
         for e in msg_blocks_condensed:
-            title_element = e.split(self.body_delimiter)[0]
-            message_element = e.split(self.body_delimiter)[1]
+            title_element = e.split(DELIMITER_TITLE)[0]
+            message_element = e.split(DELIMITER_TITLE)[1]
             msg_blocks.update({title_element : message_element})
 
         self.last_message_content = msg
         self.last_message_time = time.time()
         return msg_blocks
-
-
-    def get_blocks_with_updates(self, msg):
-        msg = self.trim_to_limit(msg)
-        msg = self.combine_previous(msg)
-        blocks = self.format_title_and_body(msg)
-        return blocks
 
 
     async def print_embed(self, msg_blocks:OrderedDict):
@@ -210,7 +277,7 @@ class Output():
 
     """ Prints all content inside message cache, calls upon print() for printing
     """
-    async def print_cache(self, embeds=True):
+    async def print_cache(self, output_redirect=None):
         if (len(self.__msg_cache_hold) > 1800 
                 and (self.output_location == OUT.DISCORD_CHANNEL 
                 or self.output_location == OUT.DISCORD_PRIVATE_MSG)):
@@ -218,15 +285,20 @@ class Output():
             print(self.__msg_cache_hold)
         else:
             if self.output_location == OUT.CONSOLE:
-                await self.print(f"{self.__msg_cache_hold}")
+                await self.print(f"{self.__msg_cache_hold}", output_redirect)
             else:
-                fancy = False
-                if ATTRIBUTE.EMBED in self.flags and not embeds:
-                    self.last_message_time = 1
-                    self.flags.remove(ATTRIBUTE.EMBED)
-                    fancy = True
-                await self.print(f"```yaml\n{'None' if not len(self.__msg_cache_hold) else self.__msg_cache_hold}```")
-                if fancy:
-                    self.flags.add(ATTRIBUTE.EMBED)
+                await self.print(f"```yaml\n{'None' if not len(self.__msg_cache_hold) else self.__msg_cache_hold}```", output_redirect)
         self.__msg_cache_hold = ""
         return
+
+def oprint(msg:str, logging_flag=None) -> None:
+    if logging_flag != None and isinstance(logging_flag, OUT) and logging_flag.value//10 == 2:
+        msg = f'{DEGREE_PLANNER_SIGNATURE} {msg}'
+        if logging_flag == OUT.INFO:
+            logging.info(msg)
+        elif logging_flag == OUT.DEBUG:
+            logging.debug(msg)
+        elif logging_flag == OUT.WARN:
+            logging.warning(msg)
+        elif logging_flag == OUT.ERROR:
+            logging.error(msg)

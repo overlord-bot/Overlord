@@ -5,6 +5,7 @@ from .course import Course
 from .degree import Degree
 from .course_template import Template
 from .search import Search
+from .output import *
 
 class Catalog():
 
@@ -12,6 +13,7 @@ class Catalog():
         # catalog will  be a list of courses and degrees
         # TODO also store graphs for further analysis and course prediction of free electives
         self.name = name
+        self.output = Output(OUT.CONSOLE)
         self.__course_list = dict() # course name as key
         self.__degree_list = dict() # degree name as key
 
@@ -56,7 +58,7 @@ class Catalog():
         if len(name) == 1:
             return self.__course_list.get(name[0], None)
         else:
-            print(f"CATALOG ERROR: catalog get course non unique course found: {str(name)}")
+            self.output.print(f"CATALOG ERROR: catalog get course non unique course found: {str(name)}", OUT.ERROR)
         return None
 
 
@@ -123,6 +125,7 @@ class Catalog():
 # If the target course attribute is not equal to the default value and the course from the pool 
 # has that required value, it will be returned.
 def get_course_match(target_course, course_pool:set, possible_values=None) -> dict:
+    output = Output(OUT.CONSOLE)
     default_course = Course("", "", 0)
 
     # <template (may be generated from wildcard) : set of courses that fulfills it>
@@ -135,7 +138,7 @@ def get_course_match(target_course, course_pool:set, possible_values=None) -> di
         target_course = target_course.template_course
 
     if not isinstance(target_course, Course):
-        print("CATALOG ERROR: get_course_match target_course is not instance of Course after initial call")
+        self.output.print("CATALOG ERROR: get_course_match target_course is not instance of Course after initial call", OUT.ERROR)
 
     # makes a copy of target_course because it will be altered later on
     target_course = copy.deepcopy(target_course)

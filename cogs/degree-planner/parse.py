@@ -51,7 +51,7 @@ async def parse_courses(file_name, catalog:Catalog, output:Output=None):
         if 'course_name' in element and 'course_subject' in element and 'course_number' in element:
             course = Course(element['course_name'], element['course_subject'], element['course_number'])
         else:
-            print("PARSING ERROR: course name, subject or number not found " + str(element))
+            output.print("PARSING ERROR: course name, subject or number not found " + str(element), OUT.WARN)
             continue
 
         if 'course_credit_hours' in element:

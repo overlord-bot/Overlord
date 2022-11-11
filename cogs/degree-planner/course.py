@@ -1,4 +1,6 @@
 from array import *
+from .output import *
+import logging
 
 class Course():
 
@@ -35,7 +37,8 @@ class Course():
 
 
     # some input data for courses may not be in the desired format. We will correct those problems here
-    def validate_course_data(self):
+    def validate_course_data(self, output:Output=None):
+        if output == None: output = Output(OUT.CONSOLE)
         if isinstance(self.course_id, str):
             if '.' in self.course_id:
                 split_num = self.course_id.split('.')
@@ -43,14 +46,14 @@ class Course():
                     self.course_id = int(float(split_num[0]))
                     self.course_id2 = int(float(split_num[1]))
                 else:
-                    print("COURSE INITIALIZATION ERROR: 2 part ID not <int>.<int> for course " + self.name)
+                    logging.error(f"{DEGREE_PLANNER_SIGNATURE} COURSE PARSING: 2 part ID not <int>.<int> for course " + self.name)
                     
             elif not self.course_id.isdigit():
-                print("COURSE INITIALIZATION WARNING: course number is not a number for course " + self.name)
+                logging.error(f"{DEGREE_PLANNER_SIGNATURE} COURSE PARSING: course number is not a number for course " + self.name)
             else:
                 self.course_id = int(float(self.course_id))
         elif not isinstance(self.course_id, int):
-            print("COURSE INITIALIZATION WARNING: course number is not a number for course " + self.name)
+            logging.error(f"{DEGREE_PLANNER_SIGNATURE} COURSE PARSING: course number is not a number for course " + self.name)
 
     def add_prerequisite(self, prereq):
         self.prerequisites.add(prereq)

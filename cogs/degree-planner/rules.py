@@ -7,27 +7,24 @@ from .catalog import *
 class Rule():
 
     def __init__(self, name="Untitled rule"):
-
-        # name should explain what this rule is, i.e. "in-major core", "HASS electives", etc
         self.name = name 
 
-        #------------------------------------------------------------------------------------------
-        # course_template usage:
-        #
-        # <Course template object : number of courses that need to fulfill this template>
-        #
-        # note: a course template contains a course (called template_course) where fields 
-        # that are filled in will be treated as required attributes of target courses. 
-        # This is used to search for all courses that fulfills the template's criteria.
-        #
-        # If template course contains a course_set, then it will be treated as a disjunction,
-        # as in courses must be selected from that pool of courses
-        #
-        # Wildcard * may be used for any field. This means that any value may be assigned for
-        # that field but must remain consistent for all the courses (e.g. use wildcard to
-        # specify if X amount of courses must be within the same pathway, but doesn't matter
-        # which pathway)
-        #------------------------------------------------------------------------------------------
+        """ course_template usage:
+        
+        <Template : number of courses that need to fulfill this template>
+        
+        note: a course template contains a course (called template_course) where fields 
+        that are filled in will be treated as required attributes of target courses. 
+        This is used to search for all courses that fulfills the template's criteria.
+        
+        If template course contains a course_set, then courses must be selected from 
+        that pool of courses rather than the entire catalog.
+        
+        Wildcard * may be used for any field. This means that any value may be assigned for
+        that field but must remain consistent for all the courses (e.g. use wildcard to
+        specify if X amount of courses must be within the same pathway, but doesn't matter
+        which pathway)
+        """
         self.course_templates = dict()
 
 

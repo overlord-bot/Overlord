@@ -1,7 +1,7 @@
-from array import *
+import logging
 
 from .course import Course
-from .catalog import Catalog, get_course_match, get_best_course_match
+from .catalog import *
 from .degree import Degree
 from .rules import Rule
 from .schedule import Schedule
@@ -11,7 +11,9 @@ from .output import *
 from .user import *
 
 class Test1():    
-    async def test(self, output:Output=Output(OUT.CONSOLE)):
+    async def test(self, output:Output=None):
+        if output == None: output = Output(OUT.CONSOLE)
+
         await output.print("Generating synthetic test data set")
         user = User("testuser")
 
@@ -88,9 +90,9 @@ class Test1():
         # checks to make sure add and remove worked properly
         # no duplicates within one semester but allowing for duplicates across semesters
         #------------------------------------------------------------------------------------------
-        #await output.print("\nAdded courses to schedule, printing schedule")
-        #output.print_hold(str(user.get_schedule("test")))
-        #await output.print_cache()
+        await output.print("\nAdded courses to schedule, printing schedule")
+        output.print_hold(str(user.get_schedule("test")))
+        await output.print_cache()
 
         assert len(user.get_schedule("test").get_semester(0)) == 1
         assert len(user.get_schedule("test").get_semester(1)) == 1
@@ -117,9 +119,9 @@ class Test1():
         assert bundle1 == bundle1_ans
 
         bundle2 = catalog.get_best_course_match(course_target2)
-        #await output.print(f"Bundle2: {set(bundle2)}")
+        await output.print(f"Bundle2: {set(bundle2)}")
         bundle2_ans = {course4, course5, course6}
-        #await output.print(f"Bundle2_ans: {str(bundle2_ans)}")
+        await output.print(f"Bundle2_ans: {str(bundle2_ans)}")
         assert bundle2 == bundle2_ans
 
         bundle3 = catalog.get_best_course_match(course_target3)
@@ -127,9 +129,9 @@ class Test1():
         assert bundle3 == bundle3_ans
 
         bundle5 = catalog.get_best_course_match(course_target5)
-        #await output.print(f"Bundle5: {str(bundle5)}")
+        await output.print(f"Bundle5: {str(bundle5)}")
         bundle5_ans = {course6}
-        #await output.print(f"Bundle5_ans: {str(bundle5_ans)}")
+        await output.print(f"Bundle5_ans: {str(bundle5_ans)}")
         assert bundle5 == bundle5_ans
 
         #------------------------------------------------------------------------------------------

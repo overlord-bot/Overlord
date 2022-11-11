@@ -6,14 +6,13 @@ from .schedule import Schedule
 from queue import Queue
 
 class Flag(Enum):
-    DEBUG = 0
-
     CMD_PAUSED = 100
     CMD_RUNNING = 101
 
+
 class User():
     
-    def __init__(self, id, output=None):
+    def __init__(self, id):
         self.id = id
         self.username = str(id)
         self.discord_user = None

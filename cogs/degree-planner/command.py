@@ -30,8 +30,6 @@ class Command():
 
     def __init__(self, command:str):
         self.command = CMD.get(command)
-        if self.command == CMD.NONE:
-            print("COMMAND ERROR: command not found")
         self.arguments = []
         self.data_store = None
 
