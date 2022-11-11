@@ -246,6 +246,7 @@ class GoMinigame(commands.Cog, name = "Go"):
         # the following checks for surrounding strings and updates them
         dir = [0,1,0,-1,0]
         neighboringStrings = []
+        totalLost = 0
         for i in range(4):
             j = x + dir[i]
             k = y + dir[i+1]
@@ -261,6 +262,7 @@ class GoMinigame(commands.Cog, name = "Go"):
                 lostPoints = len(string.points)
                 # eliminates string and resets it in our internal representation
                 if string.libertyCheck(self.board) == True:
+                    totalLost += lostPoints
                     if self.turn == 1:
                         self.player2LostStones += lostPoints
                     else:
@@ -269,10 +271,12 @@ class GoMinigame(commands.Cog, name = "Go"):
                     for point in string.points:
                         self.stringBoard[point[0]][point[1]] = -1
                         self.board[point[0]][point[1]] = 0
-                    await context.send(str(lostPoints) + " Pieces of Player " + str(3-self.turn) + " Were Captured!")
-            # this means that 
+            # this means that there are still liberties available and
             else:
                 neighboringStrings.append(self.stringBoard[j][k])
+
+        if totalLost > 0:
+            await context.send(str(totalLost) + " Pieces of Player " + str(3-self.turn) + " Were Captured!")
 
         # remove duplicates
         setNeighbors = list(set(neighboringStrings))
@@ -298,15 +302,18 @@ class GoMinigame(commands.Cog, name = "Go"):
             self.turn = 1
 
         # for debugging
-        for o in range(9):
-            print(self.board[o])
-        for o in range(9):
-            print(self.stringBoard[o])
-        print("STRINGS: ")
-        for li in self.stringMatch.values():
-            print(li.points)
+        if test == True:
+            for o in range(9):
+                print(self.board[o])
+            for o in range(9):
+                print(self.stringBoard[o])
+            print("STRINGS: ")
+            for li in self.stringMatch.values():
+                print(li.points)
 
-        await self.printBoardState(context)
+        # disabled when debugging to make the code run faster
+        if test == False:
+            await self.printBoardState(context)
 
         self.unplayedTiles -= 1
         if self.unplayedTiles == 0:
@@ -321,17 +328,87 @@ class GoMinigame(commands.Cog, name = "Go"):
                 await context.send("Player 2 won with " + result[1] + "points compared to player 1's " + result[0] + "points")
 
     async def testMovesSuite(self, context):
+        checkpoint1 = [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [1,0,0,0,0,0,0,0,0],
+            [2,0,0,0,0,0,0,0,0],
+            [0,2,0,0,0,0,0,0,0],
+            [0,2,0,0,0,0,0,0,0]
+        ]
+        checkpoint2 = [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [1,0,0,0,0,0,0,0,0],
+            [0,1,0,0,0,0,0,0,0],
+            [0,0,1,0,0,0,0,0,0],
+            [0,0,1,0,0,0,0,0,0]
+        ]
+        checkpoint3 = [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,1,0,0,0,0,0,0],
+            [0,1,0,1,0,0,0,0,0],
+            [1,0,1,1,0,0,0,0,0],
+            [0,1,0,1,0,0,0,0,0],
+            [0,0,1,0,0,0,0,0,0],
+            [0,0,1,0,0,0,0,0,0]
+        ]
+        endstate = [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ]
+        # TEST CORNER SURROUND
         await self.makeMove(context, "(1,1)", True)
         await self.makeMove(context, "(1,3)", True)
         await self.makeMove(context, "(1,2)", True)
         await self.makeMove(context, "(2,2)", True)
         await self.makeMove(context, "(1,4)", True)
         await self.makeMove(context, "(2,1)", True)
+        assert self.board == checkpoint1, "Checkpoint 1: Failed to cancel out corner pieces"
+        # 2 corner pieces should be captured by player 2
         await self.makeMove(context, "(2,3)", True)
         await self.makeMove(context, "(1,2)", True)
         await self.makeMove(context, "(3,2)", True)
         await self.makeMove(context, "(1,1)", True)
         await self.makeMove(context, "(3,1)", True)
+        assert self.board == checkpoint2, "Checkpoint 2: Failed to cancel out corner pieces"
+        # 5 corner pieces should be captured by player 2
 
+        # CENTER SURROUND
+        await self.makeMove(context, "(2,4)", True)
+        await self.makeMove(context, "(4,3)", True)
+        await self.makeMove(context, "(3,3)", True)
+        await self.makeMove(context, "(4,4)", True)
+        await self.makeMove(context, "(3,5)", True)
+        await self.makeMove(context, "(3,6)", True)
+        await self.makeMove(context, "(5,5)", True)
+        await self.makeMove(context, "(4,5)", True)
+        await self.makeMove(context, "(5,7)", True)
+        await self.makeMove(context, "(2,5)", True)
+        await self.makeMove(context, "(4,6)", True)
+        await self.makeMove(context, "(3,4)", True)
+        assert self.board == checkpoint3, "Checkpoint 3: Failed to cancel out center pieces"
+
+        await self.printBoardState(context)
+
+        # RESET AND CONFIRM
+        self.reset()
+        assert self.board == endstate
+        
 async def setup(bot):
     await bot.add_cog(GoMinigame(bot))
