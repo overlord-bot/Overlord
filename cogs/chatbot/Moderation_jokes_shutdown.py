@@ -26,6 +26,15 @@ class TimChat(commands.Cog, name="TimChat"):
         channels = self.bot.get_channel(channel_id)
         await channels.send("Don't use dirty, inappropriate, NSFW languages or content in this server!")
         await channels.send("Enter agree or disagree to determine which way you go.")
+        dic = {"bj":member.id,"xh":23}
+        json_f = json.dumps(dic)
+        dir = os.path.dirname(os.path.realpath(__file__))
+        with open(f"{dir}/join_user.json", "w") as outwrite:
+            outwrite.write(json_f)
+        with open(".\cogs\chatbot\join_user.json") as read:
+            data = json.load(read)
+        await channel.send(data["bj"])
+        await channel.send("All done")
 
         
 
@@ -65,7 +74,7 @@ class TimChat(commands.Cog, name="TimChat"):
         await message.channel.send("write_done")
         with open(".\cogs\chatbot\join_user.json") as read:
             data = json.load(read)
-        await message.channel.send(data)
+        await message.channel.send(data["bj"])
         await message.channel.send("All done")
 
 async def setup(bot):
