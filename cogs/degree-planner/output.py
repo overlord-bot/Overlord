@@ -4,6 +4,7 @@ import logging
 from enum import Enum
 from collections import OrderedDict
 import time
+import re
 
 DELIMITER_TITLE = '---'
 DELIMITER_BLOCK = '###'
@@ -271,6 +272,9 @@ class Output():
         msg (string): message to hold
     """
     def print_hold(self, msg):
+        msg = msg.replace(DELIMITER_BLOCK, ': ')
+        msg = msg.replace(DELIMITER_TITLE, ': ')
+        msg = msg.replace(TAG_NOMERGE, '')
         self.__msg_cache_hold += msg + "\n"
         return
 
@@ -302,3 +306,7 @@ def oprint(msg:str, logging_flag=None) -> None:
             logging.warning(msg)
         elif logging_flag == OUT.ERROR:
             logging.error(msg)
+
+def cleanse(msg:str) -> str:
+    re.sub(r'\W+', '', msg)
+    return msg

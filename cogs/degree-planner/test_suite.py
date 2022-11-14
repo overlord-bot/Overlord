@@ -180,6 +180,10 @@ class Test1():
         search = Search(catalog.get_all_course_names())
         assert search.search("dat str") == ["csci 1200 data structures"]
 
+        #------------------------------------------------------------------------------------------
+        # Output tests
+        #------------------------------------------------------------------------------------------
+
         await output.print(f"\nPrinting user data: {str(user)}")
 
         # resetting master_list and conclude test module

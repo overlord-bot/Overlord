@@ -314,7 +314,8 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     """
     async def parse_command(self, cmd:str, output:Output=None) -> list:
         if output == None: output = Output(OUT.CONSOLE)
-        arg_list = [e.strip().casefold() for e in cmd.split(",") if e.strip()]
+
+        arg_list = [cleanse(e.strip().casefold()) for e in cmd.split(",") if e.strip()]
         cmd_queue = []
         last_command = None
         for e in arg_list:
