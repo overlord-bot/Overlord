@@ -19,7 +19,7 @@ class CalendarJson(commands.Cog, name="Calendarv2"):
         user_name = str(context.message.author.name)
         if action.lower() == "add":
             if event:
-                await context.send(embed=self.calhelper.print_add_embed(event, user_id))
+                await context.send(embed=self.calhelper.CalAdd(event, user_id))
             else:
                 await context.send("Please specify an event.")
 
@@ -27,11 +27,11 @@ class CalendarJson(commands.Cog, name="Calendarv2"):
             await context.send(embed=self.calhelper.print_clear_json())
 
         elif action.lower() == "view":
-            await context.send(embed=self.calhelper.print_view_embed(user_id, user_name))
+            await context.send(embed=self.calhelper.CalView(user_id, user_name))
         
         elif action.lower() == "remove":
             if event:
-                await context.send(embed=self.calhelper.print_remove_embed(event, user_id))
+                await context.send(embed=self.calhelper.CalRemove(event, user_id))
             else:
                 await context.send("Please specify an event.")
 
@@ -40,13 +40,15 @@ class CalendarJson(commands.Cog, name="Calendarv2"):
                 temp = str(event.split(" ")[0])
                 new_event = event[len(temp)+1:]
                 if temp.lower() == "date":
-                    await context.send(embed=self.calhelper.edit_date(new_event, user_id))
+                    await context.send(embed=self.calhelper.CalEditDate(new_event, user_id))
                 elif temp.lower() == "event":
-                    await context.send(embed=self.calhelper.edit_event(new_event, user_id))
-                elif temp.lower() == "both":
-                    pass
+                    await context.send(embed=self.calhelper.CalEditEvent(new_event, user_id))
             else:
                 await context.send("Please specify an event.")
+
+        elif action.lower() == "remind":
+            pass
+        
         else:
             await context.send("Please specify an action.")
 
