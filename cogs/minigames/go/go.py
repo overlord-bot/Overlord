@@ -147,8 +147,9 @@ class GoMinigame(commands.Cog, name = "Go"):
                 y = j + dir[a+1]
                 if x > 8 or x < 0 or y > 8 or y < 0:
                     continue
-                elif self.board[x][y] == 0 and (x,y) not in visited:
-                    dq.append((x,y))
+                elif self.board[x][y] == 0:
+                    if (x,y) not in visited:
+                        dq.append((x,y))
                 elif res == -1:
                     res = self.board[x][y]
                 elif self.board[x][y] != res:
@@ -162,6 +163,8 @@ class GoMinigame(commands.Cog, name = "Go"):
         p2 = 0
         for i in range(9):
             for j in range(9):
+                if self.board[i][j] != 0:
+                    continue
                 res = self.BFS(i,j)
                 if res == 1:
                     p1 += 1
@@ -438,9 +441,7 @@ class GoMinigame(commands.Cog, name = "Go"):
         # SCORING
         assert self.player1LostStones == 2, "Player 1 lost stones incorrect!"
         assert self.player2LostStones == 13, "Player 2 lost stones incorrect!"
-        # TODO: FIX THIS BUG
-        print(self.endGame())
-        assert self.endGame() == (20,-2.5), "Scoring is incorrect!"
+        assert self.endGame() == (20,-1.5), "Scoring is incorrect!"
 
         # RESET AND CONFIRM
         self.reset()
