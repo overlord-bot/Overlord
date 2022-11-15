@@ -7,7 +7,11 @@ import json
 import discord
 from discord.ext import commands
 
+import datetime
+
 import asyncio
+import functools
+import typing
 import time
 from threading import Event, Thread
 import threading
@@ -31,25 +35,21 @@ class RedditListener(commands.Cog, name="Reddit Listener"):
         print(newest_post)
 
 
-        #https://stackoverflow.com/questions/65881761/discord-gateway-warning-shard-id-none-heartbeat-blocked-for-more-than-10-second
-        #Do that
         t_end = time.time() + 60 * int(min_time)
+        dt_started = datetime.datetime.utcnow()
         while time.time() < t_end:
+            #dt_now = datetime.datetime.utcnow()
+            #time_passed = (dt_now - dt_started).total_seconds()
+            await blocking_func(5)
             newest_post = await runPostCheck(context, subreddit, newest_post)
-            try:
-                time.sleep(5)
-            except:
-                pass
-
-        #cancel_future_calls() # stop future calls
-
-        #new_posts = getNewPosts(context, reddit_data, newest_post)
+            #if time_passed >= 5: #Run every 5 seconds
+            #    newest_post = await runPostCheck(context, subreddit, newest_post)
+            #    dt_started = dt_now
 
         await context.send("Completed listen")
         #await sendPosts(context, new_posts)
 
     #await context.reply("Your file is:", file=discord.File(file, "list_of_commits.txt"))
-
 
 async def runPostCheck(context, subreddit, newest_post):
     reddit_data = getRedditData(subreddit)
@@ -64,6 +64,18 @@ async def runPostCheck(context, subreddit, newest_post):
     await sendPosts(context, new_posts)
     return new_post
 
+
+def to_thread(func: typing.Callable) -> typing.Coroutine:
+    @functools.wraps(func)
+    async def wrapper(*args, **kwargs):
+        return await asyncio.to_thread(func, *args, **kwargs)
+    return wrapper
+
+
+@to_thread
+def blocking_func(interval):
+    time.sleep(interval)
+    return "some stuff"
 
 
 def getRedditData(subreddit): #https://www.reddit.com/r/rpi/new.json?sort=new
