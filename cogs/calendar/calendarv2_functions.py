@@ -61,20 +61,44 @@ class CalHelperJson():
     def print_clear_json(self):
         self.events = {}
         self.save_json()
-        embed = discord.Embed(title="Calendar", description="Calendar cleared!", color=0xff0000)
+        embed = discord.Embed(title="Calendar", description="Json file cleared!", color=0xff0000)
         return embed
 
     #checks to see if the user exists
     def check_user(self, user):
         if user not in self.events.keys():
-            self.events = {user: {"events": {}, "calendar": ""}}
+            self.events = {
+                user: 
+                {
+                    "events": {}, 
+                    "calendar": ""
+                }
+            }
             self.save_json()
             return False
         return True
 
+    #checks to see if that day has an event
+    def check_event(self, week_string, date, user):
+        if self.check_user(user) == False:
+            return week_string
+        curr = ""
+        if date < 10:  
+            curr = "0" + str(date)
+        else:
+            curr = str(date)
+        for key in self.events[user]["events"].keys():
+            if curr == key[3:5]:
+                for event in self.events[user]["events"][key]:
+                    week_string += "*"
+        return week_string
+
     #adds the event to the json file
-    def print_add_embed(self, event, user):
+    def CalAdd(self, event, user):
         date = event.split(" ")[-1]
+        if len(date) != 10 or date[2] != "/" or date[5] != "/" or int(date[0:2]) > 12 or int(date[3:5]) > 31 or int(date[6:10]) < 2022:
+            embed = discord.Embed(title="Calendar", description="Invalid date format, please use MM/DD/YYYY", color=0xff0000)
+            return embed
         event = event.replace(date, "")
         event = event[:-1]
 
@@ -93,23 +117,8 @@ class CalHelperJson():
         embed = discord.Embed(title="Calendar", description="Event added!", color=0xff0000)
         return embed
         
-    #checks to see if that day has an event
-    def check_event(self, week_string, date, user):
-        if self.check_user(user) == False:
-            return week_string
-        curr = ""
-        if date < 10:  
-            curr = "0" + str(date)
-        else:
-            curr = str(date)
-        for key in self.events[user]["events"].keys():
-            if curr == key[3:5]:
-                for event in self.events[user]["events"][key]:
-                    week_string += "*"
-        return week_string
-
     #constructs a visual of the calendar for the user
-    def print_view_embed(self, user, username):
+    def CalView(self, user, username):
         now = datetime.datetime.now()
         year = now.year
         month = now.month
@@ -118,7 +127,6 @@ class CalHelperJson():
         embed = discord.Embed(title="Calendar", description="Calendar for " + username, color=0xff0000)
         cal = calendar.monthcalendar(year, month)
         week_string = "Mon\t Tue\t Wed\t Thu\t Fri\t Sat\t Sun"
-
         for week in cal:
             week_string += "\n"
             for day in week:
@@ -148,7 +156,7 @@ class CalHelperJson():
         return embed
 
     #removes an event from the json file
-    def print_remove_embed(self, event, user):
+    def CalRemove(self, event, user):
         date = event.split(" ")[-1]
         if self.check_user(user) == False:
             embed = discord.Embed(title="Calendar", description="No events to remove!", color=0xff0000)
@@ -171,9 +179,10 @@ class CalHelperJson():
         embed = discord.Embed(title="Calendar", description="Event not found!", color=0xff0000)
         return embed
 
-    #edit an event, in progress, old_event does not exist for some reason
-    def edit_event(self, event, user):
+    #edit an event
+    def CalEditEvent(self, event, user):
         old_event = str(event.split("/")[1])
+        old_event = old_event[:-1]
         new_event = str(event.split("/")[2])
         if self.check_user(user) == False:
             embed = discord.Embed(title="Calendar", description="No events to edit!", color=0xff0000)
@@ -189,7 +198,7 @@ class CalHelperJson():
         return embed
             
     #edit a date by changing the events in that date to another date
-    def edit_date(self, event, user):
+    def CalEditDate(self, event, user):
         first = event.split(" ")[0]
         last = event.split(" ")[-1]
         if self.check_user(user) == False:
@@ -204,3 +213,17 @@ class CalHelperJson():
             self.save_json()
             embed = discord.Embed(title="Calendar", description="Event edited!", color=0xff0000)
             return embed
+
+    #reminder function, in progress
+    def CalReminder(self, user):
+        now = datetime.datetime.now()
+        year = now.year
+        month = now.month
+        currday = datetime.datetime.now().day
+        if self.check_user(user) == False:
+            return
+        for key in self.events[user]["events"].keys():
+            if key[3:5] == str(currday):
+                for event in self.events[user]["events"][key]:
+                    return event
+        return

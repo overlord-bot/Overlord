@@ -34,16 +34,15 @@ To use the new commands, type `!calendarv2` followed by the command.
 
 Current plans for the week:
 
-Create and get an edit function working for events, and maybe go into fixing remove with events themselves.
-
-Edit: Busy this week so will have less time to work on development.
+-Fixed bug with editing an event where the old event does not exist. Working on implementing the reminder system, and addin US federal holidays to calendars.
 
 ## Development Plans
 
 Currently, the calendar module is in development. The following features are planned for the future:
 
--Redesign of the calendar file, storing and reading from a json file instead of a text file. (Implemented)
-
--Fix remove command, currently does not work correctly with the events dictionary. (Implemented)
-
 -Add a command to edit events. (In progress)
+
+-Reminder system, where users can specify the date/event.
+
+-View of a week, month, or year
+

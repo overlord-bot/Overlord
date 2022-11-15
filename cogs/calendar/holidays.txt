@@ -1,0 +1,13 @@
+New Year's Day 01/01/2022
+Martin Luther King Jr. Day 01/17/2022
+President's Day 02/21/2022
+Memorial Day 05/30/2022
+Independence Day 07/04/2022
+Labor Day 09/05/2022
+Columbus Day 10/10/2022
+Veterans Day 11/11/2022
+Thanksgiving Day 11/24/2022
+Day after Thanksgiving 11/25/2022
+Christmas Eve 12/24/2022
+Christmas Day 12/25/2022
+New Year's Eve 12/31/2022
