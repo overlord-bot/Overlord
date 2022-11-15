@@ -53,58 +53,63 @@ class RottenTomatoesScraper(commands.Cog, name="Rotten Tomatoes Scraper"):
         soup = BeautifulSoup(search_data.text, 'html.parser')
         if mediaType:
             if year is None:
-                result = soup.find('search-page-result', type=mediaType).find('search-page-media-row')
+                result = soup.find('search-page-result', type=mediaType)
+                if result is not None: result = result.find('search-page-media-row')
             else:
                 parent = soup.find('search-page-result', type=mediaType)
-                result = self.findMedia(parent, year)
+                if parent is not None: result = self.findMedia(parent, year)
         else:
             if year is None:
                 result = soup.find('search-page-media-row')
             else:
                 parent = soup.find('search-page-result')
-                result = self.findMedia(parent, year)
-            mediaType = result.find_parent("search-page-result")["type"]
+                if parent is not None:
+                    result = self.findMedia(parent, year)
+                    mediaType = result.find_parent("search-page-result")["type"]
 
-        if result is not None:
-            link = result.find(href=True).get("href")
-            page_data = requests.get(link)
-            page_soup = BeautifulSoup(page_data.text, 'html.parser')
-            
-            percent = "N/A"
-            audience = "N/A"
-            if mediaType == "movie":
-                score_board = page_soup.find("score-board")
-                name = score_board.find('h1', class_="scoreboard__title").string.strip()
-                percent = score_board.get("tomatometerscore")
-                if len(percent) == 0:
-                    percent = "N/A"
-                else:
-                    percent = f"{percent}%"
-                audience = score_board.get("audiencescore")
-                if len(audience) == 0:
-                    audience = "N/A"
-                else:
-                    audience = f"{audience}%"
-            
-            elif mediaType == "tv":
-                score_board = page_soup.find("section", class_="tv-series__scoreboard score-panel-wrap")
-                name = score_board.find('h1', class_="mop-ratings-wrap__title mop-ratings-wrap__title--top").string.strip()
-                percent = score_board.find('div', class_="mop-ratings-wrap__half critic-score").find("span", class_="mop-ratings-wrap__percentage")
-                if percent is None:
-                    percent = "N/A"
-                else:
-                    percent = percent.string.strip()
-                    percent = f"{percent}"
-                audience = score_board.find('div', class_="mop-ratings-wrap__half audience-score").find("span", class_="mop-ratings-wrap__percentage")
-                if audience is None:
-                    audience = "N/A"
-                else:
-                    audience = audience.string.strip()
-                    audience = f"{audience}"
-
-            await context.send(f"Name: {name}\nURL: {link}\nTomatometer: {percent}\nAudience Score: {audience}")
-        else:
+        if result is None:
             await context.send("I couldn't find any results from that query. Try another one.")
+            return
+
+
+        link = result.find(href=True).get("href")
+        page_data = requests.get(link)
+        page_soup = BeautifulSoup(page_data.text, 'html.parser')
+            
+        percent = "N/A"
+        audience = "N/A"
+        if mediaType == "movie":
+            score_board = page_soup.find("score-board")
+            name = score_board.find('h1', class_="scoreboard__title").string.strip()
+            percent = score_board.get("tomatometerscore")
+            if len(percent) == 0:
+                percent = "N/A"
+            else:
+                percent = f"{percent}%"
+            audience = score_board.get("audiencescore")
+            if len(audience) == 0:
+                audience = "N/A"
+            else:
+                audience = f"{audience}%"
+            
+        elif mediaType == "tv":
+            score_board = page_soup.find("section", class_="tv-series__scoreboard score-panel-wrap")
+            name = score_board.find('h1', class_="mop-ratings-wrap__title mop-ratings-wrap__title--top").string.strip()
+            percent = score_board.find('div', class_="mop-ratings-wrap__half critic-score").find("span", class_="mop-ratings-wrap__percentage")
+            if percent is None:
+                percent = "N/A"
+            else:
+                percent = percent.string.strip()
+                percent = f"{percent}"
+            audience = score_board.find('div', class_="mop-ratings-wrap__half audience-score").find("span", class_="mop-ratings-wrap__percentage")
+            if audience is None:
+                audience = "N/A"
+            else:
+                audience = audience.string.strip()
+                audience = f"{audience}"
+
+        await context.send(f"Name: {name}\nURL: {link}\nTomatometer: {percent}\nAudience Score: {audience}")
+        
 
 async def setup(bot):
     await bot.add_cog(RottenTomatoesScraper(bot))
