@@ -15,6 +15,8 @@ class Blackjack(commands.Cog, name="Blackjack"):
         self.cardsindeck = []
         self.dealercards = ""
         self.playercards = ""
+        self.playercard1 = ""
+        self.playercard2 = ""
         self.gamestart = False
         self.gameend = False
     def draw(deck):
@@ -90,6 +92,8 @@ class Blackjack(commands.Cog, name="Blackjack"):
             
             card1player = Blackjack.draw(self.cardsindeck)
             card2player = Blackjack.draw(self.cardsindeck)
+            self.playercard1 = card1player
+            self.playercard2 = card2player
             emojii1 = Blackjack.emoji(card1player)
             emojii2 = Blackjack.emoji(card2player)
             await context.send("Your cards are:")
@@ -148,7 +152,42 @@ class Blackjack(commands.Cog, name="Blackjack"):
         else:
             await context.send("Please start a game first!")
         
-        
+    @commands.command()
+    async def double(self, context):
+        if(self.gamestart != True and self.gameend != False):
+            await context.send("Please start a game first")
+        else:
+            await context.send("Doubling your bet")
+        #need to implement betting before doing anything else here
+        #can double on any hand
+    @commands.command()
+    async def split(self,context):
+        if(self.gamestart != True and self.gameend != False):
+            await context.send("Please start a game first")
+        elif(self.playercard1[0]!=self.playercard2[0]):
+            await context.send("You cannot split with this hand")
+        elif(self.playercard1[0]==self.playercard2[0]):
+            await context.send("Splitting hand")
+            playerhand1 = Blackjack.emoji(self.playercard1)[0]
+            playerhand1 += Blackjack.emoji(self.playercard1)[1]
+            playerhand2 = Blackjack.emoji(self.playercard2)[0]
+            playerhand2 += Blackjack.emoji(self.playercard2)[1]
+            hand1card = Blackjack.draw(self.cardsindeck)
+            hand2card = Blackjack.draw(self.cardsindeck)
+            playerhand1 += Blackjack.emoji(hand1card)[0]
+            playerhand1 += Blackjack.emoji(hand1card)[1]
+            playerhand2 += Blackjack.emoji(hand2card)[0]
+            playerhand2 += Blackjack.emoji(hand2card)[1]
+            await context.send("Your hand to the left hand side is")
+            await context.send(playerhand1)
+            await context.send("Your hand to the right hand side is")
+            await context.send(playerhand2)
+            await context.send("Playing your hand to the right")
+            #Add implementation to actually play the hand later
+            await context.send(playerhand2)
+            await context.send("Playing your hand to the left")
+            await context.send(playerhand1)
+            #add implementation to actually play the hand later
     @commands.command()
     async def stand(self, context):
         """ Does not get another card switches to dealers turn """  # this is the description that will show up in !help
@@ -199,3 +238,4 @@ class Blackjack(commands.Cog, name="Blackjack"):
     
 async def setup(bot):
     await bot.add_cog(Blackjack(bot))
+
