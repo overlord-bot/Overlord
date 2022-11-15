@@ -5162,6 +5162,20 @@
       "course_id": "4710"
     },
     {
+      "name": "Freshwater Ecology ",
+      "type": "course",
+      "credits": "4",
+      "major": "BIOL",
+      "course_id": "4700"
+    },
+    {
+      "name": "Biol 4xxx- selected in consultation with your adviser Credits / Units: 4",
+      "type": "course",
+      "credits": -1,
+      "major": "none",
+      "course_id": -1
+    },
+    {
       "name": "selected in consultation with the adviser",
       "type": "course",
       "credits": -1,
@@ -6201,18 +6215,18 @@
       "course_id": "4760"
     },
     {
-      "name": "Operations Research Methods ",
-      "type": "course",
-      "credits": "4",
-      "major": "ISYE",
-      "course_id": "4600"
-    },
-    {
       "name": "Introduction to Engineering Design ",
       "type": "course",
       "credits": "4",
       "major": "ENGR",
       "course_id": "2050"
+    },
+    {
+      "name": "Operations Research Methods ",
+      "type": "course",
+      "credits": "4",
+      "major": "ISYE",
+      "course_id": "4600"
     },
     {
       "name": "Technical Elective I",
