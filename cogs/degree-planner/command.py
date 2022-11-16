@@ -2,10 +2,8 @@ from enum import Enum
 
 class CMD(Enum):
 
-    # getting enums require unique values so ONLY THE LAST DIGIT
-    # of each enum represents their actual value, which is how
-    # many arguments that command needs
-
+    # getting enums require unique values so ONLY THE LAST DIGIT of each enum 
+    # represents their actual value (number of arguments needed).
     ADD = 12
     REMOVE = 22
     SCHEDULE = 11
@@ -33,7 +31,9 @@ class Command():
         self.arguments = []
         self.data_store = None
 
-    # true means well formed, false means bad command
+    """ True means valid command, the last digit of the enum value
+        represents the number of arguments required
+    """
     def valid(self) -> bool:
         return self.command.value % 10 <= len(self.arguments)
 

@@ -39,8 +39,9 @@ class Search():
             self.__items = item_set
 
 
-    # searches for possible items based on msg, 
-    # taking into account only words inside msg of 3 letters and above
+    """ Searches for possible items based on msg, 
+        taking into account only words inside msg of 3 letters and above
+    """
     def search(self, msg) -> list:
         words = msg.split(' ')
         results = []
@@ -65,11 +66,9 @@ class Search():
             else:
                 results = [e for e in results if e in self.__index[key]]
 
-        # go through results to verify their entire name
+        # go through results to verify their entire name is within the search term
         for word in words:
             results = [e for e in results if word.casefold() in e.casefold()]                 
 
-        # sorting alphabetically enables better user experience
-        results.sort()
-
+        results.sort() # sorting alphabetically enables better user experience
         return results

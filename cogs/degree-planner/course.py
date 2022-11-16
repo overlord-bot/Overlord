@@ -36,8 +36,15 @@ class Course():
             self.name = self.name.replace(',', '')
 
 
-    # some input data for courses may not be in the desired format. We will correct those problems here
-    def validate_course_data(self, output:Output=None):
+    """ Some input data for courses may not be in the desired format. 
+
+        For example, most courses have an ID in the form of ####, but some
+        have ####.##. We separate the latter form into 
+        courseid = #### (numbers prior to dot) and courseid2 = ## (after dot)
+        
+        All data is modified in place, no arguments and return necessary
+    """
+    def validate_course_data(self, output:Output=None) -> None:
         if output == None: output = Output(OUT.CONSOLE)
         if isinstance(self.course_id, str):
             if '.' in self.course_id:
@@ -55,22 +62,22 @@ class Course():
         elif not isinstance(self.course_id, int):
             logging.error(f"{DEGREE_PLANNER_SIGNATURE} COURSE PARSING: course number is not a number for course " + self.name)
 
-    def add_prerequisite(self, prereq):
+    def add_prerequisite(self, prereq) -> None:
         self.prerequisites.add(prereq)
 
-    def add_cross_listed(self, cross):
+    def add_cross_listed(self, cross) -> None:
         self.cross_listed.add(cross)
 
-    def in_pathway(self, pathway):
+    def in_pathway(self, pathway) -> bool:
         return pathway in self.HASS_pathway
 
-    def add_pathway(self, pathway):
+    def add_pathway(self, pathway) -> None:
         self.HASS_pathway.add(pathway)
 
-    def in_concentration(self, concentration):
+    def in_concentration(self, concentration) -> bool:
         return concentration in self.concentration
 
-    def add_concentration(self, concentration):
+    def add_concentration(self, concentration) -> None:
         self.concentration.add(concentration)
 
     def add_available(self, semester:str) -> None:
@@ -83,7 +90,7 @@ class Course():
         return not self.available_semesters or semester.casefold() in self.available_semesters
 
     # determines the level of the course, 1000=1, 2000=2, 4000=4, etc
-    def level(self):
+    def level(self) -> int:
         return (self.course_id//1000)
 
     def __repr__(self):

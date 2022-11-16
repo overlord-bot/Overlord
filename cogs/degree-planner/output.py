@@ -242,6 +242,8 @@ class Output():
         return msg_blocks
 
 
+    """ Prints blocks (titles, body) as embed
+    """
     async def print_embed(self, msg_blocks:OrderedDict):
         user_color = discord.Color.from_rgb(172,64,184)
         if self.user != None:
@@ -255,6 +257,8 @@ class Output():
             self.last_message_object = await self.output_channel.send(embed=embed)
 
 
+    """ Prints blocks (title, body) as text
+    """
     async def print_fancy(self, msg_blocks:OrderedDict):
         msg = ''
         for k, v in msg_blocks.items():
@@ -295,6 +299,8 @@ class Output():
         self.__msg_cache_hold = ""
         return
 
+""" global function to print message to console with logging type as input
+"""
 def oprint(msg:str, logging_flag=None) -> None:
     if logging_flag != None and isinstance(logging_flag, OUT) and logging_flag.value//10 == 2:
         msg = f'{DEGREE_PLANNER_SIGNATURE} {msg}'
@@ -307,6 +313,15 @@ def oprint(msg:str, logging_flag=None) -> None:
         elif logging_flag == OUT.ERROR:
             logging.error(msg)
 
+
+""" removes all non-alphanumeric characters from string
+
+Args:
+    msg (str): string to strip
+
+Returns:
+    msg (str): stripped string
+"""
 def cleanse(msg:str) -> str:
     re.sub(r'\W+', '', msg)
     return msg

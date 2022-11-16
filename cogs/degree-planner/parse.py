@@ -8,10 +8,14 @@ import json
 import os
 
 
-#--------------------------------------------------------------------------
-# parses json data of format [{course attribute : value}] 
-# into a set of Course objects stored in Catalog
-#--------------------------------------------------------------------------
+""" Rarses json data of format [{course attribute : value}] 
+    into a set of Course objects stored in Catalog
+
+Args:
+    file_name (str): name of file to parse from
+    catalog (Catalog): catalog object to store parsed information into
+    output (Output): debug output, default is print to console
+"""
 async def parse_courses(file_name, catalog:Catalog, output:Output=None):
     if output == None: output = Output(OUT.CONSOLE)
     await output.print("Beginning parsing course data into catalog")
@@ -40,12 +44,8 @@ async def parse_courses(file_name, catalog:Catalog, output:Output=None):
     json_data = json.load(file_catalog_results)
     file_catalog_results.close()
 
-    #----------------------------------------------------------------------
     # Begin iterating through every dictionary stored inside the json_data
-    #
-    # json data format: list of dictionaries with each dictionary representing 
-    # a single course and its data
-    #----------------------------------------------------------------------
+    # json data format: list(dictionary<course attribute : data>)
     for element in json_data:
 
         if 'course_name' in element and 'course_subject' in element and 'course_number' in element:
@@ -101,10 +101,13 @@ async def parse_courses(file_name, catalog:Catalog, output:Output=None):
         catalog.add_course(course)
 
 
-#--------------------------------------------------------------------------
-# parses degree info from json into Degree objects, and then
-# stored inside the Catalog
-#--------------------------------------------------------------------------
+""" Rarses json data degree objects stored in Catalog
+
+Args:
+    file_name (str): name of file to parse from
+    catalog (Catalog): catalog object to store parsed information into
+    output (Output): debug output, default is print to console
+"""
 async def parse_degrees(file_name, catalog, output:Output=None):
     if output == None: output = Output(OUT.CONSOLE)
     await output.print("Beginning parsing degree data into catalog")

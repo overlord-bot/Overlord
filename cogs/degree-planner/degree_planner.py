@@ -136,16 +136,17 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if output == None: output = Output(OUT.CONSOLE)
         if Flag.CMD_PAUSED in user.flag:
             user.command_queue_locked = True
+            oprint(f'user {user.username} locked command queue', OUT.DEBUG)
             user.command_decision = message.strip().casefold()
             oprint(f'passed user {user.username} decision {message} to command loop', OUT.DEBUG)
         else:
-            # if queue is available, immediately lock it and proceed
+            # if queue is locked, do not proceed
             if user.command_queue_locked:
                 oprint(f'user {user.username} tried to access busy queue lmao', OUT.DEBUG)
                 await output.print(f"ERROR{DELIMITER_TITLE}queue busy, please try again later")
                 return False
-            oprint(f'user {user.username} locked command queue', OUT.DEBUG)
             user.command_queue_locked = True
+            oprint(f'user {user.username} locked command queue', OUT.DEBUG)
             user.command_queue.join()
             commands = await self.parse_command(message, output)
             for command in commands:
@@ -375,11 +376,31 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             user.curr_schedule = entry
             return
 
+
+    """ Gets schedule currently being modified by user
+
+    Args:
+        user (User): get the active schedule of this user
+
+    Returns:
+        schedule (Schedule): active schedule object
+    """
     async def get_active_schedule(self, user:User) -> Schedule:
         return user.get_current_schedule()
 
+
+    """ Get all of user's schedule
+
+    Args:
+        user (User): get the active schedule of this user
+
+    Returns:
+        list (list(Schedule)): returns a list of all schedule
+            objects
+    """
     async def get_all_schedules(self, user:User) -> list:
         return user.get_all_schedules()
+
 
     """ Changes user's active schedule's degree
 
@@ -404,8 +425,21 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             await output.print(f"SCHEDULE{DELIMITER_TITLE}set your degree to {degree.name}")
             return True
 
+    
+    """ Returns list of courses to output that match input entry
 
-    """ Print list of courses that match input entry
+    Args:
+        entry (str): search term
+        course_pool (set): pool of courses to search from
+    """
+    async def search(self, entry:str, course_pool:set, output:Output=None) -> list:
+        if output == None: output = Output(OUT.CONSOLE)
+        search_temp = Search(course_pool, True)
+        possible_courses = search_temp.search(entry)
+        return possible_courses
+
+
+    """ Print list of courses to output that match input entry
 
     Args:
         entry (str): search term

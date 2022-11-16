@@ -10,7 +10,7 @@ from .output import *
 class Catalog():
 
     def __init__(self, name="main"):
-        # catalog will  be a list of courses and degrees
+        # catalog will be a list of courses and degrees
         # TODO also store graphs for further analysis and course prediction of free electives
         self.name = name
         self.output = Output(OUT.CONSOLE)
@@ -78,12 +78,8 @@ class Catalog():
         return self.__degree_list.values()
 
 
-    # initializes default templates to use
-    def build_templates(self) -> None:
-        pass
-
-
-    # matches against entire catalog
+    """ Matches against entire catalog
+    """
     def get_course_match(self, target_course:Course) -> dict:
         return get_course_match(target_course, self.__course_list.values())
 
@@ -113,17 +109,18 @@ class Catalog():
         return len(self.__course_list)
 
 
-# Intakes a criteria of courses that we want returned
-# For example, if target_course specifies 2000 as course ID, then all 2000 level CSCI courses inside
-# course_list is returned
-#
-# There are three course objects being used here:
-# 1) a default course object
-# 2) a target course with ONLY the attributes we want to require changed to their required states
-# 3) course pool - the courses we want to select from
-#
-# If the target course attribute is not equal to the default value and the course from the pool 
-# has that required value, it will be returned.
+""" Intakes a criteria of courses that we want returned
+    For example, if target_course specifies 2000 as course ID, then all 2000 level CSCI courses inside
+    course_list is returned
+
+    There are three course objects being used in this function:
+    1) a default course object
+    2) a target course with ONLY the attributes we want to require changed to their required states
+    3) course pool - the courses we want to select from
+
+    If the target course attribute is not equal to the default value and the course from the pool 
+    has that required value, it will be returned.
+"""
 def get_course_match(target_course, course_pool:set, possible_values=None) -> dict:
     output = Output(OUT.CONSOLE)
     default_course = Course("", "", 0)

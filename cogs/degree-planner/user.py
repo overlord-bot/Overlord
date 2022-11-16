@@ -13,11 +13,11 @@ class Flag(Enum):
 class User():
     
     def __init__(self, id):
-        self.id = id
-        self.username = str(id)
-        self.discord_user = None
+        self.id = id # unique id for user
+        self.username = str(id) # username to display
+        self.discord_user = None # discord user object, if applicable
         self.__schedules = dict() # all schedules this user created <schedule name, Schedule>
-        self.curr_schedule = "" # empty string signifies no current schedule
+        self.curr_schedule = "" # schedule to modify
 
         self.flag = set()
 
