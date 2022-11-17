@@ -16,8 +16,6 @@ from .course_template import Template
 from .command import *
 from .parse import *
 
-
-# just to help keep track of deployed versions without needing access to host
 VERSION = "dev 12.1 (Fancy Embeds)"
 SEMESTERS_MAX = 12
 
@@ -30,41 +28,40 @@ OUTCONSOLE = Output(OUT.CONSOLE)
 class Degree_Planner(commands.Cog, name="Degree Planner"):
     """ DEGREE PLANNER COMMAND PARSER
 
-    Receives commands and arguments separated by cammas in a string.
-    Multiple commands allowed within one entry.
+    message_handler function receives commands and arguments separated by 
+    cammas in a string. Multiple commands allowed within one entry.
 
-    Contains a Discord listener to automatically submit entries from
+    om_message is a Discord listener to automatically submit entries from 
     Discord's chat.
 
     Valid commands are:
         (developer only)
-        test
-            - run test_suite.py
-        import
-            - parse course and degree information from json
+            test
+                - run test_suite.py
+            import
+                - parse course and degree information from json
 
         (general use)
-        schedule, <schedule name>
-            - set active schedule. New schedule will be created if
-            specified schedule does not exist
-        degree, <degree name>
-            - set degree of active schedule
-        add, <semester>, <course name>
-            - add course to active schedule, courses may not duplicate
-            within the same semester but may duplicate accross semesters
-        remove, <semester>, <course name>
-            - remove course from active schedule in specified semester
-        print
-            - print schedule
-        fulfillment
-            - print degree requirement fulfillment status
-        find, <course>* (may list any number of courses)
-            - find courses that match with the inputted string. Useful
-            for browsing courses that contain certain keywords.
+            schedule, <schedule name>
+                - set active schedule. New schedule will be created if
+                specified schedule does not exist
+            degree, <degree name>
+                - set degree of active schedule
+            add, <semester>, <course name>
+                - add course to active schedule, courses may not duplicate
+                within the same semester but may duplicate accross semesters
+            remove, <semester>, <course name>
+                - remove course from active schedule in specified semester
+            print
+                - print schedule
+            fulfillment
+                - print degree requirement fulfillment status
+            find, <course>* (may list any number of courses)
+                - find courses that match with the inputted string. Useful
+                for browsing courses that contain certain keywords.
 
     NOTE: This class is created once and is not instigated for each user.
     It is essential to keep all user specific data inside the User class.
-
     """
 
     def __init__(self, bot):
@@ -72,7 +69,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
         # each user is assigned a User object and stored in this dictionary
         # Users = <user id, User>
-
         # note that the User object is meant to represent any user and does not
         # specifically have to be a discord user.
         self.users = dict()
@@ -81,7 +77,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         self.flags = set()
 
 
-    """ Main message listener, passes the message content to helper functions
+    """ Message listener for Discord, passes the message content to message_handler
 
     Args:
         message (Discord message obj): contains message and relevant metadata
@@ -97,13 +93,13 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if userid in self.users:
             user = self.users[userid]
             user.discord_user = message.author
-            oprint(f"received msg from returning user: {message.author}, user id: {userid}", OUT.DEBUG)
+            OUTDEBUG.print(f"received msg from returning user: {message.author}, user id: {userid}")
         else:
             user = User(userid)
             user.username = str(message.author)
             user.discord_user = message.author
             self.users.update({userid:user})
-            oprint(f"received msg from new user: {message.author}, user id: {userid}", OUT.DEBUG)
+            OUTDEBUG.print(f"received msg from new user: {message.author}, user id: {userid}")
 
         output = Output(OUT.DISCORD_CHANNEL, 
             {ATTRIBUTE.USER:user, 
@@ -136,24 +132,24 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if output == None: output = Output(OUT.CONSOLE)
         if Flag.CMD_PAUSED in user.flag:
             user.command_queue_locked = True
-            oprint(f'user {user.username} locked command queue', OUT.DEBUG)
+            OUTDEBUG.print(f'user {user.username} locked command queue')
             user.command_decision = message.strip().casefold()
-            oprint(f'passed user {user.username} decision {message} to command loop', OUT.DEBUG)
+            OUTDEBUG.print(f'passed user {user.username} decision {message} to command loop')
         else:
             # if queue is locked, do not proceed
             if user.command_queue_locked:
-                oprint(f'user {user.username} tried to access busy queue lmao', OUT.DEBUG)
+                OUTDEBUG.print(f'user {user.username} tried to access busy queue lmao')
                 await output.print(f"ERROR{DELIMITER_TITLE}queue busy, please try again later")
                 return False
             user.command_queue_locked = True
-            oprint(f'user {user.username} locked command queue', OUT.DEBUG)
+            OUTDEBUG.print(f'user {user.username} locked command queue')
             user.command_queue.join()
             commands = await self.parse_command(message, output)
             for command in commands:
                 user.command_queue.put(command)
         await self.command_handler(user, output)
         user.command_queue_locked = False
-        oprint(f'user {user.username} unlocked command queue', OUT.DEBUG)
+        OUTDEBUG.print(f'user {user.username} unlocked command queue')
         return True
 
 
@@ -178,13 +174,13 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         and add Flag.CMD_PAUSED in user.flag, otherwise the loop can never
         be entered again.
         """
-        oprint(f'user {user.username} entered command loop', OUT.DEBUG)
+        OUTDEBUG.print(f'user {user.username} entered command loop')
         while(not user.command_queue.empty() or Flag.CMD_PAUSED in user.flag):
             if Flag.CMD_PAUSED in user.flag:
                 command:Command = user.command_paused
             else:
                 command:Command = user.command_queue.get()
-                oprint(f'user {user.username} fetched command {str(command)}', OUT.DEBUG)
+                OUTDEBUG.print(f'user {user.username} fetched command {str(command)}')
 
             if command.command == CMD.NONE:
                 await output(f"ERROR{DELIMITER_TITLE}there was an error understanding your command")
@@ -226,15 +222,12 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 user.command_queue.task_done()
                 continue
 
-            #------------------------------------------------------------------
             # all commands after this requires an active schedule inside User
             schedule = user.get_current_schedule()
             if schedule == None:
                 await output.print(f"SCHEDULE{DELIMITER_TITLE}no schedule selected")
                 user.command_queue.task_done()
                 continue
-            #------------------------------------------------------------------
-
 
             if command.command == CMD.ADD or command.command == CMD.REMOVE:
                 if Flag.CMD_PAUSED in user.flag:
@@ -255,7 +248,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 else:
                     possible_courses = await self.remove_course(user, course, semester, output)
 
-                if possible_courses:
+                if possible_courses != None:
                     await output.print(f"{TAG_NOMERGE}SCHEDULE{DELIMITER_TITLE}entry {course} has multiple choices, please choose from list:")
                     i = 1
                     for c in possible_courses:
@@ -335,7 +328,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if last_command != None:
             cmd_queue.append(last_command)
 
-        # validates all commands
+        # verify all commands have the required number of arguments
         for e in cmd_queue:
             if not e.valid():
                 await output.print(f"ERROR{DELIMITER_TITLE}invalid arguments for command {str(e)}")
@@ -344,7 +337,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         return cmd_queue
 
     
-    """ Run test
+    """ Runs test suite
 
     Args:
         output (Output): user interface output
@@ -360,20 +353,20 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
     Args:
         user (User): user to perform the action on
-        entry (str): schedule name
+        schedule_name (str): schedule name
         output (Output): user interface output
     """
-    async def set_active_schedule(self, user:User, entry:str, output:Output=None) -> None:
+    async def set_active_schedule(self, user:User, schedule_name:str, output:Output=None) -> None:
         if output == None: output = Output(OUT.CONSOLE)
-        schedule = user.get_schedule(entry)
+        schedule = user.get_schedule(schedule_name)
         if schedule == None:
-            await output.print(f"SCHEDULE{DELIMITER_TITLE}Schedule {entry} not found, generating new one!")
-            user.new_schedule(entry)
-            user.curr_schedule = entry
+            await output.print(f"SCHEDULE{DELIMITER_TITLE}Schedule {schedule_name} not found, generating new one!")
+            user.new_schedule(schedule_name)
+            user.curr_schedule = schedule_name
             return
         else:
-            await output.print(f"SCHEDULE{DELIMITER_TITLE}Successfully switched to schedule {entry}!")
-            user.curr_schedule = entry
+            await output.print(f"SCHEDULE{DELIMITER_TITLE}Successfully switched to schedule {schedule_name}!")
+            user.curr_schedule = schedule_name
             return
 
 
@@ -407,18 +400,18 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     Args:
         user (User): user to perform the action on
         schedule (Schedule): schedule to change degree on
-        entry (str): degree name
+        degree_name (str): degree name
         output (Output): user interface output
 
     Returns:
         bool: if degree was successfully changed. 
             False usually means specified degree was not found
     """
-    async def set_degree(self, schedule:Schedule, entry:str, output:Output=None) -> bool:
+    async def set_degree(self, schedule:Schedule, degree_name:str, output:Output=None) -> bool:
         if output == None: output = Output(OUT.CONSOLE)
-        degree = self.catalog.get_degree(entry)
+        degree = self.catalog.get_degree(degree_name)
         if degree == None:
-            await output.print(f"SCHEDULE{DELIMITER_TITLE}invalid degree entered: {entry}")
+            await output.print(f"SCHEDULE{DELIMITER_TITLE}invalid degree entered: {degree_name}")
             return False
         else:
             schedule.degree = degree
@@ -429,26 +422,33 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     """ Returns list of courses to output that match input entry
 
     Args:
-        entry (str): search term
+        course_name (str): search for courses that contains this string in its name
         course_pool (set): pool of courses to search from
     """
-    async def search(self, entry:str, course_pool:set, output:Output=None) -> list:
-        if output == None: output = Output(OUT.CONSOLE)
-        search_temp = Search(course_pool, True)
-        possible_courses = search_temp.search(entry)
+    async def search(self, course_name:str, course_pool:set=None) -> list:
+        possible_courses = self.course_search.search(course_name)
+        if course_pool != None:
+            possible_courses = [e for e in possible_courses if e in course_pool]
+        # Note that while it is possible to use 
+        #   search = Search(course_pool)
+        #   possible_courses = search.search(course_name)
+        # doing so means we're constructing a new search object and generating its index
+        # everytime we do a search, drastically slowing down the program and defeating
+        # the whole point of the searcher.
         return possible_courses
 
 
-    """ Print list of courses to output that match input entry
+    """ Print list of courses to output that match input entry, searches from entire catalog
 
     Args:
-        entry (str): search term
+        course_name (str): search term
         output (Output): user interface output
     """
-    async def print_matches(self, entry:str, output:Output=None) -> None:
+    async def print_matches(self, course_name:str, output:Output=None) -> None:
         if output == None: output = Output(OUT.CONSOLE)
-        possible_courses = self.course_search.search(entry)
-        await output.print(f"{TAG_NOMERGE}FIND{DELIMITER_TITLE}courses matching {entry}: ")
+        possible_courses = self.course_search.search(course_name)
+        possible_courses.sort()
+        await output.print(f"{TAG_NOMERGE}FIND{DELIMITER_TITLE}courses matching {course_name}: ")
         i = 1
         for c in possible_courses:
             course = self.catalog.get_course(c)
@@ -461,79 +461,86 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
     Args:
         user (User): user to perform the action on
-        entry (str): course name
+        course_name (str): course name
         semester (int or str): semester to add course into
         output (Output): user interface output
 
     Returns:
-        list: If there are multiple courses that match the input entry, then
-            that list will be returned in the form of a list of Courses.
+        returned_courses (list): If there are multiple courses that match course_name, 
+            then this list will be returned in the form of a list of Courses.
     """
-    async def add_course(self, user:User, entry:str, semester, output:Output=None):
+    async def add_course(self, user:User, course_name:str, semester, output:Output=None):
         if output == None: output = Output(OUT.CONSOLE)
+
+        # sanity checks
         if isinstance(semester, str) and not semester.isdigit():
             await output.print(f"SCHEDULE{DELIMITER_TITLE}semester must be a number")
-            return False
+            return None
         semester = int(semester)
         if semester not in range(0, SEMESTERS_MAX):
             await output.print(f"SCHEDULE{DELIMITER_TITLE}Invalid semester {semester}, enter number between 0 and 11")
-            return False
+            return None
         
-        returned_courses = [self.catalog.get_course(c) for c in self.course_search.search(entry)]
+        # list of courses matching course_name
+        returned_courses = [self.catalog.get_course(c) for c in self.course_search.search(course_name)]
 
         if len(returned_courses) == 0:
-            await output.print(f"SCHEDULE{DELIMITER_TITLE}Course {entry} not found")
-            return False
+            await output.print(f"SCHEDULE{DELIMITER_TITLE}Course {course_name} not found")
+            return None
         elif len(returned_courses) > 1:
             return returned_courses
         
+        # at this point, returned_courses have exactly one course, so we can perform the addition immediately
         course = returned_courses[0]
         user.get_current_schedule().add_course(course, semester)
         await output.print(f"SCHEDULE{DELIMITER_TITLE}Added course {course.name} to semester {semester}")
-        return False
+        return None
 
 
     """ Remove course from user's schedule
 
     Args:
         user (User): user to perform the action on
-        entry (str): course name
+        course_name (str): course name
         semester (int or str): semester to remove course from
         output (Output): user interface output
 
     Returns:
-        list: If there are multiple courses that match the input entry, then
-            that list will be returned in the form of a list of Courses.
+        returned_courses (list): If there are multiple courses that match course_name, 
+            then this list will be returned in the form of a list of Courses.
     """
-    async def remove_course(self, user:User, entry:str, semester, output:Output=None):
+    async def remove_course(self, user:User, course_name:str, semester, output:Output=None):
         if output == None: output = Output(OUT.CONSOLE)
+
+        # sanity checks
         if isinstance(semester, str) and not semester.isdigit():
             await output.print(f"SCHEDULE{DELIMITER_TITLE}semester must be a number")
-            return False
+            return None
         semester = int(semester)
         if semester not in range(0, SEMESTERS_MAX):
             await output.print(f"SCHEDULE{DELIMITER_TITLE}Invalid semester {semester}, enter number between 0 and 11")
-            return False
+            return None
         
         this_semester_courses = user.get_current_schedule().get_semester(semester)
 
         if len(this_semester_courses) == 0:
             await output.print(f"SCHEDULE{DELIMITER_TITLE}No courses in semester {semester}")
-            return False
+            return None
         
-        semester_course_search = Search(this_semester_courses, True)
-        returned_courses = [self.catalog.get_course(c) for c in semester_course_search.search(entry)]
+        # list of courses matching course_name
+        returned_courses = [self.catalog.get_course(c) for c in self.search(course_name, this_semester_courses)]
 
         if len(returned_courses) == 0:
-            await output.print(f"SCHEDULE{DELIMITER_TITLE}Course {entry} not found")
-            return False
+            await output.print(f"SCHEDULE{DELIMITER_TITLE}Course {course_name} not found")
+            return None
         elif len(returned_courses) > 1:
             return returned_courses
         
+        # at this point, returned_courses have exactly one course, so we can perform the removal immediately
         course = returned_courses[0]
         user.get_current_schedule().remove_course(course, semester)
         await output.print(f"SCHEDULE{DELIMITER_TITLE}Removed course {course.name} from semester {semester}")
-        return False
+        return None
 
     
     """ Parse json data into a list of courses and degrees inside a catalog

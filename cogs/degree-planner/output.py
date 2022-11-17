@@ -299,20 +299,6 @@ class Output():
         self.__msg_cache_hold = ""
         return
 
-""" global function to print message to console with logging type as input
-"""
-def oprint(msg:str, logging_flag=None) -> None:
-    if logging_flag != None and isinstance(logging_flag, OUT) and logging_flag.value//10 == 2:
-        msg = f'{DEGREE_PLANNER_SIGNATURE} {msg}'
-        if logging_flag == OUT.INFO:
-            logging.info(msg)
-        elif logging_flag == OUT.DEBUG:
-            logging.debug(msg)
-        elif logging_flag == OUT.WARN:
-            logging.warning(msg)
-        elif logging_flag == OUT.ERROR:
-            logging.error(msg)
-
 
 """ removes all non-alphanumeric characters from string
 

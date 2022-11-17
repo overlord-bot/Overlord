@@ -70,5 +70,4 @@ class Search():
         for word in words:
             results = [e for e in results if word.casefold() in e.casefold()]                 
 
-        results.sort() # sorting alphabetically enables better user experience
         return results
