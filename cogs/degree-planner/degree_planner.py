@@ -93,13 +93,13 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if userid in self.users:
             user = self.users[userid]
             user.discord_user = message.author
-            OUTDEBUG.print(f"received msg from returning user: {message.author}, user id: {userid}")
+            await OUTDEBUG.print(f"received msg from returning user: {message.author}, user id: {userid}")
         else:
             user = User(userid)
             user.username = str(message.author)
             user.discord_user = message.author
             self.users.update({userid:user})
-            OUTDEBUG.print(f"received msg from new user: {message.author}, user id: {userid}")
+            await OUTDEBUG.print(f"received msg from new user: {message.author}, user id: {userid}")
 
         output = Output(OUT.DISCORD_CHANNEL, 
             {ATTRIBUTE.USER:user, 
@@ -132,24 +132,24 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         if output == None: output = Output(OUT.CONSOLE)
         if Flag.CMD_PAUSED in user.flag:
             user.command_queue_locked = True
-            OUTDEBUG.print(f'user {user.username} locked command queue')
+            await OUTDEBUG.print(f'user {user.username} locked command queue')
             user.command_decision = message.strip().casefold()
-            OUTDEBUG.print(f'passed user {user.username} decision {message} to command loop')
+            await OUTDEBUG.print(f'passed user {user.username} decision {message} to command loop')
         else:
             # if queue is locked, do not proceed
             if user.command_queue_locked:
-                OUTDEBUG.print(f'user {user.username} tried to access busy queue lmao')
+                await OUTDEBUG.print(f'user {user.username} tried to access busy queue lmao')
                 await output.print(f"ERROR{DELIMITER_TITLE}queue busy, please try again later")
                 return False
             user.command_queue_locked = True
-            OUTDEBUG.print(f'user {user.username} locked command queue')
+            await OUTDEBUG.print(f'user {user.username} locked command queue')
             user.command_queue.join()
             commands = await self.parse_command(message, output)
             for command in commands:
                 user.command_queue.put(command)
         await self.command_handler(user, output)
         user.command_queue_locked = False
-        OUTDEBUG.print(f'user {user.username} unlocked command queue')
+        await OUTDEBUG.print(f'user {user.username} unlocked command queue')
         return True
 
 
@@ -174,13 +174,13 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         and add Flag.CMD_PAUSED in user.flag, otherwise the loop can never
         be entered again.
         """
-        OUTDEBUG.print(f'user {user.username} entered command loop')
+        await OUTDEBUG.print(f'user {user.username} entered command loop')
         while(not user.command_queue.empty() or Flag.CMD_PAUSED in user.flag):
             if Flag.CMD_PAUSED in user.flag:
                 command:Command = user.command_paused
             else:
                 command:Command = user.command_queue.get()
-                OUTDEBUG.print(f'user {user.username} fetched command {str(command)}')
+                await OUTDEBUG.print(f'user {user.username} fetched command {str(command)}')
 
             if command.command == CMD.NONE:
                 await output(f"ERROR{DELIMITER_TITLE}there was an error understanding your command")

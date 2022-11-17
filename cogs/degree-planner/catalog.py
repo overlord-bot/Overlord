@@ -20,9 +20,8 @@ class Catalog():
         self.search = Search()
         self.lock = False
 
+        # search must be reindexed after modification to course list
         self.reindex_flag = False
-
-        self.build_templates()
 
     
     def reindex(self):
