@@ -127,6 +127,11 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.unplayedTiles = 81
         self.gameStarted = False
         self.board = [[0]*9 for i in range(9)]
+        self.stringMatch = {}
+        self.stringBoard = [[-1]*9 for i in range(9)]
+        self.stringCounter = 0
+        self.player1LostStones = 0
+        self.player2LostStones = 0
 
     # this helps with scoring at the end. we perform bfs at a point to see if it is surrounded by all one piece
     def BFS(self, starti, startj):
@@ -228,6 +233,7 @@ class GoMinigame(commands.Cog, name = "Go"):
 
         # FOR TESTING MOVES
         await self.testMovesSuite(context)
+        await self.testSelfSurroundSuite(context)
 
     async def makeMove(self, context, move, test):
         if test == False:
@@ -279,7 +285,7 @@ class GoMinigame(commands.Cog, name = "Go"):
                     for point in string.points:
                         self.stringBoard[point[0]][point[1]] = -1
                         self.board[point[0]][point[1]] = 0
-            # this means that there are still liberties available and
+            # this means that there are still liberties available and we can append it
             else:
                 neighboringStrings.append(self.stringBoard[j][k])
 
@@ -435,7 +441,6 @@ class GoMinigame(commands.Cog, name = "Go"):
         await self.makeMove(context, "(8,6)", True)
         await self.makeMove(context, "(5,6)", True)
         await self.makeMove(context, "(9,6)", True)
-        await self.printBoardState(context)
         assert self.board == checkpoint4, "Checkpoint 4: Failed to cancel out center pieces"
 
         # SCORING
@@ -446,6 +451,44 @@ class GoMinigame(commands.Cog, name = "Go"):
         # RESET AND CONFIRM
         self.reset()
         assert self.board == endstate
-        
+    
+    async def testSelfSurroundSuite(self, context):
+        checkpoint1 = [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,1,2,0,0,0,0],
+            [0,0,1,0,1,0,0,0,0],
+            [0,0,0,1,2,0,0,0,0],
+            [0,0,0,2,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ]
+        await self.makeMove(context, "(4,6)", True)
+        await self.makeMove(context, "(4,5)", True)
+        await self.makeMove(context, "(5,7)", True)
+        await self.makeMove(context, "(5,6)", True)
+        await self.makeMove(context, "(4,8)", True)
+        await self.makeMove(context, "(5,8)", True)
+        await self.makeMove(context, "(3,7)", True)
+        await self.makeMove(context, "(4,7)", True)
+        await self.printBoardState(context)
+
+    async def testKoSuite(self, context):
+        checkpoint1 = [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ]
+        await self.makeMove(context, "(4,6)", True)
+        await self.makeMove(context, "(6,6)", True)
+        await self.makeMove(context, "(2,4)", True)
+
 async def setup(bot):
     await bot.add_cog(GoMinigame(bot))
