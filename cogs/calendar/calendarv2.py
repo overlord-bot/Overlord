@@ -2,6 +2,8 @@
 #allows users to add/view/remove events from a calendar
 
 from cogs.calendar.calendarv2_functions import CalHelperJson
+import asyncio
+import datetime
 from discord.ext import commands
 
 class CalendarJson(commands.Cog, name="Calendarv2"):
@@ -47,7 +49,15 @@ class CalendarJson(commands.Cog, name="Calendarv2"):
                 await context.send("Please specify an event.")
 
         elif action.lower() == "remind":
-            pass
+            #get current date
+            currdate = datetime.datetime.now()
+            #format in MM/DD/YYYY format
+            currdate = currdate.strftime("%m/%d/%Y")
+            while currdate != event:
+                await asyncio.sleep(1)
+                currdate = datetime.datetime.now()
+                currdate = currdate.strftime("%m/%d/%Y")
+            await context.send(f"{context.message.author.mention} {self.calhelper.CalGetDate(event, user_id)}")
         
         else:
             await context.send("Please specify an action.")
