@@ -1,4 +1,5 @@
 #Rotten Tomatoes scraper
+from pickle import NONE
 import requests
 from bs4 import BeautifulSoup
 
@@ -35,7 +36,7 @@ class RottenTomatoesScraper(commands.Cog, name="Rotten Tomatoes Scraper"):
         mediaType = None
         year = None
         if len(args) > 1:
-            if args[1] == "tv" or args[1] == "movie":
+            if args[1].lower() == "tv" or args[1].lower() == "movie":
                 mediaType = args[1]
             else:
                 await context.send("I couldn't recognize that media type! Try 'tv' or 'movie'")
@@ -61,11 +62,15 @@ class RottenTomatoesScraper(commands.Cog, name="Rotten Tomatoes Scraper"):
         else:
             if year is None:
                 result = soup.find('search-page-media-row')
-            else:
-                parent = soup.find('search-page-result')
-                if parent is not None:
-                    result = self.findMedia(parent, year)
+                if result is not None:
                     mediaType = result.find_parent("search-page-result")["type"]
+            else:
+                searches = soup.findAll('search-page-result')
+                for item in searches:
+                    result = self.findMedia(item, year)
+                    if result is not None:
+                        mediaType = item["type"]
+                        break
 
         if result is None:
             await context.send("I couldn't find any results from that query. Try another one.")
