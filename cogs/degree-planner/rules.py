@@ -36,16 +36,17 @@ class Rule():
         self.course_templates.pop(template)
     
 
-    #########################################################################################
-    # FULFILLMENT CALCULATIONS
-    #########################################################################################
+    """
+    Args:
+        taken_courses (set): all courses the user have taken
 
-    def fulfillment(self, taken_courses:set):
-
-        # Data structure of status_return: {template name : {attribute : value}}
+    Returns:
+        status_return (dict): returns fulfillment status in the form of
+            <template name : <attribute : value>>
+    """
+    def fulfillment(self, taken_courses:set) -> dict:
         status_return = dict()
 
-        # iterates through all the templates
         for template, required_count in self.course_templates.items():
 
             # 1) checks for courses within taken_bundle that fulfills this templated requirement
@@ -73,7 +74,10 @@ class Rule():
         return status_return
 
 
-    # returns a formatted message instead of a dictionary, use this for easy debugging
+    """ 
+    Returns:
+        status_return (str): formatted message instead of a dictionary, use this for easy debugging
+    """
     def fulfillment_return_message(self, taken_courses:set) -> str:
         status = self.fulfillment(taken_courses)
         status_return = ""
@@ -86,6 +90,16 @@ class Rule():
 
         return status_return
 
+
+    """
+    Returns:
+        templates (dict): <template name : required course amount?
+    """
+    def json(self) -> dict:
+        templates = dict()
+        for k, v in self.course_templates.items():
+            templates.update({k.name:v})
+        return templates
 
     def __repr__(self):
         s = f"rule {self.name}:\n" 

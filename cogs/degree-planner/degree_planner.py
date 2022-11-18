@@ -128,7 +128,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
     Returns:
         bool: whether input was successfully executed
     """
-    async def message_handler(self, user:User, message:str, output:Output=None) -> bool:
+    async def message_handler(self, user:User, message:str, output:Output=None):
         if output == None: output = Output(OUT.CONSOLE)
         if Flag.CMD_PAUSED in user.flag:
             user.command_queue_locked = True
@@ -188,19 +188,19 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 continue
 
             if command.command == CMD.TEST:
-                await output.print("BEGINNING TEST", OUT.INFO)
+                await output.print("BEGINNING TEST", output_location=OUT.INFO)
                 await output.print(f"ADMIN{DELIMITER_TITLE}Testing Degree Planner {VERSION}")
                 await self.test(Output(OUT.CONSOLE))
-                await output.print("FINISHED TEST", OUT.INFO)
+                await output.print("FINISHED TEST", output_location=OUT.INFO)
                 await output.print(f"ADMIN{DELIMITER_TITLE}Test completed successfully, all assertions met")
                 user.command_queue.task_done()
                 continue
 
             if command.command == CMD.IMPORT:
-                await output.print("BEGINNING DATA IMPORTING", OUT.INFO)
+                await output.print("BEGINNING DATA IMPORTING", output_location=OUT.INFO)
                 await output.print(f"ADMIN{DELIMITER_TITLE}begin parsing data")
                 await self.parse_data(Output(OUT.DEBUG))
-                await output.print("FINISHED DATA IMPORTING", OUT.INFO)
+                await output.print("FINISHED DATA IMPORTING", output_location=OUT.INFO)
                 await output.print(f"ADMIN{DELIMITER_TITLE}parsing completed")
                 user.command_queue.task_done()
                 continue
@@ -312,6 +312,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         arg_list = [cleanse(e.strip().casefold()) for e in cmd.split(",") if e.strip()]
         cmd_queue = []
         last_command = None
+
         for e in arg_list:
             # if we find a command, push the last command to the queue and create new command
             if CMD.get(e) != CMD.NONE:
@@ -333,7 +334,6 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             if not e.valid():
                 await output.print(f"ERROR{DELIMITER_TITLE}invalid arguments for command {str(e)}")
         cmd_queue = [e for e in cmd_queue if e.valid()]
-
         return cmd_queue
 
     
@@ -559,20 +559,20 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
 
         try:
             await parse_courses(catalog_file, self.catalog, output)
-            await output.print(f"ADMIN{DELIMITER_TITLE}Sucessfully parsed catalog data", OUT.INFO)
+            await output.print(f"ADMIN{DELIMITER_TITLE}Sucessfully parsed catalog data", output_location=OUT.INFO)
             
             # set up searcher for finding courses based on incomplete user input
             self.course_search.update_items(self.catalog.get_all_course_names())
             self.course_search.generate_index()
 
             await parse_degrees(degree_file, self.catalog, output)
-            await output.print(f"ADMIN{DELIMITER_TITLE}Sucessfully parsed degree data", OUT.INFO)
-            await output.print(f"ADMIN{DELIMITER_TITLE}Printing catalog:", OUT.DEBUG)
+            await output.print(f"ADMIN{DELIMITER_TITLE}Sucessfully parsed degree data", output_location=OUT.INFO)
+            await output.print(f"ADMIN{DELIMITER_TITLE}Printing catalog:", output_location=OUT.DEBUG)
             output.print_hold(str(self.catalog))
             await output.print_cache(OUT.DEBUG)
 
         except Exception as e:
-            await output.print(f"ERROR{DELIMITER_TITLE}An exception has occurred during parsing: {e}", OUT.ERROR)
+            await output.print(f"ERROR{DELIMITER_TITLE}An exception has occurred during parsing: {e}", output_location=OUT.ERROR)
             return e
 
         else:

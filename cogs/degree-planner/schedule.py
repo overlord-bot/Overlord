@@ -106,6 +106,18 @@ class Schedule():
             i+=1
         return present_in
 
+    """
+    Returns:
+        schedule (dict): returns user's schedule in the form of
+            <schedule name : <semester : course list>>
+    """
+    def json(self):
+        schedule = dict()
+        dict.update({self.name:dict()})
+        for i in range(0, 12):
+            dict[self.name].update({i:self.get_semester(i)})
+        return schedule
+
     def __len__(self):
         i = 0
         for sem in self.__master_list:

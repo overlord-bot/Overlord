@@ -15,6 +15,8 @@ class CMD(Enum):
     TEST = 30
     IMPORT = 40
 
+    TAG = 101 # tags all responses with given id
+
     NONE = 50
 
     def get(string:str):

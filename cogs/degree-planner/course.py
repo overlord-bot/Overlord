@@ -1,5 +1,6 @@
 from array import *
 from .output import *
+
 import logging
 
 class Course():
@@ -92,6 +93,37 @@ class Course():
     # determines the level of the course, 1000=1, 2000=2, 4000=4, etc
     def level(self) -> int:
         return (self.course_id//1000)
+
+    """
+    Returns:
+        course (OrderedDict): all course attributes within an ordered dictionary
+            includes name, id, id2, major, credits, CI, HASS_inquiry, crosslisted,
+            concentrations, pathways, presequisites, restricted, description.
+
+            Some attributes will be omitted if empty, includes all attributes that
+            are the form of a list or set.
+    """
+    def json(self) -> OrderedDict:
+        course = OrderedDict()
+        course.update({'name':self.name})
+        course.update({'id':self.course_id})
+        if self.course_id2 != 0:
+            course.update({'id2':self.course_id2})
+        course.update({'major':self.major})
+        course.update({'credits':self.credits})
+        course.update({'CI':self.CI})
+        course.update({'HASS_inquiry':self.HASS_inquiry})
+        if len(self.cross_listed):
+            course.update({'crosslisted':self.cross_listed})
+        if len(self.concentration):
+            course.update({'concentrations':self.concentration})
+        if len(self.HASS_pathway):
+            course.update({'pathways':self.HASS_pathway})
+        if len(self.prerequisites):
+            course.update({'prerequisites':self.prerequisites})
+        course.update({'restricted':self.restricted})
+        course.update({'description':self.description})
+        return course
 
     def __repr__(self):
         st = (f"{self.display_name if self.display_name else 'None'}: {self.major if self.major else 'None'} " + \

@@ -24,6 +24,8 @@ class OUT(Enum):
     WARN = 24 # SKILL ISSUE
     ERROR = 25 # PROGRAM ISSUE
 
+    WEB = 100
+
 
 class ATTRIBUTE(Enum):
     CHANNEL = 1
@@ -78,11 +80,11 @@ class Output():
     """ Determines appropriate printing channel and prints message
 
     Args:
-        msg (str): message to print
+        msg (str or dict): message to print
         logging_flag (OUT): temporary prints to this output location
             without altering the stored location within this object
     """
-    async def print(self, msg:str, logging_location=None) -> None:
+    async def print(self, msg:str, dictionary:dict=None, logging_location=None) -> None:
         outloc = self.output_location
         if logging_location != None and isinstance(logging_location, OUT) and logging_location.value//10 == 2:
             self.output_location = logging_location
@@ -99,7 +101,7 @@ class Output():
             logging.error(tagged_msg)
 
         elif self.output_location == OUT.CONSOLE:
-            print(msg)
+            print(dictionary)
 
         # If printing to discord, will use block (title/message) formatting
         elif (self.output_location == OUT.DISCORD_CHANNEL 
@@ -110,6 +112,9 @@ class Output():
                 await self.print_embed(self.get_blocks(msg))
             else:
                 await self.print_fancy(self.get_blocks(msg))
+
+        elif (self.output_location == OUT.WEB):
+            self.json(msg)
 
         self.output_location = outloc
 
@@ -293,11 +298,14 @@ class Output():
             print(self.__msg_cache_hold)
         else:
             if self.output_location == OUT.CONSOLE:
-                await self.print(f"{self.__msg_cache_hold}", output_redirect)
+                await self.print(f"{self.__msg_cache_hold}", output_location=output_redirect)
             else:
-                await self.print(f"```yaml\n{'None' if not len(self.__msg_cache_hold) else self.__msg_cache_hold}```", output_redirect)
+                await self.print(f"```yaml\n{'None' if not len(self.__msg_cache_hold) else self.__msg_cache_hold}```", output_location=output_redirect)
         self.__msg_cache_hold = ""
         return
+
+    def json(self, json_message):
+        raise NotImplementedError
 
 
 """ removes all non-alphanumeric characters from string
