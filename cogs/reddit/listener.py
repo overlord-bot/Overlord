@@ -28,38 +28,31 @@ class RedditListener(commands.Cog, name="Reddit Listener"):
     @commands.command()
     async def redditlisten(self, context, subreddit, min_time):
         await context.send("Starting listen for the subreddit '" + subreddit + "' for " + min_time + " minutes")
-        #await sendPosts(context, new_posts)
 
         reddit_data = getRedditData(subreddit)
+
+        #Find newest post
         newest_post = reddit_data["data"]["children"][1]["data"]["name"]
-        print(newest_post)
 
-
+        #Run for min_time minutes
         t_end = time.time() + 60 * int(min_time)
-        dt_started = datetime.datetime.utcnow()
         while time.time() < t_end:
-            #dt_now = datetime.datetime.utcnow()
-            #time_passed = (dt_now - dt_started).total_seconds()
-            await blocking_func(5)
+            await blocking_func(5) #sleep that doesn't break discord
             newest_post = await runPostCheck(context, subreddit, newest_post)
-            #if time_passed >= 5: #Run every 5 seconds
-            #    newest_post = await runPostCheck(context, subreddit, newest_post)
-            #    dt_started = dt_now
 
         await context.send("Completed listen")
-        #await sendPosts(context, new_posts)
-
-    #await context.reply("Your file is:", file=discord.File(file, "list_of_commits.txt"))
 
 async def runPostCheck(context, subreddit, newest_post):
     reddit_data = getRedditData(subreddit)
-    #print(reddit_data)
     new_post = reddit_data["data"]["children"][0]["data"]["name"]
-    print("Checking new: " + new_post + " against newest: " + str(newest_post))
+    #print("Checking new: " + new_post + " against newest: " + str(newest_post))
+    
+    #Check if new post is found
     if new_post == newest_post:
         return new_post
-    
-    print("is a new post")
+    #print("is a new post")
+
+    #Send new post
     new_posts = getNewPosts(context, reddit_data, newest_post)
     await sendPosts(context, new_posts)
     return new_post
@@ -71,7 +64,6 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
         return await asyncio.to_thread(func, *args, **kwargs)
     return wrapper
 
-
 @to_thread
 def blocking_func(interval):
     time.sleep(interval)
@@ -80,10 +72,8 @@ def blocking_func(interval):
 
 def getRedditData(subreddit): #https://www.reddit.com/r/rpi/new.json?sort=new
     url = "https://www.reddit.com/r/" + subreddit + "/new.json?sort=new"
-    #response = urllib.request.urlopen(url).read()
     response = requests.get(url, headers = {'User-agent': 'your bot 0.1'}).text
     data = json.loads(response) #.decode('utf-8')
-    #posts = data["data"]["children"] 
     return data
 
 def getNewPosts(context, data, new_post):
