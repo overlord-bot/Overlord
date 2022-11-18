@@ -18,13 +18,38 @@ class RedditListener(commands.Cog, name="Reddit Listener"):
         self.bot = bot
 
     @commands.command()
-    async def redditlisten(self, context, subreddit, min_time = "5"):
-        await context.send("Starting listen for the subreddit '" + subreddit + "' for " + min_time + " minutes")
+    #async def redditlisten(self, context, subreddit, min_time = "5"):
+    async def redditlisten(self, context, *reddit):
+        if len(reddit) == 1:
+            subreddit = reddit[0]
+            min_time = "5"
+        elif len(reddit) == 2:
+            subreddit = reddit[0]
+            min_time = str(reddit[1])
+        else:
+            await context.reply("Invalid input, please enter !redditlisten REDDIT_NAME TIME")
+            return
+
+        if min_time.isdigit():
+            min_time = int(min_time)
+        else:
+            await context.reply("Input an integer for time")
+            return
+
+        if min_time < 1 or min_time > 60:
+            await context.reply("Invalid amount input. Must be between 1 and 60")
+            return
 
         reddit_data = getRedditData(subreddit)
 
+        if "message" in reddit_data.keys() or reddit_data["data"]["dist"] == 0 :
+            await context.reply("Invalid subreddit / Error fetching subreddits")
+            return
+
+        await context.send("Starting listen for the subreddit '" + str(subreddit) + "' for " + str(min_time) + " minutes")
+
         #Find newest post
-        newest_post = reddit_data["data"]["children"][1]["data"]["name"]
+        newest_post = reddit_data["data"]["children"][0]["data"]["name"]
 
         #Run for min_time minutes
         t_end = time.time() + 60 * int(min_time)
