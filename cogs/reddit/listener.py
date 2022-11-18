@@ -1,22 +1,14 @@
 from hashlib import new
-import urllib.request #python3 bot.py -fast -load reddit
 import requests
-#from urllib.request import Request, urlopen
 import json
 
 import discord
 from discord.ext import commands
 
-import datetime
-
 import asyncio
 import functools
 import typing
 import time
-from threading import Event, Thread
-import threading
-import datetime
-#https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds
 
 
 class RedditListener(commands.Cog, name="Reddit Listener"):
@@ -26,7 +18,7 @@ class RedditListener(commands.Cog, name="Reddit Listener"):
         self.bot = bot
 
     @commands.command()
-    async def redditlisten(self, context, subreddit, min_time):
+    async def redditlisten(self, context, subreddit, min_time = "5"):
         await context.send("Starting listen for the subreddit '" + subreddit + "' for " + min_time + " minutes")
 
         reddit_data = getRedditData(subreddit)
