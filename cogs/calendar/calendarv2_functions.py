@@ -9,7 +9,6 @@ format to add user data to json file:
             "date": ["event1", "event2"],
             ...
         ],
-        "calendar": string,
     ],
     "user2":
     [
@@ -18,7 +17,6 @@ format to add user data to json file:
             "date": ["event1", "event2"],
             ...
         ],
-        "calendar": string,
     ],
     ...
 }
@@ -29,6 +27,7 @@ import os
 import calendar
 import datetime
 import json
+import asyncio
 
 class CalHelperJson():
     def __init__(self, bot):
@@ -70,11 +69,11 @@ class CalHelperJson():
             self.events = {
                 user: 
                 {
-                    "events": {}, 
-                    "calendar": ""
+                    "events": {},
                 }
             }
             self.save_json()
+            self.CalHolidays(user)
             return False
         return True
 
@@ -92,6 +91,21 @@ class CalHelperJson():
                 for event in self.events[user]["events"][key]:
                     week_string += "*"
         return week_string
+
+    #adds holidays to calendar
+    def CalHolidays(self, user):
+        path = os.path.join(os.path.dirname(__file__), "holidays.txt")
+        with open(path, "r") as f:
+            for line in f:
+                date = line.split(" ")[-1]
+                line = line.replace(date, "")
+                line = line[:-1]
+                if date not in self.events[user]["events"].keys():
+                    self.events[user]["events"][date] = [line]
+                else:
+                    if line not in self.events[user]["events"][date]:
+                        self.events[user]["events"][date].append(line)
+        self.save_json()
 
     #adds the event to the json file
     def CalAdd(self, event, user):
@@ -151,7 +165,6 @@ class CalHelperJson():
         for key in sorted(self.events[user]["events"].keys()):
             if key[0:2] == str(month):
                 embed.add_field(name=key, value="\n".join(self.events[user]["events"][key]), inline=False)
-        self.events[user]["calendar"] = week_string
         self.save_json()
         return embed
 
@@ -214,16 +227,17 @@ class CalHelperJson():
             embed = discord.Embed(title="Calendar", description="Event edited!", color=0xff0000)
             return embed
 
-    #reminder function, in progress
-    def CalReminder(self, user):
-        now = datetime.datetime.now()
-        year = now.year
-        month = now.month
-        currday = datetime.datetime.now().day
+    #get all events for a specific date in a string
+    def CalGetDate(self, date, user):
         if self.check_user(user) == False:
-            return
-        for key in self.events[user]["events"].keys():
-            if key[3:5] == str(currday):
-                for event in self.events[user]["events"][key]:
-                    return event
-        return
+            embed = "New User: no events added yet!"
+            return embed
+        if date not in self.events[user]["events"].keys():
+            embed = "No events for this date!"
+            return embed
+        else:
+            #for each event, add to string and return
+            embed = "\nReminder for " + date + ":\n"
+            for event in self.events[user]["events"][date]:
+                embed += event + "\n"
+            return embed
