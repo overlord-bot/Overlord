@@ -1,5 +1,6 @@
 import discord
 
+
 class PollInfoModal(discord.ui.Modal, title="Poll Information"):
 	'''
 	A modal (basically a form) for users to type the title, the options, and the
@@ -38,7 +39,9 @@ class PollInfoModal(discord.ui.Modal, title="Poll Information"):
 
 	async def on_submit(self, interaction:discord.Interaction) -> None:
 		'''
-		This function is called when the modal is submitted
+		This function is called when the modal is submitted.
+
+		If this function has an error, `self.on_error` is called.
 		
 		Parameters
 		----------
@@ -51,23 +54,36 @@ class PollInfoModal(discord.ui.Modal, title="Poll Information"):
 		if (num_options > PollInfoModal.max_num_options):
 			raise OptionsOutOfRangeError(num_options, PollInfoModal.max_num_options) 
 		self.poll_timeout = float(self.timeout_field.value)
-		await interaction.response.defer()
+		await interaction.response.defer()  # Close the modal ui
 
 	async def on_error(self, interaction:discord.Interaction, error:Exception) -> None:
+		'''
+		A callback that is called when on_submit fails with an error.
+
+		Constructs an embed that shows all fields that were submitted and
+		which field had an error, sets `self.error` to the :class:`Exception`,
+		and sets `self.embed` to the constructed embed.
+
+		Parameters
+		interaction: :class:`discord.Interaction`
+			The interaction that led to the failure.
+		error: :class:`Exception`
+			The exception that was raised.
+		'''
 		self.error = error
 		embed = discord.Embed(title=f"**ERROR {error}**")
 		embed.add_field(name="Title:", value=f"{self.title_field.value}", inline=False)
 		embed.add_field(name="Options:", value=f"{self.options_field.value}", inline=False)
 		embed.add_field(name="Timeout:", value=f"{self.timeout_field.value}", inline=False)
-		print(type(error))
 		if type(error) == OptionsOutOfRangeError:
 			embed.set_field_at(index=1, name="**OPTIONS: TOO MANY OPTIONS**", value=f"{self.options_field.value}", inline=False)
 		elif type(error) == ValueError:
 			embed.set_field_at(index=2, name="**TIMEOUT: NOT A NUMBER**", value=f"{self.timeout_field.value}", inline=False)
 
 		self.embed = embed
-		await interaction.response.defer()
+		await interaction.response.defer() # Close the modal ui
 		self.stop()
+
 
 class OptionsOutOfRangeError(Exception):
 	'''
@@ -75,12 +91,10 @@ class OptionsOutOfRangeError(Exception):
 
 	Init Parameters	
 	----------
-	num_options:`int`
+	num_options: :class:`int`
 		The number of options
-	max:`int`
+	max: :class:`int`
 		The maximum number of options
-
-	TODO move to its own file
 	'''
 	def __init__(self, num_options:int, max:int) -> None:
 		self.num_options = num_options

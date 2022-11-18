@@ -2,6 +2,7 @@ import discord
 import matplotlib.pyplot as plt
 from typing import List
 
+
 class PollView(discord.ui.View):
 	'''
 	This poll view contains the buttons to vote on specific options
@@ -79,7 +80,7 @@ class PollView(discord.ui.View):
 		Parameters
 		----------
 		interaction: :class:`discord.Interaction`
-			Interaction of a button click
+			The interaction from a button click
 		'''
 
 		# Check to see if the button clicked corresponds with this poll
