@@ -54,7 +54,8 @@ class PollInfoModal(discord.ui.Modal, title="Poll Information"):
 		if (num_options > PollInfoModal.max_num_options):
 			raise OptionsOutOfRangeError(num_options, PollInfoModal.max_num_options) 
 		self.poll_timeout = float(self.timeout_field.value)
-		await interaction.response.defer()  # Close the modal ui
+		# Close the modal ui
+		await interaction.response.defer()
 
 	async def on_error(self, interaction:discord.Interaction, error:Exception) -> None:
 		'''

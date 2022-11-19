@@ -14,7 +14,9 @@ class Polls(commands.GroupCog, name="polls"):
 	@discord.app_commands.command(name="create")
 	async def create(self, interaction:discord.Interaction) -> None:
 		'''
-		Creates a poll.
+		Creates a poll that users can vote on.
+
+		TODO Insert a tutorial gif here on how to use it.
 
 		Parameters
 		----------
@@ -38,28 +40,38 @@ class Polls(commands.GroupCog, name="polls"):
 		embed:discord.Embed = await self.generate_embed(interaction=interaction, modal=modal)
 		embed.set_footer(text=f"ID:{poll_id}", icon_url=None)
 		
-		view = PollView(
-			title=modal.poll_title,
-			content=modal.poll_options,
-			embed=embed, 
-			timeout=modal.poll_timeout,
-			poll_id=poll_id
-		)
+		view = PollView(title=modal.poll_title, content=modal.poll_options, embed=embed, timeout=modal.poll_timeout, poll_id=poll_id)
 		
-		await interaction.followup.send(embed=embed, view=view, content=f"{modal.poll_title}")
+		msg:discord.Message = await interaction.followup.send(embed=embed, view=view, content=f"POLL: {modal.poll_title}")
 		await view.wait()
+
+		# Removes the buttons visually
+		await msg.edit(view=None)
+
+		# Edit the embed to show that the poll has ended
+		embed = msg.embeds[0].insert_field_at(index=0, name="This poll has ended", value="-"*25, inline=False)
+		await msg.edit(embed=embed)
+
+		await view.create_plot()
 
 		# Wait for the poll to end which creates a barplot with the "{poll_id}.png" as the name
 		# TODO might be a better way to do this
 		filename = f"{poll_id}.png"
-		while not(filename in os.listdir(os.getcwd())):
+		while not (filename in os.listdir(os.getcwd())):
 			await asyncio.sleep(1)
 		await interaction.followup.send(file=discord.File(filename))
 		os.remove(os.path.join(os.getcwd(), filename))
 
 	async def generate_embed(self, interaction:discord.Interaction, modal:PollInfoModal):
 		'''
-		TODO finish
+		Generates an embed from the fields provided in the modal.
+
+		Parameters
+		----------
+		interaction: :class:`discord.Interaction`
+			The interaction that triggered the create slash command.
+		modal: :class:`PollInfoModal`
+			The modal after it has been submitted.
 		'''
 
 		# TODO randomize embed color?
