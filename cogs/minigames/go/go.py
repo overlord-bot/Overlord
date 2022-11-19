@@ -289,26 +289,41 @@ class GoMinigame(commands.Cog, name = "Go"):
             else:
                 neighboringStrings.append(self.stringBoard[j][k])
 
-        if totalLost > 0:
-            await context.send(str(totalLost) + " Pieces of Player " + str(3-self.turn) + " Were Captured!")
-
         # remove duplicates
         setNeighbors = list(set(neighboringStrings))
+        stringNum = -1
         # the case where the new piece placed borders no new strings
         if len(setNeighbors) == 0:
             self.stringMatch[self.stringCounter] = String(self.turn)
             self.stringMatch[self.stringCounter].addPoint(x,y)
             self.stringBoard[x][y] = self.stringCounter
+            stringNum = self.stringCounter
             self.stringCounter += 1
         else:
             # combining neighboring strings
             self.stringMatch[setNeighbors[0]].addPoint(x,y)
             self.stringBoard[x][y] = setNeighbors[0]
+            stringNum = setNeighbors[0]
             for i in range(1,len(setNeighbors)):
                 self.stringMatch[setNeighbors[0]].combineStrings(self.stringMatch[setNeighbors[i]])
                 # update the board keeping track of the different strings
                 for point in self.stringMatch[setNeighbors[0]].points:
                     self.stringBoard[point[0]][point[1]] = setNeighbors[0]
+        
+        # if the move did not eliminate any other pieces, we also have to check if the newly placed has liberties
+        if totalLost == 0 and self.stringMatch[stringNum].libertyCheck(self.board) == True:
+            numLost = len(self.stringMatch[stringNum].points)
+            if self.turn == 1:
+                self.player1LostStones += numLost
+            else:
+                self.player2LostStones += numLost
+            await context.send(str(numLost) + " Pieces of Player " + str(self.turn) + " Were Captured!")
+            for point in self.stringMatch[stringNum].points:
+                self.stringBoard[point[0]][point[1]] = -1
+                self.board[point[0]][point[1]] = 0
+            del self.stringMatch[stringNum]
+        elif totalLost > 0:
+            await context.send(str(totalLost) + " Pieces of Player " + str(3-self.turn) + " Were Captured!")
 
         if self.turn == 1:
             self.turn = 2
@@ -472,6 +487,10 @@ class GoMinigame(commands.Cog, name = "Go"):
         await self.makeMove(context, "(5,8)", True)
         await self.makeMove(context, "(3,7)", True)
         await self.makeMove(context, "(4,7)", True)
+        assert self.board == checkpoint1, "Checkpoint 1: Failed to remove captured piece"
+
+        self.reset()
+
         await self.printBoardState(context)
 
     async def testKoSuite(self, context):
