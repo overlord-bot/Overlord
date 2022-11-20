@@ -1,26 +1,28 @@
 from array import *
 import copy
+import json
 
 from .course import Course
 from .degree import Degree
 from .course_template import Template
 from .search import Search
+from .output import *
 
 class Catalog():
 
     def __init__(self, name="main"):
-        # catalog will  be a list of courses and degrees
+        # catalog will be a list of courses and degrees
         # TODO also store graphs for further analysis and course prediction of free electives
         self.name = name
+        self.output = Output(OUT.CONSOLE)
         self.__course_list = dict() # course name as key
         self.__degree_list = dict() # degree name as key
 
         self.search = Search()
         self.lock = False
 
+        # search must be reindexed after modification to course list
         self.reindex_flag = False
-
-        self.build_templates()
 
     
     def reindex(self):
@@ -56,7 +58,7 @@ class Catalog():
         if len(name) == 1:
             return self.__course_list.get(name[0], None)
         else:
-            print(f"CATALOG ERROR: catalog get course non unique course found: {str(name)}")
+            self.output.print(f"CATALOG ERROR: catalog get course non unique course found: {str(name)}", OUT.ERROR)
         return None
 
 
@@ -76,12 +78,8 @@ class Catalog():
         return self.__degree_list.values()
 
 
-    # initializes default templates to use
-    def build_templates(self) -> None:
-        pass
-
-
-    # matches against entire catalog
+    """ Matches against entire catalog
+    """
     def get_course_match(self, target_course:Course) -> dict:
         return get_course_match(target_course, self.__course_list.values())
 
@@ -89,6 +87,11 @@ class Catalog():
     def get_best_course_match(self, target_course:Course) -> set:
         return get_best_course_match(target_course, self.__course_list.values())
 
+    def json(self):
+        catalog = dict()
+        catalog.update({'courses':list(self.__course_list.keys())})
+        catalog.update({'degrees':list(self.__degree_list.keys())})
+        return json.dumps(catalog)
 
     def __repr__(self):
         count1 = 1
@@ -111,18 +114,20 @@ class Catalog():
         return len(self.__course_list)
 
 
-# Intakes a criteria of courses that we want returned
-# For example, if target_course specifies 2000 as course ID, then all 2000 level CSCI courses inside
-# course_list is returned
-#
-# There are three course objects being used here:
-# 1) a default course object
-# 2) a target course with ONLY the attributes we want to require changed to their required states
-# 3) course pool - the courses we want to select from
-#
-# If the target course attribute is not equal to the default value and the course from the pool 
-# has that required value, it will be returned.
+""" Intakes a criteria of courses that we want returned
+    For example, if target_course specifies 2000 as course ID, then all 2000 level CSCI courses inside
+    course_list is returned
+
+    There are three course objects being used in this function:
+    1) a default course object
+    2) a target course with ONLY the attributes we want to require changed to their required states
+    3) course pool - the courses we want to select from
+
+    If the target course attribute is not equal to the default value and the course from the pool 
+    has that required value, it will be returned.
+"""
 def get_course_match(target_course, course_pool:set, possible_values=None) -> dict:
+    output = Output(OUT.CONSOLE)
     default_course = Course("", "", 0)
 
     # <template (may be generated from wildcard) : set of courses that fulfills it>
@@ -135,7 +140,7 @@ def get_course_match(target_course, course_pool:set, possible_values=None) -> di
         target_course = target_course.template_course
 
     if not isinstance(target_course, Course):
-        print("CATALOG ERROR: get_course_match target_course is not instance of Course after initial call")
+        self.output.print("CATALOG ERROR: get_course_match target_course is not instance of Course after initial call", OUT.ERROR)
 
     # makes a copy of target_course because it will be altered later on
     target_course = copy.deepcopy(target_course)

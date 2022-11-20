@@ -1,4 +1,5 @@
 from array import *
+import json
 
 class Degree():
 
@@ -32,6 +33,15 @@ class Degree():
         for rule in self.rules:
             status_return = f"Rule {rule.name}: \n{rule.fulfillment_return_message(taken_courses)}\n"
         return status_return
+
+    def json(self):
+        degree = dict()
+        rules = list()
+        for r in self.rules:
+            rules.append(r)
+        degree.update({self.name:r})
+        return json.dumps(degree)
+
 
     def __repr__(self):
         return f"{self.name}: {str(self.rules)}"

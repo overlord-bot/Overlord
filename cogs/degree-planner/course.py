@@ -1,4 +1,8 @@
 from array import *
+from .output import *
+import json
+
+import logging
 
 class Course():
 
@@ -34,8 +38,16 @@ class Course():
             self.name = self.name.replace(',', '')
 
 
-    # some input data for courses may not be in the desired format. We will correct those problems here
-    def validate_course_data(self):
+    """ Some input data for courses may not be in the desired format. 
+
+        For example, most courses have an ID in the form of ####, but some
+        have ####.##. We separate the latter form into 
+        courseid = #### (numbers prior to dot) and courseid2 = ## (after dot)
+        
+        All data is modified in place, no arguments and return necessary
+    """
+    def validate_course_data(self, output:Output=None) -> None:
+        if output == None: output = Output(OUT.CONSOLE)
         if isinstance(self.course_id, str):
             if '.' in self.course_id:
                 split_num = self.course_id.split('.')
@@ -43,31 +55,31 @@ class Course():
                     self.course_id = int(float(split_num[0]))
                     self.course_id2 = int(float(split_num[1]))
                 else:
-                    print("COURSE INITIALIZATION ERROR: 2 part ID not <int>.<int> for course " + self.name)
+                    logging.error(f"{DEGREE_PLANNER_SIGNATURE} COURSE PARSING: 2 part ID not <int>.<int> for course " + self.name)
                     
             elif not self.course_id.isdigit():
-                print("COURSE INITIALIZATION WARNING: course number is not a number for course " + self.name)
+                logging.error(f"{DEGREE_PLANNER_SIGNATURE} COURSE PARSING: course number is not a number for course " + self.name)
             else:
                 self.course_id = int(float(self.course_id))
         elif not isinstance(self.course_id, int):
-            print("COURSE INITIALIZATION WARNING: course number is not a number for course " + self.name)
+            logging.error(f"{DEGREE_PLANNER_SIGNATURE} COURSE PARSING: course number is not a number for course " + self.name)
 
-    def add_prerequisite(self, prereq):
+    def add_prerequisite(self, prereq) -> None:
         self.prerequisites.add(prereq)
 
-    def add_cross_listed(self, cross):
+    def add_cross_listed(self, cross) -> None:
         self.cross_listed.add(cross)
 
-    def in_pathway(self, pathway):
+    def in_pathway(self, pathway) -> bool:
         return pathway in self.HASS_pathway
 
-    def add_pathway(self, pathway):
+    def add_pathway(self, pathway) -> None:
         self.HASS_pathway.add(pathway)
 
-    def in_concentration(self, concentration):
+    def in_concentration(self, concentration) -> bool:
         return concentration in self.concentration
 
-    def add_concentration(self, concentration):
+    def add_concentration(self, concentration) -> None:
         self.concentration.add(concentration)
 
     def add_available(self, semester:str) -> None:
@@ -80,8 +92,39 @@ class Course():
         return not self.available_semesters or semester.casefold() in self.available_semesters
 
     # determines the level of the course, 1000=1, 2000=2, 4000=4, etc
-    def level(self):
+    def level(self) -> int:
         return (self.course_id//1000)
+
+    """
+    Returns:
+        course (OrderedDict): all course attributes within an ordered dictionary
+            includes name, id, id2, major, credits, CI, HASS_inquiry, crosslisted,
+            concentrations, pathways, presequisites, restricted, description.
+
+            Some attributes will be omitted if empty, includes all attributes that
+            are the form of a list or set.
+    """
+    def json(self) -> OrderedDict:
+        course = OrderedDict()
+        course.update({'name':self.name})
+        course.update({'id':self.course_id})
+        if self.course_id2 != 0:
+            course.update({'id2':self.course_id2})
+        course.update({'major':self.major})
+        course.update({'credits':self.credits})
+        course.update({'CI':self.CI})
+        course.update({'HASS_inquiry':self.HASS_inquiry})
+        if len(self.cross_listed):
+            course.update({'crosslisted':list(self.cross_listed)})
+        if len(self.concentration):
+            course.update({'concentrations':list(self.concentration)})
+        if len(self.HASS_pathway):
+            course.update({'pathways':list(self.HASS_pathway)})
+        if len(self.prerequisites):
+            course.update({'prerequisites':list(self.prerequisites)})
+        course.update({'restricted':self.restricted})
+        course.update({'description':self.description})
+        return json.dumps(course)
 
     def __repr__(self):
         st = (f"{self.display_name if self.display_name else 'None'}: {self.major if self.major else 'None'} " + \
