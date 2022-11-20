@@ -32,9 +32,10 @@ class Moderation(commands.Cog, name="Moderation"):
         '''
         Checks when bot was last updated on the server.
         '''
-        fetch = open(os.getcwd() + '\.git\FETCH_HEAD', 'r')
+        file = os.path.join(os.getcwd(), ".git", "FETCH_HEAD")
+        fetch = open(file, 'r')
         commit_hash = fetch.readline().split('\t')[0]
-        time = os.path.getmtime((os.getcwd() + '\.git\FETCH_HEAD'))
+        time = os.path.getmtime(file)
         time = datetime.fromtimestamp(time).strftime('%m/%d/%Y %I:%M:%S')
         await interaction.response.send_message(content=f'Bot last updated on: {time} \nCommit Hash is: {commit_hash}', ephemeral=True)
 
