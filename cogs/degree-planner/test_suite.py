@@ -191,7 +191,7 @@ class Test1():
         print('catalog json dump: \n' + str(y))
         y = json.loads(user.get_schedule('test').json())
         print('schedule json dump: \n' + str(y))
-        y = json.loads(course1.json())
+        y = json.loads(course6.json())
         print('course json dump: \n' + str(y))
 
         await output.print(f"\nPrinting user data: {str(user)}")

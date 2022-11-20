@@ -89,8 +89,8 @@ class Catalog():
 
     def json(self):
         catalog = dict()
-        catalog.update({'courses':self.__course_list.values()})
-        catalog.update({'degrees':self.__degree_list.values()})
+        catalog.update({'courses':list(self.__course_list.keys())})
+        catalog.update({'degrees':list(self.__degree_list.keys())})
         return json.dumps(catalog)
 
     def __repr__(self):

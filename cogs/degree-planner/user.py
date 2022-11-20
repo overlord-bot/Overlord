@@ -66,9 +66,12 @@ class User():
         user.update({'username':self.username})
         user.update({'id':self.id})
         user.update({'discord user':True if self.discord_user != None else False})
-        user.update({'schedules':self.__schedules.values()})
+        schedules = list()
+        for s in self.__schedules.keys():
+            schedules.append(s)
+        user.update({'schedules':schedules})
         user.update({'admin':self.admin})
-        user.update({'commands in queue':len(self.command_queue)})
+        user.update({'commands in queue':self.command_queue.qsize()})
         return json.dumps(user)
 
     def __repr__(self):

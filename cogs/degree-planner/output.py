@@ -85,10 +85,10 @@ class Output():
         logging_flag (OUT): temporary prints to this output location
             without altering the stored location within this object
     """
-    async def print(self, msg:str, json_output:json=None, logging_location=None) -> None:
+    async def print(self, msg:str, json_output:json=None, output_location=None) -> None:
         outloc = self.output_location
-        if logging_location != None and isinstance(logging_location, OUT) and logging_location.value//10 == 2:
-            self.output_location = logging_location
+        if output_location != None and isinstance(output_location, OUT) and output_location.value//10 == 2:
+            self.output_location = output_location
         
         tagged_msg = f'{DEGREE_PLANNER_SIGNATURE} {msg}'
 
@@ -102,7 +102,7 @@ class Output():
             logging.error(tagged_msg)
 
         elif self.output_location == OUT.CONSOLE:
-            print(json_output)
+            print(msg)
 
         # If printing to discord, will use block (title/message) formatting
         elif (self.output_location == OUT.DISCORD_CHANNEL 

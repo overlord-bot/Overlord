@@ -115,13 +115,13 @@ class Course():
         course.update({'CI':self.CI})
         course.update({'HASS_inquiry':self.HASS_inquiry})
         if len(self.cross_listed):
-            course.update({'crosslisted':self.cross_listed})
+            course.update({'crosslisted':list(self.cross_listed)})
         if len(self.concentration):
-            course.update({'concentrations':self.concentration})
+            course.update({'concentrations':list(self.concentration)})
         if len(self.HASS_pathway):
-            course.update({'pathways':self.HASS_pathway})
+            course.update({'pathways':list(self.HASS_pathway)})
         if len(self.prerequisites):
-            course.update({'prerequisites':self.prerequisites})
+            course.update({'prerequisites':list(self.prerequisites)})
         course.update({'restricted':self.restricted})
         course.update({'description':self.description})
         return json.dumps(course)

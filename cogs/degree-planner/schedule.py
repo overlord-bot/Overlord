@@ -114,9 +114,9 @@ class Schedule():
     """
     def json(self):
         schedule = dict()
-        dict.update({self.name:dict()})
+        schedule.update({self.name:dict()})
         for i in range(0, 12):
-            dict[self.name].update({i:self.get_semester(i)})
+            schedule[self.name].update({i:[e.display_name for e in self.get_semester(i)]})
         return json.dumps(schedule)
 
     def __len__(self):
