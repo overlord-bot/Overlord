@@ -184,6 +184,16 @@ class Test1():
         # Output tests
         #------------------------------------------------------------------------------------------
 
+        # testing json dumps:
+        y = json.loads(user.json())
+        print('user json dump: \n' + str(y))
+        y = json.loads(catalog.json())
+        print('catalog json dump: \n' + str(y))
+        y = json.loads(user.get_schedule('test').json())
+        print('schedule json dump: \n' + str(y))
+        y = json.loads(course1.json())
+        print('course json dump: \n' + str(y))
+
         await output.print(f"\nPrinting user data: {str(user)}")
 
         # resetting master_list and conclude test module

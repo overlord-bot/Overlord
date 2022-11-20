@@ -1,5 +1,6 @@
 from array import *
 import copy
+import json
 
 from .course import Course
 from .degree import Degree
@@ -86,6 +87,11 @@ class Catalog():
     def get_best_course_match(self, target_course:Course) -> set:
         return get_best_course_match(target_course, self.__course_list.values())
 
+    def json(self):
+        catalog = dict()
+        catalog.update({'courses':self.__course_list.values()})
+        catalog.update({'degrees':self.__degree_list.values()})
+        return json.dumps(catalog)
 
     def __repr__(self):
         count1 = 1

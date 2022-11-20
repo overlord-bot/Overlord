@@ -2,7 +2,7 @@ from array import *
 from .course import Course
 from .course_template import Template
 from .catalog import *
-
+import json
 
 class Rule():
 
@@ -99,7 +99,7 @@ class Rule():
         templates = dict()
         for k, v in self.course_templates.items():
             templates.update({k.name:v})
-        return templates
+        return json.dumps(templates)
 
     def __repr__(self):
         s = f"rule {self.name}:\n" 

@@ -5,6 +5,7 @@ from enum import Enum
 from collections import OrderedDict
 import time
 import re
+import json
 
 DELIMITER_TITLE = '---'
 DELIMITER_BLOCK = '###'
@@ -84,7 +85,7 @@ class Output():
         logging_flag (OUT): temporary prints to this output location
             without altering the stored location within this object
     """
-    async def print(self, msg:str, dictionary:dict=None, logging_location=None) -> None:
+    async def print(self, msg:str, json_output:json=None, logging_location=None) -> None:
         outloc = self.output_location
         if logging_location != None and isinstance(logging_location, OUT) and logging_location.value//10 == 2:
             self.output_location = logging_location
@@ -101,7 +102,7 @@ class Output():
             logging.error(tagged_msg)
 
         elif self.output_location == OUT.CONSOLE:
-            print(dictionary)
+            print(json_output)
 
         # If printing to discord, will use block (title/message) formatting
         elif (self.output_location == OUT.DISCORD_CHANNEL 
@@ -114,7 +115,7 @@ class Output():
                 await self.print_fancy(self.get_blocks(msg))
 
         elif (self.output_location == OUT.WEB):
-            self.json(msg)
+            self.on_output(json_output)
 
         self.output_location = outloc
 
@@ -304,7 +305,7 @@ class Output():
         self.__msg_cache_hold = ""
         return
 
-    def json(self, json_message):
+    def on_output(self, json_message:json):
         raise NotImplementedError
 
 

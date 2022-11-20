@@ -4,6 +4,7 @@ from discord.ext import commands
 import discord
 from .schedule import Schedule
 from queue import Queue
+import json
 
 class Flag(Enum):
     CMD_PAUSED = 100
@@ -60,6 +61,15 @@ class User():
             self.__schedules.pop(old_name)
             return True
 
+    def json(self):
+        user = dict()
+        user.update({'username':self.username})
+        user.update({'id':self.id})
+        user.update({'discord user':True if self.discord_user != None else False})
+        user.update({'schedules':self.__schedules.values()})
+        user.update({'admin':self.admin})
+        user.update({'commands in queue':len(self.command_queue)})
+        return json.dumps(user)
 
     def __repr__(self):
         schedule_names = ""

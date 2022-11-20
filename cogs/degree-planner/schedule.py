@@ -4,6 +4,7 @@ from .course import Course
 from .catalog import Catalog
 from .degree import Degree
 from .rules import Rule
+import json
 
 
 #########################################################################
@@ -116,7 +117,7 @@ class Schedule():
         dict.update({self.name:dict()})
         for i in range(0, 12):
             dict[self.name].update({i:self.get_semester(i)})
-        return schedule
+        return json.dumps(schedule)
 
     def __len__(self):
         i = 0

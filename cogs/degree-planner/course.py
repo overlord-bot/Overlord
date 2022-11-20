@@ -1,5 +1,6 @@
 from array import *
 from .output import *
+import json
 
 import logging
 
@@ -123,7 +124,7 @@ class Course():
             course.update({'prerequisites':self.prerequisites})
         course.update({'restricted':self.restricted})
         course.update({'description':self.description})
-        return course
+        return json.dumps(course)
 
     def __repr__(self):
         st = (f"{self.display_name if self.display_name else 'None'}: {self.major if self.major else 'None'} " + \
