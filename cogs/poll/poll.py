@@ -1,8 +1,9 @@
 import asyncio, os, discord
 from discord.ext import commands
-from .util.PollInfoModal import PollInfoModal
-from .util.PollView import PollView
+from .utils.PollInfoModal import PollInfoModal
+from .utils.PollView import PollView
 from utils.SemiRandID import generate_semi_rand_id
+
 
 class Polls(commands.GroupCog, name="polls"):
 	'''
