@@ -6,7 +6,6 @@ import discord
 import json
 import os
 
-from bot import Bot
 
 
 class TimChat(commands.Cog, name="TimChat"):
@@ -19,6 +18,7 @@ class TimChat(commands.Cog, name="TimChat"):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
+        user = self.bot.get_user(member.id)
         role = discord.utils.get(member.guild.roles, name='Friends')
         await member.add_roles(role)
         channel = discord.utils.get(member.guild.channels, name="new-friends")
@@ -26,15 +26,30 @@ class TimChat(commands.Cog, name="TimChat"):
         channels = self.bot.get_channel(channel_id)
         await channels.send("Don't use dirty, inappropriate, NSFW languages or content in this server!")
         await channels.send("Enter agree or disagree to determine which way you go.")
-        dic = {"bj":member.id,"xh":23}
-        json_f = json.dumps(dic)
+        
         dir = os.path.dirname(os.path.realpath(__file__))
+        with open(f"{dir}/join_user.json") as read:
+            data = json.load(read)
+        data[user] = member.id
+        json_f = json.dumps(data)
         with open(f"{dir}/join_user.json", "w") as outwrite:
             outwrite.write(json_f)
-        with open(".\cogs\chatbot\join_user.json") as read:
-            data = json.load(read)
-        await channel.send(data["bj"])
+        with open(f"{dir}/join_user.json") as read:
+            data1 = json.load(read)
+        await channel.send(data1[user])
         await channel.send("All done")
+    
+    @commands.Cog.listener()
+    async def on_member_leave(self, member):
+        user = self.bot.get_user(member.id)
+        dir = os.path.dirname(os.path.realpath(__file__))
+        with open(f"{dir}/join_user.json") as read:
+            data = json.load(read)
+        if data[user]:
+            del data[user]
+            json_f = json.dumps(data)
+            with open(f"{dir}/join_user.json", "w") as outwrite:
+                outwrite.write(json_f)
 
         
 
