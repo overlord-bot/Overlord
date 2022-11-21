@@ -19,6 +19,13 @@ class Blackjack(commands.Cog, name="Blackjack"):
         self.playercard2 = ""
         self.gamestart = False
         self.gameend = False
+        self.splithand = False
+        self.playerright = ""
+        self.playerleft = ""
+        self.rightscore = 0
+        self.leftscore = 0
+        self.rightdone = False
+        self.leftdone = False
     def draw(deck):
         draw = random.randint(0,len(deck))
         card = deck[draw]
@@ -135,20 +142,58 @@ class Blackjack(commands.Cog, name="Blackjack"):
             cardemoji = Blackjack.emoji(card)
             await context.send("You drew")
             await context.send(cardemoji[0]+cardemoji[1])
-            self.playercards+=cardemoji[0]
-            self.playercards+=cardemoji[1]
-            self.playerscore+=cardscore
-            #SHOW NEW HAND
-            await context.send("Your current hand is")
-            await context.send(self.playercards)
-            
+            if(self.splithand == False):
+                self.playercards+=cardemoji[0]
+                self.playercards+=cardemoji[1]
+                self.playerscore+=cardscore
+                #SHOW NEW HAND
+                await context.send("Your current hand is")
+                await context.send(self.playercards)
+            elif(self.splithand == True):
+                if(self.rightdone == False):
+                    self.playerright+=cardemoji[0]
+                    self.playerright+=cardemoji[1]
+                    self.rightscore+=cardscore
+                    await context.send("Your current hand to the right is")
+                    await context.send(self.playerright)
+                elif(self.leftdone == False):
+                    self.playerleft+=cardemoji[0]
+                    self.playerleft+=cardemoji[1]
+                    self.leftscore+=cardscore
+                    await context.send("Your current hand to the left is")
+                    await context.send(self.playerleft)
 
-            if(self.playerscore>21):
+            
+            if(self.rightscore>21):
+                await context.send("HAND TO RIGHT LOSE")
+                self.rightdone = True
+                self.rightscore = 0
+                self.playerright = ""
+                await context.send("Playing your hand to the left")
+                await context.send(self.playerleft)
+            if(self.leftscore>21):
+                await context.send("HANDTOLEFTLOSE")
+                self.gameend = True
+                self.gamestart = False
+                self.playerright = ""
+                self.dealercards = ""
+                self.splithand = False
+                self.playerscore = 0
+                self.dealerscore = 0
+                self.rightscore = 0
+                self.leftscore = 0
+                self.rightdone = False
+            elif(self.playerscore>21):
                 await context.send("YOU LOSE")
                 self.gameend = True
                 self.gamestart = False
                 self.playercards = ""
                 self.dealercards = ""
+                self.playerscore = 0
+                self.dealerscore = 0
+                self.rightscore = 0
+                self.leftscore = 0
+                self.rightdone = False
         else:
             await context.send("Please start a game first!")
         
@@ -164,30 +209,53 @@ class Blackjack(commands.Cog, name="Blackjack"):
     async def split(self,context):
         if(self.gamestart != True and self.gameend != False):
             await context.send("Please start a game first")
+       # elif(self.playercard1[0]!=self.playercard2[0]):
+          #  await context.send("You cannot split with this hand")
         elif(self.playercard1[0]!=self.playercard2[0]):
-            await context.send("You cannot split with this hand")
-        elif(self.playercard1[0]==self.playercard2[0]):
             await context.send("Splitting hand")
-            playerhand1 = Blackjack.emoji(self.playercard1)[0]
-            playerhand1 += Blackjack.emoji(self.playercard1)[1]
-            playerhand2 = Blackjack.emoji(self.playercard2)[0]
-            playerhand2 += Blackjack.emoji(self.playercard2)[1]
+            self.splithand = True
+            self.playerscore = 0
+            self.playerleft = Blackjack.emoji(self.playercard1)[0]
+            self.playerleft += Blackjack.emoji(self.playercard1)[1]
+            self.playerright = Blackjack.emoji(self.playercard2)[0]
+            self.playerright += Blackjack.emoji(self.playercard2)[1]
             hand1card = Blackjack.draw(self.cardsindeck)
             hand2card = Blackjack.draw(self.cardsindeck)
-            playerhand1 += Blackjack.emoji(hand1card)[0]
-            playerhand1 += Blackjack.emoji(hand1card)[1]
-            playerhand2 += Blackjack.emoji(hand2card)[0]
-            playerhand2 += Blackjack.emoji(hand2card)[1]
+            self.playerleft += Blackjack.emoji(hand1card)[0]
+            self.playerleft += Blackjack.emoji(hand1card)[1]
+            self.playerright += Blackjack.emoji(hand2card)[0]
+            self.playerright += Blackjack.emoji(hand2card)[1]
             await context.send("Your hand to the left hand side is")
-            await context.send(playerhand1)
+            await context.send(self.playerleft)
             await context.send("Your hand to the right hand side is")
-            await context.send(playerhand2)
+            await context.send(self.playerright)
             await context.send("Playing your hand to the right")
             #Add implementation to actually play the hand later
-            await context.send(playerhand2)
-            await context.send("Playing your hand to the left")
-            await context.send(playerhand1)
-            #add implementation to actually play the hand later
+            await context.send(self.playerright)
+            cardscore = 0
+            if(self.playercard2[0] == "J" or self.playercard2[0] == "K" or self.playercard2[0] == "Q"):
+                cardscore = 10
+            else:
+                cardscore = int(re.search(r'\d+',self.playercard2).group())
+            self.rightscore += cardscore
+            cardscore2 = 0
+            if(hand2card[0] == "J" or hand2card[0] == "K" or hand2card[0] == "Q"):
+                cardscore2 = 10
+            else:
+                cardscore2 = int(re.search(r'\d+',hand2card).group())
+            self.rightscore += cardscore2
+            cardscore3 = 0
+            if(self.playercard1[0] == "J" or self.playercard1[0] == "K" or self.playercard1[0] == "Q"):
+                cardscore3 = 10
+            else:
+                cardscore3 = int(re.search(r'\d+',self.playercard1).group())
+            self.leftscore += cardscore3
+            cardscore4 = 0
+            if(hand1card[0] == "J" or hand1card[0] == "K" or hand1card[0] == "Q"):
+                cardscore4 = 10
+            else:
+                cardscore4 = int(re.search(r'\d+',hand1card).group())
+            self.leftscore += cardscore4
     @commands.command()
     async def stand(self, context):
         """ Does not get another card switches to dealers turn """  # this is the description that will show up in !help
@@ -238,4 +306,3 @@ class Blackjack(commands.Cog, name="Blackjack"):
     
 async def setup(bot):
     await bot.add_cog(Blackjack(bot))
-
