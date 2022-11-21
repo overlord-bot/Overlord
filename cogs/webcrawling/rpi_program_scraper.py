@@ -117,7 +117,7 @@ def write_to_dict(classes):
             credit_hours = -1
             if len(credit_hours_split) >= 2:
                 if len(credit_hours_split[1]) > 0:
-                    credit_hours = credit_hours_split[1][0]
+                    credit_hours = int(credit_hours_split[1][0])
 
             #Find name and ID
             tag = "none"
@@ -133,6 +133,14 @@ def write_to_dict(classes):
                 if len(tag_split) >= 2:
                     tag = tag_split[0]
                     number = tag_split[1]
+
+                    try:
+                        number = int(number)
+                    except ValueError:
+                        try:
+                            number = int(number.replace("XXX", "000"))
+                        except ValueError:
+                            pass
             else:
                 name = name_split[0].strip()
                 if name.lower().count('footnote') != 0 or name.lower().count('or') != 0: #Special case for footnote
@@ -174,6 +182,6 @@ for ref_tup in getRefs():
     #break
 
 json_object = json.dumps(dict, indent=2)
-with open("cogs/webcrawling/class_results.json", "w") as outfile:  # write to file
+with open("class_results.json", "w") as outfile:  # write to file
     outfile.write(json_object)
 
