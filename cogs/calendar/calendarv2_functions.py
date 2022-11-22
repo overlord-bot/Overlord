@@ -9,7 +9,6 @@ format to add user data to json file:
             "date": ["event1", "event2"],
             ...
         ],
-        "calendar": string,
     ],
     "user2":
     [
@@ -18,7 +17,6 @@ format to add user data to json file:
             "date": ["event1", "event2"],
             ...
         ],
-        "calendar": string,
     ],
     ...
 }
@@ -29,6 +27,7 @@ import os
 import calendar
 import datetime
 import json
+import asyncio
 
 class CalHelperJson():
     def __init__(self, bot):
@@ -61,20 +60,59 @@ class CalHelperJson():
     def print_clear_json(self):
         self.events = {}
         self.save_json()
-        embed = discord.Embed(title="Calendar", description="Calendar cleared!", color=0xff0000)
+        embed = discord.Embed(title="Calendar", description="Json file cleared!", color=0xff0000)
         return embed
 
     #checks to see if the user exists
     def check_user(self, user):
         if user not in self.events.keys():
-            self.events = {user: {"events": {}, "calendar": ""}}
+            self.events = {
+                user: 
+                {
+                    "events": {},
+                }
+            }
             self.save_json()
+            self.CalHolidays(user)
             return False
         return True
 
+    #checks to see if that day has an event
+    def check_event(self, week_string, date, user):
+        if self.check_user(user) == False:
+            return week_string
+        curr = ""
+        if date < 10:  
+            curr = "0" + str(date)
+        else:
+            curr = str(date)
+        for key in self.events[user]["events"].keys():
+            if curr == key[3:5]:
+                for event in self.events[user]["events"][key]:
+                    week_string += "*"
+        return week_string
+
+    #adds holidays to calendar
+    def CalHolidays(self, user):
+        path = os.path.join(os.path.dirname(__file__), "holidays.txt")
+        with open(path, "r") as f:
+            for line in f:
+                date = line.split(" ")[-1]
+                line = line.replace(date, "")
+                line = line[:-1]
+                if date not in self.events[user]["events"].keys():
+                    self.events[user]["events"][date] = [line]
+                else:
+                    if line not in self.events[user]["events"][date]:
+                        self.events[user]["events"][date].append(line)
+        self.save_json()
+
     #adds the event to the json file
-    def print_add_embed(self, event, user):
+    def CalAdd(self, event, user):
         date = event.split(" ")[-1]
+        if len(date) != 10 or date[2] != "/" or date[5] != "/" or int(date[0:2]) > 12 or int(date[3:5]) > 31 or int(date[6:10]) < 2022:
+            embed = discord.Embed(title="Calendar", description="Invalid date format, please use MM/DD/YYYY", color=0xff0000)
+            return embed
         event = event.replace(date, "")
         event = event[:-1]
 
@@ -93,23 +131,8 @@ class CalHelperJson():
         embed = discord.Embed(title="Calendar", description="Event added!", color=0xff0000)
         return embed
         
-    #checks to see if that day has an event
-    def check_event(self, week_string, date, user):
-        if self.check_user(user) == False:
-            return week_string
-        curr = ""
-        if date < 10:  
-            curr = "0" + str(date)
-        else:
-            curr = str(date)
-        for key in self.events[user]["events"].keys():
-            if curr == key[3:5]:
-                for event in self.events[user]["events"][key]:
-                    week_string += "*"
-        return week_string
-
     #constructs a visual of the calendar for the user
-    def print_view_embed(self, user, username):
+    def CalView(self, user, username):
         now = datetime.datetime.now()
         year = now.year
         month = now.month
@@ -118,7 +141,6 @@ class CalHelperJson():
         embed = discord.Embed(title="Calendar", description="Calendar for " + username, color=0xff0000)
         cal = calendar.monthcalendar(year, month)
         week_string = "Mon\t Tue\t Wed\t Thu\t Fri\t Sat\t Sun"
-
         for week in cal:
             week_string += "\n"
             for day in week:
@@ -143,12 +165,11 @@ class CalHelperJson():
         for key in sorted(self.events[user]["events"].keys()):
             if key[0:2] == str(month):
                 embed.add_field(name=key, value="\n".join(self.events[user]["events"][key]), inline=False)
-        self.events[user]["calendar"] = week_string
         self.save_json()
         return embed
 
     #removes an event from the json file
-    def print_remove_embed(self, event, user):
+    def CalRemove(self, event, user):
         date = event.split(" ")[-1]
         if self.check_user(user) == False:
             embed = discord.Embed(title="Calendar", description="No events to remove!", color=0xff0000)
@@ -171,31 +192,52 @@ class CalHelperJson():
         embed = discord.Embed(title="Calendar", description="Event not found!", color=0xff0000)
         return embed
 
-    #edit an event, in progress
-    def edit_event(self, event, user):
+    #edit an event
+    def CalEditEvent(self, event, user):
+        old_event = str(event.split("/")[1])
+        old_event = old_event[:-1]
+        new_event = str(event.split("/")[2])
         if self.check_user(user) == False:
             embed = discord.Embed(title="Calendar", description="No events to edit!", color=0xff0000)
             return embed
-        if event not in self.events[user]["events"].keys():
+        for key in self.events[user]["events"].keys():
+            if old_event in self.events[user]["events"][key]:
+                self.events[user]["events"][key].remove(old_event)
+                self.events[user]["events"][key].append(new_event)
+                self.save_json()
+                embed = discord.Embed(title="Calendar", description="Event edited!", color=0xff0000)
+                return embed
+        embed = discord.Embed(title="Calendar", description="Event not found!", color=0xff0000)
+        return embed
+            
+    #edit a date by changing the events in that date to another date
+    def CalEditDate(self, event, user):
+        first = event.split(" ")[0]
+        last = event.split(" ")[-1]
+        if self.check_user(user) == False:
+            embed = discord.Embed(title="Calendar", description="No events to edit!", color=0xff0000)
+            return embed
+        if first not in self.events[user]["events"].keys():
             embed = discord.Embed(title="Calendar", description="Event does not exist!", color=0xff0000)
             return embed
         else:
+            self.events[user]["events"][last] = self.events[user]["events"][first]
+            del self.events[user]["events"][first]
+            self.save_json()
             embed = discord.Embed(title="Calendar", description="Event edited!", color=0xff0000)
             return embed
-            
-    #edit a date, in progress
-    def edit_date(self, event, user):
-        date = event.split(" ")[-1]
-        event = event.replace(date, "")
-        event = event[:-1]
+
+    #get all events for a specific date in a string
+    def CalGetDate(self, date, user):
         if self.check_user(user) == False:
-            embed = discord.Embed(title="Calendar", description="No events to edit!", color=0xff0000)
+            embed = "New User: no events added yet!"
             return embed
         if date not in self.events[user]["events"].keys():
-            embed = discord.Embed(title="Calendar", description="Event does not exist!", color=0xff0000)
+            embed = "No events for this date!"
             return embed
         else:
-            self.events[user]["events"][date] = [event]
-            self.save_json()
-            embed = discord.Embed(title="Calendar", description="Date edited!", color=0xff0000)
+            #for each event, add to string and return
+            embed = "\nReminder for " + date + ":\n"
+            for event in self.events[user]["events"][date]:
+                embed += event + "\n"
             return embed

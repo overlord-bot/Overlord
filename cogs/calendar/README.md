@@ -28,20 +28,26 @@ To use the new commands, type `!calendarv2` followed by the command.
 
 `!calendarv2 clear` will clear the calendar of its data and its events.
 
-`!calendaredit date <event> <MM/DD/YYYY>` is a planned event in which users can edit events for the date
+`!calendarv2 edit date <old date> <new date>` will change the events of one day to another and remove the old date's events.
+
+`!calendarv2 edit /<event1> /<event2>` will change event1 to event2
+
+`!calendarv2 remind <date>` will set a reminder for date and send all events on the date.
 
 ## Plans for the Week:
 
 Current plans for the week:
 
-Create and get an edit function working for events, and maybe go into fixing remove with events themselves.
+-Fixed bug with editing an event where the old event does not exist. Implemented US Federal Holidays into every calendar, also stopped storing the calendar as a string in json file
+as it was very messy to view and there was no purpose in storing it.
 
 ## Development Plans
 
 Currently, the calendar module is in development. The following features are planned for the future:
 
--Redesign of the calendar file, storing and reading from a json file instead of a text file. (Implemented)
+-Add a command to edit events. (Implemented)
 
--Fix remove command, currently does not work correctly with the events dictionary. (Implemented)
+-Reminder system, where users can specify the date/event. (Implemented basic version)
 
--Add a command to edit events. (In progress)
+-View of a week, month, or year (In progress)
+

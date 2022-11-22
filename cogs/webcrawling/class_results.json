@@ -3,16 +3,16 @@
     {
       "name": "Science, Technology, and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Intermediate STS course",
@@ -23,23 +23,23 @@
     {
       "name": "Mathematical Methods in Management and Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1520"
+      "course_id": 1520
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Investigating Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Science Core Elective",
@@ -56,9 +56,9 @@
     {
       "name": "Research Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "4980"
+      "course_id": 4980
     },
     {
       "name": "HASS Core Elective",
@@ -75,14 +75,14 @@
     {
       "name": "Federal Civil Procedure",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "none",
       "course_id": -1
     },
     {
       "name": "Property I",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "none",
       "course_id": -1
     },
@@ -95,28 +95,28 @@
     {
       "name": "Criminal Law",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "none",
       "course_id": -1
     },
     {
       "name": "Property II",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "none",
       "course_id": -1
     },
     {
       "name": "Introduction to Lawyering",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "none",
       "course_id": -1
     },
     {
       "name": "Contracts",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "none",
       "course_id": -1
     }
@@ -125,58 +125,58 @@
     {
       "name": "Introduction to Engineering Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Fundamentals of Flight ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "MANE",
-      "course_id": "1060"
+      "course_id": 1060
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "SoE 2\u2026. Engineering Design Elective",
@@ -187,93 +187,93 @@
     {
       "name": "Engineering Processes ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1300"
+      "course_id": 1300
     },
     {
       "name": "Strength of Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2530"
-    },
-    {
-      "name": "Introduction to Differential Equations ",
-      "type": "course",
-      "credits": "4",
-      "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2530
     },
     {
       "name": "Thermodynamics ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "2710"
+      "course_id": 2710
+    },
+    {
+      "name": "Introduction to Differential Equations ",
+      "type": "course",
+      "credits": 4,
+      "major": "MATH",
+      "course_id": 2400
     },
     {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Fluid Mechanics ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "2720"
+      "course_id": 2720
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Engineering Dynamics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2090"
+      "course_id": 2090
     },
     {
       "name": "Aerospace Structures and Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MANE",
-      "course_id": "4060"
+      "course_id": 4060
     },
     {
       "name": "Aerodynamics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MANE",
-      "course_id": "4070"
+      "course_id": 4070
     },
     {
       "name": "STSO 4100   Professional Development II",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "none",
       "course_id": -1
     },
     {
       "name": "Modeling and Control of Dynamic Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "4500"
+      "course_id": 4500
     },
     {
       "name": "Aeroelasticity and Structural Vibrations ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "4900"
+      "course_id": 4900
     },
     {
       "name": "MANE 4\u2026. Computation Elective",
@@ -290,9 +290,9 @@
     {
       "name": "Propulsion Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "4080"
+      "course_id": 4080
     },
     {
       "name": "Free Elective",
@@ -321,39 +321,39 @@
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     }
   ],
   "Applied Physics": [
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "HASS Elective,",
@@ -364,30 +364,30 @@
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Quantum Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "2210"
+      "course_id": 2210
     },
     {
       "name": "Mathematics Elective",
@@ -404,28 +404,28 @@
     {
       "name": "Experimental Physics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "2350"
+      "course_id": 2350
     },
     {
       "name": "Advanced Calculus ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "4600"
+      "course_id": 4600
     },
     {
       "name": "Thermodynamics and Statistical Mechanics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "4420"
+      "course_id": 4420
     },
     {
       "name": "Culminating Experience",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "none",
       "course_id": -1
     },
@@ -450,137 +450,137 @@
     {
       "name": "Optics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "2620"
+      "course_id": 2620
     },
     {
       "name": "Optical Communications and Integrated Optics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "4640"
+      "course_id": 4640
     },
     {
       "name": "Introduction to Electronics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "Microelectronics Technology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ECSE",
-      "course_id": "2210"
+      "course_id": 2210
     },
     {
       "name": "VLSI Design ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ECSE",
-      "course_id": "4220"
+      "course_id": 4220
     },
     {
       "name": "Integrated Circuit Processes and Design ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ECSE",
-      "course_id": "4250"
+      "course_id": 4250
     },
     {
       "name": "Semiconducting Materials ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4160"
+      "course_id": 4160
     },
     {
       "name": "Lasers and Optical Systems ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "4630"
+      "course_id": 4630
     },
     {
       "name": "Solid-State Physics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "4720"
+      "course_id": 4720
     },
     {
       "name": "Quantum Mechanics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "6510"
+      "course_id": 6510
     },
     {
       "name": "Quantum Mechanics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "6520"
+      "course_id": 6520
     },
     {
       "name": "Observational Astronomy ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ASTR",
-      "course_id": "4120"
+      "course_id": 4120
     },
     {
       "name": "Astrophysics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ASTR",
-      "course_id": "4220"
+      "course_id": 4220
     },
     {
       "name": "Gravitation and Cosmology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ASTR",
-      "course_id": "4240"
+      "course_id": 4240
     }
   ],
   "Architecture": [
     {
       "name": "The Ethos of Architecture ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ARCH",
-      "course_id": "2150"
+      "course_id": 2150
     },
     {
       "name": "Architectural Media ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2160"
+      "course_id": 2160
     },
     {
       "name": "Materials and Design ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2510"
+      "course_id": 2510
     },
     {
       "name": "Digital Constructs 1 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2520"
+      "course_id": 2520
     },
     {
       "name": "Architectural Design Studio 1 ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "2800"
+      "course_id": 2800
     },
     {
       "name": "HASS Approved Inquiry and Communication Intensive Course",
@@ -591,93 +591,93 @@
     {
       "name": "Digital Constructs 2 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2530"
+      "course_id": 2530
     },
     {
       "name": "Architectural Design Studio 2 ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "2810"
+      "course_id": 2810
     },
     {
       "name": "Architectural Case Studies ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "4090"
+      "course_id": 4090
     },
     {
       "name": "An Architectural Genealogy ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ARCH",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "Structures 1 ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ARCH",
-      "course_id": "2330"
+      "course_id": 2330
     },
     {
       "name": "Construction Systems ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2350"
+      "course_id": 2350
     },
     {
       "name": "Digital Constructs 3 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2540"
+      "course_id": 2540
     },
     {
       "name": "Architectural Design Studio 3 ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "2820"
+      "course_id": 2820
     },
     {
       "name": "Cloud Atlas: 20th Century Architecture, Culture and Civilization ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ARCH",
-      "course_id": "4120"
+      "course_id": 4120
     },
     {
       "name": "Environmental and Ecological Systems ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARCH",
-      "course_id": "2360"
+      "course_id": 2360
     },
     {
       "name": "Digital Constructs 4 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2550"
+      "course_id": 2550
     },
     {
       "name": "Architectural Design Studio 4 ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "2830"
+      "course_id": 2830
     },
     {
       "name": "General Physics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1050"
+      "course_id": 1050
     },
     {
       "name": "MATH Elective",
@@ -688,51 +688,51 @@
     {
       "name": "Structures 2 ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ARCH",
-      "course_id": "4330"
+      "course_id": 4330
     },
     {
       "name": "Materials and Enclosures ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "4560"
+      "course_id": 4560
     },
     {
       "name": "Integrated Design Schematic ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "4820"
+      "course_id": 4820
     },
     {
       "name": "Professional Practice 1 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "4540"
+      "course_id": 4540
     },
     {
       "name": "Entrepreneurship and Architecture ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "4590"
+      "course_id": 4590
     },
     {
       "name": "Building Systems and Environment ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARCH",
-      "course_id": "4740"
+      "course_id": 4740
     },
     {
       "name": "Integrated Design Development ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "4830"
+      "course_id": 4830
     },
     {
       "name": "Science Elective",
@@ -743,23 +743,23 @@
     {
       "name": "Architectural Design Studio 5 ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "4770"
+      "course_id": 4770
     },
     {
       "name": "Professional Practice 2 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "4550"
+      "course_id": 4550
     },
     {
       "name": "Architectural Design Studio 6 ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "4780"
+      "course_id": 4780
     },
     {
       "name": "HASS Elective",
@@ -770,16 +770,16 @@
     {
       "name": "Architectural Design Studio 7 ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "4790"
+      "course_id": 4790
     },
     {
       "name": "Final Project Design Research Seminar ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ARCH",
-      "course_id": "4910"
+      "course_id": 4910
     },
     {
       "name": "Elective",
@@ -796,67 +796,67 @@
     {
       "name": "Final Project Design Studio ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "4920"
+      "course_id": 4920
     }
   ],
   "Biological Neuroscience": [
     {
       "name": "Introduction to Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Chemistry I with Advanced Lab ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Cell and Molecular Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Genetics and Evolution ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "2500"
+      "course_id": 2500
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "HASS Core Elective",
@@ -867,16 +867,16 @@
     {
       "name": "Molecular Biology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4620"
+      "course_id": 4620
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "HASS Core Neuroscience Elective",
@@ -887,16 +887,16 @@
     {
       "name": "Advanced Cell Biology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4260"
+      "course_id": 4260
     },
     {
       "name": "Human Physiology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4270"
+      "course_id": 4270
     },
     {
       "name": "Free Elective",
@@ -907,88 +907,88 @@
     {
       "name": "Cellular Neuroscience ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4150"
+      "course_id": 4150
     },
     {
       "name": "Developmental Biology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4250"
+      "course_id": 4250
     }
   ],
   "Biology": [
     {
       "name": "Introduction to Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Chemistry I with Advanced Lab ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Cell and Molecular Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Genetics and Evolution ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "2500"
+      "course_id": 2500
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Molecular Biology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4620"
+      "course_id": 4620
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "HASS Core Elective",
@@ -1005,16 +1005,16 @@
     {
       "name": "Biostatistics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4200"
+      "course_id": 4200
     },
     {
       "name": "Molecular Biochemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4760"
+      "course_id": 4760
     },
     {
       "name": "BIOL - Biology Elective",
@@ -1039,30 +1039,30 @@
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Engineering Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "HASS Elective-",
@@ -1073,93 +1073,93 @@
     {
       "name": "Introduction to Cell and Molecular Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Engineering Processes ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1300"
+      "course_id": 1300
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Biomaterials Science and Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BMED",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Bioimaging and Bioinstrumentation ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BMED",
-      "course_id": "2300"
+      "course_id": 2300
     },
     {
       "name": "Biomechanics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BMED",
-      "course_id": "2540"
+      "course_id": 2540
     },
     {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Modeling of Biomedical Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BMED",
-      "course_id": "4200"
+      "course_id": 4200
     },
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     },
     {
       "name": "BME Tech Elective I -",
@@ -1176,23 +1176,23 @@
     {
       "name": "Advanced Systems Physiology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BMED",
-      "course_id": "4500"
+      "course_id": 4500
     },
     {
       "name": "Professional Development  2 \u2013Technical Issues and Solutions ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "STSO",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "Introduction to Engineering Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "BME Tech Elective II -",
@@ -1215,9 +1215,9 @@
     {
       "name": "Biomedical Product Development and Commercialization ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BMED",
-      "course_id": "4260"
+      "course_id": 4260
     },
     {
       "name": "BME Tech Elective III -",
@@ -1246,67 +1246,67 @@
     {
       "name": "Biomedical Engineering Design ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BMED",
-      "course_id": "4600"
+      "course_id": 4600
     }
   ],
   "Biotechnology and Health Economics": [
     {
       "name": "Introduction to Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Chemistry I with Advanced Lab ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Principles of Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Introduction to Cell and Molecular Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Health Economics and Policy ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECON",
-      "course_id": "4170"
+      "course_id": 4170
     },
     {
       "name": "Biotech and Health Economics Concentration Course #1",
@@ -1317,23 +1317,23 @@
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Econometrics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECON",
-      "course_id": "4570"
+      "course_id": 4570
     },
     {
       "name": "Molecular Biochemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BCBP",
-      "course_id": "4760"
+      "course_id": 4760
     },
     {
       "name": "Biotech and Health Economics Concentration Course #2",
@@ -1344,9 +1344,9 @@
     {
       "name": "Economics of Biotech and Medical Innovations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECON",
-      "course_id": "4290"
+      "course_id": 4290
     },
     {
       "name": "Biotech and Health Economics Concentration Course #3",
@@ -1357,9 +1357,9 @@
     {
       "name": "Readings in Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECON",
-      "course_id": "4940"
+      "course_id": 4940
     },
     {
       "name": "Biotech and Health Economics Concentration Course #4",
@@ -1378,205 +1378,205 @@
       "type": "course",
       "credits": -1,
       "major": "BCBP",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Engineering, Science, and Management",
       "type": "course",
       "credits": -1,
       "major": "MGMT",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Applied Analytics & Predictive Modeling",
       "type": "course",
       "credits": -1,
       "major": "MGMT",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Data Analytics Research Lab",
       "type": "course",
       "credits": -1,
       "major": "ITWS",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Health Analytics Challenges Lab",
       "type": "course",
       "credits": -1,
       "major": "BIOL",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Mathematics in Medicine and Biology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "4720"
+      "course_id": 4720
     },
     {
       "name": "Introduction to Data Mathematics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATP",
-      "course_id": "4400"
+      "course_id": 4400
     },
     {
       "name": "Metabolic Engineering",
       "type": "course",
       "credits": -1,
       "major": "CHME",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Biostatistics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4200"
+      "course_id": 4200
     },
     {
       "name": "The Biology of Systems ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4660"
+      "course_id": 4660
     },
     {
       "name": "Molecular Modeling ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4550"
+      "course_id": 4550
     },
     {
       "name": "Human Physiology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4270"
+      "course_id": 4270
     },
     {
       "name": "Genetic Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BCBP",
-      "course_id": "4310"
+      "course_id": 4310
     },
     {
       "name": "Drug and Gene Delivery ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BMED",
-      "course_id": "4450"
+      "course_id": 4450
     },
     {
       "name": "Biocatalysis",
       "type": "course",
       "credits": -1,
       "major": "CHEM",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Natural Polymers and Biomaterials",
       "type": "course",
       "credits": -1,
       "major": "CHEM",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Nucleic Acids: Nano and Biotech",
       "type": "course",
       "credits": -1,
       "major": "CHEM",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Bionanotechnology",
       "type": "course",
       "credits": -1,
       "major": "CHEM",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Virology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4350"
+      "course_id": 4350
     },
     {
       "name": "Microbiology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4310"
+      "course_id": 4310
     },
     {
       "name": "Biology in Materials Science ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4470"
+      "course_id": 4470
     }
   ],
   "Building Sciences B.S.": [
     {
       "name": "The Ethos of Architecture ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ARCH",
-      "course_id": "2150"
+      "course_id": 2150
     },
     {
       "name": "Architectural Media ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2160"
+      "course_id": 2160
     },
     {
       "name": "Materials and Design ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2510"
+      "course_id": 2510
     },
     {
       "name": "Digital Constructs 1 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2520"
+      "course_id": 2520
     },
     {
       "name": "Architectural Design Studio 1 ",
       "type": "course",
-      "credits": "5",
+      "credits": 5,
       "major": "ARCH",
-      "course_id": "2800"
+      "course_id": 2800
     },
     {
       "name": "Architectural Case Studies ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "4090"
+      "course_id": 4090
     },
     {
       "name": "Mathematical Methods in Management and Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1520"
+      "course_id": 1520
     },
     {
       "name": "General Physics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1050"
+      "course_id": 1050
     },
     {
       "name": "Concentration 1",
@@ -1587,23 +1587,23 @@
     {
       "name": "Structures 1 ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ARCH",
-      "course_id": "2330"
+      "course_id": 2330
     },
     {
       "name": "Construction Systems ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "2350"
+      "course_id": 2350
     },
     {
       "name": "Materials and Enclosures ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "4560"
+      "course_id": 4560
     },
     {
       "name": "Concentration 2",
@@ -1614,23 +1614,23 @@
     {
       "name": "Environmental and Ecological Systems ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARCH",
-      "course_id": "2360"
+      "course_id": 2360
     },
     {
       "name": "Professional Practice 2 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "4550"
+      "course_id": 4550
     },
     {
       "name": "Building Systems and Environment ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARCH",
-      "course_id": "4740"
+      "course_id": 4740
     },
     {
       "name": "Concentration 3",
@@ -1665,16 +1665,16 @@
     {
       "name": "Structures 2 ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ARCH",
-      "course_id": "4330"
+      "course_id": 4330
     },
     {
       "name": "Construction Industry Seminar 1 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "4510"
+      "course_id": 4510
     },
     {
       "name": "Elective",
@@ -1691,9 +1691,9 @@
     {
       "name": "Construction Industry Seminar 2 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARCH",
-      "course_id": "4520"
+      "course_id": 4520
     },
     {
       "name": "ARCH 4530 - Building Sciences Capstone",
@@ -1706,37 +1706,37 @@
     {
       "name": "Management in the Digital Age ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Data Structures ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "HASS Science, Technology and Society Option",
@@ -1747,44 +1747,44 @@
     {
       "name": "Management Professional Development 1 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "MGMT",
-      "course_id": "1240"
+      "course_id": 1240
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Statistical Methods ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Principles of Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Financial Accounting in the Digital Age ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2300"
+      "course_id": 2300
     },
     {
       "name": "Marketing Principles ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2430"
+      "course_id": 2430
     },
     {
       "name": "Science Core Elective",
@@ -1795,9 +1795,9 @@
     {
       "name": "Managerial Finance ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2320"
+      "course_id": 2320
     },
     {
       "name": "HASS Core Elective",
@@ -1808,9 +1808,9 @@
     {
       "name": "Operations Management ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4110"
+      "course_id": 4110
     },
     {
       "name": "HASS Ethics Option",
@@ -1823,21 +1823,21 @@
       "type": "course",
       "credits": -1,
       "major": "MGMT",
-      "course_id": "4170"
+      "course_id": 4170
     },
     {
       "name": "Introduction to Machine Learning Applications ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4190"
+      "course_id": 4190
     },
     {
       "name": "Strategy and Policy ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4870"
+      "course_id": 4870
     },
     {
       "name": "Capstone",
@@ -1854,9 +1854,9 @@
     {
       "name": "Econometrics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECON",
-      "course_id": "4570"
+      "course_id": 4570
     },
     {
       "name": "Elective",
@@ -1869,107 +1869,107 @@
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Management in the Digital Age ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Data Management and Analytics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2510"
+      "course_id": 2510
     },
     {
       "name": "Principles of Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Mathematical Methods in Management and Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1520"
+      "course_id": 1520
     },
     {
       "name": "Business Law and Ethics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "1260"
+      "course_id": 1260
     },
     {
       "name": "Management Professional Development 1 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "MGMT",
-      "course_id": "1240"
+      "course_id": 1240
     },
     {
       "name": "Statistical Methods ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Financial Accounting in the Digital Age ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2300"
+      "course_id": 2300
     },
     {
       "name": "Management Professional Development 2 ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "MGMT",
-      "course_id": "1250"
+      "course_id": 1250
     },
     {
       "name": "Marketing Principles ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2430"
+      "course_id": 2430
     },
     {
       "name": "Operations Management ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4110"
+      "course_id": 4110
     },
     {
       "name": "Managerial Finance ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2320"
+      "course_id": 2320
     },
     {
       "name": "Science Core Elective",
@@ -1992,228 +1992,228 @@
     {
       "name": "Strategy and Policy ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4870"
+      "course_id": 4870
     },
     {
       "name": "Invention, Innovation, and Entrepreneurship ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4510"
+      "course_id": 4510
     },
     {
       "name": "Introduction to Technological Entrepreneurship ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4520"
+      "course_id": 4520
     },
     {
       "name": "Starting Up a New Venture ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4530"
+      "course_id": 4530
     },
     {
       "name": "Investments I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4320"
+      "course_id": 4320
     },
     {
       "name": "Student Managed Investment Fund ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4420"
+      "course_id": 4420
     },
     {
       "name": "Entrepreneurial Finance ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4540"
+      "course_id": 4540
     },
     {
       "name": "Topics in Management ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "IT Project Management ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4150"
+      "course_id": 4150
     },
     {
       "name": "Data Resource Management ",
       "type": "course",
       "credits": -1,
       "major": "MGMT",
-      "course_id": "4170"
+      "course_id": 4170
     },
     {
       "name": "Systems Analysis and Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4240"
+      "course_id": 4240
     },
     {
       "name": "Marketing Analytics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4180"
+      "course_id": 4180
     },
     {
       "name": "Internet Marketing ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4450"
+      "course_id": 4450
     },
     {
       "name": "Marketing Research ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4470"
+      "course_id": 4470
     },
     {
       "name": "Advertising Strategy and Promotions ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4490"
+      "course_id": 4490
     },
     {
       "name": "Supply Chain Analytics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4175"
+      "course_id": 4175
     },
     {
       "name": "Design and Analysis of Supply Chains ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ISYE",
-      "course_id": "4210"
+      "course_id": 4210
     }
   ],
   "Chemical Engineering": [
     {
       "name": "Introduction to Chemical Engineering ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "CHME",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Chemistry I with Advanced Lab ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Fundamentals of Chemical Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHME",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Cell and Molecular Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Engineering Communications ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1400"
+      "course_id": 1400
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Material, Energy, and Entropy Balances ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHME",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Professional Development: Group Dynamics ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Energy, Entropy, and Equilibrium ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHME",
-      "course_id": "2020"
+      "course_id": 2020
     },
     {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Free Elective I",
@@ -2224,16 +2224,16 @@
     {
       "name": "Introduction to Computational Chemical Engineering ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHME",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "Professional Development  2 \u2013Technical Issues and Solutions ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "STSO",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "CHME 4XXX Chemical Engineering Elective",
@@ -2250,16 +2250,16 @@
     {
       "name": "Chemical Engineering Separations ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHME",
-      "course_id": "4040"
+      "course_id": 4040
     },
     {
       "name": "Modern Techniques in Chemistry ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "4530"
+      "course_id": 4530
     },
     {
       "name": "Engineering Elective",
@@ -2270,23 +2270,23 @@
     {
       "name": "Chemical Process Dynamics and Control ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHME",
-      "course_id": "4030"
+      "course_id": 4030
     },
     {
       "name": "Chemical Process Design: Fundamentals ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHME",
-      "course_id": "4050"
+      "course_id": 4050
     },
     {
       "name": "Microscopic Physical Chemistry ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4420"
+      "course_id": 4420
     },
     {
       "name": "Free Elective II",
@@ -2303,60 +2303,60 @@
     {
       "name": "Chemical Process Design: Applications ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHME",
-      "course_id": "4060"
+      "course_id": 4060
     },
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     }
   ],
   "Chemistry": [
     {
       "name": "Chemistry I with Advanced Lab ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "HASS  Core Elective",
@@ -2367,51 +2367,51 @@
     {
       "name": "Equilibrium Chemistry and Quantitative Analysis ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "2110"
+      "course_id": 2110
     },
     {
       "name": "Experimental Chemistry I: Analytical Techniques ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "CHEM",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Introduction to Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Experimental Chemistry II: Synthesis and Characterization ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "2290"
+      "course_id": 2290
     },
     {
       "name": "Macroscopic Physical Chemistry ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4410"
+      "course_id": 4410
     },
     {
       "name": "Molecular Biochemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "4760"
+      "course_id": 4760
     },
     {
       "name": "Elective",
@@ -2422,9 +2422,9 @@
     {
       "name": "Microscopic Physical Chemistry ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4420"
+      "course_id": 4420
     },
     {
       "name": "HASS Core Elective",
@@ -2435,16 +2435,16 @@
     {
       "name": "Instrumental Methods of Analysis ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4110"
+      "course_id": 4110
     },
     {
       "name": "Professional Development Seminar ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "CHEM",
-      "course_id": "4900"
+      "course_id": 4900
     },
     {
       "name": "Electives",
@@ -2455,109 +2455,109 @@
     {
       "name": "Experimental Chemistry IV: Physical and Instrumental Methods ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4120"
+      "course_id": 4120
     },
     {
       "name": "Introduction to Polymer Chemistry ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4620"
+      "course_id": 4620
     }
   ],
   "Chemistry - Chemical Biology Track": [
     {
       "name": "Chemistry I with Advanced Lab ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Equilibrium Chemistry and Quantitative Analysis ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "2110"
+      "course_id": 2110
     },
     {
       "name": "Experimental Chemistry I: Analytical Techniques ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "CHEM",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Introduction to Cell and Molecular Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Experimental Chemistry II: Synthesis and Characterization ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "2290"
+      "course_id": 2290
     },
     {
       "name": "Macroscopic Physical Chemistry ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4410"
+      "course_id": 4410
     },
     {
       "name": "Molecular Biochemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "4760"
+      "course_id": 4760
     },
     {
       "name": "Elective",
@@ -2568,23 +2568,23 @@
     {
       "name": "Genetics and Evolution ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "2500"
+      "course_id": 2500
     },
     {
       "name": "Microscopic Physical Chemistry ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4420"
+      "course_id": 4420
     },
     {
       "name": "Experimental Chemistry III Abridged: Physical Methods ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "CHEM",
-      "course_id": "4030"
+      "course_id": 4030
     },
     {
       "name": "HASS Core Elective",
@@ -2601,16 +2601,16 @@
     {
       "name": "Instrumental Methods of Analysis ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4110"
+      "course_id": 4110
     },
     {
       "name": "Professional Development Seminar ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "CHEM",
-      "course_id": "4900"
+      "course_id": 4900
     },
     {
       "name": "Electives Credit hours 3",
@@ -2621,88 +2621,88 @@
     {
       "name": "Experimental Chemistry IV: Physical and Instrumental Methods ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4120"
+      "course_id": 4120
     },
     {
       "name": "Molecular Biochemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "4770"
+      "course_id": 4770
     }
   ],
   "Chemistry - Industrial Chemistry Track": [
     {
       "name": "Chemistry I with Advanced Lab ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Equilibrium Chemistry and Quantitative Analysis ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "2110"
+      "course_id": 2110
     },
     {
       "name": "Experimental Chemistry I: Analytical Techniques ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "CHEM",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Material, Energy, and Entropy Balances ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHME",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "This course may be deferred until Spring and replaced by a HASS core elective.",
@@ -2713,16 +2713,16 @@
     {
       "name": "Experimental Chemistry II: Synthesis and Characterization ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "2290"
+      "course_id": 2290
     },
     {
       "name": "Industrial Chemistry ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4200"
+      "course_id": 4200
     },
     {
       "name": "Elective Credit Hours 4",
@@ -2733,16 +2733,16 @@
     {
       "name": "Introduction to Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Macroscopic Physical Chemistry ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4410"
+      "course_id": 4410
     },
     {
       "name": "HASS Core Elective",
@@ -2765,16 +2765,16 @@
     {
       "name": "Experimental Chemistry III Abridged: Physical Methods ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "CHEM",
-      "course_id": "4030"
+      "course_id": 4030
     },
     {
       "name": "Microscopic Physical Chemistry ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4420"
+      "course_id": 4420
     },
     {
       "name": "Electives (either free elective or CHME elective)",
@@ -2785,23 +2785,23 @@
     {
       "name": "Instrumental Methods of Analysis ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4110"
+      "course_id": 4110
     },
     {
       "name": "Professional Development Seminar ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "CHEM",
-      "course_id": "4900"
+      "course_id": 4900
     },
     {
       "name": "Molecular Biochemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "4760"
+      "course_id": 4760
     },
     {
       "name": "Electives",
@@ -2812,158 +2812,158 @@
     {
       "name": "Experimental Chemistry IV: Physical and Instrumental Methods ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4120"
+      "course_id": 4120
     },
     {
       "name": "Introduction to Polymer Chemistry ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4620"
+      "course_id": 4620
     }
   ],
   "Civil Engineering": [
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Engineering Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Civil and Environmental Engineering ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "CIVL",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Strength of Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2530"
+      "course_id": 2530
     },
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Introduction to Water Resources Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CIVL",
-      "course_id": "2060"
+      "course_id": 2060
     },
     {
       "name": "Introduction to Geotechnical Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CIVL",
-      "course_id": "2630"
+      "course_id": 2630
     },
     {
       "name": "Introduction to Structural Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CIVL",
-      "course_id": "2670"
+      "course_id": 2670
     },
     {
       "name": "Introduction to Engineering Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "Engineering Economics ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "4760"
+      "course_id": 4760
     },
     {
       "name": "Applied Hydrology and Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "4370"
+      "course_id": 4370
     },
     {
       "name": "Beginning Programming in Civil and Environmental Engineering ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "CIVL",
-      "course_id": "1300"
+      "course_id": 1300
     },
     {
       "name": "Engineering Dynamics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2090"
+      "course_id": 2090
     },
     {
       "name": "Professional Development  2 \u2013Technical Issues and Solutions ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "STSO",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "CE Design Elective",
@@ -3004,121 +3004,121 @@
     {
       "name": "Steel Design ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CIVL",
-      "course_id": "4070"
+      "course_id": 4070
     },
     {
       "name": "Concrete Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CIVL",
-      "course_id": "4080"
+      "course_id": 4080
     },
     {
       "name": "Solid and Hazardous Waste Engineering ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENVE",
-      "course_id": "4200"
+      "course_id": 4200
     },
     {
       "name": "Introduction to Air Quality ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENVE",
-      "course_id": "4330"
+      "course_id": 4330
     },
     {
       "name": "Physicochemical Processes in Environmental Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "4340"
+      "course_id": 4340
     },
     {
       "name": "CIVL 4010  Foundation Engineering",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "none",
       "course_id": -1
     },
     {
       "name": "Geotechnical Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CIVL",
-      "course_id": "4150"
+      "course_id": 4150
     },
     {
       "name": "Mass Transit Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CIVL",
-      "course_id": "4620"
+      "course_id": 4620
     },
     {
       "name": "Traffic Engineering ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CIVL",
-      "course_id": "4660"
+      "course_id": 4660
     },
     {
       "name": "Geoenvironmental Engineering ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CIVL",
-      "course_id": "4140"
+      "course_id": 4140
     },
     {
       "name": "Highway Engineering ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CIVL",
-      "course_id": "4670"
+      "course_id": 4670
     },
     {
       "name": "Biological Processes in Environmental Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "4350"
+      "course_id": 4350
     },
     {
       "name": "Aqueous Geochemistry ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "4110"
+      "course_id": 4110
     },
     {
       "name": "Structural Geology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Earth Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2330"
+      "course_id": 2330
     },
     {
       "name": "Groundwater Hydrology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "4710"
+      "course_id": 4710
     },
     {
       "name": "Numerical Computing ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "4800"
+      "course_id": 4800
     }
   ],
   "Cognitive Science": [
@@ -3131,72 +3131,72 @@
     {
       "name": "Minds and Machines ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1140"
+      "course_id": 1140
     },
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Cognitive Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COGS",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Data Structures ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Foundations of Computer Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "2200"
+      "course_id": 2200
     },
     {
       "name": "Introduction to Linguistics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COGS",
-      "course_id": "2340"
+      "course_id": 2340
     },
     {
       "name": "Introduction to Logic ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHIL",
-      "course_id": "2140"
+      "course_id": 2140
     },
     {
       "name": "Sensation and Perception ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "4410"
+      "course_id": 4410
     },
     {
       "name": "Cognitive Science Elective Credit hours: 4 (See list of approved electives below)",
@@ -3207,58 +3207,58 @@
     {
       "name": "Research Methods and Statistics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "2310"
+      "course_id": 2310
     },
     {
       "name": "Cognitive Modeling ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COGS",
-      "course_id": "4210"
+      "course_id": 4210
     },
     {
       "name": "Introduction to Artificial Intelligence ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "4150"
+      "course_id": 4150
     },
     {
       "name": "Mathematical Methods in Psychological Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "4350"
+      "course_id": 4350
     },
     {
       "name": "Introduction to Cognitive Neuroscience ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COGS",
-      "course_id": "4330"
+      "course_id": 4330
     },
     {
       "name": "Cognitive Psychology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "4370"
+      "course_id": 4370
     },
     {
       "name": "Philosophy of Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHIL",
-      "course_id": "4130"
+      "course_id": 4130
     },
     {
       "name": "Metaphysics and Consciousness ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHIL",
-      "course_id": "4480"
+      "course_id": 4480
     },
     {
       "name": "Cognitive Science Elective",
@@ -3281,9 +3281,9 @@
     {
       "name": "Undergraduate Thesis ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "COGS",
-      "course_id": "4990"
+      "course_id": 4990
     }
   ],
   "Communication, Media, and Design": [
@@ -3296,30 +3296,30 @@
     {
       "name": "Strategic Writing ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "WRIT",
-      "course_id": "2110"
+      "course_id": 2110
     },
     {
       "name": "Media and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1560"
+      "course_id": 1560
     },
     {
       "name": "Language and Power ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1492"
+      "course_id": 1492
     },
     {
       "name": "Introduction to Graphic Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COMM",
-      "course_id": "2660"
+      "course_id": 2660
     },
     {
       "name": "Science Core Elective",
@@ -3330,9 +3330,9 @@
     {
       "name": "Pro-Seminar in Communication, Media, and Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COMM",
-      "course_id": "4930"
+      "course_id": 4930
     },
     {
       "name": "HASS Core Elective",
@@ -3357,107 +3357,107 @@
     {
       "name": "Introduction to Electrical, Computer, and Systems Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Computer Components and Operations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "2610"
+      "course_id": 2610
     },
     {
       "name": "Data Structures ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Engineering Communications ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1400"
+      "course_id": 1400
     },
     {
       "name": "Embedded Control ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2350"
+      "course_id": 2350
     },
     {
       "name": "Foundations of Computer Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "2200"
+      "course_id": 2200
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Electric Circuits ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Free Elective",
@@ -3468,16 +3468,16 @@
     {
       "name": "Introduction to Engineering Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "Professional Development  2 \u2013Technical Issues and Solutions ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "STSO",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "HASS Core Elective",
@@ -3488,30 +3488,30 @@
     {
       "name": "Introduction to Electronics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "Signals and Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ECSE",
-      "course_id": "2410"
+      "course_id": 2410
     },
     {
       "name": "Engineering Probability ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ECSE",
-      "course_id": "2500"
+      "course_id": 2500
     },
     {
       "name": "ECSE Enrichment Seminar ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ECSE",
-      "course_id": "2900"
+      "course_id": 2900
     },
     {
       "name": "Computer Engineering Elective",
@@ -3536,44 +3536,44 @@
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Data Structures ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Mathematics Option I",
@@ -3584,9 +3584,9 @@
     {
       "name": "Foundations of Computer Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "2200"
+      "course_id": 2200
     },
     {
       "name": "Mathematics Option II",
@@ -3597,9 +3597,9 @@
     {
       "name": "Principles of Software ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Computer Science Option/Capstone or Free Elective",
@@ -3610,9 +3610,9 @@
     {
       "name": "Operating Systems ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "4210"
+      "course_id": 4210
     },
     {
       "name": "Science Option",
@@ -3635,9 +3635,9 @@
     {
       "name": "Programming Languages ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "4430"
+      "course_id": 4430
     },
     {
       "name": "CS Option/Capstone Credit Hours 4",
@@ -3662,16 +3662,16 @@
     {
       "name": "Design and Innovation Studio I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1610"
+      "course_id": 1610
     },
     {
       "name": "Science, Technology, and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "\u200bScience Core Elective",
@@ -3682,23 +3682,23 @@
     {
       "name": "Design and Innovation Studio II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "2610"
+      "course_id": 2610
     },
     {
       "name": "Design, Culture, and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "2210"
+      "course_id": 2210
     },
     {
       "name": "Design and Innovation Studio III ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "2020"
+      "course_id": 2020
     },
     {
       "name": "Design Elective",
@@ -3715,9 +3715,9 @@
     {
       "name": "Design and Innovation Studio A ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "4600"
+      "course_id": 4600
     },
     {
       "name": "Complementary Area of Study",
@@ -3728,16 +3728,16 @@
     {
       "name": "Design and Innovation Studio B ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "4605"
+      "course_id": 4605
     },
     {
       "name": "Design and Innovation  Studio C ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "4610"
+      "course_id": 4610
     },
     {
       "name": "Science Core Elective",
@@ -3768,37 +3768,37 @@
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Design and Innovation Studio I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1610"
+      "course_id": 1610
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Science, Technology, and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "",
@@ -3810,65 +3810,65 @@
     {
       "name": "Introduction to Engineering Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Processes ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1300"
+      "course_id": 1300
     },
     {
       "name": "Design and Innovation Studio II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "2610"
+      "course_id": 2610
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Design, Culture, and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "2210"
+      "course_id": 2210
     },
     {
       "name": "Design and Innovation Studio III ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "2020"
+      "course_id": 2020
     },
     {
       "name": "Strength of Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2530"
+      "course_id": 2530
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Design Elective",
@@ -3879,44 +3879,44 @@
     {
       "name": "Thermodynamics ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "2710"
+      "course_id": 2710
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Engineering Dynamics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2090"
+      "course_id": 2090
     },
     {
       "name": "Fluid Mechanics ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "2720"
+      "course_id": 2720
     },
     {
       "name": "Elements of Mechanical Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MANE",
-      "course_id": "4030"
+      "course_id": 4030
     },
     {
       "name": "PDI Studio Advanced Option",
@@ -3927,23 +3927,23 @@
     {
       "name": "Electronic Instrumentation ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2300"
+      "course_id": 2300
     },
     {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Heat Transfer ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "4730"
+      "course_id": 4730
     },
     {
       "name": "MANE Technical Elective",
@@ -3954,16 +3954,16 @@
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     },
     {
       "name": "Modeling and Control of Dynamic Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "4500"
+      "course_id": 4500
     },
     {
       "name": "STS Advanced Option",
@@ -3980,9 +3980,9 @@
     {
       "name": "Materials Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1600"
+      "course_id": 1600
     },
     {
       "name": "MANE 4260 - Multidisciplinary Capstone Design",
@@ -3995,30 +3995,30 @@
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Principles of Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Statistics Option",
@@ -4035,9 +4035,9 @@
     {
       "name": "Econometrics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECON",
-      "course_id": "4570"
+      "course_id": 4570
     },
     {
       "name": "HASS Core Elective",
@@ -4048,7 +4048,7 @@
     {
       "name": "Culminating Experience",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "none",
       "course_id": -1
     },
@@ -4069,23 +4069,23 @@
     {
       "name": "Introduction to Electrical, Computer, and Systems Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Science Elective",
@@ -4096,79 +4096,79 @@
     {
       "name": "Embedded Control ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2350"
+      "course_id": 2350
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Engineering Communications ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1400"
+      "course_id": 1400
     },
     {
       "name": "Computer Components and Operations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "2610"
+      "course_id": 2610
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Electric Circuits ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Engineering Probability ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ECSE",
-      "course_id": "2500"
+      "course_id": 2500
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Free Elective",
@@ -4179,23 +4179,23 @@
     {
       "name": "Electrical Energy Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ECSE",
-      "course_id": "2110"
+      "course_id": 2110
     },
     {
       "name": "Introduction to Engineering Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "Professional Development  2 \u2013Technical Issues and Solutions ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "STSO",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "Math/Science Elective",
@@ -4206,30 +4206,30 @@
     {
       "name": "Introduction to Electronics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "Fields and Waves I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Signals and Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ECSE",
-      "course_id": "2410"
+      "course_id": 2410
     },
     {
       "name": "ECSE Enrichment Seminar ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ECSE",
-      "course_id": "2900"
+      "course_id": 2900
     },
     {
       "name": "Laboratory Elective",
@@ -4246,9 +4246,9 @@
     {
       "name": "Microelectronics Technology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ECSE",
-      "course_id": "2210"
+      "course_id": 2210
     },
     {
       "name": "ECSE 4900 - Multidisciplinary Capstone Design",
@@ -4259,9 +4259,9 @@
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     },
     {
       "name": "Restricted Elective",
@@ -4292,9 +4292,9 @@
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "History/Theory Elective",
@@ -4305,23 +4305,23 @@
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Mathematical Methods in Management and Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1520"
+      "course_id": 1520
     },
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Studio Elective",
@@ -4356,100 +4356,100 @@
     {
       "name": "Advanced Digital 3D Projects ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4020"
+      "course_id": 4020
     },
     {
       "name": "3D Visual Effects ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4060"
+      "course_id": 4060
     },
     {
       "name": "3D Animation ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4070"
+      "course_id": 4070
     },
     {
       "name": "Art and Code and Interactivity ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4090"
+      "course_id": 4090
     },
     {
       "name": "Animation Production ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4460"
+      "course_id": 4460
     },
     {
       "name": "Sculpture I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2210"
+      "course_id": 2210
     },
     {
       "name": "Fundamentals of 2D Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2220"
+      "course_id": 2220
     },
     {
       "name": "3D Digital Modeling ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2230"
+      "course_id": 2230
     },
     {
       "name": "Advanced Drawing ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4200"
+      "course_id": 4200
     },
     {
       "name": "Sculpture II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4210"
+      "course_id": 4210
     },
     {
       "name": "Painting ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4220"
+      "course_id": 4220
     },
     {
       "name": "Advanced Digital Imaging ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4860"
+      "course_id": 4860
     },
     {
       "name": "Experimental Game Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "4510"
+      "course_id": 4510
     },
     {
       "name": "Fundamentals of Music and Sound ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "1380"
+      "course_id": 1380
     },
     {
       "name": "and",
@@ -4461,86 +4461,86 @@
     {
       "name": "Music and Technology I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2020"
+      "course_id": 2020
     },
     {
       "name": "Interactive Arts Programming ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4010"
+      "course_id": 4010
     },
     {
       "name": "Music and Sound II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4380"
+      "course_id": 4380
     },
     {
       "name": "Composition Seminar ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4390"
+      "course_id": 4390
     },
     {
       "name": "Deep Listening ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2180"
+      "course_id": 2180
     },
     {
       "name": "Topics in Deep Listening ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4180"
+      "course_id": 4180
     },
     {
       "name": "Game Sound and Musical Play ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "2560"
+      "course_id": 2560
     },
     {
       "name": "Music, Sound, & the Environment ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2570"
+      "course_id": 2570
     },
     {
       "name": "Ensemble Nonlinear ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ARTS",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Designing Musical Games ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2610"
+      "course_id": 2610
     },
     {
       "name": "Interdisciplinary Research Seminar ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4880"
+      "course_id": 4880
     },
     {
       "name": "Music, Sound & Screen Media ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "4440"
+      "course_id": 4440
     },
     {
       "name": "(ARTS 1030 is required for this concentration.)",
@@ -4551,79 +4551,79 @@
     {
       "name": "Intermediate Video ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Intermediate Digital Imaging ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2040"
+      "course_id": 2040
     },
     {
       "name": "2D Experimental Animation ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2060"
+      "course_id": 2060
     },
     {
       "name": "Rethinking Documentary: Video Production ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4040"
+      "course_id": 4040
     },
     {
       "name": "Art, Community, and Technology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4250"
+      "course_id": 4250
     },
     {
       "name": "Inflatable Sculpture ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4230"
+      "course_id": 4230
     },
     {
       "name": "Eco Chic: Living Art ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4240"
+      "course_id": 4240
     },
     {
       "name": "Hactivism ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4560"
+      "course_id": 4560
     },
     {
       "name": "Topics in the Arts ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ARTS",
-      "course_id": "4960"
+      "course_id": 4960
     },
     {
       "name": "Creative Seminar I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4840"
+      "course_id": 4840
     },
     {
       "name": "Creative Seminar II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4850"
+      "course_id": 4850
     },
     {
       "name": "24 credits from any ARTS courses of which 12 credits must be taken at the 4000-level.",
@@ -4642,67 +4642,67 @@
     {
       "name": "The Multimedia Century ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2540"
+      "course_id": 2540
     },
     {
       "name": "Digital Imaging ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Digital Filmmaking ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "1030"
+      "course_id": 1030
     },
     {
       "name": "Basic Drawing ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Music and Sound I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2380"
+      "course_id": 2380
     }
   ],
   "Engineering Core Curriculum": [
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Engineering Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Science Elective",
@@ -4713,37 +4713,37 @@
     {
       "name": "Engineering Processes ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1300"
+      "course_id": 1300
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Engineering Elective",
@@ -4760,60 +4760,60 @@
     {
       "name": "Introduction to Engineering Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2050"
+      "course_id": 2050
     }
   ],
   "Environmental Engineering": [
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Engineering Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Civil and Environmental Engineering ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "CIVL",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Biological Science Elective",
@@ -4824,44 +4824,44 @@
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Introduction to Environmental Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "2110"
+      "course_id": 2110
     },
     {
       "name": "Introduction to Water Resources Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CIVL",
-      "course_id": "2060"
+      "course_id": 2060
     },
     {
       "name": "Beginning Programming in Civil and Environmental Engineering ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "CIVL",
-      "course_id": "1300"
+      "course_id": 1300
     },
     {
       "name": "Free Elective I",
@@ -4872,23 +4872,23 @@
     {
       "name": "Introduction to Engineering Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     },
     {
       "name": "Applied Hydrology and Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "4370"
+      "course_id": 4370
     },
     {
       "name": "Technical Elective",
@@ -4905,16 +4905,16 @@
     {
       "name": "Environmental Chemodynamics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "4320"
+      "course_id": 4320
     },
     {
       "name": "Physicochemical Processes in Environmental Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "4340"
+      "course_id": 4340
     },
     {
       "name": "Technical Elective Credits Hours: 3",
@@ -4931,16 +4931,16 @@
     {
       "name": "Introduction to Air Quality ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENVE",
-      "course_id": "4330"
+      "course_id": 4330
     },
     {
       "name": "Biological Processes in Environmental Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "4350"
+      "course_id": 4350
     },
     {
       "name": "HASS Core Elective",
@@ -4963,95 +4963,95 @@
     {
       "name": "Environmental Process Design ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENVE",
-      "course_id": "4180"
+      "course_id": 4180
     }
   ],
   "Environmental Science": [
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Geology II: Earth\u2019s Surface ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ERTH",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Geology ll: Earth\u2019s Surface Lab ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ERTH",
-      "course_id": "1250"
+      "course_id": 1250
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Introduction to Geobiology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2160"
+      "course_id": 2160
     },
     {
       "name": "Field Methods ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2210"
+      "course_id": 2210
     },
     {
       "name": "Environmental Seminar ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "IENV",
-      "course_id": "1910"
+      "course_id": 1910
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Environmental Data Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2200"
+      "course_id": 2200
     },
     {
       "name": "Environmental Measurements ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "4190"
+      "course_id": 4190
     },
     {
       "name": "HASS Core Elective",
@@ -5062,16 +5062,16 @@
     {
       "name": "Earth\u2019s Climate: Past, Present, and Future ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "4500"
+      "course_id": 4500
     },
     {
       "name": "Global Environmental Change ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4880"
+      "course_id": 4880
     },
     {
       "name": "HASS Core Electives",
@@ -5082,7 +5082,7 @@
     {
       "name": "Culminating Experience",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "none",
       "course_id": -1
     },
@@ -5101,121 +5101,135 @@
     {
       "name": "Principles of Ecology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4850"
+      "course_id": 4850
     },
     {
       "name": "Introduction to Geobiology  ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2960"
+      "course_id": 2960
     },
     {
       "name": "Introduction to Geophysics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Structural Geology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Introduction to Geochemistry ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2140"
+      "course_id": 2140
     },
     {
       "name": "Earth Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2330"
+      "course_id": 2330
     },
     {
       "name": "Oceanography ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2610"
+      "course_id": 2610
     },
     {
       "name": "The Global Carbon Cycle ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "4370"
+      "course_id": 4370
     },
     {
       "name": "Groundwater Hydrology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "4710"
+      "course_id": 4710
+    },
+    {
+      "name": "Freshwater Ecology ",
+      "type": "course",
+      "credits": 4,
+      "major": "BIOL",
+      "course_id": 4700
+    },
+    {
+      "name": "Biol 4xxx- selected in consultation with your adviser Credits / Units: 4",
+      "type": "course",
+      "credits": -1,
+      "major": "none",
+      "course_id": -1
     },
     {
       "name": "selected in consultation with the adviser",
       "type": "course",
       "credits": -1,
       "major": "CHEM",
-      "course_id": "4XXX"
+      "course_id": 4000
     },
     {
       "name": "Equilibrium Chemistry and Quantitative Analysis ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "2110"
+      "course_id": 2110
     },
     {
       "name": "Instrumental Methods of Analysis ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "CHEM",
-      "course_id": "4110"
+      "course_id": 4110
     },
     {
       "name": "Modern Techniques in Chemistry ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "4530"
+      "course_id": 4530
     },
     {
       "name": "Aqueous Geochemistry ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "4690"
+      "course_id": 4690
     },
     {
       "name": "Chemistry of the Environment ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "4810"
+      "course_id": 4810
     },
     {
       "name": "Isotope Geochemistry ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "4560"
+      "course_id": 4560
     },
     {
       "name": "One Mile of the Hudson River ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IENV",
-      "course_id": "4700"
+      "course_id": 4700
     },
     {
       "name": "",
@@ -5229,65 +5243,65 @@
     {
       "name": "Introduction to Game Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "2510"
+      "course_id": 2510
     },
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Game Programming ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "2540"
+      "course_id": 2540
     },
     {
       "name": "Data Structures ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Mathematical Methods in Management and Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1520"
+      "course_id": 1520
     },
     {
       "name": "Game Development I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "4520"
+      "course_id": 4520
     },
     {
       "name": "Game Development II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "4540"
+      "course_id": 4540
     },
     {
       "name": "Science Core Elective",
@@ -5298,23 +5312,23 @@
     {
       "name": "Experimental Game Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "4510"
+      "course_id": 4510
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "General Physics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1050"
+      "course_id": 1050
     },
     {
       "name": "GSAS Concentration Course\u200b",
@@ -5349,16 +5363,16 @@
     {
       "name": "Introduction to Cognitive Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COGS",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Minds and Machines ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1140"
+      "course_id": 1140
     },
     {
       "name": "Critical Thinking \nPHIL 1110 ",
@@ -5370,142 +5384,142 @@
     {
       "name": "Cognitive Psychology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "4370"
+      "course_id": 4370
     },
     {
       "name": "Game AI ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COGS",
-      "course_id": "4420"
+      "course_id": 4420
     },
     {
       "name": "Foundations of Computer Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "2200"
+      "course_id": 2200
     },
     {
       "name": "Principles of Software ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Operating Systems ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "4210"
+      "course_id": 4210
     },
     {
       "name": "Programming Languages ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "4430"
+      "course_id": 4430
     },
     {
       "name": "Game Architecture ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "4550"
+      "course_id": 4550
     },
     {
       "name": "Advanced Computer Graphics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "4530"
+      "course_id": 4530
     },
     {
       "name": "Basic Drawing ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "3D Digital Modeling ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2230"
+      "course_id": 2230
     },
     {
       "name": "3D Animation ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4070"
+      "course_id": 4070
     },
     {
       "name": "Principles of Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Management in the Digital Age ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Business Law and Ethics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "1260"
+      "course_id": 1260
     },
     {
       "name": "Financial Accounting in the Digital Age ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2300"
+      "course_id": 2300
     },
     {
       "name": "Managerial Finance ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2320"
+      "course_id": 2320
     },
     {
       "name": "Marketing Principles ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2430"
+      "course_id": 2430
     },
     {
       "name": "Introduction to Data Management and Analytics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "2510"
+      "course_id": 2510
     },
     {
       "name": "Strategy and Policy ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MGMT",
-      "course_id": "4870"
+      "course_id": 4870
     },
     {
       "name": "Game Narrative Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "4260"
+      "course_id": 4260
     },
     {
       "name": "ANY 4000-level COMM course",
@@ -5516,9 +5530,9 @@
     {
       "name": "Fundamentals of Music and Sound ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "1380"
+      "course_id": 1380
     },
     {
       "name": "OR\n\n4 additional credits of Music coursework from the concentration if student is approved to skip ARTS 1380",
@@ -5529,37 +5543,37 @@
     {
       "name": "Music and Technology I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2020"
+      "course_id": 2020
     },
     {
       "name": "Music and Sound I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2380"
+      "course_id": 2380
     },
     {
       "name": "Music and Sound II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4380"
+      "course_id": 4380
     },
     {
       "name": "Designing Musical Games ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "2610"
+      "course_id": 2610
     },
     {
       "name": "Introduction to Cognitive Neuroscience ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "4330"
+      "course_id": 4330
     },
     {
       "name": "Computational Linguistics",
@@ -5571,228 +5585,228 @@
     {
       "name": "Sensation and Perception ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "4410"
+      "course_id": 4410
     },
     {
       "name": "Intelligent Virtual Agents ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COGS",
-      "course_id": "4640"
+      "course_id": 4640
     },
     {
       "name": "Digital Imaging ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Intermediate Digital Imaging ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2040"
+      "course_id": 2040
     },
     {
       "name": "2D Experimental Animation ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2060"
+      "course_id": 2060
     },
     {
       "name": "3D Technical Direction ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4280"
+      "course_id": 4280
     },
     {
       "name": "Game Animation ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "4230"
+      "course_id": 4230
     },
     {
       "name": "Animation Production ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4460"
+      "course_id": 4460
     },
     {
       "name": "Advanced Digital Imaging ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4860"
+      "course_id": 4860
     },
     {
       "name": "3D Visual Effects ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4060"
+      "course_id": 4060
     },
     {
       "name": "Visual Poetics and Narrative ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COMM",
-      "course_id": "4320"
+      "course_id": 4320
     },
     {
       "name": "Interactive Narrative ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "COMM",
-      "course_id": "4780"
+      "course_id": 4780
     },
     {
       "name": "Introduction to Literature ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "LITR",
-      "course_id": "2110"
+      "course_id": 2110
     },
     {
       "name": "Creative Nonfiction Writing ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "WRIT",
-      "course_id": "2320"
+      "course_id": 2320
     },
     {
       "name": "Deep Listening ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2180"
+      "course_id": 2180
     },
     {
       "name": "Topics in Deep Listening ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4180"
+      "course_id": 4180
     },
     {
       "name": "Composition Seminar ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4390"
+      "course_id": 4390
     },
     {
       "name": "Interdisciplinary Research Seminar ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4880"
+      "course_id": 4880
     },
     {
       "name": "The Multimedia Century ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2540"
+      "course_id": 2540
     },
     {
       "name": "Music, Sound, & the Environment ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2570"
+      "course_id": 2570
     },
     {
       "name": "Music, Sound & Screen Media ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4440"
+      "course_id": 4440
     },
     {
       "name": "Popular Music and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2550"
+      "course_id": 2550
     },
     {
       "name": "Game Sound and Musical Play ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "2560"
+      "course_id": 2560
     }
   ],
   "Geology": [
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Geology II: Earth\u2019s Surface ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ERTH",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Geology ll: Earth\u2019s Surface Lab ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ERTH",
-      "course_id": "1250"
+      "course_id": 1250
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Earth Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2330"
+      "course_id": 2330
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "HASS Core Elective",
@@ -5803,23 +5817,23 @@
     {
       "name": "Introduction to Geophysics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Introduction to Geochemistry ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2140"
+      "course_id": 2140
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "HASS Elective",
@@ -5836,9 +5850,9 @@
     {
       "name": "Environmental Measurements ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "4190"
+      "course_id": 4190
     },
     {
       "name": "Biology Requirement",
@@ -5867,14 +5881,14 @@
     {
       "name": "Structural Geology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Culminating Experience",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "none",
       "course_id": -1
     },
@@ -5887,60 +5901,60 @@
     {
       "name": "Out-of-Classroom Experience in Earth Sciences ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ERTH",
-      "course_id": "4970"
+      "course_id": 4970
     },
     {
       "name": "Undergraduate Research Thesis ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ERTH",
-      "course_id": "4980"
+      "course_id": 4980
     }
   ],
   "Hydrogeology": [
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Geology II: Earth\u2019s Surface ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ERTH",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Geology ll: Earth\u2019s Surface Lab ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ERTH",
-      "course_id": "1250"
+      "course_id": 1250
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "CSCI XXXX  Computer Science Elective",
@@ -5951,37 +5965,37 @@
     {
       "name": "Structural Geology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Geophysics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Introduction to Geochemistry ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "2140"
+      "course_id": 2140
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "HASS Core Elective",
@@ -5992,9 +6006,9 @@
     {
       "name": "Environmental Measurements ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "4190"
+      "course_id": 4190
     },
     {
       "name": "Elective",
@@ -6011,9 +6025,9 @@
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Free Elective",
@@ -6024,21 +6038,21 @@
     {
       "name": "Introduction to Environmental Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENVE",
-      "course_id": "2110"
+      "course_id": 2110
     },
     {
       "name": "Groundwater Hydrology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ERTH",
-      "course_id": "4710"
+      "course_id": 4710
     },
     {
       "name": "Culminating Experience",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "none",
       "course_id": -1
     },
@@ -6051,16 +6065,16 @@
     {
       "name": "Out-of-Classroom Experience in Earth Sciences ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ERTH",
-      "course_id": "4970"
+      "course_id": 4970
     },
     {
       "name": "Undergraduate Research Thesis ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "ERTH",
-      "course_id": "4980"
+      "course_id": 4980
     }
   ],
   "Industrial and Management Engineering": [
@@ -6073,30 +6087,30 @@
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Engineering Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Processes ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1300"
+      "course_id": 1300
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "HASS Core Elective II",
@@ -6107,30 +6121,30 @@
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "HASS Core Elective III",
@@ -6141,51 +6155,51 @@
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Production and Operations Management ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ISYE",
-      "course_id": "2210"
+      "course_id": 2210
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Statistical Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ISYE",
-      "course_id": "4140"
+      "course_id": 4140
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Professional Development  2 \u2013Technical Issues and Solutions ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "STSO",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "HASS Core Elective IV Credits Hours: 4",
@@ -6196,23 +6210,23 @@
     {
       "name": "Engineering Economics ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "4760"
+      "course_id": 4760
     },
     {
       "name": "Introduction to Engineering Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "Operations Research Methods ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ISYE",
-      "course_id": "4600"
+      "course_id": 4600
     },
     {
       "name": "Technical Elective I",
@@ -6241,9 +6255,9 @@
     {
       "name": "Discrete Event Simulation Modeling and Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ISYE",
-      "course_id": "4290"
+      "course_id": 4290
     },
     {
       "name": "Technical Elective III",
@@ -6266,9 +6280,9 @@
     {
       "name": "Design and Analysis of Supply Chains ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ISYE",
-      "course_id": "4210"
+      "course_id": 4210
     },
     {
       "name": "Technical Elective IV Credit Hours:3",
@@ -6291,9 +6305,9 @@
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     },
     {
       "name": "ISYE 4270 - Multidisciplinary Capstone Design",
@@ -6306,16 +6320,16 @@
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Math Elective",
@@ -6332,16 +6346,16 @@
     {
       "name": "Data Structures ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "IT and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ITWS",
-      "course_id": "1220"
+      "course_id": 1220
     },
     {
       "name": "Technical Track Course #1 (see chart in previous section)",
@@ -6352,9 +6366,9 @@
     {
       "name": "Web Systems Development ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ITWS",
-      "course_id": "2110"
+      "course_id": 2110
     },
     {
       "name": "Technical Track Course #2 (see chart in previous section)",
@@ -6365,16 +6379,16 @@
     {
       "name": "Introduction to Human Computer Interaction ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ITWS",
-      "course_id": "2210"
+      "course_id": 2210
     },
     {
       "name": "Web Science Systems Development ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ITWS",
-      "course_id": "4500"
+      "course_id": 4500
     },
     {
       "name": "Life Science Elective:",
@@ -6391,30 +6405,30 @@
     {
       "name": "Managing IT Resources ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ITWS",
-      "course_id": "4310"
+      "course_id": 4310
     },
     {
       "name": "Database Systems ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "4380"
+      "course_id": 4380
     },
     {
       "name": "Database Applications and Systems (DBAS) ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ITWS",
-      "course_id": "4250"
+      "course_id": 4250
     },
     {
       "name": "Data Resource Management ",
       "type": "course",
       "credits": -1,
       "major": "MGMT",
-      "course_id": "4170"
+      "course_id": 4170
     },
     {
       "name": "ITWS 4100  - Information Technology and Web Science Capstone",
@@ -6451,79 +6465,79 @@
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Engineering Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Materials Engineering ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "MTLE",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Materials Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1600"
+      "course_id": 1600
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Structure of Engineering Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MTLE",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Science Elective, Credit Hours 4",
@@ -6534,23 +6548,23 @@
     {
       "name": "Introduction to Engineering Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2050"
+      "course_id": 2050
     },
     {
       "name": "Thermal and Fluids Engineering I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2250"
+      "course_id": 2250
     },
     {
       "name": "Electrical and Optical Properties of Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MTLE",
-      "course_id": "4200"
+      "course_id": 4200
     },
     {
       "name": "Restricted Elective",
@@ -6561,16 +6575,16 @@
     {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Mechanical Properties of Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MTLE",
-      "course_id": "4250"
+      "course_id": 4250
     },
     {
       "name": "HASS Core Elective",
@@ -6587,23 +6601,23 @@
     {
       "name": "Thermodynamics of Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MTLE",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "Materials Selection ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4910"
+      "course_id": 4910
     },
     {
       "name": "Professional Development  2 \u2013Technical Issues and Solutions ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "STSO",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "Materials Elective I",
@@ -6620,23 +6634,23 @@
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     },
     {
       "name": "Kinetics in Materials Systems ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MTLE",
-      "course_id": "4150"
+      "course_id": 4150
     },
     {
       "name": "Computational Materials Design ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4500"
+      "course_id": 4500
     },
     {
       "name": "Materials Elective II",
@@ -6653,9 +6667,9 @@
     {
       "name": "Materials Synthesis and Processing ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MTLE",
-      "course_id": "4400"
+      "course_id": 4400
     },
     {
       "name": "MTLE 4920 - Multidisciplinary Capstone Design",
@@ -6666,158 +6680,158 @@
     {
       "name": "Biomechanics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BMED",
-      "course_id": "2540"
+      "course_id": 2540
     },
     {
       "name": "Electric Circuits ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ECSE",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Engineering Dynamics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2090"
+      "course_id": 2090
     },
     {
       "name": "Electronic Instrumentation ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2300"
+      "course_id": 2300
     },
     {
       "name": "Embedded Control ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2350"
+      "course_id": 2350
     },
     {
       "name": "Strength of Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2530"
+      "course_id": 2530
     },
     {
       "name": "Glass Science ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4030"
+      "course_id": 4030
     },
     {
       "name": "Introduction to Polymers ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4050"
+      "course_id": 4050
     },
     {
       "name": "Fundamentals of Metallurgical Alloy Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4430"
+      "course_id": 4430
     },
     {
       "name": "Thin Films ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4440"
+      "course_id": 4440
     },
     {
       "name": "Biology in Materials Science ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4470"
+      "course_id": 4470
     },
     {
       "name": "Materials under Extreme Conditions ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4520"
+      "course_id": 4520
     },
     {
       "name": "Applied Mathematical Methods in Materials ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4720"
+      "course_id": 4720
     },
     {
       "name": "Topics in Materials Engineering ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MTLE",
-      "course_id": "4960"
+      "course_id": 4960
     }
   ],
   "Mathematics": [
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Art and Science of Mathematics I ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "MATH",
-      "course_id": "1900"
+      "course_id": 1900
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Introduction to Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "MATH Option",
@@ -6866,93 +6880,93 @@
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Engineering Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Engineering Processes ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1300"
+      "course_id": 1300
     },
     {
       "name": "Materials Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1600"
+      "course_id": 1600
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Professional Development II ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "STSO",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "Strength of Materials ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2530"
+      "course_id": 2530
     },
     {
       "name": "Thermodynamics ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "2710"
+      "course_id": 2710
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "SoE-2\u2026.  Engineering Design Elective",
@@ -6963,58 +6977,58 @@
     {
       "name": "Electronic Instrumentation ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2300"
+      "course_id": 2300
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Engineering Dynamics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "2090"
+      "course_id": 2090
     },
     {
       "name": "Fluid Mechanics ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "2720"
+      "course_id": 2720
     },
     {
       "name": "Elements of Mechanical Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MANE",
-      "course_id": "4030"
+      "course_id": 4030
     },
     {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Modeling and Control of Dynamic Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "4500"
+      "course_id": 4500
     },
     {
       "name": "Heat Transfer ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "4730"
+      "course_id": 4730
     },
     {
       "name": "HASS Core Elective Credit hours:  4",
@@ -7037,9 +7051,9 @@
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     },
     {
       "name": "MANE 4260 - Multidisciplinary Capstone Design",
@@ -7070,51 +7084,51 @@
     {
       "name": "Music and Technology I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2020"
+      "course_id": 2020
     },
     {
       "name": "Music and Sound I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2380"
+      "course_id": 2380
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Music and Technology II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4160"
+      "course_id": 4160
     },
     {
       "name": "Music and Sound II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4380"
+      "course_id": 4380
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Mathematical Methods in Management and Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1520"
+      "course_id": 1520
     },
     {
       "name": "HASS Core Elective OR History and Culture Course",
@@ -7173,151 +7187,151 @@
     {
       "name": "Rensselaer Concert Choir ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ARTS",
-      "course_id": "2310"
+      "course_id": 2310
     },
     {
       "name": "Chamber Music Ensemble ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ARTS",
-      "course_id": "2350"
+      "course_id": 2350
     },
     {
       "name": "Ensemble Nonlinear ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ARTS",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Private Music Lessons ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ARTS",
-      "course_id": "2750"
+      "course_id": 2750
     },
     {
       "name": "The Multimedia Century ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2540"
+      "course_id": 2540
     },
     {
       "name": "Popular Music and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "2550"
+      "course_id": 2550
     },
     {
       "name": "Game Sound and Musical Play ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "GSAS",
-      "course_id": "2560"
+      "course_id": 2560
     },
     {
       "name": "Composition Seminar ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4390"
+      "course_id": 4390
     },
     {
       "name": "Interdisciplinary Research Seminar ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ARTS",
-      "course_id": "4880"
+      "course_id": 4880
     }
   ],
   "Nuclear Engineering Curriculum": [
     {
       "name": "Introduction to Engineering Analysis ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ENGR",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Engineering Graphics and CAD ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Nuclear Engineering ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "MANE",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Thermodynamics ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "2710"
+      "course_id": 2710
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Professional Development  2 \u2013Technical Issues and Solutions ",
       "type": "course",
-      "credits": "2",
+      "credits": 2,
       "major": "STSO",
-      "course_id": "4100"
+      "course_id": 4100
     },
     {
       "name": "",
@@ -7335,23 +7349,23 @@
     {
       "name": "Fundamentals of Nuclear Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MANE",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Fluid Mechanics ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "2720"
+      "course_id": 2720
     },
     {
       "name": "Nuclear Instrumentation and Measurement ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "4350"
+      "course_id": 4350
     },
     {
       "name": "SoE 2\u2026. Engineering Design Elective",
@@ -7362,37 +7376,37 @@
     {
       "name": "Modeling and Analysis of Uncertainty ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "ENGR",
-      "course_id": "2600"
+      "course_id": 2600
     },
     {
       "name": "Modeling and Control of Dynamic Systems ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "4500"
+      "course_id": 4500
     },
     {
       "name": "Professional Development: Leadership Competencies ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "ENGR",
-      "course_id": "4010"
+      "course_id": 4010
     },
     {
       "name": "Nuclear Power Systems Engineering ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MANE",
-      "course_id": "4400"
+      "course_id": 4400
     },
     {
       "name": "Radiological Engineering ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "MANE",
-      "course_id": "4470"
+      "course_id": 4470
     },
     {
       "name": "HASS Core Elective",
@@ -7423,100 +7437,100 @@
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Mathematical Methods in Management and Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1520"
+      "course_id": 1520
     },
     {
       "name": "Minds and Machines ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1140"
+      "course_id": 1140
     },
     {
       "name": "Introduction to Philosophy ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHIL",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Are Humans Rational? ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1235"
+      "course_id": 1235
     },
     {
       "name": "The Genome and You ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1150"
+      "course_id": 1150
     },
     {
       "name": "Science and Scientific Misconduct ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1160"
+      "course_id": 1160
     },
     {
       "name": "Great Ideas in Philosophy ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1165"
+      "course_id": 1165
     },
     {
       "name": "Philosophy, Technology, & the Human Future ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1130"
+      "course_id": 1130
     },
     {
       "name": "Introduction to Logic ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHIL",
-      "course_id": "2140"
+      "course_id": 2140
     },
     {
       "name": "Philosophy of Biology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHIL",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Philosophy of Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHIL",
-      "course_id": "4130"
+      "course_id": 4130
     },
     {
       "name": "Scientific Revolutions ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHIL",
-      "course_id": "4310"
+      "course_id": 4310
     },
     {
       "name": "Science Core Elective",
@@ -7533,30 +7547,30 @@
     {
       "name": "Ethics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHIL",
-      "course_id": "4240"
+      "course_id": 4240
     },
     {
       "name": "Environmental Philosophy ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHIL",
-      "course_id": "4300"
+      "course_id": 4300
     },
     {
       "name": "Bioethics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "4250"
+      "course_id": 4250
     },
     {
       "name": "Ethics of AI ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "or\n\nPHIL",
-      "course_id": "2960"
+      "course_id": 2960
     },
     {
       "name": "PHIL 4990 - Capstone Experience in Philosophy",
@@ -7581,100 +7595,100 @@
     {
       "name": "Introduction to Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Chemistry I with Advanced Lab ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Cell and Molecular Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "2120"
+      "course_id": 2120
     },
     {
       "name": "Chemistry II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Genetics and Evolution ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "2500"
+      "course_id": 2500
     },
     {
       "name": "Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Molecular Biology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4620"
+      "course_id": 4620
     },
     {
       "name": "Physics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Investigative Medicine I ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "BIOL",
-      "course_id": "4110"
+      "course_id": 4110
     },
     {
       "name": "Biostatistics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4200"
+      "course_id": 4200
     },
     {
       "name": "Human Physiology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4270"
+      "course_id": 4270
     },
     {
       "name": "Molecular Biochemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4760"
+      "course_id": 4760
     },
     {
       "name": "HASS Core Elective",
@@ -7685,28 +7699,28 @@
     {
       "name": "Investigative Medicine II ",
       "type": "course",
-      "credits": "1",
+      "credits": 1,
       "major": "BIOL",
-      "course_id": "4120"
+      "course_id": 4120
     },
     {
       "name": "Developmental Biology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "BIOL",
-      "course_id": "4250"
+      "course_id": 4250
     },
     {
       "name": "Biomedical Research ",
       "type": "course",
-      "credits": "6",
+      "credits": 6,
       "major": "BIOL",
-      "course_id": "4980"
+      "course_id": 4980
     },
     {
       "name": "Research",
       "type": "course",
-      "credits": "0",
+      "credits": 0,
       "major": "none",
       "course_id": -1
     }
@@ -7715,58 +7729,58 @@
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Biology ",
       "type": "course",
-      "credits": "3",
+      "credits": 3,
       "major": "BIOL",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Chemistry I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CHEM",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Introduction to Differential Equations ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2400"
+      "course_id": 2400
     },
     {
       "name": "Multivariable Calculus and Matrix Algebra ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "2010"
+      "course_id": 2010
     },
     {
       "name": "Quantum Physics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "2210"
+      "course_id": 2210
     },
     {
       "name": "Elective",
@@ -7777,16 +7791,16 @@
     {
       "name": "Experimental Physics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "2350"
+      "course_id": 2350
     },
     {
       "name": "Thermodynamics and Statistical Mechanics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PHYS",
-      "course_id": "4420"
+      "course_id": 4420
     },
     {
       "name": "Mathematics Elective",
@@ -7797,7 +7811,7 @@
     {
       "name": "Culminating Experience",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "none",
       "course_id": -1
     },
@@ -7816,23 +7830,23 @@
     {
       "name": "Observational Astronomy ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ASTR",
-      "course_id": "4120"
+      "course_id": 4120
     },
     {
       "name": "Astrophysics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ASTR",
-      "course_id": "4220"
+      "course_id": 4220
     },
     {
       "name": "Gravitation and Cosmology ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "ASTR",
-      "course_id": "4240"
+      "course_id": 4240
     }
   ],
   "Program for Graduates of Naval Nuclear Power Training Command\u2019s Nuclear Power School": [],
@@ -7840,51 +7854,51 @@
     {
       "name": "Computer Science I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "CSCI",
-      "course_id": "1100"
+      "course_id": 1100
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Introduction to Psychological Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "1200"
+      "course_id": 1200
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Mathematical Methods in Management and Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1520"
+      "course_id": 1520
     },
     {
       "name": "Research Methods and Statistics I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "2310"
+      "course_id": 2310
     },
     {
       "name": "Research Methods and Statistics II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "4310"
+      "course_id": 4310
     },
     {
       "name": "Science Core Elective",
@@ -7895,9 +7909,9 @@
     {
       "name": "Mathematical Methods in Psychological Science ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "PSYC",
-      "course_id": "4350"
+      "course_id": 4350
     },
     {
       "name": "PSYC 2/4000 Core Content Elective",
@@ -7928,16 +7942,16 @@
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Science, Technology, and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "1110"
+      "course_id": 1110
     },
     {
       "name": "Intermediate STS course",
@@ -7948,23 +7962,23 @@
     {
       "name": "Mathematical Methods in Management and Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1520"
+      "course_id": 1520
     },
     {
       "name": "Calculus II ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1020"
+      "course_id": 1020
     },
     {
       "name": "Investigating Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Science Core Elective",
@@ -7975,9 +7989,9 @@
     {
       "name": "Sustainability and STS Careers ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "4300"
+      "course_id": 4300
     },
     {
       "name": "Advanced STS Course",
@@ -7994,9 +8008,9 @@
     {
       "name": "Research Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "4980"
+      "course_id": 4980
     },
     {
       "name": "CAS Course",
@@ -8015,37 +8029,37 @@
     {
       "name": "Sustainability Debates ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "IHSS",
-      "course_id": "1240"
+      "course_id": 1240
     },
     {
       "name": "Calculus I ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1010"
+      "course_id": 1010
     },
     {
       "name": "Environment and Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "2300"
+      "course_id": 2300
     },
     {
       "name": "Mathematical Methods in Management and Economics ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "MATH",
-      "course_id": "1520"
+      "course_id": 1520
     },
     {
       "name": "Investigating Society ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "2100"
+      "course_id": 2100
     },
     {
       "name": "Science Core Elective",
@@ -8068,16 +8082,16 @@
     {
       "name": "Sustainability and STS Careers ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "4300"
+      "course_id": 4300
     },
     {
       "name": "Research Design ",
       "type": "course",
-      "credits": "4",
+      "credits": 4,
       "major": "STSO",
-      "course_id": "4980"
+      "course_id": 4980
     },
     {
       "name": "CAS Course",

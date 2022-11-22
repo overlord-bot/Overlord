@@ -11,7 +11,6 @@ Currently, they scrape information from MyAnimeList, GitHub, and an Overlord wik
 
 ### MyAnimeList.net Command
 - Returns the link of the page for an anime listed in MyAnimeList.net.
-- Currently, the command does not work with titles with 3 or more words.
 - To use the command type `!anime` followed by the name of the anime.
 - `!anime <title of anime>`
 
@@ -21,6 +20,6 @@ Currently, they scrape information from MyAnimeList, GitHub, and an Overlord wik
 - `!overlordfacts <name of Overlord character>`
 
 ### Development Plans
-- GitHub Scraper: Currently no plans for further development.
-- MyAnimeList Scraper: Need to fix a bug preventing search of anime titles longer than 2 words.
+- GitHub Scraper: Feature requested to scrape commits after a certain date.
+- MyAnimeList Scraper: No plans for further development.
 - Overlord Wiki Scraper: No plans for further development.
