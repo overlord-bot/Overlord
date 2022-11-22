@@ -6,14 +6,11 @@ import discord
 import json
 import os
 
-
-
 class TimChat(commands.Cog, name="TimChat"):
     """Basic Chatbot Functions"""
 
     def __init__(self, bot):
         self.bot = bot
-        #self.taskLoop.start()
         self.index = 0
 
     @commands.Cog.listener()
@@ -24,8 +21,9 @@ class TimChat(commands.Cog, name="TimChat"):
         channel = discord.utils.get(member.guild.channels, name="new-friends")
         channel_id = channel.id
         channels = self.bot.get_channel(channel_id)
-        await channels.send("Don't use dirty, inappropriate, NSFW languages or content in this server!")
-        await channels.send("Enter agree or disagree to determine which way you go.")
+        await channels.send("Don't use dirty, inappropriate, NSFW languages or content in this server. Be respectful to each server member, and have fun!")
+        await channels.send("Now is your time to choose your own way to go.")
+        await channels.send("Agree or Disagree, it's your call.")
         
         dir = os.path.dirname(os.path.realpath(__file__))
         with open(f"{dir}/join_user.json") as read:
@@ -34,10 +32,7 @@ class TimChat(commands.Cog, name="TimChat"):
         json_f = json.dumps(data)
         with open(f"{dir}/join_user.json", "w") as outwrite:
             outwrite.write(json_f)
-        with open(f"{dir}/join_user.json") as read:
-            data1 = json.load(read)
-        await channel.send(data1[user])
-        await channel.send("All done")
+        
     
     @commands.Cog.listener()
     async def on_member_leave(self, member):
@@ -45,23 +40,11 @@ class TimChat(commands.Cog, name="TimChat"):
         dir = os.path.dirname(os.path.realpath(__file__))
         with open(f"{dir}/join_user.json") as read:
             data = json.load(read)
-        if data[user]:
+        if data[user] in data:
             del data[user]
             json_f = json.dumps(data)
             with open(f"{dir}/join_user.json", "w") as outwrite:
                 outwrite.write(json_f)
-
-        
-
-#   def cog_unload(self):
-#         self.taskLoop.cancel()
-
-#     @tasks.loop(seconds=5)
-#     async def taskLoop(self, message, arg):
-#             message.channel.send(arg)
-#             #print(self.index)
-#             #self.index += 1
-
 
     @commands.command()
     async def pun(self, message):
@@ -78,19 +61,6 @@ class TimChat(commands.Cog, name="TimChat"):
         FAREWELL = ("See ya, ", "Bye bye, ", "See you around, ", "Alright, ", "Good to see you ", "Anytime ", "See you next time ")
         await message.channel.send(random.choice(FAREWELL) + message.author.name + ", have a great day!")
         await self.bot.close()
-    
-    @commands.command()
-    async def test(self, message):
-        dic = {"bj":30,"xh":23}
-        json_f = json.dumps(dic)
-        dir = os.path.dirname(os.path.realpath(__file__))
-        with open(f"{dir}/join_user.json", "w") as outwrite:
-            outwrite.write(json_f)
-        await message.channel.send("write_done")
-        with open(".\cogs\chatbot\join_user.json") as read:
-            data = json.load(read)
-        await message.channel.send(data["bj"])
-        await message.channel.send("All done")
 
 async def setup(bot):
     await bot.add_cog(TimChat(bot))
