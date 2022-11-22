@@ -103,9 +103,10 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         muterole = discord.utils.get(ctx.guild.roles,name="Muted")
         
         if not muterole:
-            muterole = await ctx.guild.create_role(name = "Muted")
-            for channel in ctx.guild.channels:
-                await channel.set_permmissions(muterole, speak = False, send_message=False)  
+            perms = discord.Permissions(speak = False, send_messages=False,read_messages=True)
+            muterole = await ctx.guild.create_role(name = "Muted",permissions=perms)
+            #for channel in ctx.guild.channels:
+                #await channel.set_permmissions(muterole, speak = False, send_message=False,read_messages=True)  
         group = {}
         with open("./cogs/chatbot/Roles.json","r") as f:
             js=f.read()
