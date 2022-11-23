@@ -11,7 +11,6 @@ DELIMITER_TITLE = '---'
 DELIMITER_BLOCK = '###'
 TAG_NOMERGE = '@nomerge'
 
-
 class OUT(Enum):
     NONE = 0
     
@@ -26,12 +25,10 @@ class OUT(Enum):
     CACHE = 30
     FILE = 31
 
-
 class OUTTYPE(Enum):
     STRING = 1
     EMBED = 2
     JSON = 3
-
 
 class Output():
 
@@ -43,8 +40,10 @@ class Output():
         discord_channel (channel): discord channel if printing to discord
         file (file): file to print to if printing to file
         combine_embeds (bool): whether to merge embeds when printing to discord
+        signature (str): used for embed titles
     """
-    def __init__(self, output_location:OUT, output_type:OUTTYPE=OUTTYPE.STRING, user=None, discord_channel=None, file=None, combine_embeds=True, signature=''):
+    def __init__(self, output_location:OUT, output_type:OUTTYPE=OUTTYPE.STRING, user=None, 
+            discord_channel=None, file=None, combine_embeds:bool=True, signature:str=''):
         self.output_location = output_location
         self.output_type = output_type
         self.discord_channel = discord_channel
@@ -52,6 +51,7 @@ class Output():
         self.user = user
 
         self.__msg_cache_hold = ""
+        self.json_cache = list()
 
         # for printing and editing discord embeds
         self.last_message_object = None
@@ -75,11 +75,12 @@ class Output():
     """ Determines appropriate printing channel and prints message
 
     Args:
-        msg (str or dict): message to print
+        msg (str): message to print
+        
         logging_flag (OUT): temporary prints to this output location
             without altering the stored location within this object
     """
-    async def print(self, msg:str, json_output:json=None, output_location=None) -> None:
+    async def print(self, msg:str, json_output:json=None, output_location:OUT=None, file_name:str=None) -> None:
         outlocation = self.output_location if output_location == None else output_location
      
         tagged_msg = f'{self.signature} {msg}'
@@ -101,15 +102,17 @@ class Output():
             if self.discord_channel == None:
                 logging.warning('OUTPUT ERROR: no output channel specified')
             elif self.output_type == OUTTYPE.EMBED:
-                await self.print_embed(self.get_blocks(msg))
+                await self.print_embed(self.get_title_body_blocks(msg))
             else:
-                await self.print_fancy(self.get_blocks(msg))
+                await self.print_fancy(self.get_title_body_blocks(msg))
 
         elif (self.output_location == OUT.CACHE):
-            self.on_output(json_output)
+            self.json_cache.append(json_output)
 
         elif (self.output_location == OUT.FILE):
-            pass
+            f = open(file_name, 'a')
+            f.write(msg)
+            f.close
 
 
     """ Goes through each function to generate the blocks from original input string
@@ -121,7 +124,7 @@ class Output():
         msg_blocks (OrderedDict): ordered dictionary of (title/message) blocks where each
             member is guaranteed to be non-empty, and titles are all unique.
     """
-    def get_blocks(self, msg):
+    def get_title_body_blocks(self, msg):
         msg = self.trim_to_limit(msg)
         msg = self.try_combine_previous(msg)
         blocks = self.format_title_and_body(msg)
@@ -284,21 +287,12 @@ class Output():
     """ Prints all content inside message cache, calls upon print() for printing
     """
     async def print_cache(self, output_redirect=None):
-        if (len(self.__msg_cache_hold) > 1800 
-                and (self.output_location == OUT.DISCORD_CHANNEL 
-                or self.output_location == OUT.DISCORD_PRIVATE_MSG)):
-            await self.print(f"message too long for discord, printing to console...")
-            print(self.__msg_cache_hold)
+        if self.output_location == OUT.CONSOLE:
+            await self.print(self.__msg_cache_hold, output_location=output_redirect)
         else:
-            if self.output_location == OUT.CONSOLE:
-                await self.print(f"{self.__msg_cache_hold}", output_location=output_redirect)
-            else:
-                await self.print(f"```yaml\n{'None' if not len(self.__msg_cache_hold) else self.__msg_cache_hold}```", output_location=output_redirect)
+            await self.print(f"```yaml\n{'None' if not len(self.__msg_cache_hold) else self.__msg_cache_hold}```", output_location=output_redirect)
         self.__msg_cache_hold = ""
         return
-
-    def on_output(self, json_message:json):
-        raise NotImplementedError
 
 
 """ removes all non-alphanumeric characters from string
