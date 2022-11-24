@@ -1,73 +1,127 @@
 from array import *
 from discord.ext import commands
 import discord
+from random import SystemRandom as sr
+import time
 
 from ..utils.output import *
-
-VERSION = "dev 1.1"
-
-OUTERROR = Output(OUT.ERROR)
-OUTWARNING = Output(OUT.WARN)
-OUTINFO = Output(OUT.INFO)
-OUTDEBUG = Output(OUT.DEBUG)
-OUTCONSOLE = Output(OUT.CONSOLE)
-
-RED = 0xf5cdd6
-ORANGE = 0xf5e1cd
-YELLOW = 0xf5f1cd
-GREEN = 0xd6f5cd
-TEAL = 0xcdf5f1
-BLUE = 0xcdd4f5
-VIOLET = 0xe8cdf5
-MAGENTA = 0xe6a6d3
-
-MAX_COLORS = 8
 
 class rainbow_roles(commands.Cog, name="Rainbow Roles"):
 
     def __init__(self, bot):
         self.bot = bot
+        self.lock = False
+        self.version = '1.1'
+        self.colors = list()
+
+    """ Creates a list of the colors needed for the roles
+    """
+    def set_rainbow(self):
+        self.colors.clear()
+        self.colors.append(0xf5cdd6) # red
+        self.colors.append(0xf5e1cd) # orange
+        self.colors.append(0xf5f1cd) # yellow
+        self.colors.append(0xd6f5cd) # green
+        self.colors.append(0xcdf5f1) # teal
+        self.colors.append(0xcdd4f5) # blue
+        self.colors.append(0xe8cdf5) # violet
+        self.colors.append(0xe6a6d3) # magenta
+
+    """ Creates a list of the colors needed for the roles
+    """
+    def set_rainbow2(self):
+        self.colors.clear()
+        self.colors.append(0xf5cdd6) # red
+        self.colors.append(0xf5e1cd) # orange
+        self.colors.append(0xf5f1cd) # yellow
+        self.colors.append(0xd6f5cd) # green
+        self.colors.append(0xcdf5f1) # teal
+        self.colors.append(0xcdd4f5) # blue
+        self.colors.append(0xe8cdf5) # violet
+        self.colors.append(0xe6a6d3) # magenta
+
+    """ Creates a list of the colors needed for the roles
+    """
+    def set_random(self):
+        self.colors.clear()
+        gen = sr()
+        for i in range(0,20):
+            self.colors.append(gen.randrange(255**3-1))
+
 
     @commands.Cog.listener()
     async def on_message(self, message) -> None:
-        if (message.content == 'rainbowfy'):
-            await self.rainbowfy(message.guild, Output(OUT.DISCORD_CHANNEL, OUTTYPE.EMBED, discord_channel=message.channel, signature='Rainbow Roles'))
-        if (message.content == 'cleanse'):
-            await self.cleanse(message.guild, Output(OUT.DISCORD_CHANNEL, OUTTYPE.EMBED, discord_channel=message.channel, signature='Rainbow Roles'))
-        if (message.content == 'deep cleanse' or 'tidy up the fucking roles' in message.content):
-            await self.deep_cleanse(message.guild, Output(OUT.DISCORD_CHANNEL, OUTTYPE.EMBED, discord_channel=message.channel, signature='Rainbow Roles'))
+        if message.author == self.bot.user or message.author.bot:
+            return
+        output =  Output(OUT.DISCORD_CHANNEL, OUTTYPE.EMBED, discord_channel=message.channel, signature='Rainbow Roles')
+        if (message.content == '!rainbowfy'):
+            if self.lock:
+                await output.print(f'ERROR{DELIMITER_TITLE}Please hold while operation is in progress')
+                return
+            self.lock = True
+            self.set_rainbow()
+            await self.rainbowfy(message.guild, output)
+            self.lock = False
+        elif (message.content == '!rainbowfy random'):
+            if self.lock:
+                await output.print(f'ERROR{DELIMITER_TITLE}Please hold while operation is in progress')
+                return
+            self.lock = True
+            self.set_random()
+            await self.rainbowfy(message.guild, output)
+            self.lock = False
+        elif (message.content == '!cleanse'):
+            if self.lock:
+                await output.print(f'ERROR{DELIMITER_TITLE}Please hold while operation is in progress')
+                return
+            self.lock = True
+            await self.cleanse(message.guild, output)
+            self.lock = False
+        elif (message.content == '!deep cleanse' or 'tidy up the fucking roles please' in message.content):
+            if self.lock:
+                await output.print(f'ERROR{DELIMITER_TITLE}Please hold while operation is in progress')
+                return
+            self.lock = True
+            await self.deep_cleanse(message.guild, output)
+            self.lock = False
+        elif (message.content == '!rainbow roles' or message.content == '!rainbow version'):
+            await output.print(f'Info{DELIMITER_TITLE}Rainbow Roles version: {self.version}')
+            await output.print(f'Info{DELIMITER_TITLE}Commands: !rainbowfy, !cleanse, !deep cleanse, !rainbow roles/!rainbow version')
 
 
+    """ Deassigns color roles from everyone, but doesn't delete the roles themselves
+    """
     async def cleanse(self, guild, output=None):
         if output == None:
             output = Output(OUT.CONSOLE)
+        
         for m in guild.members:
-            for i in range(1, MAX_COLORS+1):
-                await m.remove_roles(discord.utils.get(guild.roles, name=str(i)))
+            for i in range(0, 20):
+                if discord.utils.get(guild.roles, name = str(i)): await m.remove_roles(discord.utils.get(guild.roles, name=str(i)))
         await output.print(f'Cleanse{DELIMITER_TITLE}cleansed the roles!')
 
 
+    """ Deletes all color roles
+    """
     async def deep_cleanse(self, guild, output=None):
         if output == None:
             output = Output(OUT.CONSOLE)
-        for i in range(1, MAX_COLORS+1):
+
+        for i in range(0, 20):
             if discord.utils.get(guild.roles, name = str(i)): await discord.utils.get(guild.roles, name=str(i)).delete()
         await output.print(f'Deep Cleaning{DELIMITER_TITLE}roles reduced to atoms')
 
 
+    """ Creates the color roles (labelled by a number starting from 0), and assigns everyone to it in an even distribution
+        among all the colors
+    """
     async def rainbowfy(self, guild, output=None):
         if output == None:
             output = Output(OUT.CONSOLE)
-        if not discord.utils.get(guild.roles, name = '1'): await guild.create_role(name='1', color=discord.Colour(RED))
-        if not discord.utils.get(guild.roles, name = '2'): await guild.create_role(name='2', color=discord.Colour(ORANGE))
-        if not discord.utils.get(guild.roles, name = '3'): await guild.create_role(name='3', color=discord.Colour(YELLOW))
-        if not discord.utils.get(guild.roles, name = '4'): await guild.create_role(name='4', color=discord.Colour(GREEN))
-        if not discord.utils.get(guild.roles, name = '5'): await guild.create_role(name='5', color=discord.Colour(TEAL))
-        if not discord.utils.get(guild.roles, name = '6'): await guild.create_role(name='6', color=discord.Colour(BLUE))
-        if not discord.utils.get(guild.roles, name = '7'): await guild.create_role(name='7', color=discord.Colour(VIOLET))
-        if not discord.utils.get(guild.roles, name = '8'): await guild.create_role(name='8', color=discord.Colour(MAGENTA))
 
-        await output.print(f'Rainbowfy{DELIMITER_TITLE}created roles')
+        for i in range(0, len(self.colors)):
+            if discord.utils.get(guild.roles, name = str(i)): await discord.utils.get(guild.roles, name=str(i)).delete()
+            await guild.create_role(name=str(i), color=discord.Colour(self.colors[i]))
 
         # make an ordered dictionary of <top role:members>
         # so that we can assign the colors in the appropriate order
@@ -89,16 +143,25 @@ class rainbow_roles(commands.Cog, name="Rainbow Roles"):
         
         i = 0
         for m in members:
-            await m.add_roles(discord.utils.get(guild.roles, name=str( int( 1+i*MAX_COLORS/(len(members)) ) )))
+            await m.add_roles(discord.utils.get(guild.roles, name=str( int((i/((len(members) - 1) if len(members) > 1 else 1)) * len(self.colors) * 0.99))))
             i += 1
 
-        await output.print('server successfully rainbowfied!')
+        await output.print(f'Rainbowfy{DELIMITER_TITLE}Server successfully rainbowfied!')
 
 
 """
 HELPER FUNCTIONS
 """
 
+"""
+Args:
+    guild (guild): discord server
+    member (member): discord member object
+
+Returns:
+    role (role): discord role that is the highest ranking hoisted role of the given member
+        hoisted role means it's a role displayed separately on the sidebar.
+"""
 def top_role(guild, member):
     role = discord.utils.get(guild.roles, name='@everyone')
     for r in member.roles:
@@ -106,6 +169,15 @@ def top_role(guild, member):
             role = r
     return role
 
+""" If you're asking 'eggy why didn't you just feed a custom sort function to the provided sort()
+     instead of generating all this bullshit' well you'll be absolutely correct 👍
+
+Args:
+    members (list): list of members to sort alphabetically by nickname (name if nick not available)
+
+Returns:
+    members (list): it's the members list but sorted
+"""
 def sort_members(members):
     members_dict = OrderedDict()
     for m in members:
