@@ -31,19 +31,23 @@ Admin only:
 
 user 
     - stores user data and user schedules
+    
 catalog 
     - stores one copy of RPI's course catalog and degree list
     - course_match to locate courses with a defined criteria
+    
 schedule
     - stores courses organized by semester
 
 course
     - all data describing a course
+    
 degree
     - list of rules that describe degree requirements
 
 course_template
     - describes criteria for filtering courses
+    
 rule
     - a set of course templates and the required fulfillment amount
     - fulfillment returns a dictionary of unfulfilled templates and its status/metadata
