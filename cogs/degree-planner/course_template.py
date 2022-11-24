@@ -3,6 +3,11 @@ from .course import Course
 
 class Template():
 
+    """ This class contains a template course, which contains attributes that
+        serves as a filter for courses, and a course set, which is the pool of
+        courses we filter from.
+    """
+
     def __init__(self, name, template_course=Course("", "", 0), course_set=set()):
         self.name = name
         self.template_course = template_course

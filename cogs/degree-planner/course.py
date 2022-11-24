@@ -1,5 +1,5 @@
 from array import *
-from .output import *
+from ..utils.output import *
 import json
 
 import logging
@@ -55,14 +55,14 @@ class Course():
                     self.course_id = int(float(split_num[0]))
                     self.course_id2 = int(float(split_num[1]))
                 else:
-                    logging.error(f"{DEGREE_PLANNER_SIGNATURE} COURSE PARSING: 2 part ID not <int>.<int> for course " + self.name)
+                    logging.error(f"COURSE PARSING: 2 part ID not <int>.<int> for course " + self.name)
                     
             elif not self.course_id.isdigit():
-                logging.error(f"{DEGREE_PLANNER_SIGNATURE} COURSE PARSING: course number is not a number for course " + self.name)
+                logging.error(f"COURSE PARSING: course number is not a number for course " + self.name)
             else:
                 self.course_id = int(float(self.course_id))
         elif not isinstance(self.course_id, int):
-            logging.error(f"{DEGREE_PLANNER_SIGNATURE} COURSE PARSING: course number is not a number for course " + self.name)
+            logging.error(f"COURSE PARSING: course number is not a number for course " + self.name)
 
     def add_prerequisite(self, prereq) -> None:
         self.prerequisites.add(prereq)

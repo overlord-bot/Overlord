@@ -1,4 +1,4 @@
-from .output import *
+from ..utils.output import *
 from .course import Course
 from .course_template import Template
 from .catalog import Catalog

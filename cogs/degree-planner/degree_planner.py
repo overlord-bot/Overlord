@@ -2,7 +2,7 @@ from array import *
 from discord.ext import commands
 import discord
 
-from .output import *
+from ..utils.output import *
 from .course import Course
 from .catalog import Catalog
 from .degree import Degree
@@ -101,10 +101,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
             self.users.update({userid:user})
             await OUTDEBUG.print(f"received msg from new user: {message.author}, user id: {userid}")
 
-        output = Output(OUT.DISCORD_CHANNEL, 
-            {ATTRIBUTE.USER:user, 
-            ATTRIBUTE.CHANNEL:message.channel, 
-            ATTRIBUTE.FLAG:ATTRIBUTE.EMBED})
+        output = Output(OUT.DISCORD_CHANNEL, user=user, discord_channel=message.channel, output_type=OUTTYPE.EMBED)
 
         # only allows message through to message handler if there's a paused command
         # waiting for user input or if the message starts with !dp

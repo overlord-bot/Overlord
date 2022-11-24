@@ -7,7 +7,7 @@ from .rules import Rule
 from .schedule import Schedule
 from .course_template import Template
 from .search import Search
-from .output import *
+from ..utils.output import *
 from .user import *
 
 class Test1():    

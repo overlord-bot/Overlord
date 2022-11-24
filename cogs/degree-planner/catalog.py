@@ -6,7 +6,7 @@ from .course import Course
 from .degree import Degree
 from .course_template import Template
 from .search import Search
-from .output import *
+from ..utils.output import *
 
 class Catalog():
 
@@ -140,7 +140,7 @@ def get_course_match(target_course, course_pool:set, possible_values=None) -> di
         target_course = target_course.template_course
 
     if not isinstance(target_course, Course):
-        self.output.print("CATALOG ERROR: get_course_match target_course is not instance of Course after initial call", OUT.ERROR)
+        output.print("CATALOG ERROR: get_course_match target_course is not instance of Course after initial call", OUT.ERROR)
 
     # makes a copy of target_course because it will be altered later on
     target_course = copy.deepcopy(target_course)
