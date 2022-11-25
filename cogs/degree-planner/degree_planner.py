@@ -76,42 +76,39 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         self.course_search = Search()
         self.flags = set()
 
+    @commands.command()
+    async def dp(self, ctx, *, args) -> None:
+        user = self.get_user(ctx)
+        output = Output(OUT.DISCORD_CHANNEL, user=user, discord_channel=ctx.channel, output_type=OUTTYPE.EMBED)
+        print(args)
+        await self.message_handler(user, args, output)
+        return
 
-    """ Message listener for Discord, passes the message content to message_handler
+    @dp.error
+    async def dp_error(self, ctx, error):
+        user = self.get_user(ctx)
+        output = Output(OUT.DISCORD_CHANNEL, user=user, discord_channel=ctx.channel, output_type=OUTTYPE.EMBED)
+        await output.print(f'ERROR{DELIMITER_TITLE}No arguments provided')
+
+    """ Listens for user's choices when prompted
 
     Args:
         message (Discord message obj): contains message and relevant metadata
     """
     @commands.Cog.listener()
-    async def on_message(self, message) -> None:
+    async def response_listener(self, message) -> None:
         # ignore messages not from users
         if message.author == self.bot.user or message.author.bot:
             return
 
-        # users from discord will be assigned user id equal to their discord id
-        userid = str(message.author.id)
-        if userid in self.users:
-            user = self.users[userid]
-            user.discord_user = message.author
-            await OUTDEBUG.print(f"received msg from returning user: {message.author}, user id: {userid}")
-        else:
-            user = User(userid)
-            user.username = str(message.author)
-            user.discord_user = message.author
-            self.users.update({userid:user})
-            await OUTDEBUG.print(f"received msg from new user: {message.author}, user id: {userid}")
-
-        output = Output(OUT.DISCORD_CHANNEL, user=user, discord_channel=message.channel, output_type=OUTTYPE.EMBED)
+        user = self.get_user(message)
 
         # only allows message through to message handler if there's a paused command
         # waiting for user input or if the message starts with !dp
         if Flag.CMD_PAUSED in user.flag:
-            await self.message_handler(user, message.content, output)
-            return
-
-        if message.content.startswith('.dp '):
-            await self.message_handler(user, message.content[4:], output)
-            return
+            await self.message_handler(user, message.content, Output(OUT.DISCORD_CHANNEL, user=user, discord_channel=message.channel, output_type=OUTTYPE.EMBED))
+        
+        return
 
 
     """ MAIN FUNCTION FOR ACCEPTING COMMAND ENTRIES
@@ -332,6 +329,19 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 await output.print(f"ERROR{DELIMITER_TITLE}invalid arguments for command {str(e)}")
         cmd_queue = [e for e in cmd_queue if e.valid()]
         return cmd_queue
+
+
+    def get_user(self, ctx) -> User:
+        userid = str(ctx.author.id)
+        if userid in self.users:
+            user = self.users[userid]
+            user.discord_user = ctx.author
+        else:
+            user = User(userid)
+            user.username = str(ctx.author)
+            user.discord_user = ctx.author
+            self.users.update({userid:user})
+        return user
 
     
     """ Runs test suite
