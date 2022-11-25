@@ -48,50 +48,63 @@ class rainbow_roles(commands.Cog, name="Rainbow Roles"):
         for i in range(0,20):
             self.colors.append(gen.randrange(255**3-1))
 
-
-    @commands.Cog.listener()
-    async def on_message(self, message) -> None:
-        if message.author == self.bot.user or message.author.bot:
-            return
-        output =  Output(OUT.DISCORD_CHANNEL, OUTTYPE.EMBED, discord_channel=message.channel, signature='Rainbow Roles')
-        if (message.content == '!rainbowfy'):
+    
+    @commands.command()
+    async def rainbowfy(self, ctx, args=None):
+        output = Output(OUT.DISCORD_CHANNEL, OUTTYPE.EMBED, discord_channel=ctx.channel, signature='Rainbow Roles')
+        if args == None:
             if self.lock:
                 await output.print(f'ERROR{DELIMITER_TITLE}Please hold while operation is in progress')
                 return
             self.lock = True
             self.set_rainbow()
-            await self.rainbowfy(message.guild, output)
+            await self.roles_paint(ctx.guild, output)
             self.lock = False
-        elif (message.content == '!rainbowfy random'):
+        elif args == 'random':
             if self.lock:
                 await output.print(f'ERROR{DELIMITER_TITLE}Please hold while operation is in progress')
                 return
             self.lock = True
             self.set_random()
-            await self.rainbowfy(message.guild, output)
+            await self.roles_paint(ctx.guild, output)
             self.lock = False
-        elif (message.content == '!cleanse'):
+    
+    @commands.command()
+    async def cleanse(self, ctx, args=None):
+        output = Output(OUT.DISCORD_CHANNEL, OUTTYPE.EMBED, discord_channel=ctx.channel, signature='Rainbow Roles')
+        if args == None:
             if self.lock:
                 await output.print(f'ERROR{DELIMITER_TITLE}Please hold while operation is in progress')
                 return
             self.lock = True
-            await self.cleanse(message.guild, output)
+            await self.roles_cleanse(ctx.guild, output)
             self.lock = False
-        elif (message.content == '!deep cleanse' or 'tidy up the fucking roles please' in message.content):
+        elif args == 'deep':
             if self.lock:
                 await output.print(f'ERROR{DELIMITER_TITLE}Please hold while operation is in progress')
                 return
             self.lock = True
-            await self.deep_cleanse(message.guild, output)
+            await self.roles_deep_cleanse(ctx.guild, output)
             self.lock = False
-        elif (message.content == '!rainbow roles' or message.content == '!rainbow version'):
-            await output.print(f'Info{DELIMITER_TITLE}Rainbow Roles version: {self.version}')
-            await output.print(f'Info{DELIMITER_TITLE}Commands: !rainbowfy, !cleanse, !deep cleanse, !rainbow roles/!rainbow version')
+    
+    @commands.command()
+    async def rainbow(self, ctx):
+        output = Output(OUT.DISCORD_CHANNEL, OUTTYPE.EMBED, discord_channel=ctx.channel, signature='Rainbow Roles')
+        await output.print(f'Info{DELIMITER_TITLE}Rainbow Roles version: {self.version}')
+        await output.print(f'Info{DELIMITER_TITLE}Commands: !rainbowfy, !cleanse, !deep cleanse, !rainbow roles/!rainbow version')
 
+    @commands.Cog.listener()
+    async def on_message(self, message) -> None:
+        if message.author == self.bot.user or message.author.bot:
+            return
+
+        if ('tidy up the fucking roles please' in message.content):
+            await self.deepcleanse(message)
+            
 
     """ Deassigns color roles from everyone, but doesn't delete the roles themselves
     """
-    async def cleanse(self, guild, output=None):
+    async def roles_cleanse(self, guild, output=None):
         if output == None:
             output = Output(OUT.CONSOLE)
         
@@ -103,7 +116,7 @@ class rainbow_roles(commands.Cog, name="Rainbow Roles"):
 
     """ Deletes all color roles
     """
-    async def deep_cleanse(self, guild, output=None):
+    async def roles_deep_cleanse(self, guild, output=None):
         if output == None:
             output = Output(OUT.CONSOLE)
 
@@ -115,7 +128,7 @@ class rainbow_roles(commands.Cog, name="Rainbow Roles"):
     """ Creates the color roles (labelled by a number starting from 0), and assigns everyone to it in an even distribution
         among all the colors
     """
-    async def rainbowfy(self, guild, output=None):
+    async def roles_paint(self, guild, output=None):
         if output == None:
             output = Output(OUT.CONSOLE)
 
