@@ -4,21 +4,21 @@ from discord.ext import commands
 import discord
 from .schedule import Schedule
 from queue import Queue
+import json
 
 class Flag(Enum):
-    DEBUG = 0
-
     CMD_PAUSED = 100
     CMD_RUNNING = 101
 
+
 class User():
     
-    def __init__(self, id, output=None):
-        self.id = id
-        self.username = str(id)
-        self.discord_user = None
+    def __init__(self, id):
+        self.id = id # unique id for user
+        self.username = str(id) # username to display
+        self.discord_user = None # discord user object, if applicable
         self.__schedules = dict() # all schedules this user created <schedule name, Schedule>
-        self.curr_schedule = "" # empty string signifies no current schedule
+        self.curr_schedule = "" # schedule to modify
 
         self.flag = set()
 
@@ -61,6 +61,18 @@ class User():
             self.__schedules.pop(old_name)
             return True
 
+    def json(self):
+        user = dict()
+        user.update({'username':self.username})
+        user.update({'id':self.id})
+        user.update({'discord user':True if self.discord_user != None else False})
+        schedules = list()
+        for s in self.__schedules.keys():
+            schedules.append(s)
+        user.update({'schedules':schedules})
+        user.update({'admin':self.admin})
+        user.update({'commands in queue':self.command_queue.qsize()})
+        return json.dumps(user)
 
     def __repr__(self):
         schedule_names = ""

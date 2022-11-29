@@ -4,6 +4,7 @@ from .course import Course
 from .catalog import Catalog
 from .degree import Degree
 from .rules import Rule
+import json
 
 
 #########################################################################
@@ -18,7 +19,6 @@ from .rules import Rule
 
 
 class Schedule():
-    # SCHEDULE GLOBAL VARIABLES
 
     def __init__(self, name:str):
         # needs to be initialized before every use by calling master_list_init()
@@ -29,45 +29,61 @@ class Schedule():
         self.degree = None
         self.master_list_init()
 
-    #-----------------------------------------------------------------------
-    # Initializes the data structure storing all courses in the schedule,
-    # grouped by semester
-    #-----------------------------------------------------------------------
-
+    """ Initializes the list storing all courses in the schedule, grouped by semester
+    """
     def master_list_init(self):
         self.__master_list.clear()
-
-        # Generates 12 empty lists within master_list. Each list represents a semester
-        # with element 0 representing semester 1 and so on.
         for x in range(0, 12):
             self.__master_list.append([])
 
-    #-----------------------------------------------------------------------
-    # Main scheduling functions
-    #-----------------------------------------------------------------------
+    """
+    Args:
+        course (Course): course to add
+        semester (int): add course only to this semester
 
-    def add_course(self, course, semester) -> bool:
+    Returns:
+        success (set): whether add was successful
+    """
+    def add_course(self, course:Course, semester:int) -> bool:
         if semester in self.find_course(course):
             return False
         else:
             self.__master_list[semester].append(course)
             return True
 
+    """
+    Args:
+        course (Course): course to remove
+        semester (int): remove course only from specified semester
 
-    def remove_course(self, course, semester) -> bool:
+    Returns:
+        success (bool): whether removal was successful
+    """
+    def remove_course(self, course:Course, semester:int) -> bool:
         if semester not in self.find_course(course):
             return False
         else:
             self.__master_list[semester].remove(course)
             return True
 
-
+    """
+    Args:
+        semester (int): semester to find courses in
+    Returns:
+        courses (list): all courses in the specified semester,
+            None if invalid semester entered and empty list if
+            semester exists but no courses added.
+    """
     def get_semester(self, semester:int) -> list:
         if semester not in range(0, self.SEMESTERS_MAX):
             return None
         else:
             return self.__master_list[semester]
 
+    """
+    Returns:
+        courses (set): all courses within this schedule
+    """
     def get_all_courses(self) -> set:
         courses = set()
         for a in self.__master_list:
@@ -75,7 +91,13 @@ class Schedule():
                 courses.add(c)
         return courses
 
-    # Returns list of semesters that the course is present in
+    """ 
+    Args:
+        course (Course): course to locate
+        
+    Returns:
+        present_in (list): list of semesters that the course is found in
+    """
     def find_course(self, course:Course) -> list:
         i = 0
         present_in = []
@@ -84,6 +106,18 @@ class Schedule():
                 present_in.append(i)
             i+=1
         return present_in
+
+    """
+    Returns:
+        schedule (dict): returns user's schedule in the form of
+            <schedule name : <semester : course list>>
+    """
+    def json(self):
+        schedule = dict()
+        schedule.update({self.name:dict()})
+        for i in range(0, 12):
+            schedule[self.name].update({i:[e.display_name for e in self.get_semester(i)]})
+        return json.dumps(schedule)
 
     def __len__(self):
         i = 0
