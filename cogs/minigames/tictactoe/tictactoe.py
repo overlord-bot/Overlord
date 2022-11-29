@@ -139,6 +139,7 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
         return tuple(sorted([author.id, opponent.id]))
 
     @commands.command()
+    @commands.cooldown(1, 5, type=commands.BucketType.user)
     async def tttstart(self, context, opponent: discord.User):
         """
         Start a new game by pinging someone, with yourself as X and your
@@ -197,6 +198,7 @@ class TicTacToe(commands.Cog, name="Tic-tac-toe"):
                 return
 
     @commands.command()
+    @commands.cooldown(1, 5, type=commands.BucketType.user)
     async def tttstop(self, context, opponent: discord.User):
         """
         Ends your game with the specified opponent if such a game is in
