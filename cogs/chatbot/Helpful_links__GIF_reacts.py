@@ -1,6 +1,8 @@
 ﻿# Chat Functions made by Andy
 
 from discord.ext import commands
+import giphy_client 
+from giphy_client.rest import ApiException  
 
 name_to_url = {"!s youtube": "https://www.youtube.com/", '!s yt': "https://www.youtube.com/",
                "!s facebook": "https://www.facebook.com/", "!s fb": "https://www.facebook.com/",
@@ -29,6 +31,7 @@ gifs_react = {"johncena": "https://media.giphy.com/media/zgJj5O3peaTrg95T46/giph
               "superman": "https://media.giphy.com/media/R8MIGe47XWx68/giphy.gif"}
 
 
+
 class AndyChat(commands.Cog, name="Andy Chat"):
     """Andy Chatbot Functions"""
 
@@ -52,7 +55,16 @@ class AndyChat(commands.Cog, name="Andy Chat"):
         for key_ in gifs_react:
             if key_ in msg.replace(' ', ''):
                 await message.reply(gifs_react[key_])
+        
+        async def gif(ctx,*, q = "Smile"):
+            api_key = 'gAjUHlVPfCnyPPRN7UHBCXzpSE3zaCJm'
+            api_instance = giphy_client.DefaultApi()
 
+            api_response = api_instance.gifs_search_get(api_key, q, limit = 5, rating = 'g')
+            lst = list(api_response.data)
+            giff = random.choice(lst)
+
+            await ctx.channel.send(giff.embed_url)
 
 
 async def setup(bot):
