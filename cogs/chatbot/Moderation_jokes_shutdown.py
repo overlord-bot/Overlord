@@ -24,6 +24,7 @@ class TimChat(commands.Cog, name="TimChat"):
         await channels.send("Don't use dirty, inappropriate, NSFW languages or content in this server. Be respectful to each server member, and have fun!")
         await channels.send("Now is your time to choose your own way to go.")
         await channels.send("Agree or Disagree, it's your call.")
+        await channels.send("Please send 'Overlord Agree' or 'Overlord Disagree'")
         
         dir = os.path.dirname(os.path.realpath(__file__))
         with open(f"{dir}/join_user.json") as read:

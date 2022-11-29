@@ -13,7 +13,7 @@ class BasicChat(commands.Cog, name="Basic Chat"):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        BAD_WORDS = ("fuck", "motherfucker", "shit", "fk", "mf")
+        BAD_WORDS = ("fuck", "motherfucker", "shit", "fk", "mf", "fucking")
 
         if message.author == self.bot.user or message.author.bot:
             return
