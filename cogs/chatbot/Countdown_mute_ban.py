@@ -8,7 +8,6 @@ from datetime import datetime
 from datetime import date
 import asyncio
 import json 
-import jsonpickle
        
 class ExtraFunc(commands.Cog, name="Additional Function "):
     def __init__(self, bot):
