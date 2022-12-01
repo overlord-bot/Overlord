@@ -2,10 +2,10 @@ import discord
 import matplotlib.pyplot as plt
 from typing import List
 
+
 class PollView(discord.ui.View):
 	'''
-	This poll view contains the buttons to vote on specific options
-	for a poll.
+	This poll view contains the buttons to vote on specific options for a poll.
 	'''
 
 	'''
@@ -13,8 +13,10 @@ class PollView(discord.ui.View):
 	'''
 	# TODO optimize the code to only use a list of number_emojis of size 10
 	number_emojis = [ 
-    '0️⃣1️⃣', '0️⃣2️⃣', '0️⃣3️⃣', '0️⃣4️⃣', '0️⃣5️⃣', '0️⃣6️⃣', '0️⃣7️⃣', '0️⃣8️⃣', '0️⃣9️⃣', '1️⃣0️⃣',
-		'1️⃣1️⃣', '1️⃣2️⃣', '1️⃣3️⃣', '1️⃣4️⃣', '1️⃣5️⃣', '1️⃣6️⃣', '1️⃣7️⃣', '1️⃣8️⃣', '1️⃣9️⃣', '2️⃣0️⃣',
+    '0️⃣1️⃣', '0️⃣2️⃣', '0️⃣3️⃣', '0️⃣4️⃣', '0️⃣5️⃣',
+		'0️⃣6️⃣', '0️⃣7️⃣', '0️⃣8️⃣', '0️⃣9️⃣', '1️⃣0️⃣',
+		'1️⃣1️⃣', '1️⃣2️⃣', '1️⃣3️⃣', '1️⃣4️⃣', '1️⃣5️⃣',
+		'1️⃣6️⃣', '1️⃣7️⃣', '1️⃣8️⃣', '1️⃣9️⃣', '2️⃣0️⃣',
 		'2️⃣1️⃣', '2️⃣2️⃣', '2️⃣3️⃣', '2️⃣4️⃣', '2️⃣5️⃣'
   ]
     
@@ -25,7 +27,6 @@ class PollView(discord.ui.View):
 		self.num_polls = len(content)
 		self.voted = [[] for i in range(self.num_polls)]
 		self.poll_id = poll_id
-		self.message = None
 		super().__init__(timeout=60*timeout)
 
 		# Generate buttons based on how many options
@@ -79,17 +80,13 @@ class PollView(discord.ui.View):
 		Parameters
 		----------
 		interaction: :class:`discord.Interaction`
-			Interaction of a button click
+			The interaction from a button click
 		'''
 
 		# Check to see if the button clicked corresponds with this poll
 		button_id = await self.check_poll_helper(interaction.data["custom_id"]) 
 		if button_id < 0:
 			return
-
-		# Allows this view to edit the message its attached to
-		if self.message == None:
-			self.message = interaction.message
 
 		# Add or remove the user from the option clicked
 		if interaction.user in self.voted[button_id]:
@@ -121,19 +118,11 @@ class PollView(discord.ui.View):
 		if button_id != -2:
 			return
 
-		# Allows this view to edit the message its attached to
-		if self.message == None:
-			self.message = interaction.message
-
 		print(f"Poll {self.poll_id}:{self.title} has been ended by {interaction.user.display_name}.")
 		# Defering is needed to stop "Interaction has not responded" error message
 		await interaction.response.defer() 
-		# Edit the message to show that the poll has ended and
-		# create a bar plot and save it with the name "poll_id.png" 
-		await self.edit_msg_ended_poll_helper()
-		await self.create_plot_helper()
-		# TODO Clearing buttons does not work??
-		self.clear_items()
+		# The buttons are visually removed in poll.py, this removes the objects so they can't be interacted with
+		self.clear_items() 
 		self.stop()
 		
 	async def on_timeout(self) -> None:
@@ -141,14 +130,10 @@ class PollView(discord.ui.View):
 		This function is called when the poll times out.
 		'''
 		print(f"Poll {self.poll_id}:{self.title} timed out.")
-
-		await self.edit_msg_ended_poll_helper()
-		await self.create_plot_helper()
-		
-		# TODO Clearing buttons does not work??
+		# The buttons are visually removed in poll.py, this removes the objects so they can't be interacted with
 		self.clear_items()
 
-	async def create_plot_helper(self) -> None:
+	async def create_plot(self) -> None:
 		'''
 		Create a bar plot and save it with the name "poll_id.png"
 		'''
@@ -163,13 +148,3 @@ class PollView(discord.ui.View):
 		plt.yticks(ticks=[i for i in range(max(count)+1)])
 		plt.savefig(f'{self.poll_id}.png')
 		plt.close()
-
-	async def edit_msg_ended_poll_helper(self) -> None:
-		'''
-    If the poll has had a button clicked, (self.message was assigned),
-		edits the embed to show only "This poll has ended".
-		'''
-		if self.message:
-			self.embed.clear_fields()
-			self.embed.add_field(name="This poll has ended", value="-"*25)
-			await self.message.edit(embed=self.embed)
