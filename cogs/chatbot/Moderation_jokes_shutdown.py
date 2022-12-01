@@ -1,10 +1,10 @@
-# Basic Chat Response
-import random 
-#from discord.ext import tasks
-from discord.ext import commands
-import discord
 import json
 import os
+import random
+
+import discord
+from discord.ext import commands
+
 
 class TimChat(commands.Cog, name="TimChat"):
     """Basic Chatbot Functions"""
