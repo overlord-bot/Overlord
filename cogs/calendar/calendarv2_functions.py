@@ -78,7 +78,7 @@ class CalHelperJson():
         return True
 
     #checks to see if that day has an event
-    def check_event(self, week_string, date, user):
+    def check_event(self, week_string, date, user, month):
         if self.check_user(user) == False:
             return week_string
         curr = ""
@@ -87,7 +87,7 @@ class CalHelperJson():
         else:
             curr = str(date)
         for key in self.events[user]["events"].keys():
-            if curr == key[3:5]:
+            if key[3:5] == curr and key[0:2] == month:
                 for event in self.events[user]["events"][key]:
                     week_string += "*"
         return week_string
@@ -100,11 +100,7 @@ class CalHelperJson():
                 date = line.split(" ")[-1]
                 line = line.replace(date, "")
                 line = line[:-1]
-                if date not in self.events[user]["events"].keys():
-                    self.events[user]["events"][date] = [line]
-                else:
-                    if line not in self.events[user]["events"][date]:
-                        self.events[user]["events"][date].append(line)
+                self.events[user]["events"][date] = [line]
         self.save_json()
 
     #adds the event to the json file
@@ -148,17 +144,17 @@ class CalHelperJson():
                     if day < 10:
                         week_string += "0"
                     week_string += str(day)
-                    week_string = self.check_event(week_string, day, user)
+                    week_string = self.check_event(week_string, day, user, str(month))
                     week_string += "<-\t"
                 elif day == 0:
                     week_string += "  x\t\t"
                 elif len(str(day)) == 1:
                     week_string += "0" + str(day)
-                    week_string = self.check_event(week_string, day, user)
+                    week_string = self.check_event(week_string, day, user, str(month))
                     week_string += "\t\t"
                 else:
                     week_string += str(day)
-                    week_string = self.check_event(week_string, day, user)
+                    week_string = self.check_event(week_string, day, user, str(month))
                     week_string += "\t\t"
             week_string += "\n"
         embed.add_field(name=week_string, value="\u200b", inline=False)
@@ -236,7 +232,6 @@ class CalHelperJson():
             embed = "No events for this date!"
             return embed
         else:
-            #for each event, add to string and return
             embed = "\nReminder for " + date + ":\n"
             for event in self.events[user]["events"][date]:
                 embed += event + "\n"

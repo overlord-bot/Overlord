@@ -49,9 +49,7 @@ class CalendarJson(commands.Cog, name="Calendarv2"):
                 await context.send("Please specify an event.")
 
         elif action.lower() == "remind":
-            #get current date
             currdate = datetime.datetime.now()
-            #format in MM/DD/YYYY format
             currdate = currdate.strftime("%m/%d/%Y")
             while currdate != event:
                 await asyncio.sleep(1)

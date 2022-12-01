@@ -38,8 +38,7 @@ To use the new commands, type `!calendarv2` followed by the command.
 
 Current plans for the week:
 
--Fixed bug with editing an event where the old event does not exist. Implemented US Federal Holidays into every calendar, also stopped storing the calendar as a string in json file
-as it was very messy to view and there was no purpose in storing it.
+-Put finishing touches on any bugs/code and work on slides for presentation.
 
 ## Development Plans
 
