@@ -132,6 +132,7 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.stringCounter = 0
         self.player1LostStones = 0
         self.player2LostStones = 0
+        self.passMove = 0
 
     # this helps with scoring at the end. we perform bfs at a point to see if it is surrounded by all one piece
     def BFS(self, starti, startj):
@@ -204,12 +205,13 @@ class GoMinigame(commands.Cog, name = "Go"):
                 result = self.endGame()
                 # A draw is not possible given komi
                 if result[0] > result[1]:
-                    await context.send("Player 1 won with " + result[0] + "points compared to player 2's " + result[1] + "points")
+                    await context.send("Player 1 won with " + str(result[0]) + " points compared to player 2's " + str(result[1]) + " points")
                 else:
-                    await context.send("Player 2 won with " + result[1] + "points compared to player 1's " + result[0] + "points")
+                    await context.send("Player 2 won with " + str(result[1]) + " points compared to player 1's " + str(result[0]) + " points")
                 self.reset()
                 await context.send("Game ended! GG!")
                 return
+            return
 
         #making a move
         if context.message.mentions == []:
@@ -489,7 +491,7 @@ class GoMinigame(commands.Cog, name = "Go"):
         await self.makeMove(context, "(4,7)", True)
         assert self.board == checkpoint1, "Checkpoint 1: Failed to remove captured piece"
 
-        self.reset()
+
 
         await self.printBoardState(context)
 
