@@ -25,6 +25,7 @@ class UniversalThread(threading.Thread):
         self.events = []
         self.preconditions = []
         self.keep_alive = True
+        
 
     def run(self):
         print(f'{self.thread_name} {self.thread_ID} nya')
@@ -57,6 +58,13 @@ class Slime(commands.Cog, name='Slime Lambda'):
         self.running = True
         self.thread = None
         self.daemon_start()
+
+    def _start_background_loop(loop):
+        asyncio.set_event_loop(loop)
+        loop.run_forever()
+
+    def asyncio_run(coro, timeout):
+        pass
 
     def daemon_start(self):
         self.thread = UniversalThread('daemon', '1')

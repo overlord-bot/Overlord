@@ -99,7 +99,10 @@ class rainbow_roles(commands.Cog, name="Rainbow Roles"):
             return
 
         if ('tidy up the fucking roles please' in message.content):
-            await self.deepcleanse(message)
+            output = Output(OUT.DISCORD_CHANNEL, OUTTYPE.EMBED, discord_channel=message.channel, signature='Rainbow Roles')
+            self.lock = True
+            await self.roles_deep_cleanse(message.guild, output)
+            self.lock = False
             
 
     """ Deassigns color roles from everyone, but doesn't delete the roles themselves
@@ -141,6 +144,7 @@ class rainbow_roles(commands.Cog, name="Rainbow Roles"):
         top_roles = OrderedDict()
         for m in guild.members:
             toprole = top_role(guild, m)
+            #print('top role of : ' + str(m) + ' ' + str(toprole))
             if top_roles.get(toprole) == None:
                 top_roles.update({toprole:[m]})
             else:
