@@ -353,9 +353,9 @@ class GoMinigame(commands.Cog, name = "Go"):
             await context.send("Game ended! GG!")
 
             if result[0] > result[1]:
-                await context.send("Player 1 won with " + result[0] + "points compared to player 2's " + result[1] + "points")
+                await context.send("Player 1 won with " + str(result[0]) + "points compared to player 2's " + str(result[1]) + "points")
             else:
-                await context.send("Player 2 won with " + result[1] + "points compared to player 1's " + result[0] + "points")
+                await context.send("Player 2 won with " + str(result[1]) + "points compared to player 1's " + str(result[0]) + "points")
 
     async def testMovesSuite(self, context):
         checkpoint1 = [
@@ -481,6 +481,18 @@ class GoMinigame(commands.Cog, name = "Go"):
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0]
         ]
+        checkpoint2 = [
+            [0,0,0,2,0,0,0,1,1],
+            [0,0,2,0,2,0,0,1,1],
+            [0,2,0,0,0,2,0,0,1],
+            [0,0,2,0,2,0,0,0,0],
+            [0,0,0,2,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ]
+
         await self.makeMove(context, "(4,6)", True)
         await self.makeMove(context, "(4,5)", True)
         await self.makeMove(context, "(5,7)", True)
@@ -491,9 +503,26 @@ class GoMinigame(commands.Cog, name = "Go"):
         await self.makeMove(context, "(4,7)", True)
         assert self.board == checkpoint1, "Checkpoint 1: Failed to remove captured piece"
 
+        await self.makeMove(context, "(9,9)", True)
+        await self.makeMove(context, "(6,7)", True)
+        await self.makeMove(context, "(8,9)", True)
+        await self.makeMove(context, "(4,9)", True)
+        await self.makeMove(context, "(9,8)", True)
+        await self.makeMove(context, "(3,8)", True)
+        await self.makeMove(context, "(8,8)", True)
+        await self.makeMove(context, "(2,7)", True)
+        await self.makeMove(context, "(9,7)", True)
+        await self.makeMove(context, "(3,6)", True)
+        await self.makeMove(context, "(4,7)", True)
+        assert self.board == checkpoint2, "Checkpoint 2: Failed to have pieces self surround"
 
+        # SCORING
+        assert self.player1LostStones == 5, "Player 1 lost stones incorrect!"
+        assert self.player2LostStones == 1, "Player 2 lost stones incorrect!"
+        assert self.endGame() == (-5,11.5), "Scoring is incorrect!"
 
-        await self.printBoardState(context)
+        # RESET AND CONFIRM
+        self.reset()
 
     async def testKoSuite(self, context):
         checkpoint1 = [
