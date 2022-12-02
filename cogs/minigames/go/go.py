@@ -232,8 +232,8 @@ class GoMinigame(commands.Cog, name = "Go"):
         await context.send("Game Started:")
 
         # FOR TESTING MOVES
-        await self.testMovesSuite(context)
-        await self.testSelfSurroundSuite(context)
+        # await self.testMovesSuite(context)
+        # await self.testSelfSurroundSuite(context)
 
     async def makeMove(self, context, move, test):
         if test == False:
