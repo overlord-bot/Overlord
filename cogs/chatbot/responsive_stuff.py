@@ -1,11 +1,10 @@
 # Basic Chat Response
-import random 
-from discord.ext import commands
-from datetime import datetime
-from datetime import date
-import cogs.chatbot.Countdown_mute_ban as cb
 import json
+import random
+from datetime import date, datetime
+
 import discord
+from discord.ext import commands
 
 
 class BasicChat(commands.Cog, name="Basic Chat"):
