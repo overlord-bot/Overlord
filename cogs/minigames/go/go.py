@@ -60,6 +60,8 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.unplayedTiles = 81
         self.gameStarted = False
         self.passMove = 0
+        self.lastMovePlayer1 = (-1,-1)
+        self.lastMovePlayer2 = (-1,-1)
 
         # this keeps track of all strings of pieces present on the board
         self.stringMatch = {}
@@ -133,6 +135,8 @@ class GoMinigame(commands.Cog, name = "Go"):
         self.player1LostStones = 0
         self.player2LostStones = 0
         self.passMove = 0
+        self.lastMovePlayer1 = (-1,-1)
+        self.lastMovePlayer2 = (-1,-1)
 
     # this helps with scoring at the end. we perform bfs at a point to see if it is surrounded by all one piece
     def BFS(self, starti, startj):
@@ -236,6 +240,7 @@ class GoMinigame(commands.Cog, name = "Go"):
         # FOR TESTING MOVES
         # await self.testMovesSuite(context)
         # await self.testSelfSurroundSuite(context)
+        # await self.testKoSuite(context)
 
     async def makeMove(self, context, move, test):
         if test == False:
@@ -246,8 +251,7 @@ class GoMinigame(commands.Cog, name = "Go"):
             if len(move) != 5:
                 await context.send("Please write your move command like '(x,y)'")
                 return
-
-        self.passMove = 0
+                
         x = 9-int(move[3])
         y = int(move[1])-1
 
@@ -257,6 +261,11 @@ class GoMinigame(commands.Cog, name = "Go"):
             await context.send("Invalid move, please pick a valid tile")
             return
 
+        if (self.turn == 1 and self.lastMovePlayer1  == (x,y)) or (self.turn == 2 and self.lastMovePlayer2  == (x,y)):
+            await context.send("By the Ko rule, you cannot make a move there")
+            return
+
+        self.passMove = 0
         self.board[x][y] = self.turn
 
         # the following checks for surrounding strings and updates them
@@ -328,8 +337,10 @@ class GoMinigame(commands.Cog, name = "Go"):
             await context.send(str(totalLost) + " Pieces of Player " + str(3-self.turn) + " Were Captured!")
 
         if self.turn == 1:
+            self.lastMovePlayer1 = (x,y)
             self.turn = 2
         else:
+            self.lastMovePlayer2 = (x,y)
             self.turn = 1
 
         # for debugging
@@ -521,24 +532,56 @@ class GoMinigame(commands.Cog, name = "Go"):
         assert self.player2LostStones == 1, "Player 2 lost stones incorrect!"
         assert self.endGame() == (-5,11.5), "Scoring is incorrect!"
 
-        # RESET AND CONFIRM
         self.reset()
 
     async def testKoSuite(self, context):
         checkpoint1 = [
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,1,2,0,0,0],
+            [0,0,0,1,2,0,2,0,0],
+            [0,0,0,0,1,2,0,0,0],
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0]
         ]
+        checkpoint3 = [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,1,2,0,0,0],
+            [0,0,0,1,0,1,2,0,0],
+            [0,0,0,0,1,2,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [2,0,0,0,0,0,0,0,0],
+            [1,0,0,0,0,0,0,0,0]
+        ]
+
         await self.makeMove(context, "(4,6)", True)
+        await self.makeMove(context, "(7,6)", True)
+        await self.makeMove(context, "(5,7)", True)
+        await self.makeMove(context, "(6,7)", True)
+        await self.makeMove(context, "(5,5)", True)
+        await self.makeMove(context, "(6,5)", True)
         await self.makeMove(context, "(6,6)", True)
-        await self.makeMove(context, "(2,4)", True)
+        await self.makeMove(context, "(5,6)", True)
+        assert self.board == checkpoint1, "Checkpoint 1: Captured piece without being captured itself"
+
+        await self.makeMove(context, "(6,6)", True)
+        assert self.board == checkpoint1, "Checkpoint 2: Invalid move"
+
+        await self.makeMove(context, "(1,1)", True)
+        await self.makeMove(context, "(1,2)", True)
+        await self.makeMove(context, "(6,6)", True)
+        assert self.board == checkpoint3, "Checkpoint 3: Can place in the place once again since another move was made in between"
+
+        # SCORING
+        assert self.player1LostStones == 1, "Player 1 lost stones incorrect!"
+        assert self.player2LostStones == 1, "Player 2 lost stones incorrect!"
+        assert self.endGame() == (0,6.5), "Scoring is incorrect!"
+
+        self.reset()
 
 async def setup(bot):
     await bot.add_cog(GoMinigame(bot))
