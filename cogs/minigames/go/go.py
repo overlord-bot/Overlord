@@ -198,10 +198,13 @@ class GoMinigame(commands.Cog, name = "Go"):
             await context.send("invalid command, must only have 2 commands")
             return
 
-        if self.gameStarted == True and context.message.content.split()[1] == "pass" and (context.message.author == self.player1 or context.message.author == self.player2):
+        if self.gameStarted == True and context.message.content.split()[1] == "pass" and \
+             (context.message.author.id == self.player1 or context.message.author.id == self.player2):
             if self.turn == 1:
+                await context.send("It is now " + self.getPlayer(2) + "'s turn")
                 self.turn = 2
             else:
+                await context.send("It is now " + self.getPlayer(1) + "'s turn")
                 self.turn = 1
             self.passMove += 1
 
@@ -209,9 +212,9 @@ class GoMinigame(commands.Cog, name = "Go"):
                 result = self.endGame()
                 # A draw is not possible given komi
                 if result[0] > result[1]:
-                    await context.send("Player 1 won with " + str(result[0]) + " points compared to player 2's " + str(result[1]) + " points")
+                    await context.send(self.getPlayer(1) + " won with " + str(result[0]) + "points compared to " + str(result[1]) + " points for " + self.getPlayer(2))
                 else:
-                    await context.send("Player 2 won with " + str(result[1]) + " points compared to player 1's " + str(result[0]) + " points")
+                    await context.send(self.getPlayer(2) + " won with " + str(result[1]) + "points compared to " + str(result[0]) + " points for " + self.getPlayer(1))
                 self.reset()
                 await context.send("Game ended! GG!")
                 return
@@ -228,23 +231,28 @@ class GoMinigame(commands.Cog, name = "Go"):
 
         # starting the game, resetting the board
         self.reset()
-        self.player1 = context.message.author
-        self.player2 = context.message.mentions[0]
+        self.player1 = context.message.author.id
+        self.player2 = context.message.mentions[0].id
         self.gameStarted = True
 
         print(self.player1)
         print(self.player2)
         await self.printBoardState(context)
-        await context.send("Game Started:")
+        await context.send("It is now " + self.getPlayer(1) + "'s turn")
 
         # FOR TESTING MOVES
         # await self.testMovesSuite(context)
         # await self.testSelfSurroundSuite(context)
         # await self.testKoSuite(context)
 
+    def getPlayer(self, player):
+        if player == 1:
+            return "<@" + str(self.player1) + ">"
+        return "<@" + str(self.player2) + ">"
+
     async def makeMove(self, context, move, test):
         if test == False:
-            user = context.message.author
+            user = context.message.author.id
             if (self.turn == 1 and user != self.player1) or (self.turn == 2 and user != self.player2):
                 print("Not the right player!")
                 return
@@ -321,6 +329,10 @@ class GoMinigame(commands.Cog, name = "Go"):
                 for point in self.stringMatch[setNeighbors[0]].points:
                     self.stringBoard[point[0]][point[1]] = setNeighbors[0]
         
+        # disabled when debugging to make the code run faster
+        if test == False:
+            await self.printBoardState(context)
+
         # if the move did not eliminate any other pieces, we also have to check if the newly placed has liberties
         if totalLost == 0 and self.stringMatch[stringNum].libertyCheck(self.board) == True:
             numLost = len(self.stringMatch[stringNum].points)
@@ -328,18 +340,20 @@ class GoMinigame(commands.Cog, name = "Go"):
                 self.player1LostStones += numLost
             else:
                 self.player2LostStones += numLost
-            await context.send(str(numLost) + " Pieces of Player " + str(self.turn) + " Were Captured!")
+            await context.send(str(numLost) + " Pieces of " + self.getPlayer(self.turn) + " Were Captured!")
             for point in self.stringMatch[stringNum].points:
                 self.stringBoard[point[0]][point[1]] = -1
                 self.board[point[0]][point[1]] = 0
             del self.stringMatch[stringNum]
         elif totalLost > 0:
-            await context.send(str(totalLost) + " Pieces of Player " + str(3-self.turn) + " Were Captured!")
+            await context.send(str(totalLost) + " Pieces of " + self.getPlayer(3 - self.turn)+ " Were Captured!")
 
         if self.turn == 1:
+            await context.send("It is now " + self.getPlayer(2) + "'s turn")
             self.lastMovePlayer1 = (x,y)
             self.turn = 2
         else:
+            await context.send("It is now " + self.getPlayer(1) + "'s turn")
             self.lastMovePlayer2 = (x,y)
             self.turn = 1
 
@@ -353,20 +367,15 @@ class GoMinigame(commands.Cog, name = "Go"):
             for li in self.stringMatch.values():
                 print(li.points)
 
-        # disabled when debugging to make the code run faster
-        if test == False:
-            await self.printBoardState(context)
-
         self.unplayedTiles -= 1
         if self.unplayedTiles == 0:
             result = self.endGame()
             self.reset()
-            await context.send("Game ended! GG!")
 
             if result[0] > result[1]:
-                await context.send("Player 1 won with " + str(result[0]) + "points compared to player 2's " + str(result[1]) + "points")
+                await context.send(self.getPlayer(1) + " won with " + str(result[0]) + " points compared to " + str(result[1]) + " points for " + self.getPlayer(2))
             else:
-                await context.send("Player 2 won with " + str(result[1]) + "points compared to player 1's " + str(result[0]) + "points")
+                await context.send(self.getPlayer(2) + " won with " + str(result[1]) + " points compared to " + str(result[0]) + " points for " + self.getPlayer(1))
 
     async def testMovesSuite(self, context):
         checkpoint1 = [
