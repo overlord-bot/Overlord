@@ -204,14 +204,14 @@ class Blackjack(commands.Cog, name="Blackjack"):
         else:
             await context.send("Doubling your bet")
         #need to implement betting before doing anything else here
-        #can double on any hand
+        #can double on any hand that wasnt split
     @commands.command()
     async def split(self,context):
         if(self.gamestart != True and self.gameend != False):
             await context.send("Please start a game first")
-       # elif(self.playercard1[0]!=self.playercard2[0]):
-          #  await context.send("You cannot split with this hand")
         elif(self.playercard1[0]!=self.playercard2[0]):
+            await context.send("You cannot split with this hand")
+        elif(self.playercard1[0]==self.playercard2[0]):
             await context.send("Splitting hand")
             self.splithand = True
             self.playerscore = 0
@@ -266,9 +266,16 @@ class Blackjack(commands.Cog, name="Blackjack"):
             dealercards2 = Blackjack.emoji(self.dealercard2)
             self.dealercards+=dealercards2[0]
             self.dealercards+=dealercards2[1]
+            originalscore = self.dealerscore
+            originalhand = self.dealercards
             await context.send("dealer has the cards")
             await context.send(dealercards1[0]+dealercards1[1] + dealercards2[0] + dealercards2[1])
-
+            if(self.splithand == True):
+                if(self.rightdone == False):
+                    self.playerscore = self.rightscore
+                elif(self.leftdone == False):
+                    self.playerscore = self.leftscore
+                
             while(self.dealerscore <= self.playerscore):
                 card = Blackjack.draw(self.cardsindeck)
                 if(card[0] == "J" or card[0] == "K" or card[0] == "Q"):
@@ -283,24 +290,93 @@ class Blackjack(commands.Cog, name="Blackjack"):
                 self.dealerscore+=cardscore
                 await context.send("Dealer's current hand is")
                 await context.send(self.dealercards)
-            if(self.dealerscore > 21):
-                await context.send("YOU WIN")
-                self.gameend = True
-                self.gamestart = False
-                self.playercards = ""
-                self.dealercards = ""
-            elif(self.dealerscore > self.playerscore):
-                await context.send("YOU LOSE")
-                self.gameend = True
-                self.gamestart = False
-                self.playercards = ""
-                self.dealercards = ""
-            else:
-                await context.send("YOU WIN")
-                self.gameend = True
-                self.gamestart = False
-                self.playercards = ""
-                self.dealercards = ""
+            if(self.splithand == False):
+                if(self.dealerscore > 21):
+                    await context.send("YOU WIN")
+                    self.gameend = True
+                    self.gamestart = False
+                    self.playercards = ""
+                    self.dealercards = ""
+                    
+                elif(self.dealerscore > self.playerscore):
+                    await context.send("YOU LOSE")
+                    self.gameend = True
+                    self.gamestart = False
+                    self.playercards = ""
+                    self.dealercards = ""
+                else:
+                    await context.send("YOU WIN")
+                    self.gameend = True
+                    self.gamestart = False
+                    self.playercards = ""
+                    self.dealercards = ""
+            elif(self.splithand == True):
+                if(self.dealerscore > 21):
+                    if(self.rightdone == False):
+                        await context.send("YOU WIN ON RIGHT HAND")
+                        self.rightdone = True
+                        self.rightscore = 0
+                        self.playerright = ""
+                        self.dealerscore = originalscore
+                        self.dealercards = originalhand
+                        await context.send("Playing your hand to the left")
+                        await context.send(self.playerleft)
+                    elif(self.leftdone == False):
+                        await context.send("YOU WIN ON LEFT HAND")
+                        self.gameend = True
+                        self.gamestart = False
+                        self.playerright = ""
+                        self.dealercards = ""
+                        self.splithand = False
+                        self.playerscore = 0
+                        self.dealerscore = 0
+                        self.rightscore = 0
+                        self.leftscore = 0
+                        self.rightdone = False
+                elif(self.dealerscore > self.playerscore):
+                    if(self.rightdone == False):
+                        await context.send("YOU LOSE ON RIGHT HAND")
+                        self.rightdone = True
+                        self.rightscore = 0
+                        self.playerright = ""
+                        self.dealerscore = originalscore
+                        self.dealercards = originalhand
+                        await context.send("Playing your hand to the left")
+                        await context.send(self.playerleft)
+                    elif(self.leftdone == False):
+                        await context.send("YOU LOSE ON LEFT HAND")
+                        self.gameend = True
+                        self.gamestart = False
+                        self.playerright = ""
+                        self.dealercards = ""
+                        self.splithand = False
+                        self.playerscore = 0
+                        self.dealerscore = 0
+                        self.rightscore = 0
+                        self.leftscore = 0
+                        self.rightdone = False
+                elif(self.playerscore > self.dealerscore):
+                    if(self.rightdone == False):
+                        await context.send("YOU WIN ON RIGHT HAND")
+                        self.rightdone = True
+                        self.rightscore = 0
+                        self.playerright = ""
+                        self.dealerscore = originalscore
+                        self.dealercards = originalhand
+                        await context.send("Playing your hand to the left")
+                        await context.send(self.playerleft)
+                    elif(self.leftdone == False):
+                        await context.send("YOU WIN ON LEFT HAND")
+                        self.gameend = True
+                        self.gamestart = False
+                        self.playerright = ""
+                        self.dealercards = ""
+                        self.splithand = False
+                        self.playerscore = 0
+                        self.dealerscore = 0
+                        self.rightscore = 0
+                        self.leftscore = 0
+                        self.rightdone = False
         else:
             await context.send("Please start a game first!")
     
