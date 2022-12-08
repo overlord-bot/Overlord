@@ -286,6 +286,11 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
                 user.command_queue.task_done()
                 continue
 
+            if command.command == CMD.DETAILS:
+                await output.print(self.details(command.arguments[0]))
+                user.command_queue.task_done()
+                continue
+
 
     #--------------------------------------------------------------------------
     # HELPER FUNCTIONS
@@ -434,7 +439,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         course_name (str): search for courses that contains this string in its name
         course_pool (set): pool of courses to search from
     """
-    async def search(self, course_name:str, course_pool:set=None) -> list:
+    def search(self, course_name:str, course_pool:set=None) -> list:
         possible_courses = self.course_search.search(course_name)
         if course_pool != None:
             possible_courses = [e for e in possible_courses if self.catalog.get_course(e) in course_pool]
@@ -445,6 +450,16 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         # everytime we do a search, drastically slowing down the program and defeating
         # the whole point of the searcher.
         return possible_courses
+
+    def details(self, course_name:str) -> str:
+        courses = self.search(course_name)
+        if len(courses) == 0:
+            return 'Course not found'
+        if len(courses) == 1:
+            course = self.catalog.get_course(courses[0])
+            s = f'{repr(course)}{DELIMITER_TITLE}{course.description}'
+            return s
+        return 'Please write exact course name or ID'
 
 
     """ Print list of courses to output that match input entry, searches from entire catalog
@@ -538,7 +553,7 @@ class Degree_Planner(commands.Cog, name="Degree Planner"):
         
         # list of courses matching course_name
         print(str(this_semester_courses))
-        returned_courses = [self.catalog.get_course(c) for c in await self.search(course_name, this_semester_courses)]
+        returned_courses = [self.catalog.get_course(c) for c in self.search(course_name, this_semester_courses)]
 
         if len(returned_courses) == 0:
             await output.print(f"SCHEDULE{DELIMITER_TITLE}Course {course_name} not found")

@@ -11,6 +11,7 @@ class CMD(Enum):
     FULFILLMENT = 20
     DEGREE = 21
     FIND = 31
+    DETAILS = 41
 
     TEST = 30
     IMPORT = 40
