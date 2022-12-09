@@ -16,6 +16,12 @@ class CommonEvents(commands.Cog, name="Common Events"):
             welcome_msg = f"Welcome {member.mention} to {guild.name}!"
             await guild.system_channel.send(welcome_msg)
 
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            await ctx.send(f"Woah, slow down! Wait {error.retry_after:.2f}s")
+        else:
+            raise error
 
 async def setup(bot):
     await bot.add_cog(CommonEvents(bot))
