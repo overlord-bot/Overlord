@@ -7,8 +7,8 @@ from discord.ext import commands
 from datetime import datetime
 from datetime import date
 import asyncio
-        
-                   
+import json 
+       
 class ExtraFunc(commands.Cog, name="Additional Function "):
     def __init__(self, bot):
         self.bot = bot
@@ -102,22 +102,82 @@ class ExtraFunc(commands.Cog, name="Additional Function "):
         muterole = discord.utils.get(ctx.guild.roles,name="Muted")
         
         if not muterole:
-            muterole = await ctx.guild.create_role(name = "Muted")
-            for channel in ctx.guild.channels:
-                await channel.set_permmissions(muterole, speak = False, send_message=False)  
-        role_get = discord.utils.get(Member.guild.roles, name="Friends") #Returns a role object.
-        await Member.remove_roles(role_get) #Remove the role (object) from the user.   
-        await Member.add_roles(muterole,reason=reasons)
+            perms = discord.Permissions(speak = False, send_messages=False,read_messages=True)
+            muterole = await ctx.guild.create_role(name = "Muted",permissions=perms)
+            #for channel in ctx.guild.channels:
+                #await channel.set_permmissions(muterole, speak = False, send_message=False,read_messages=True)  
+        group = {}
+        with open("./cogs/chatbot/Roles.json","r") as f:
+            js=f.read()
+        if len(js) == 0:
+            var = json.dumps(group)
+            f = open("./cogs/chatbot/Roles.json", "w")
+            f.write(var)
+            f.close()
+        else:
+            group = json.loads(js) #Group dictionary
+        data = {} #Detail data for each member
+        
+        
+        Roles = []
+        for role in Member.roles:
+            if(role.name!="@everyone"):
+                Roles.append(role.id)
+        
+        data["was"] = Roles
+        data["now"] = muterole.id
+        data["Time"] = reasons
+        group[str(Member.id)] = data
+        print(group)
+        var = json.dumps(group)
+        f = open("./cogs/chatbot/Roles.json", "w")
+        f.write(var)
+        f.close()
+        'await Member.remove_roles(Member.roles) #Remove the role (object) from the user.  '
+        await Member.edit(roles=[muterole])
+        'await Member.add_roles(muterole,reason=reasons)'
         await ctx.send(f"Muted {Member.mention} for reason {reasons}")  
     
     @commands.command()
     @commands.has_permissions(ban_members = True,administrator = True)
     async def unmute(self,ctx,Member: discord.Member, reasons=None):
         muterole = discord.utils.get(ctx.guild.roles,name="Muted")
-        role_get = discord.utils.get(Member.guild.roles, name="Friends") #Returns a role object.
+        
+        group = {}
+        with open("./cogs/chatbot/Roles.json","r") as f:
+            js=f.read()
+        if len(js) == 0:
+            var = json.dumps(group)
+            f = open("./cogs/chatbot/Roles.json", "w")
+            f.write(var)
+            f.close()
+        else:
+            group = json.loads(js) #Group dictionary
+        data = {}
+        Roles = []
+        for role in ctx.guild.roles:
+            print(type(role.id))
+        for role in group[str(Member.id)]["was"]:
+            
+            role_get = discord.utils.get(ctx.guild.roles, id=int(role)) #Returns a role object.
+            print(role_get.id)
+            await Member.add_roles(role_get)
+            print(role_get.id)
+            Roles.append(role);
+            
+        data["was"] = muterole.id
+        data["now"] = Roles
+        data["Time"] = reasons
+        group[str(Member.id)] = data
+        print(group)
+        var = json.dumps(group)
+        f = open("./cogs/chatbot/Roles.json", "w")
+        f.write(var)
+        f.close()
         await Member.remove_roles(muterole,reason=reasons) #Remove the role (object) from the user.   
-        await Member.add_roles(role_get)
+        
         await ctx.send(f"Unmuted {Member.mention} for reason {reasons}")
+    
         
 async def setup(bot):
     await bot.add_cog(ExtraFunc(bot))
