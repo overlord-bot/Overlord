@@ -4,42 +4,41 @@ This module is used to manage events and reminders for the server, and is curren
 
 ## Commands (Old)
 
-To use the old commands, type `!calendar` or `!calendar_timer` followed by the command. 
+To use the old commands, type `!calendar_old` or `!calendar_old_timer` followed by the command. However, this is not recommend as it creates a server-wide txt file containing data.
 
-`!calendar add <event> <MM/DD/YYYY>` will add an event for that date to the calendar.
+`!calendar_old add <event> <MM/DD/YYYY>` will add an event for that date to the calendar.
 
-`!calendar remove <event>` or `!calendar remove <MM/DD/YYYY>` will remove an event from the calendar.
+`!calendar_old remove <event>` or `!calendar remove <MM/DD/YYYY>` will remove an event from the calendar.
 
-`!calendar view <week/month>` will pull up a calendar visual with all the events within the time frame.
+`!calendar_old view <week/month>` will pull up a calendar visual with all the events within the time frame.
 
-`!calendar clear` will clear the calendar of its data and its events.
+`!calendar_old clear` will clear the calendar of its data and its events.
 
-`!calendar_timer <MM/DD/YYYY>` will set a timer for the specified date.
+`!calendar_old_timer <MM/DD/YYYY>` will set a timer for the specified date.
 
 ## Commands (New)
 
-To use the new commands, type `!calendarv2` followed by the command.
+To use the new commands, type `!calendar` followed by the command.
 
-`!calendarv2 add <event> <MM/DD/YYYY>` will add an event for that date to the calendar.
+`!calendar add <event> <MM/DD/YYYY>` will add an event for that date to the calendar.
 
-`!calendarv2 remove <MM/DD/YYYY>` will remove an event from the calendar.
+`!calendar remove <MM/DD/YYYY>` will remove an event from the calendar.
 
-`!calendarv2 view` will pull up a calendar visual with all the events for the month.
+`!calendar view` will pull up a calendar visual with all the events for the month.
 
-`!calendarv2 clear` will clear the calendar of its data and its events.
+`!calendar clear` will clear the calendar of its data and its events.
 
-`!calendarv2 edit date <old date> <new date>` will change the events of one day to another and remove the old date's events.
+`!calendar edit date <old date> <new date>` will change the events of one day to another and remove the old date's events.
 
-`!calendarv2 edit /<event1> /<event2>` will change event1 to event2
+`!calendar edit /<event1> /<event2>` will change event1 to event2
 
-`!calendarv2 remind <date>` will set a reminder for date and send all events on the date.
+`!calendar remind <date>` will set a reminder for date and send all events on the date.
 
 ## Plans for the Week:
 
 Current plans for the week:
 
--Fixed bug with editing an event where the old event does not exist. Implemented US Federal Holidays into every calendar, also stopped storing the calendar as a string in json file
-as it was very messy to view and there was no purpose in storing it.
+-Put finishing touches on any bugs/code and work on slides for presentation, and renamed/moved around old calendar model to its own folder.
 
 ## Development Plans
 

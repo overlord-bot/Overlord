@@ -4816,6 +4816,13 @@
       "course_id": 1200
     },
     {
+      "name": "Introduction to Civil and Environmental Engineering ",
+      "type": "course",
+      "credits": "1",
+      "major": "CIVL",
+      "course_id": "1100"
+    },
+    {
       "name": "Biological Science Elective",
       "type": "elective",
       "credits": 4,
@@ -4850,18 +4857,26 @@
       "course_id": 2110
     },
     {
-      "name": "Introduction to Water Resources Engineering ",
+      "name": "Beginning Programming in Civil and Environmental Engineering ",
       "type": "course",
+      "credits": "1",
+      "major": "CIVL",
+      "course_id": "1300"
       "credits": 4,
       "major": "CIVL",
       "course_id": 2060
     },
     {
-      "name": "Beginning Programming in Civil and Environmental Engineering ",
+      "name": "Introduction to Water Resources Engineering ",
       "type": "course",
+
+      "credits": "4",
+      "major": "CIVL",
+      "course_id": "2060"
       "credits": 1,
       "major": "CIVL",
       "course_id": 1300
+
     },
     {
       "name": "Free Elective I",
@@ -5167,6 +5182,20 @@
       "credits": 4,
       "major": "BIOL",
       "course_id": 4700
+    },
+    {
+      "name": "Biol 4xxx- selected in consultation with your adviser Credits / Units: 4",
+      "type": "course",
+      "credits": -1,
+      "major": "none",
+      "course_id": -1
+    },
+    {
+      "name": "Freshwater Ecology ",
+      "type": "course",
+      "credits": "4",
+      "major": "BIOL",
+      "course_id": "4700"
     },
     {
       "name": "Biol 4xxx- selected in consultation with your adviser Credits / Units: 4",

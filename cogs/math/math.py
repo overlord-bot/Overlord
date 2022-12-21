@@ -95,6 +95,7 @@ class BasicMath(commands.Cog, name="Basic Math"):
         self.bot = bot
 
     @commands.command()
+    @commands.cooldown(1, 5, type=commands.BucketType.user)
     async def calc(self, context, *, expression):
         """Evaluate the given mathematical expression."""
 
