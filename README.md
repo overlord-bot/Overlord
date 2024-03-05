@@ -6,11 +6,13 @@
 [![GitHub stars](https://img.shields.io/github/stars/overlord-bot/Overlord.svg)](https://github.com/overlord-bot/Overlord/stargazers)
 
 ## Description
+Introducing Project Overlord! This is an open source Python Discord bot made by students in Rensselaer Polytechnic Institute's RCOS (Rensselaer Center for Open Source).
 
-Project Overlord is a open source Python Discord bot made by students in Rensselaer Polytechnic Institute's RCOS (Rensselaer Center for Open Source).
 
-The goal of this Discord bot is to help make students' lives easier by providing many different utility functions. The following bot modules and functionalities are in development:
+## The Goal
+Our goal is to create a functional bot that may be integrated into Discord servers to encourage the use of this platform in the classroom setting as well as foster a community of students within the discord platform. By combining school and leasure, we aim to provide a fun yet impactful assistant.
 
+The following bot modules and functionalities are in development:
 - Degree/course planner
 - Web crawler with many different search functions
 - Chat management to help administer a Discord server
@@ -29,7 +31,6 @@ The goal of this Discord bot is to help make students' lives easier by providing
 - [License](#license)
 
 ## Installation
-
 In order to run this project and start your own instance of this Discord bot, you will need to do the following:
 
 - Create a [Discord Developer Account](https://discord.com/developers/applications)
@@ -41,30 +42,28 @@ In order to run this project and start your own instance of this Discord bot, yo
     - [DISCORD_TOKEN](https://github.com/overlord-bot/Overlord/blob/main/bot.py#L91)
 - Run the [bot.py](bot.py) file
 
-## Usage
+Implementation:
+- Package coming soon
+- Web version available
 
+## Usage
 For instructions on how to use the Discord bot's commands, please see the [cogs folder](https://github.com/overlord-bot/Overlord/tree/main/cogs) and click on individual modules. Most of these modules have examples on how to use the corresponding commands. 
 
 In the future, we plan on merging the individual module instuctions into an "INSTRUCTIONS.md" file.
 
 ## Configuration
-
 Currently, we do not have many configuration options, but we are planning on adding this capability for the bot. We understand that most Discord bots already available have settings/configurations to customize the experience for users, and we are fully committed to making this happen.
 
 ## Examples
-
 This section will be expanded in the future when bot modules have matured more.
 
 ## Contributing
-
-Guidelines for contributors, including instructions on how to submit bug reports, feature requests, or pull requests. 
+We welcome with open arms the aid of fellow students of all skill sets to continue to develop new features and further refine this bot.
 
 Please review the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details.
 
 ## License
-
 This project is licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
 
 ### Why the MIT License?
-
 We chose the [MIT License](LICENSE) because it is a permissive open-source license that allows users to use, modify, and distribute the project's code with minimal restrictions. The MIT License allows developers of all backgrounds to contribute to this project, as well as adapt this project for their own needs, without having to worry about complex problems from licensing issues. Additionally, the MIT License aligns with the [Rensselaer Center for Open Source's (RCOS)](https://handbook.rcos.io/#/README) philosophy of promoting collaboration and community-driven development.
